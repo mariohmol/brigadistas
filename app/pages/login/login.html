@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar whatsapp>
+    <ion-title>Login</ion-title>
+
+    <ion-buttons end>
+      <button class="done-button" (click)="login()">Done</button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="login-page-content">
+  <div class="instructions">
+    <div>
+      Please enter your email and password.
+    </div>
+    <br>
+  </div>
+
+  <ion-item>
+    <ion-input [(ngModel)]="username" (keypress)="onInputKeypress($event)" type="email" placeholder="Your email"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input [(ngModel)]="password" (keypress)="onInputKeypress($event)" type="password" placeholder="Your password"></ion-input>
+  </ion-item>
+</ion-content>

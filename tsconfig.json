@@ -1,0 +1,16 @@
+{
+  "compilerOptions": {
+    "target": "es5",
+    "module": "commonjs",
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true
+  },
+  "files": [
+    "typings/index.d.ts",
+    "node_modules/zone.js/dist/zone.js.d.ts"
+  ],
+  "exclude": [
+    "www",
+    "node_modules"
+  ]
+}
