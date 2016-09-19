@@ -9,15 +9,16 @@ import {Chats, Messages,Brigades, FireAlerts} from 'api/collections';
 import {MessagesPage} from '../messages/messages';
 import {ChatsOptionsPage} from '../chats-options/chats-options';
 import {NewChatPage} from '../new-chat/new-chat';
-
+import {TranslatePipe} from "ng2-translate/ng2-translate";
 
 @Component({
   templateUrl: 'build/pages/brigades/brigades.html',
-  pipes: [CalendarPipe]
+  pipes: [CalendarPipe,TranslatePipe]
 })
 export class BrigadesPage extends MeteorComponent {
   chats: Mongo.Cursor<Chat>;
   private senderId: string;
+  public brigades: Mongo.Cursor<Brigade>;
 
   constructor(private navCtrl: NavController, public modCtrl: ModalController, public popCtrl: PopoverController) {
     super();

@@ -22,7 +22,7 @@ export class LoginPage {
   }
 
   login(): void {
-
+    let classe = this;
     Meteor.loginWithPassword(this.username, this.password, function (error) {
       if(!error){
         classe.navCtrl.push(TabsPage);
