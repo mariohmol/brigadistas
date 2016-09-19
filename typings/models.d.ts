@@ -22,4 +22,21 @@ declare module 'api/models' {
     content?: string;
     createdAt?: Date;
   }
+
+  interface Brigade {
+    _id?: string;
+    name?: string;
+    desc?: string;
+    ownership?: string;
+    city?: string;
+    createdAt?: Date;
+  }
+
+  interface FireAlert {
+    _id?: string;
+    userId?: string;
+    title?: string;
+    city?: string;
+    createdAt?: Date;
+  }
 }

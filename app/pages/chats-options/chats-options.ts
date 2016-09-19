@@ -3,6 +3,7 @@ import {NavController, ViewController, AlertController} from 'ionic-angular';
 import {Meteor} from 'meteor/meteor';
 import {ProfilePage} from '../profile/profile';
 import {LoginPage} from '../login/login';
+import {BrigadesPage} from '../brigades/brigades'
 
 
 @Component({
@@ -14,6 +15,12 @@ export class ChatsOptionsPage {
   editProfile(): void {
     this.viewCtrl.dismiss().then(() => {
       this.navCtrl.push(ProfilePage);
+    });
+  }
+
+  showBrigadas(): void {
+    this.viewCtrl.dismiss().then(() => {
+      this.navCtrl.push(BrigadesPage);
     });
   }
 

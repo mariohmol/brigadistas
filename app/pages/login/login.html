@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar whatsapp>
-    <ion-title>Login</ion-title>
+    <ion-title>Brigadista Civil</ion-title>
 
     <ion-buttons end>
       <button class="done-button" (click)="login()">Done</button>
@@ -11,15 +11,15 @@
 <ion-content padding class="login-page-content">
   <div class="instructions">
     <div>
-      Please enter your email and password.
+      Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.
     </div>
     <br>
   </div>
 
   <ion-item>
-    <ion-input [(ngModel)]="username" (keypress)="onInputKeypress($event)" type="email" placeholder="Your email"></ion-input>
+    <ion-input [(ngModel)]="username" (keypress)="onInputKeypress($event)" type="email" placeholder="Seu email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input [(ngModel)]="password" (keypress)="onInputKeypress($event)" type="password" placeholder="Your password"></ion-input>
+    <ion-input [(ngModel)]="password" (keypress)="onInputKeypress($event)" type="password" placeholder="Sua senha"></ion-input>
   </ion-item>
 </ion-content>

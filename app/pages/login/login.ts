@@ -22,51 +22,52 @@ export class LoginPage {
   }
 
   login(): void {
-    const alert = this.alertCtrl.create({
-      title: 'Confirm',
-      message: `Would you like to proceed with the username ${this.username}?`,
-      buttons: [
-        {
-          text: 'Cancel',
-          role: 'cancel'
-        },
-        {
-          text: 'Yes',
-          handler: () => {
-            this.handleLogin(alert);
-            return false;
-          }
-        }
-      ]
-    });
-
-    alert.present();
-  }
-
-  private handleLogin(alert): void {
-    let classe=this;
 
     Meteor.loginWithPassword(this.username, this.password, function (error) {
       if(!error){
         classe.navCtrl.push(TabsPage);
       }else{
-        Meteor.call("signin",classe.username, classe.password,{},(e: Error)=>{
-          alert.dismiss().then(() => {
-            if (e) return classe.handleError(e);
 
-            Meteor.loginWithPassword(classe.username, classe.password, function (error) {
-              if (error) {
-                alert(error)
-                //sAlert.error('Account login failed for unknown reasons :(');
-              } else {
-                classe.navCtrl.push(ProfilePage, {
-                  username: classe.username
-                });
+        const alert = this.alertCtrl.create({
+          title: 'Confirmar',
+          message: `Gostaria de criar uma conta utilizando o email ${this.username}?`,
+          buttons: [
+            {
+              text: 'Cancelar',
+              role: 'cancel'
+            },
+            {
+              text: 'Sim',
+              handler: () => {
+                this.handleLogin(alert);
+                return false;
               }
-            });
-          });
+            }
+          ]
         });
+        alert.present();
       }
+    })
+  }
+
+  private handleLogin(alert): void {
+    let classe=this;
+
+    Meteor.call("signin",classe.username, classe.password,{},(e: Error)=>{
+      alert.dismiss().then(() => {
+        if (e) return classe.handleError(e);
+
+        Meteor.loginWithPassword(classe.username, classe.password, function (error) {
+          if (error) {
+            alert(error)
+            //sAlert.error('Account login failed for unknown reasons :(');
+          } else {
+            classe.navCtrl.push(ProfilePage, {
+              username: classe.username
+            });
+          }
+        });
+      });
     });
   }
 
