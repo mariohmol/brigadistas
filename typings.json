@@ -1,7 +1,9 @@
 {
   "name": "Whatsapp",
   "globalDependencies": {
+    "debug": "registry:dt/debug#0.0.0+20160317120654",
     "es6-shim": "registry:dt/es6-shim#0.31.2+20160602141504",
+    "google-maps": "registry:dt/google-maps#3.1.0+20151203174025",
     "meteor": "registry:env/meteor#1.3.0+20160713172414",
     "meteor-publish-composite": "registry:dt/meteor-publish-composite#0.0.0+20160724055739"
   },

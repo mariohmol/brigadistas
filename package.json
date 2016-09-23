@@ -3,7 +3,9 @@
   "description": "Whatsapp: An Ionic project",
   "scripts": {
     "build": "cd api & meteor build ../build",
+    "deploy": "git pull && gulp build && cp -R www api/public && cd api && passenger restart",
     "install": "typings install",
+    "install-global": "ypings install registry:env/meteor --global --save",
     "install-plugins": "cordova plugin add cordova-plugin-console cordova-plugin-device cordova-plugin-splashscreen cordova-plugin-statusbar cordova-plugin-whitelist ionic-plugin-keyboard",
     "format-patch": "git format-patch step-by-step --root --stdout > tutorial/step-by-step.patch && git add tutorial/step-by-step.patch && git commit -m \"Format patch file for step-by-step branch\""
   },
