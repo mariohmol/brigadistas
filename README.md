@@ -22,4 +22,10 @@ To run this app do:
 
 * in root folder run `ionic serve`
 * inside api folder run `meteor run` or `meteor debug`
-* Is possible to use gulp to watch and recompile files, but ionic serve does that pressing `r` in termina to restart.
+* Is possible to use gulp to watch and recompile files, but ionic serve does that pressing `r` in terminal to restart.
+
+## Production
+
+Is possible to use mod_wstunnel for apache2.4, for that check the proxy.conf file in this repo.
+
+Other option is to use passenger standalone running the command `cd api && passenger start`. For this you need to create a `public/` folder inside the `api/` with all the `www/` contents. Guarantee that you have that folder generated running `gulp build` mainly in development environment. So is better to upload this www folder using FTP.

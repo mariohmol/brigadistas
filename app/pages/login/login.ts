@@ -28,9 +28,9 @@ export class LoginPage {
         classe.navCtrl.push(TabsPage);
       }else{
 
-        const alert = this.alertCtrl.create({
+        const alert = classe.alertCtrl.create({
           title: 'Confirmar',
-          message: `Gostaria de criar uma conta utilizando o email ${this.username}?`,
+          message: `Gostaria de criar uma conta utilizando o email ${classe.username}?`,
           buttons: [
             {
               text: 'Cancelar',
@@ -39,7 +39,7 @@ export class LoginPage {
             {
               text: 'Sim',
               handler: () => {
-                this.handleLogin(alert);
+                classe.handleLogin(alert);
                 return false;
               }
             }
