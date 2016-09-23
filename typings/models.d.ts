@@ -12,6 +12,7 @@ declare module 'api/models' {
     lastMessage?: Message;
     receiverComp?: Tracker.Computation;
     lastMessageComp?: Tracker.Computation;
+    deletedAt?: Date;
   }
 
   interface Message {
@@ -21,6 +22,7 @@ declare module 'api/models' {
     ownership?: string;
     content?: string;
     createdAt?: Date;
+    deletedAt?: Date;
   }
 
   interface Brigade {
@@ -30,6 +32,7 @@ declare module 'api/models' {
     ownership?: string;
     city?: string;
     createdAt?: Date;
+    deletedAt?: Date;
   }
 
   interface FireAlert {
@@ -38,5 +41,6 @@ declare module 'api/models' {
     title?: string;
     city?: string;
     createdAt?: Date;
+    deletedAt?: Date;
   }
 }

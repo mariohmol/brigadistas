@@ -1,16 +1,21 @@
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {Chat, Message} from 'api/models';
-import {Chats, Messages} from './collections';
+import {Chat, Message,Brigade } from 'api/models';
+import {Chats, Messages,Brigades} from './collections';
 
 
 Meteor.publish('users', function(): Mongo.Cursor<Meteor.User> {
-  console.log(this.userid,"oioioio")
   if (!this.userId) return;
 
   return Meteor.users.find({}, {
     fields: {profile: 1}
   });
+});
+
+Meteor.publish('brigades', function(): Mongo.Cursor<Brigade> {
+  if (!this.userId) return;
+
+  return Brigades.find({deletedAt: { $eq: null }}, {});
 });
 
 Meteor.publishComposite('chats', function(): PublishCompositeConfig<Chat> {

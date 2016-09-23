@@ -1,29 +1,26 @@
 import {Component} from '@angular/core';
-import {NavController, ModalController, PopoverController} from 'ionic-angular';
-import {MeteorComponent} from 'angular2-meteor';
+import {NavController, ModalController, PopoverController,AlertController} from 'ionic-angular';
 import {CalendarPipe} from 'angular2-moment';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {Chat, Message,Brigade, FireAlert} from 'api/models';
+import {Chat, Message, Brigade, FireAlert} from 'api/models';
 import {Chats, Messages,Brigades, FireAlerts} from 'api/collections';
 import {MessagesPage} from '../messages/messages';
 import {ChatsOptionsPage} from '../chats-options/chats-options';
-import {NewChatPage} from '../new-chat/new-chat';
+import {NewBrigade} from '../brigades/new-brigade';
 import {TranslatePipe} from "ng2-translate/ng2-translate";
+import BasicComponent from '../basic.ts'
 
 @Component({
   templateUrl: 'build/pages/brigades/brigades.html',
   pipes: [CalendarPipe,TranslatePipe]
 })
-export class BrigadesPage extends MeteorComponent {
+export class BrigadesPage extends BasicComponent {
   chats: Mongo.Cursor<Chat>;
-  private senderId: string;
   public brigades: Mongo.Cursor<Brigade>;
 
-  constructor(private navCtrl: NavController, public modCtrl: ModalController, public popCtrl: PopoverController) {
-    super();
-
-    this.senderId = Meteor.userId();
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public modCtrl: ModalController, public popCtrl: PopoverController) {
+    super(navCtrl,alertCtrl);
 
     this.subscribe('brigades', () => {
       this.autorun(() => {
@@ -33,12 +30,8 @@ export class BrigadesPage extends MeteorComponent {
   }
 
   addBrigada(): void {
-    const modal = this.modCtrl.create(NewChatPage);
+    const modal = this.modCtrl.create(NewBrigade);
     modal.present();
-  }
-
-  removeBrigada(chat): void {
-    this.call('removeChat', chat._id);
   }
 
   showMembers(chat): void {
@@ -54,45 +47,13 @@ export class BrigadesPage extends MeteorComponent {
   }
 
   private findBrigades(): Mongo.Cursor<Brigade>{
-    const chats = Brigades.find({}, {
-      transform: this.transformChat.bind(this)
-    });
+    const brigades = Brigades.find({}, {});
 
-    chats.observe({
-      changed: (newChat, oldChat) => this.disposeChat(oldChat),
-      removed: (chat) => this.disposeChat(chat)
-    });
+    /*brigades.observe({
+      changed: (newChat, oldChat) => this.disposeChat(oldChat)
+    });*/
 
-    return chats;
+    return brigades;
   }
 
-  private transformChat(chat): Chat {
-    chat.receiverComp = this.autorun(() => {
-      const receiverId = chat.memberIds.find(memberId => memberId != this.senderId);
-      const receiver = Meteor.users.findOne(receiverId);
-      if (!receiver) return;
-
-      chat.title = receiver.profile.name;
-      chat.picture = receiver.profile.picture;
-    });
-
-    chat.lastMessageComp = this.autorun(() => {
-      chat.lastMessage = this.findLastMessage(chat);
-    });
-
-    return chat;
-  }
-
-  private findLastMessage(chat): Message {
-    return Messages.findOne({
-      chatId: chat._id
-    }, {
-      sort: {createdAt: -1}
-    });
-  }
-
-  private disposeChat(chat: Chat): void {
-    if (chat.receiverComp) chat.receiverComp.stop();
-    if (chat.lastMessageComp) chat.lastMessageComp.stop();
-  }
 }

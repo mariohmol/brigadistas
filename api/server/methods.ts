@@ -1,13 +1,37 @@
 import {Meteor} from 'meteor/meteor';
 import {check, Match} from 'meteor/check';
 import {Profile} from 'api/models';
-import {Chats, Messages} from './collections';
+import {Chats, Messages,Brigades} from './collections';
 
 import 'meteor/accounts-password';
 
 const nonEmptyString = Match.Where((str: any) => {
   check(str, String);
   return str.length > 0;
+});
+
+
+
+  Brigades.allow({
+    insert: function (userId, doc) {
+      return true;
+    }
+  })
+
+Meteor.methods({
+  'brigades.insert'(brigade) {
+    console.log(brigade)
+    check(brigade.name, String);
+
+    // Make sure the user is logged in before inserting a task
+    if (! this.userId) {
+      throw new Meteor.Error('not-authorized');
+    }
+
+    brigade.createdAt=new Date();
+    console.log(brigade,"oioioioiisssssss")
+    return Brigades.insert(brigade);
+  }
 });
 
 
@@ -90,4 +114,5 @@ if (Meteor.isServer) {
       Accounts.createUser({username: username,email: username, password: password, profile: profile})
     }
   });
+
 }

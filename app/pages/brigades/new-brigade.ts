@@ -1,65 +1,47 @@
 import {Component} from '@angular/core';
-import {MeteorComponent} from 'angular2-meteor';
 import {NavController, ViewController, AlertController} from 'ionic-angular';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {Chats} from 'api/collections';
+import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {Chat, Message, Brigade, FireAlert} from 'api/models';
+import BasicComponent from '../basic.ts'
+import {Brigades} from 'api/collections';
 
 @Component({
-  templateUrl: 'build/pages/new-chat/new-chat.html'
+    templateUrl: 'build/pages/brigades/new-brigade.html',
+    pipes: [TranslatePipe]
 })
-export class NewChatPage extends MeteorComponent {
-  users: Mongo.Cursor<Meteor.User>;
-  private senderId: string;
+export class NewBrigade extends BasicComponent {
+    users: Mongo.Cursor<Meteor.User>;
+    private brigade: Brigade;
 
-  constructor(private navCtrl: NavController, private viewCtrl: ViewController,public alertCtrl: AlertController) {
-    super();
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController) {
+        super(navCtrl,alertCtrl);
+        this.brigade =  {};
+    }
 
-    this.senderId = Meteor.userId();
-
-    this.subscribe('users', () => {
-      this.autorun(() => {
-        this.users = this.findUsers();
+    defaultAction(): void {
+      console.log(this.brigade);
+      this.call('brigades.insert', this.brigade, (e: Error) => {
+        console.log(e)
+        this.viewCtrl.dismiss().then(() => {
+            if (e) return this.handleError(e);
+        });
       });
-    });
-  }
+      /*Brigades.insert(this.senderId,this.brigade, (e: Error) => {
+        console.log(e)
+        this.viewCtrl.dismiss().then(() => {
+            if (e) return this.handleError(e);
+        });
+      })*/
+        /*this.call('addBrigade', this.brigade, (e: Error) => {
+            this.viewCtrl.dismiss().then(() => {
+                if (e) return this.handleError(e);
+            });
+        });/**/
+    }
 
-  addChat(user): void {
-    this.call('addChat', user._id, (e: Error) => {
-      this.viewCtrl.dismiss().then(() => {
-        if (e) return this.handleError(e);
-      });
-    });
-  }
-
-  private findUsers(): Mongo.Cursor<Meteor.User> {
-    const chats = Chats.find({
-      memberIds: this.senderId
-    }, {
-      fields: {
-        memberIds: 1
-      }
-    });
-
-    const recieverIds = chats
-      .map(({memberIds}) => memberIds)
-      .reduce((result, memberIds) => result.concat(memberIds), [])
-      .concat(this.senderId);
-
-    return Meteor.users.find({
-      _id: {$nin: recieverIds}
-    });
-  }
-
-  private handleError(e: Error): void {
-    console.error(e);
-
-    const alert = this.alertCtrl.create({
-      title: 'Oops!',
-      message: e.message,
-      buttons: ['OK']
-    });
-
-    alert.present();
-  }
+    removeBrigada(chat): void {
+      this.call('removeChat', chat._id);
+    }
 }

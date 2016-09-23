@@ -1,6 +1,6 @@
 {
-  "name": "Whatsapp",
-  "description": "Whatsapp: An Ionic project",
+  "name": "BrigadistaCivil",
+  "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "scripts": {
     "build": "cd api & meteor build ../build",
     "deploy": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",

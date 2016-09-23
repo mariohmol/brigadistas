@@ -26,7 +26,7 @@ Object.assign(window,
   template: '<ion-nav [root]="rootPage"></ion-nav>',
   pipes: [TranslatePipe]
 })
-export class Whatsapp {
+export class BrigadistaCivil {
   rootPage: any;
 
   constructor(platform: Platform, private  translate: TranslateService) {
@@ -57,7 +57,7 @@ Tracker.autorun((computation) => {
   if (Meteor.loggingIn()) return;
   computation.stop();
 
-  ionicBootstrap(Whatsapp, [METEOR_PROVIDERS, [provide(TranslateLoader, {
+  ionicBootstrap(BrigadistaCivil, [METEOR_PROVIDERS, [provide(TranslateLoader, {
   useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
   deps: [Http]
 }),

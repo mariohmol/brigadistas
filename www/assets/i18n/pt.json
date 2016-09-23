@@ -1,7 +1,14 @@
 {
     "title" : "Brigadista Civil",
+    "name": "Nome",
+    "city": "Cidade",
+    "description": "Descrição",
+    "done": "Enviar",
     "brigades": {
         "title": "Brigadas",
-        "kittens": "Kittens"
+        "kittens": "Kittens",
+        "new": {
+          "title": "Nova Brigada"
+        }
     }
 }
