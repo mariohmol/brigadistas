@@ -1,4 +1,4 @@
-//require('es6-promise').polyfill()
+require('es6-promise').polyfill()
 var camelCase = require('lodash.camelcase');
 var upperFirst = require('lodash.upperfirst');
 var webpack = require('webpack');
