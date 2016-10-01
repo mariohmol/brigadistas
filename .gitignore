@@ -22,6 +22,7 @@ www/build/
 $RECYCLE.BIN/
 typings/globals/
 typings/modules/
+platforms/
 
 .DS_Store
 Thumbs.db

@@ -3,6 +3,7 @@
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "scripts": {
     "build": "cd api & meteor build ../build",
+    "start-dev": "ionic serve && cd api && meteor run & ",
     "deploy": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
     "install": "typings install",
@@ -38,7 +39,7 @@
   "devDependencies": {
     "del": "2.2.0",
     "es6-promise": "^3.3.1",
-    "gulp": "3.9.1",
+    "gulp": "ˆ3.9.1",
     "gulp-watch": "4.3.5",
     "ionic-gulp-fonts-copy": "^1.0.0",
     "ionic-gulp-html-copy": "^1.0.0",
@@ -61,5 +62,12 @@
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard"
+  ],
+  "ionicPlugins": [
+    "ionic platform add browser",
+    "ionic build browser",
+    "ionic plugin add cordova-plugin-crosswalk-webview"
+
+
   ]
 }

@@ -23,6 +23,12 @@
   <!-- Zone.js and Reflect-metadata  -->
   <script src="build/js/Reflect.js"></script>
   <script src="build/js/zone.js"></script>
+  <script>
+      SERVER_URL = "http://my_server_domain:3000";
+      __meteor_runtime_config__ = {};
+      __meteor_runtime_config__.DDP_DEFAULT_CONNECTION_URL = SERVER_URL;
+   </script>
+
   <!-- the bundle which is built from the app's source code -->
   <script src="build/js/app.bundle.js"></script>
 </body>
