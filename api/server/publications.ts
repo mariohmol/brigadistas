@@ -13,6 +13,7 @@ Meteor.publish('users', function(): Mongo.Cursor<Meteor.User> {
 });
 
 Meteor.publish('brigades', function(): Mongo.Cursor<Brigade> {
+  console.log("brgade publih")
   if (!this.userId) return;
 
   return Brigades.find({deletedAt: { $eq: null }}, {});

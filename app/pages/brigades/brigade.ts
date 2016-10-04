@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ViewController, AlertController} from 'ionic-angular';
+import {NavController, ViewController, AlertController,NavParams} from 'ionic-angular';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
 import {TranslatePipe} from "ng2-translate/ng2-translate";
@@ -8,21 +8,26 @@ import BasicComponent from '../basic.ts'
 import {Brigades} from 'api/collections';
 
 @Component({
-    templateUrl: 'build/pages/brigades/new-brigade.html',
+    templateUrl: 'build/pages/brigades/brigade.html',
     pipes: [TranslatePipe]
 })
-export class NewBrigade extends BasicComponent {
+export class BrigadePage extends BasicComponent {
     users: Mongo.Cursor<Meteor.User>;
     private brigade: Brigade;
+    readOnly: boolean;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController) {
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController, public navParams: NavParams) {
         super(navCtrl,alertCtrl);
-        this.brigade =  {};
+
+        this.brigade = <Brigade>navParams.get('brigade');
+        if(!this.brigade) this.brigade =  {};
+        this.readOnly = <boolean>navParams.get('readOnly');
+        if(!this.readOnly) this.readOnly=false;
     }
 
     defaultAction(): void {
       console.log(this.brigade);
-      this.call('brigades.insert', this.brigade, (e: Error) => {
+      this.call('brigadesInsert', this.brigade, (e: Error) => {
         console.log(e)
         this.viewCtrl.dismiss().then(() => {
             if (e) return this.handleError(e);
@@ -39,6 +44,10 @@ export class NewBrigade extends BasicComponent {
                 if (e) return this.handleError(e);
             });
         });/**/
+    }
+
+    isReadonly(){
+        return this.readOnly;
     }
 
     removeBrigada(chat): void {

@@ -3,30 +3,27 @@
     <ion-title> {{ "brigades.title" | translate }}</ion-title>
 
     <ion-buttons end>
-      <button class="add-chat-button" (click)="addBrigada()"><ion-icon name="add"></ion-icon></button>
-      <button class="options-button" (click)="showOptions()"><ion-icon name="more"></ion-icon></button>
+      <button class="add-chat-button" (click)="addBrigade()"><ion-icon name="add"></ion-icon></button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
 
 <ion-content class="chats-page-content">
   <ion-list class="chats">
-    <ion-item-sliding *ngFor="let chat of chats">
-      <button ion-item class="chat" (click)="showMessages(chat)">
-        <img class="chat-picture" [src]="chat.picture">
-
+    <ion-item-sliding *ngFor="let brigade of brigades">
+      <button ion-item class="chat" (click)="showBrigade(brigade)">
         <div class="chat-info">
-          <h2 class="chat-title">{{chat.title}}</h2>
+          <h2 class="chat-title">{{brigade.name}}</h2>
 
-          <span *ngIf="chat.lastMessage" class="last-message">
-            <p class="last-message-content">{{chat.lastMessage.content}}</p>
-            <span class="last-message-timestamp">{{chat.lastMessage.createdAt | amCalendar}}</span>
+          <span *ngIf="brigade.city" class="last-message">
+            <p class="last-message-content">{{brigade.city}}</p>
+            <span class="last-message-timestamp">{{brigade.createdAt | amCalendar}}</span>
           </span>
         </div>
       </button>
 
       <ion-item-options class="chat-options">
-        <button danger class="option option-remove" (click)="removeChat(chat)">Remove</button>
+        <button danger class="option option-remove" (click)="removeBrigade(brigade)">Remove</button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

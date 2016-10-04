@@ -2,7 +2,7 @@
     <ion-toolbar brigadistacivil>
         <ion-title>{{ "brigades.new.title" | translate }}</ion-title>
         <ion-buttons end>
-          <button class="dismiss-button" (click)="defaultAction()"><ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
+          <button class="dismiss-button" *ngIf="!isReadonly()" (click)="defaultAction()"><ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
             <button class="dismiss-button" (click)="viewCtrl.dismiss()"><ion-icon name="close"></ion-icon></button>
         </ion-buttons>
     </ion-toolbar>
@@ -12,15 +12,15 @@
     <ion-list class="users">
         <ion-item>
             <ion-label floating>{{ "name" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.name" (keypress)="onInputKeypress($event)" type="text"></ion-input>
+            <ion-input [(ngModel)]="brigade.name" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="text"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "city" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.city" (keypress)="onInputKeypress($event)" type="text"></ion-input>
+            <ion-input [(ngModel)]="brigade.city" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "description" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.description" (keypress)="onInputKeypress($event)" type="textarea"></ion-input>
+            <ion-input [(ngModel)]="brigade.description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
         </ion-item>
     </ion-list>
 </ion-content>

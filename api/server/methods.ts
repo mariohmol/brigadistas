@@ -19,7 +19,7 @@ const nonEmptyString = Match.Where((str: any) => {
   })
 
 Meteor.methods({
-  'brigades.insert'(brigade) {
+  brigadesInsert(brigade) {
     console.log(brigade)
     check(brigade.name, String);
 

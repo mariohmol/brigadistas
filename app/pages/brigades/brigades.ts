@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ModalController, PopoverController,AlertController} from 'ionic-angular';
+import {NavController, ModalController, PopoverController,AlertController,NavParams} from 'ionic-angular';
 import {CalendarPipe} from 'angular2-moment';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
@@ -7,7 +7,7 @@ import {Chat, Message, Brigade, FireAlert} from 'api/models';
 import {Chats, Messages,Brigades, FireAlerts} from 'api/collections';
 import {MessagesPage} from '../messages/messages';
 import {ChatsOptionsPage} from '../chats-options/chats-options';
-import {NewBrigade} from '../brigades/new-brigade';
+import {BrigadePage} from '../brigades/brigade';
 import {TranslatePipe} from "ng2-translate/ng2-translate";
 import BasicComponent from '../basic.ts'
 
@@ -25,25 +25,17 @@ export class BrigadesPage extends BasicComponent {
     this.subscribe('brigades', () => {
       this.autorun(() => {
         this.brigades = this.findBrigades();
+        console.log(this.brigades)
       });
     });
   }
 
-  addBrigada(): void {
-    const modal = this.modCtrl.create(NewBrigade);
+  addBrigade(): void {
+    const modal = this.modCtrl.create(BrigadePage);
     modal.present();
   }
-
-  showMembers(chat): void {
-    this.navCtrl.push(MessagesPage, {chat});
-  }
-
-  showOptions(): void {
-    const popover = this.popCtrl.create(ChatsOptionsPage, {}, {
-      cssClass: 'options-popover'
-    });
-
-    popover.present();
+  showBrigade(brigade): void {
+    this.navCtrl.push(BrigadePage, {brigade: brigade, readOnly: true});
   }
 
   private findBrigades(): Mongo.Cursor<Brigade>{
