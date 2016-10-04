@@ -13,7 +13,9 @@ export class LoginPage {
   username = '';
   password = '';
 
-  constructor(private navCtrl: NavController,public alertCtrl: AlertController) {}
+  constructor(private navCtrl: NavController,public alertCtrl: AlertController) {
+    if (Meteor.userId()) navCtrl.push(TabsPage);
+  }
 
   onInputKeypress({keyCode}: KeyboardEvent): void {
     if (keyCode == 13) {
