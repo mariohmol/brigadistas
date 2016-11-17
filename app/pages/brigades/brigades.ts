@@ -1,5 +1,5 @@
 import {Component} from '@angular/core';
-import {NavController, ModalController, PopoverController,AlertController,NavParams} from 'ionic-angular';
+import {NavController, ModalController, PopoverController,AlertController,MenuController,NavParams} from 'ionic-angular';
 import {CalendarPipe} from 'angular2-moment';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
@@ -19,9 +19,12 @@ export class BrigadesPage extends BasicComponent {
   chats: Mongo.Cursor<Chat>;
   public brigades: Mongo.Cursor<Brigade>;
 
-  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public modCtrl: ModalController, public popCtrl: PopoverController) {
+  constructor(public navCtrl: NavController,public alertCtrl: AlertController, public modCtrl: ModalController,
+    public popCtrl: PopoverController, public menuCtrl: MenuController) {
     super(navCtrl,alertCtrl);
 
+    menuCtrl.enable(true, 'menuBrigadista');
+    menuCtrl.swipeEnable(true);
     this.subscribe('brigades', () => {
       this.autorun(() => {
         this.brigades = this.findBrigades();
