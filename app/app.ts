@@ -23,7 +23,6 @@ Object.assign(window,
   EJSON
 );
 
-
 @Component({
   templateUrl: 'build/pages/app.html', //template: '<ion-nav [root]="rootPage"></ion-nav>',
   pipes: [TranslatePipe]
