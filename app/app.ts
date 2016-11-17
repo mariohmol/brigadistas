@@ -32,17 +32,11 @@ export class BrigadistaCivil {
   rootPage: any;
 
   constructor(public app: App,platform: Platform, private  translate: TranslateService,public menuCtrl: MenuController) {
-
     this.rootPage = Meteor.user() ? BrigadesPage : LoginPage; //TabsPage
-
     this.pages = { LoginPage , TabsPage, BrigadesPage, ProfilePage};
-
-
     platform.ready().then(() => {
-
       StatusBar.styleDefault();
     });
-
     this.translateConfig();
   }
 
