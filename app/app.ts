@@ -14,6 +14,7 @@ import * as EJSON from 'meteor/ejson';
 import {LoginPage} from './pages/login/login';
 import {TabsPage} from './pages/tabs/tabs';
 import {BrigadesPage} from './pages/brigades/brigades';
+import {FiresPage} from './pages/fires/fires';
 import {ProfilePage} from './pages/profile/profile';
 import {Http, HTTP_PROVIDERS} from '@angular/http';
 import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
@@ -30,10 +31,11 @@ Object.assign(window,
 export class BrigadistaCivil {
   @ViewChild('nav') nav : NavController;
   rootPage: any;
+  pages: any;
 
   constructor(public app: App,platform: Platform, private  translate: TranslateService,public menuCtrl: MenuController) {
     this.rootPage = Meteor.user() ? BrigadesPage : LoginPage; //TabsPage
-    this.pages = { LoginPage , TabsPage, BrigadesPage, ProfilePage};
+    this.pages = { LoginPage , TabsPage, BrigadesPage, ProfilePage,FiresPage};
     platform.ready().then(() => {
       StatusBar.styleDefault();
     });
@@ -66,8 +68,8 @@ export class BrigadistaCivil {
   }
 
   isAdmin() {
-    if (UserService && UserService.loginData && UserService.loginData.empresa && UserService.loginData.tipo == "admin")
-      return true;
+    if('profile' in localStorage && localStorage['profile'])
+      return false;
     else return false;
   }
 
@@ -83,7 +85,6 @@ export class BrigadistaCivil {
     let deviceToken = localStorage['deviceToken']
     localStorage.clear();
     localStorage['deviceToken']=deviceToken;
-    UserService.loginData=null;
     this.openPage(LoginPage);
   }
 
