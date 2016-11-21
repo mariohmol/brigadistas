@@ -1,8 +1,14 @@
+[![Build Status](https://travis-ci.org/mariohmol/brigadistas.svg?branch=master)](https://travis-ci.org/mariohmol/brigadistas)
+
 App that connects civil fire brigades with civil society to fight against the fire.
 
 Here is the web version:
 
 * http://app.brigadistacivil.com.br:3000/
+
+Development enviroment:
+
+* https://brigadistas.herokuapp.com/
 
 # Techs
 
