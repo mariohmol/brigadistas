@@ -2,8 +2,7 @@
   "name": "BrigadistaCivil",
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "scripts": {
-    "test": "mocha",
-    "testts": "mocha --opts mocha.opts",
+    "test": "mocha --opts mocha.opts",
     "check": "eval npm install",
     "meteor-test": "meteor test --driver-package practicalmeteor:mocha",
     "build": "cd api & meteor build ../build",
@@ -94,5 +93,15 @@
     "ionic platform add browser",
     "ionic build browser",
     "ionic plugin add cordova-plugin-crosswalk-webview"
-  ]
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mariohmol/brigadistas.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mariohmol/brigadistas/issues"
+  },
+  "homepage": "https://github.com/mariohmol/brigadistas#readme"
 }
