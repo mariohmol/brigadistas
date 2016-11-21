@@ -2,6 +2,9 @@
   "name": "BrigadistaCivil",
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "scripts": {
+    "test": "mocha",
+    "testts": "mocha --opts mocha.opts",
+    "meteor-test": "meteor test --driver-package practicalmeteor:mocha",
     "build": "cd api & meteor build ../build",
     "clean": "cordova clean",
     "watch": "gulp watch",
@@ -10,7 +13,8 @@
     "deploy": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
     "updatecordova": "cordova platform update android && cordova platform update ios",
-    "install": "typings install",
+    "typings-install": "typings install",
+    "typings-definition": "tsd query meteor/practicalmeteor:chai --save --action install",
     "install-global": "typings install registry:env/meteor --global --save",
     "install-plugins": "cordova plugin add cordova-plugin-console cordova-plugin-device cordova-plugin-splashscreen cordova-plugin-statusbar cordova-plugin-whitelist ionic-plugin-keyboard",
     "format-patch": "git format-patch step-by-step --root --stdout > tutorial/step-by-step.patch && git add tutorial/step-by-step.patch && git commit -m \"Format patch file for step-by-step branch\"",
@@ -36,8 +40,9 @@
     "@angular/router": "^2.0.0-rc.2",
     "accounts-base-client-side": "^0.1.1",
     "accounts-password-client-side": "^0.3.2",
-    "angular2-meteor": "^0.6.2",
+    "angular2-meteor": "^0.7.0",
     "angular2-moment": "^0.8.1",
+    "babel-register": "^6.18.0",
     "es6-shim": "^0.35.0",
     "ionic-angular": "2.0.0-beta.11",
     "ionic-native": "^1.3.9",
@@ -51,6 +56,8 @@
     "zone.js": "^0.6.12"
   },
   "devDependencies": {
+    "babel": "^6.5.2",
+    "chai": "^3.5.0",
     "del": "2.2.0",
     "es6-promise": "^3.3.1",
     "gulp": "3.9.1",
@@ -63,10 +70,13 @@
     "ionic-gulp-webpack": "^2.0.0",
     "lodash.camelcase": "^4.1.1",
     "lodash.upperfirst": "^4.2.0",
+    "mocha": "^3.1.2",
     "run-sequence": "1.1.5",
     "ts-loader": "^0.8.2",
+    "ts-node": "^1.7.0",
     "tslint-ionic-rules": "0.0.3",
     "typescript": "^2.0.3",
+    "typings": "^2.0.0",
     "webpack": "^1.13.1"
   },
   "cordovaPlugins": [
