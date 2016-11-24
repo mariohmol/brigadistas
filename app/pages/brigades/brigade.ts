@@ -2,14 +2,13 @@ import {Component} from '@angular/core';
 import {NavController, ViewController, AlertController,NavParams} from 'ionic-angular';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService} from 'ng2-translate';
 import {Chat, Message, Brigade, FireAlert} from 'api/models';
 import BasicComponent from '../basic.ts'
 import {Brigades} from 'api/collections';
 
 @Component({
-    templateUrl: 'build/pages/brigades/brigade.html',
-    pipes: [TranslatePipe]
+    templateUrl: 'build/pages/brigades/brigade.html'
 })
 export class BrigadePage extends BasicComponent {
     users: Mongo.Cursor<Meteor.User>;

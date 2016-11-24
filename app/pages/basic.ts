@@ -2,10 +2,10 @@ import {Component,ChangeDetectionStrategy} from '@angular/core';
 import {MeteorComponent} from 'angular2-meteor';
 import {NavController, AlertController} from 'ionic-angular';
 import {TabsPage} from './tabs/tabs';
-import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService} from 'ng2-translate';
 
 @Component({
-    pipes: [TranslatePipe]
+    //pipes: [TranslatePipe]
 })
 export default class BasicComponent extends MeteorComponent {
   protected senderId: string;

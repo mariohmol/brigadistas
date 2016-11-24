@@ -8,20 +8,19 @@ import {Chats, Messages,Brigades, FireAlerts} from 'api/collections';
 import {BrigadePage} from '../brigades/brigade';
 import {FirePage} from './fire';
 import { GoogleMap, GoogleMapsEvent } from 'ionic-native';
-
-import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService} from 'ng2-translate';
 import BasicComponent from '../basic.ts'
 
 @Component({
-  templateUrl: 'build/pages/fires/fires.html',
-  pipes: [CalendarPipe,TranslatePipe]
+  templateUrl: 'build/pages/fires/fires.html'
+//  pipes: [CalendarPipe,TranslatePipe]
 })
 export class FiresPage extends BasicComponent {
   chats: Mongo.Cursor<Chat>;
   public brigades: Mongo.Cursor<Brigade>;
 
   constructor(public navCtrl: NavController,public alertCtrl: AlertController, public modCtrl: ModalController,
-    public popCtrl: PopoverController, public menuCtrl: MenuController) {
+    public popCtrl: PopoverController, public menuCtrl: MenuController,public translate: TranslateService) {
     super(navCtrl,alertCtrl);
 
     menuCtrl.enable(true, 'menuBrigadista');

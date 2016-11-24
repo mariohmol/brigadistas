@@ -12,8 +12,8 @@ import {NewChatPage} from '../new-chat/new-chat';
 
 
 @Component({
-  templateUrl: 'build/pages/chats/chats.html',
-  pipes: [CalendarPipe]
+  templateUrl: 'build/pages/chats/chats.html'
+  //,pipes: [CalendarPipe]
 })
 export class ChatsPage extends MeteorComponent {
   chats: Mongo.Cursor<Chat>;

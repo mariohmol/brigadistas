@@ -9,8 +9,8 @@ import {Messages} from 'api/collections';
 
 
 @Component({
-  templateUrl: 'build/pages/messages/messages.html',
-  pipes: [DateFormatPipe]
+  templateUrl: 'build/pages/messages/messages.html'
+  //pipes: [DateFormatPipe]
 })
 export class MessagesPage extends MeteorComponent implements OnInit, OnDestroy {
   message = '';

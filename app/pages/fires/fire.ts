@@ -2,7 +2,7 @@ import {Component,ViewChild} from '@angular/core';
 import {NavController, ViewController, AlertController,NavParams} from 'ionic-angular';
 import {Meteor} from 'meteor/meteor';
 import {Mongo} from 'meteor/mongo';
-import {TranslatePipe} from "ng2-translate/ng2-translate";
+import {TranslateService} from 'ng2-translate';
 import {Chat, Message, Brigade, FireAlert} from 'api/models';
 import BasicComponent from '../basic.ts'
 import {Brigades} from 'api/collections';
@@ -12,8 +12,7 @@ import { CameraPreview } from 'ionic-native';
 import { Geolocation } from 'ionic-native';
 
 @Component({
-    templateUrl: 'build/pages/fires/fire.html',
-    pipes: [TranslatePipe]
+    templateUrl: 'build/pages/fires/fire.html'
 })
 export class FirePage extends BasicComponent {
     users: Mongo.Cursor<Meteor.User>;
@@ -23,7 +22,8 @@ export class FirePage extends BasicComponent {
     // then we can use @ViewChild to find the element and pass it to GoogleMaps
     @ViewChild('map') mapElement;
 
-    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController, public navParams: NavParams) {
+    constructor(public navCtrl: NavController, public viewCtrl: ViewController, public alertCtrl: AlertController,
+              public navParams: NavParams,public translate: TranslateService) {
         super(navCtrl,alertCtrl);
 
         this.brigade = <Brigade>navParams.get('brigade');

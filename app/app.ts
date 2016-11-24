@@ -3,8 +3,8 @@ import 'accounts-base-client-side';
 import 'accounts-password-client-side';
 import 'api/methods';
 
-import {Component,provide,ViewChild} from '@angular/core';
-import {Platform, ionicBootstrap,NavController,MenuController,App} from 'ionic-angular';
+import {Component,ViewChild,NgModule} from '@angular/core'; //provide
+import {IonicApp,Platform, NavController,MenuController,App,IonicModule} from 'ionic-angular'; //ionicBootstrap
 import {StatusBar} from 'ionic-native';
 import {METEOR_PROVIDERS} from 'angular2-meteor';
 import {Meteor} from 'meteor/meteor';
@@ -16,17 +16,44 @@ import {TabsPage} from './pages/tabs/tabs';
 import {BrigadesPage} from './pages/brigades/brigades';
 import {FiresPage} from './pages/fires/fires';
 import {ProfilePage} from './pages/profile/profile';
-import {Http, HTTP_PROVIDERS} from '@angular/http';
-import {TranslateService, TranslatePipe, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {Http } from '@angular/http'; //HTTP_PROVIDERS
+import {HttpModule} from '@angular/http';
+//import {TranslateService, TranslateLoader, TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import { TranslateService} from 'ng2-translate';
+import { TranslateModule } from 'ng2-translate/ng2-translate';
+import {BrowserModule} from '@angular/platform-browser';
 
 Object.assign(window,
   Check,
   EJSON
 );
 
+/*ionicBootstrap(BrigadistaCivil, [METEOR_PROVIDERS, [provide(TranslateLoader, {
+useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
+deps: [Http]
+}),
+TranslateService]]);*/
+/*
 @Component({
-  templateUrl: 'build/pages/app.html', //template: '<ion-nav [root]="rootPage"></ion-nav>',
-  pipes: [TranslatePipe]
+  templateUrl: 'build/pages/app.html' //template: '<ion-nav [root]="rootPage"></ion-nav>',pipes: [TranslatePipe]
+})
+*/
+
+@Component({
+  templateUrl: 'build/pages/app.html'
+})
+export class BrigadistaCivilApp {
+  root = LoginPage;
+}
+
+
+
+@NgModule({
+  declarations: [BrigadistaCivilApp,LoginPage], //,HelloIonicPage, ItemDetailsPage, ListPage
+  imports: [BrowserModule,HttpModule,IonicModule.forRoot(BrigadistaCivilApp),TranslateModule.forRoot()],
+  bootstrap: [IonicApp],
+  entryComponents: [LoginPage], //,HelloIonicPage,ItemDetailsPage,ListPage
+  providers: []
 })
 export class BrigadistaCivil {
   @ViewChild('nav') nav : NavController;
@@ -98,9 +125,9 @@ Tracker.autorun((computation) => {
   if (Meteor.loggingIn()) return;
   computation.stop();
 
-  ionicBootstrap(BrigadistaCivil, [METEOR_PROVIDERS, [provide(TranslateLoader, {
+  /*ionicBootstrap(BrigadistaCivil, [METEOR_PROVIDERS, [provide(TranslateLoader, {
   useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
   deps: [Http]
 }),
-  TranslateService]]);
+  TranslateService]]);*/
 });
