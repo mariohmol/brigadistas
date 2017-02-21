@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 const { User , Chat, Message} = require('./models');
-
+const passport = require('passport');
 
 router.get('/', function (req, res, next) {
   User.find().then(d => { res.json(d);});

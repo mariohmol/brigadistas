@@ -2,8 +2,6 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { Page1 } from '../pages/page1/page1';
-import { Page2 } from '../pages/page2/page2';
 import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { FirePage } from '../pages/fire/fire';
@@ -21,8 +19,6 @@ import {BrowserModule} from '@angular/platform-browser';
 
 let pages = [
   MyApp,
-  Page1,
-  Page2,
   UserPage,LoginPage,
   FirePage, FiresPage,
   BrigadePage, BrigadesPage
@@ -38,8 +34,6 @@ let pages = [
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    Page1,
-    Page2,
     UserPage, LoginPage
   ],
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,UserService,BaseService]

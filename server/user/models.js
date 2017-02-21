@@ -14,7 +14,10 @@ const UserSchema = new mongoose.Schema({
   avatar: { type: String },
   bio: { type: String },
   url: { type: String },
-  location: { type: String }
+  location: { type: String },
+  createdAt: { type: Date },
+  updatedAt: { type: Date },
+  deletedAt: { type: Date }
 });
 
 UserSchema.methods.validatePassword = function(password, callback) {
