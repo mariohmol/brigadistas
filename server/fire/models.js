@@ -16,9 +16,8 @@ const FireSchema = new mongoose.Schema({
   createdAt: { type: Date },
   deletedAt: { type: Date },
   positions: [{
-    user: { type: Schema.Types.ObjectId, ref: 'posts',required: [true,'No post id found']},
-    lat: Number,
-    lng: Number
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'posts',required: [true,'No post id found']},
+    coordinates: { type: [Number], index: '2dsphere'}
   }]
 });
 

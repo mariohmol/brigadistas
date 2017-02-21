@@ -24,9 +24,10 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(__dirname__ + "../brigadistacivil/www/"));
+app.use(express.static(__dirname+ "/../brigadistacivil/www/"));
 
 
 app.use('/user',userMiddleware);
