@@ -14,7 +14,12 @@ const FireSchema = new mongoose.Schema({
   },
   city: { type: String },
   createdAt: { type: Date },
-  deletedAt: { type: Date }
+  deletedAt: { type: Date },
+  positions: [{
+    user: { type: Schema.Types.ObjectId, ref: 'posts',required: [true,'No post id found']},
+    lat: Number,
+    lng: Number
+  }]
 });
 
 const Fire = mongoose.model('Fire', FireSchema);

@@ -23,4 +23,20 @@ router.delete('/:id', passport.authenticate('basic', { session: false }), functi
 });
 
 
+router.post('/position/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
+  let dados = {
+    $push: {
+      positions: {
+        user: req.user._id,
+        lat: req.body.lat,
+        lng: req.body.lng
+      }
+    }
+  };
+  Fire.findOneAndUpdate(req.params.id,dados).then(function(d) {
+    res.json(d);
+  });
+});
+
+
 module.exports = router;
