@@ -9,6 +9,8 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
 const userMiddleware = require('./user/routes');
+const brigadeMiddleware = require('./brigade/routes');
+const fireMiddleware = require('./fire/routes');
 
 const app = express();
 app.use(express.static('public'));
@@ -23,7 +25,9 @@ app.use(session({
 app.use(passport.initialize());
 app.use(passport.session());
 
-app.use(userMiddleware);
+app.use('/user',userMiddleware);
+app.use('/brigade',brigadeMiddleware);
+app.use('/fire',fireMiddleware);
 
 // Startup server
 const runServer = function(callback) {
