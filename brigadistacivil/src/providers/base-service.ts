@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BaseService {
   apiUrl: string;
-  env: string = "production";
-  //env: string = "development";
+  //env: string = "production";
+  env: string = "development";
   profile: any;
 
   constructor(public http: Http) {

@@ -17,10 +17,10 @@
   </div>
 
   <ion-item>
-    <ion-input [(ngModel)]="username" (keypress)="onInputKeyPress($event)" type="email" placeholder="Seu email"></ion-input>
+    <ion-input [(ngModel)]="username"  type="email" placeholder="Seu email"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input [(ngModel)]="password" (keypress)="onInputKeyPress($event)" type="password" placeholder="Sua senha"></ion-input>
+    <ion-input [(ngModel)]="password"  type="password" placeholder="Sua senha"></ion-input>
   </ion-item>
   <ion-content padding>
     <button ion-button block (click)="loginPage(username,password)">Entrar</button>

@@ -22,46 +22,5 @@ router.delete('/:id', passport.authenticate('basic', { session: false }), functi
   Fire.findOneAndDelete(req.params.id,{},{}).then(d => { res.json(d);});
 });
 
-// authenticate user
-router.post('/login', passport.authenticate('basic'), (req, res) => {
-  if (req.user) {
-    res.status(200).json({  "success": req.user  });
-  }else{
-    res.status(403).json({  "success": req.user  });
-  }
-});
-
-
-router.post('/users', (req, res) => {
-  let username = req.body.username.trim();
-  let password = req.body.password.trim();
-
-  bcrypt.genSalt(10, (err, salt) => {
-    if (err) {
-      return console.log(`error: ${err}`);
-    }
-    bcrypt.hash(password, salt, (err, hash) => {
-        if (err) {
-          return console.log(`error: ${err}`);
-        }
-
-        let userObj = {
-          username: username,
-          password: hash,
-          createdAt: new Date()
-        };
-
-        User.create(userObj, (err, result) => {
-          if (err) {
-            return res.status(500).json({
-              message: 'Internal server error'
-            });
-          }
-          delete result.password;
-          res.status(201).json(result);
-        });
-      });
-    });
-});
 
 module.exports = router;
