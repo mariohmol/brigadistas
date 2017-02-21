@@ -9,16 +9,16 @@ import {TranslateService} from 'ng2-translate';
   Ionic pages and navigation.
 */
 @Component({
-  selector: 'page-user',
-  templateUrl: 'user.html'
+  selector: 'page-login',
+  templateUrl: 'login.html'
 })
-export class UserPage {
+export class LoginPage {
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
               public translate: TranslateService) {}
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
+    console.log('ionViewDidLoad LoginPage');
   }
 
   login(){

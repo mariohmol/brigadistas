@@ -1,0 +1,32 @@
+<ion-header>
+  <ion-navbar brigadistacivil>
+    <button class="options-button" menuToggle ><ion-icon name="menu"></ion-icon></button>
+
+    <ion-title> {{ "brigades.title" | translate }}</ion-title>
+
+    <ion-buttons end>
+      <button class="add-chat-button" (click)="addBrigade()"><ion-icon name="add"></ion-icon></button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content class="chats-page-content">
+  <ion-list class="chats">
+    <ion-item-sliding *ngFor="let brigade of brigades">
+      <button ion-item class="chat" (click)="showBrigade(brigade)">
+        <div class="chat-info">
+          <h2 class="chat-title">{{brigade.name}}</h2>
+
+          <span *ngIf="brigade.city" class="last-message">
+            <p class="last-message-content">{{brigade.city}}</p>
+            <span class="last-message-timestamp">{{brigade.createdAt}}</span>
+          </span>
+        </div>
+      </button>
+
+      <ion-item-options class="chat-options">
+        <button danger class="option option-remove" (click)="removeBrigade(brigade)">Remove</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
