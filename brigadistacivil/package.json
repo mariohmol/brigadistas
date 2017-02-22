@@ -1,7 +1,7 @@
 {
-  "name": "ionic-hello-world",
-  "author": "Ionic Framework",
-  "homepage": "http://ionicframework.com/",
+  "name": "brigadistacivil",
+  "author": "Brigadista Civil",
+  "homepage": "http://brigadistacivil.com.br/",
   "private": true,
   "scripts": {
     "build": "ionic-app-scripts build",
@@ -69,5 +69,5 @@
       "locator": "ios"
     }
   ],
-  "description": "brigadistacivil: An Ionic project"
+  "description": "brigadistacivil: Appque auxilia brigadista civil durante o combate"
 }

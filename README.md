@@ -18,7 +18,11 @@ Development enviroment:
 
 To install:
 
-* npm install
+* `npm install` on root folder
+* `npm install` on brigadistacivil folder
+
+In case of typings problems:
+
 * typings install
 * npm run install-plugins
 
