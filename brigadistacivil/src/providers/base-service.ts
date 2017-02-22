@@ -29,27 +29,49 @@ export class BaseService {
     }
   }
 
+  doHeaders(data){
+    let headers;
+    if(!this.profile && 'profile' in localStorage){
+      this.profile  = JSON.parse(localStorage['profile']);
+    }
+    if(this.profile && !data && !data.username){
+      headers = new Headers({
+        'Content-Type': 'application/json' ,
+        'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)
+      });
+    }else{
+      headers = new Headers({'Content-Type': 'application/json',
+      'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)});
+    }
+    return headers;
+  }
+
+  doGet(url: string){
+    return new Promise( (resolve,reject) => {
+      let headers=this.doHeaders(null);
+        //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      let options = new RequestOptions({ headers: headers, method: "get" });
+
+      return this.http.get(this.apiUrl+url, options  )
+        .map(res => res.json())
+
+        .subscribe(data => {
+          resolve(data);
+          },
+          error => {
+            reject(error);
+        });
+    });
+  }
+
+
+
   doPost(url: string,data: any){
     return new Promise( (resolve,reject) => {
-      let headers;
-
-      if(!this.profile && 'profile' in localStorage){
-        this.profile  = JSON.parse(localStorage['profile']);
-      }
-      if(this.profile && !data.username){
-        headers = new Headers({
-          'Content-Type': 'application/json' ,
-          'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)
-        });
-      }else{
-        headers = new Headers({'Content-Type': 'application/json',
-        'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)});
-      }
-
+      let headers=this.doHeaders(data);
         //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-      let options = new RequestOptions({ headers: headers, method: "post" });
+      let options = new RequestOptions({ headers: headers, method:  'post' });
       if(!data) data={};
-
 
       return this.http.post(this.apiUrl+url,  JSON.stringify(data), options  )
         .map(res => res.json())

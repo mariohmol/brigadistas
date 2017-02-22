@@ -83,7 +83,6 @@ export default class BasePage {
     if (this.menuCtrl) this.menuCtrl.close();
 
     if (this.app) {
-      console.log("vai mudar de pagina não?", param, page)
       if (param) this.app.getRootNav().push(page, param);
       else this.app.getRootNav().setRoot(page);
     }
@@ -253,7 +252,6 @@ export default class BasePage {
       }
 
     }).catch(err => {
-      console.log(err);
       this.dismissLoading();
       this.errorlogin();
     });

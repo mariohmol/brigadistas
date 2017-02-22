@@ -18,9 +18,13 @@ import BasePage from '../basepage';
 export class LoginPage extends BasePage {
 
   constructor(public app:App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-              public translate: TranslateService, public alertCtrl: AlertController,   public menuCtrl: MenuController) {
-                super();
-              }
+    public translate: TranslateService, public alertCtrl: AlertController,   public menuCtrl: MenuController) {
+      super();
+      if(localStorage["profile"]){
+        this.openPage(FiresPage);
+        this.setMenu();
+      }
+    }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
