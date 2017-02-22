@@ -12,6 +12,7 @@
     "build:before": "build",
     "run:before": "build",
     "clean": "cordova clean",
+    "savestate": "ionic state save",
     "startandroid": "ionic run android",
     "deploy-mongo": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
