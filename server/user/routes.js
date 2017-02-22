@@ -53,7 +53,7 @@ router.post('/login', passport.authenticate('basic'), (req, res) => {
 });
 
 
-router.post('/users', (req, res) => {
+router.post('/signin', (req, res) => {
   let username = req.body.username.trim();
   let password = req.body.password.trim();
 

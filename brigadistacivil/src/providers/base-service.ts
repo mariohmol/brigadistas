@@ -21,7 +21,7 @@ export class BaseService {
     if(window.location.hostname==="app.brigadistacivil.com.br") this.env=="production";
 
     if(this.env=="development"){
-      this.apiUrl = "http://localhost:8080";
+      this.apiUrl = "http://localhost:8484";
     }else{
       //this.apiUrl = "http://192.168.0.3:8288";
       this.apiUrl = "https://brigadistacivil.com.br";
