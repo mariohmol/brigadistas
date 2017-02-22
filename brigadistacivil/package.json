@@ -54,12 +54,14 @@
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
+    "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-device",
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
-    "ionic-plugin-keyboard"
+    "ionic-plugin-keyboard",
+    "cordova-plugin-googlemaps"
   ],
   "cordovaPlatforms": [
     "ios",
@@ -67,6 +69,11 @@
       "platform": "ios",
       "version": "",
       "locator": "ios"
+    },
+    {
+      "platform": "android",
+      "version": "",
+      "locator": "android"
     }
   ],
   "description": "brigadistacivil: Appque auxilia brigadista civil durante o combate"
