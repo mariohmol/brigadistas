@@ -1,5 +1,5 @@
-import { App,Platform, NavController, MenuController, AlertController,
-        LoadingController,ToastController} from 'ionic-angular'; //ModalController
+import { App, Platform, NavController, MenuController, AlertController,
+  LoadingController, ToastController} from 'ionic-angular'; //ModalController
 import {UserService} from '../providers/user-service';
 //import { Component } from '@angular/core';
 
@@ -30,16 +30,15 @@ export default class BasePage {
 
   setMenu() {
     if (!this.menuCtrl) return;
-
-    if (this.isUsuario()) {
-      this.menuCtrl.enable(true, 'menuUsuario');
+    if (this.isUser()) {
+      this.menuCtrl.enable(true, 'menuUser');
       this.menuCtrl.swipeEnable(true);
     }
     else this.menuCtrl.swipeEnable(false);
   }
 
-  showLoading(): void{
-    if(!this.loadingCtrl || this.loading) return;
+  showLoading(): void {
+    if (!this.loadingCtrl || this.loading) return;
     this.loading = this.loadingCtrl.create({
       content: "Carregando...",
       duration: 90000
@@ -48,16 +47,16 @@ export default class BasePage {
     return this.loading;
   }
 
-  dismissLoading(): void{
-    if(this.loading) {
+  dismissLoading(): void {
+    if (this.loading) {
       this.loading.dismiss();
-      this.loading=null;
+      this.loading = null;
     }
   }
 
-/**
- * FORMS
- */
+  /**
+   * FORMS
+   */
   onInputKeypress({keyCode}: KeyboardEvent): void {
     if (keyCode == 13) {
       this.formsubmit();
@@ -71,31 +70,31 @@ export default class BasePage {
   formsubmit() { }
 
 
-/**
- * USUARIO
- */
-  isUsuario() {
+  /**
+   * USUARIO
+   */
+  isUser() {
     if (UserService && UserService.loginData)
       return true;
     else return false;
   }
 
-  openPageParam(page,param) {
-    if(this.menuCtrl) this.menuCtrl.close();
+  openPageParam(page, param) {
+    if (this.menuCtrl) this.menuCtrl.close();
 
-    if(this.app) {
-      console.log("vai mudar de pagina não?",param,page)
-      if(param) this.app.getRootNav().push(page,param);
+    if (this.app) {
+      console.log("vai mudar de pagina não?", param, page)
+      if (param) this.app.getRootNav().push(page, param);
       else this.app.getRootNav().setRoot(page);
     }
     //let nav = this.app.getActiveNav();nav.push(page);
   }
   openPage(page) {
-    return this.openPageParam(page,null);
+    return this.openPageParam(page, null);
   }
   goBack() {
-     this.app.getRootNav().pop();
-   }
+    this.app.getRootNav().pop();
+  }
 
 
   /**
@@ -134,55 +133,55 @@ export default class BasePage {
   }
 
 
-showConfirmOptions(title, message,names,callback) {
-  let alertConfirm;
+  showConfirmOptions(title, message, names, callback) {
+    let alertConfirm;
 
-  alertConfirm = this.alertCtrl.create();
+    alertConfirm = this.alertCtrl.create();
 
-  if(!title) title="Escolha uma opção"
-  alertConfirm.setTitle(title);
-  alertConfirm.setMessage(message);
+    if (!title) title = "Escolha uma opção"
+    alertConfirm.setTitle(title);
+    alertConfirm.setMessage(message);
 
-  for (let i = 0; i < names.length; i++) {
-    alertConfirm.addInput({
+    for (let i = 0; i < names.length; i++) {
+      alertConfirm.addInput({
         type: 'radio',
         label: names[i].label,
         value: names[i].value,
         checked: false
       });
-  }
-
-  alertConfirm.addButton('Cancelar');
-  alertConfirm.addButton({
-    text: 'Ok',
-    handler: (data: any) => {
-      if(data){
-        callback(data);
-      }else{
-        alert('Por favor, selecione sua nota para continuar a avliação.')
-        return false;
-        //alert('Selecione uma opção para avaliar');
-      }
     }
-  });
 
-  alertConfirm.present().then(() => {
+    alertConfirm.addButton('Cancelar');
+    alertConfirm.addButton({
+      text: 'Ok',
+      handler: (data: any) => {
+        if (data) {
+          callback(data);
+        } else {
+          alert('Por favor, selecione sua nota para continuar a avliação.')
+          return false;
+          //alert('Selecione uma opção para avaliar');
+        }
+      }
+    });
 
-  });
+    alertConfirm.present().then(() => {
 
-}
+    });
+
+  }
 
 
 
   showError(error: any) {
     console.log(error)
     this.dismissLoading();
-    if(error && error.status===0){
-      error= "Provável problema com a sua internet, tente novamente."
+    if (error && error.status === 0) {
+      error = "Provável problema com a sua internet, tente novamente."
     }
 
-    if(this.alertCtrl) {
-        let alert = this.alertCtrl.create({
+    if (this.alertCtrl) {
+      let alert = this.alertCtrl.create({
         title: "Ocorreu um erro ao conectar",
         subTitle: error,
         buttons: ['OK']
@@ -195,8 +194,8 @@ showConfirmOptions(title, message,names,callback) {
     this.showAlert("Validação de informações", desc);
   }
 
-  showToast(desc,fixed=false){
-    if(!this.toastCtrl) return;
+  showToast(desc, fixed = false) {
+    if (!this.toastCtrl) return;
     let options = {
       message: desc,
       position: "top",
@@ -205,9 +204,9 @@ showConfirmOptions(title, message,names,callback) {
       duration: 5000
     };
 
-    if(fixed===true){
+    if (fixed === true) {
       options.duration = 15000;
-      options.showCloseButton= true;
+      options.showCloseButton = true;
     }
     let toast = this.toastCtrl.create(options);
     toast.present();
@@ -215,60 +214,60 @@ showConfirmOptions(title, message,names,callback) {
 
 
 
-/**
- *USERS ACTIONS
- *
- */
-    afterLogin(){}
+  /**
+   *USERS ACTIONS
+   *
+   */
+  afterLogin() { }
 
-    authSuccess(token, user) {
-      console.log(user, token)
-      localStorage['profile'] = JSON.stringify(user);
-      localStorage['id_token'] = token;
+  authSuccess(token, user) {
+    console.log(user, token)
+    localStorage['profile'] = JSON.stringify(user);
+    localStorage['id_token'] = token;
 
 
-      if(localStorage['deviceToken']){
-        let type="android"; //windows
-        if (this.platform && this.platform.is('ios')) {
-          type="ios";
-        }
-        this.userService.storeDeviceToken(type,localStorage['deviceToken']);
+    if (localStorage['deviceToken']) {
+      let type = "android"; //windows
+      if (this.platform && this.platform.is('ios')) {
+        type = "ios";
       }
-      this.afterLogin();
-      this.showToast(user.fullname+', seja bem vindo(a)!');
+      this.userService.storeDeviceToken(type, localStorage['deviceToken']);
     }
+    this.afterLogin();
+    this.showToast(user.fullname + ', seja bem vindo(a)!');
+  }
 
-    login(username:any=null,password:any=null,callback:any=null): void {
-      this.showLoading();
-      if(!username) username=this.username;
-      if(!password) password=this.password;
+  login(username: any = null, password: any = null, callback: any = null): void {
+    this.showLoading();
+    if (!username) username = this.username;
+    if (!password) password = this.password;
 
-      this.userService.login(username, password).then(user => {
-        this.dismissLoading();
-        if(user) {
-          this.authSuccess(true, user);
-          if(callback) callback();
-        }
-        else{
-          this.errorlogin();
-        }
-
-      }).catch( err => {
-        console.log(err);
-        this.dismissLoading();
+    this.userService.login(username, password).then(user => {
+      this.dismissLoading();
+      if (user) {
+        this.authSuccess(true, user);
+        if (callback) callback();
+      }
+      else {
         this.errorlogin();
-      });
-    }
-
-    errorlogin(): void{
-      if(this.alertCtrl){
-        let alert = this.alertCtrl.create({
-          title: 'Não foi possível entrar',
-          subTitle: 'Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!',
-          buttons: ['OK']
-        });
-        alert.present();
       }
+
+    }).catch(err => {
+      console.log(err);
+      this.dismissLoading();
+      this.errorlogin();
+    });
+  }
+
+  errorlogin(): void {
+    if (this.alertCtrl) {
+      let alert = this.alertCtrl.create({
+        title: 'Não foi possível entrar',
+        subTitle: 'Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!',
+        buttons: ['OK']
+      });
+      alert.present();
     }
+  }
 
 }

@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, App } from 'ionic-angular';
+import { NavController, NavParams, AlertController, App, MenuController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
@@ -18,7 +18,7 @@ import BasePage from '../basepage';
 export class LoginPage extends BasePage {
 
   constructor(public app:App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-              public translate: TranslateService, public alertCtrl: AlertController) {
+              public translate: TranslateService, public alertCtrl: AlertController,   public menuCtrl: MenuController) {
                 super();
               }
 
@@ -27,8 +27,8 @@ export class LoginPage extends BasePage {
   }
 
   afterLogin() {
-    console.log("chupa");
     this.openPage(FiresPage);
+    this.setMenu();
   }
 
   loginPage(username,password){

@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Fire = require('./models');
+const { Fire } = require('./models');
 const passport = require('passport');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {

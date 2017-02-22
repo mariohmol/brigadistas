@@ -1,18 +1,35 @@
-<ion-menu [content]="content">
+<ion-menu [content]="content" id="menuUser">
   <ion-header>
-    <ion-toolbar>
-      <ion-title>Menu</ion-title>
+    <ion-toolbar secondary>
+      <ion-title>BrigadistaCivil</ion-title>
+      <ion-buttons end>
+        <button ion-button color="royal" menuClose="menuUser">
+          <ion-icon name="md-close"></ion-icon>
+        </button>
+      </ion-buttons>
     </ion-toolbar>
   </ion-header>
 
   <ion-content>
     <ion-list>
-      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">
-        {{p.title}}
+      <button ion-item (click)="openPageName('FiresPage')">
+          <ion-icon name="md-add" item-left></ion-icon>
+        Fires
+      </button>
+      <button ion-item (click)="openPageName('BrigadesPage')">
+          <ion-icon name="md-cart" item-left></ion-icon>
+        Brigades
+      </button>
+      <button ion-item (click)="openPageName('ContactPage')">
+        <ion-icon name="md-mail" item-left></ion-icon>
+       Contact
+      </button>
+      <button ion-item >
+        <ion-icon name="md-log-out" item-left></ion-icon>
+        Logout
       </button>
     </ion-list>
   </ion-content>
-
 </ion-menu>
 
 <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->

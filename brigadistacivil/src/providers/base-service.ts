@@ -19,6 +19,7 @@ export class BaseService {
     this.http=http;
 
     if(window.location.hostname==="app.brigadistacivil.com.br") this.env=="production";
+    //if(window.location.pathname.contains("assets")) this.env=="production";
 
     if(this.env=="development"){
       this.apiUrl = "http://localhost:8484";
