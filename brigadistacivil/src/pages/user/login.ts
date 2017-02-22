@@ -3,6 +3,7 @@ import { NavController, NavParams, AlertController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
+import { FiresPage } from '../fire/fires';
 import BasePage from '../basepage';
 /*
   Generated class for the User page.
@@ -25,11 +26,16 @@ export class LoginPage extends BasePage {
     console.log('ionViewDidLoad LoginPage');
   }
 
-  loginPage(username,password){
-    this.login(username,password);
+  afterLogin() {
+    console.log("chupa");
+    this.openPage(FiresPage);
   }
 
-  cadastrar(){
+  loginPage(username,password){
+    this.login(username, password);
+  }
+
+  signin(){
     this.openPage(UserPage);
   }
 
