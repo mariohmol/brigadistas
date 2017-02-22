@@ -230,7 +230,7 @@ export default class BasePage {
       if (this.platform && this.platform.is('ios')) {
         type = "ios";
       }
-      this.userService.storeDeviceToken(type, localStorage['deviceToken']);
+      //this.userService.storeDeviceToken(type, localStorage['deviceToken']);
     }
     this.afterLogin();
     this.showToast(user.fullname + ', seja bem vindo(a)!');

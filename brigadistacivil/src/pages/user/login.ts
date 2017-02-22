@@ -4,6 +4,7 @@ import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
 import { FiresPage } from '../fire/fires';
+import { BrigadesPage } from '../brigade/brigades';
 import BasePage from '../basepage';
 /*
   Generated class for the User page.
@@ -20,18 +21,18 @@ export class LoginPage extends BasePage {
   constructor(public app:App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
     public translate: TranslateService, public alertCtrl: AlertController,   public menuCtrl: MenuController) {
       super();
-      if(localStorage["profile"]){
-        this.openPage(FiresPage);
-        this.setMenu();
-      }
     }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
+    if(localStorage["profile"]){
+      this.openPage(BrigadesPage);
+      this.setMenu();
+    }
   }
 
   afterLogin() {
-    this.openPage(FiresPage);
+    this.openPage(BrigadesPage);
     this.setMenu();
   }
 
