@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, App } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
@@ -17,7 +17,7 @@ import BasePage from '../basepage';
 })
 export class LoginPage extends BasePage {
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
+  constructor(public app:App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
               public translate: TranslateService, public alertCtrl: AlertController) {
                 super();
               }

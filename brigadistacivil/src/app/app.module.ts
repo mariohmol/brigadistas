@@ -32,10 +32,7 @@ let pages = [
     TranslateModule.forRoot()
   ],
   bootstrap: [IonicApp],
-  entryComponents: [
-    MyApp,
-    UserPage, LoginPage
-  ],
+  entryComponents: pages,
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,UserService,BaseService]
 })
 export class AppModule {}
