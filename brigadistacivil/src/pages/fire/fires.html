@@ -14,6 +14,7 @@
 
 
 <ion-content class="chats-page-content">
+  <button ion-button block (click)="tracking()">Tracking Test</button>
   <ion-list class="chats">
     <ion-item-sliding *ngFor="let brigade of brigades">
       <button ion-item class="chat" (click)="showBrigade(brigade)">

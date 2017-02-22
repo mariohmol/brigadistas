@@ -11,8 +11,8 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BaseService {
   apiUrl: string;
-  //env: string = "production";
-  env: string = "development";
+  env: string = "production";
+  //env: string = "development";
   profile: any;
 
   constructor(public http: Http) {
@@ -25,7 +25,7 @@ export class BaseService {
       this.apiUrl = "http://localhost:8484";
     }else{
       //this.apiUrl = "http://192.168.0.3:8288";
-      this.apiUrl = "https://brigadistacivil.com.br";
+      this.apiUrl = "http://app.brigadistacivil.com.br";
     }
   }
 
