@@ -18,6 +18,8 @@ export class BaseService {
   constructor(public http: Http) {
     this.http=http;
 
+    if(window.location.hostname==="app.brigadistacivil.com.br") this.env=="production";
+
     if(this.env=="development"){
       this.apiUrl = "http://localhost:8080";
     }else{

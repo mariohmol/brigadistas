@@ -12,10 +12,6 @@ Development enviroment:
 
 # Techs
 
-Based on the tutorial example:
-
-* https://github.com/mariohmol/ionic2-meteor-messenger-password
-
 - [ionic2](ionicframework.com/docs/v2)
 - [angular2](angular.io)
 - [webpack](webpack.com)
@@ -26,4 +22,7 @@ To install:
 * typings install
 * npm run install-plugins
 
-To run this app do `npm run dev` to run server and `npm run watch` and to keep watching angular2 files
+To run this app :
+
+* `npm run dev` to run express server on port 8484
+* `npm run watch` to keep watching angular2 files
