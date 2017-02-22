@@ -35,7 +35,7 @@ export class BaseService {
       if(!this.profile && 'profile' in localStorage){
         this.profile  = JSON.parse(localStorage['profile']);
       }
-      if(this.profile){
+      if(this.profile && !data.username){
         headers = new Headers({
           'Content-Type': 'application/json' ,
           'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)

@@ -41,7 +41,8 @@ router.delete('/:id', function (req, res, next) {
 
 router.post('/login', passport.authenticate('basic'), (req, res) => {
   if (req.user) {
-    res.status(200).json({  "success": req.user  });
+    req.user.password = req.body.password;
+    res.status(200).json( req.user  );
   }else{
     res.status(403).json({  "error": "No auth"  });
   }
