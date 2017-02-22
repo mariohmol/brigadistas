@@ -30,16 +30,25 @@ export class BaseService {
 
   doPost(url: string,data: any){
     return new Promise( (resolve,reject) => {
-      let headers = new Headers({ 'Content-Type': 'application/json' }); //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
-      let options = new RequestOptions({ headers: headers, method: "post" });
-      if(!data) data={};
+      let headers;
+
       if(!this.profile && 'profile' in localStorage){
         this.profile  = JSON.parse(localStorage['profile']);
       }
       if(this.profile){
-        data.username=this.profile.username;
-        data.password=this.profile.password;
+        headers = new Headers({
+          'Content-Type': 'application/json' ,
+          'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)
+        });
+      }else{
+        headers = new Headers({'Content-Type': 'application/json',
+        'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)});
       }
+
+        //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      let options = new RequestOptions({ headers: headers, method: "post" });
+      if(!data) data={};
+
 
       return this.http.post(this.apiUrl+url,  JSON.stringify(data), options  )
         .map(res => res.json())
