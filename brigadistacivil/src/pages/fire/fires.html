@@ -7,7 +7,7 @@
        </button>
      </ion-buttons >
 
-    <ion-title> Firesss</ion-title>
+    <ion-title> Fires</ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,14 +15,14 @@
 
 <ion-content class="chats-page-content">
   <ion-list class="chats">
-    <ion-item-sliding *ngFor="let brigade of brigades">
-      <button ion-item class="chat" (click)="showBrigade(brigade)">
+    <ion-item-sliding *ngFor="let fire of fires">
+      <button ion-item (click)="showFire(fire)">
         <div class="chat-info">
-          <h2 class="chat-title">{{brigade.name}}</h2>
+          <h2 class="chat-title">{{fire.name}}</h2>
 
           <span *ngIf="brigade.city" class="last-message">
-            <p class="last-message-content">{{brigade.city}}</p>
-            <span class="last-message-timestamp">{{brigade.createdAt}}</span>
+            <p class="last-message-content">{{fire.city}}</p>
+            <span class="last-message-timestamp">{{fire.createdAt}}</span>
           </span>
         </div>
       </button>
