@@ -28,12 +28,14 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
     $push: {
       positions: {
         user: req.user._id,
-        lat: req.body.lat,
-        lng: req.body.lng
+        activityType: req.body.activityType,
+        coordinates: [req.body.lat,req.body.lng]
       }
     }
   };
   Fire.findOneAndUpdate(req.params.id,dados).then(function(d) {
+    res.json(d);
+  }).catch(d=>{
     res.json(d);
   });
 });
