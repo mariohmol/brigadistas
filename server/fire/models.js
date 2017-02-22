@@ -3,11 +3,7 @@ const bcrypt = require('bcryptjs');
 
 
 const FireSchema = new mongoose.Schema({
-  userId: {
-    type: String,
-    required: true,
-    unique: true
-  },
+  user: { type: mongoose.Schema.Types.ObjectId, ref: 'users',required: [true,'No user id found']},
   title: {
     type: String,
     required: true
@@ -15,9 +11,11 @@ const FireSchema = new mongoose.Schema({
   city: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },
+  coordinate: { type: [Number], index: '2dsphere'},
   positions: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'posts',required: [true,'No post id found']},
-    coordinates: { type: [Number], index: '2dsphere'}
+    coordinates: { type: [Number], index: '2dsphere'},
+    activityType: { type: [String] }
   }]
 });
 

@@ -13,8 +13,8 @@ passport.use('basic', new BasicStrategy(
       if (!user) {
         return done(null, false, {message: "Incorrect username"});
       }
-      user.validatePassword(password, error => {
-        if (err) {
+      user.validatePassword(password, (error,isValid) => {
+        if (error || !isValid) {
           return done(null, false, {message: "Incorrect username"});
         } else {
           return done(null, user);
@@ -32,11 +32,6 @@ router.get('/', function (req, res, next) {
 
 router.put('/:id', function (req, res, next) {
   User.findOneAndUpdate(req.params.id,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
-});
-
-
-router.post('/', function (req, res, next) {
-  User.findOneAndUpdate({},req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
 
@@ -83,6 +78,11 @@ router.post('/signin', (req, res) => {
         });
       });
     });
+});
+
+router.get("/logout", (req,res)=>{
+  req.logout();
+  res.json({"success":"ok"});
 });
 
 

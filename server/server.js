@@ -3,7 +3,7 @@ const mongoose = require('mongoose');
 const config = require('./config');
 const bodyParser = require('body-parser');
 const request = require('request');
-
+var cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
 
@@ -16,7 +16,7 @@ const fireMiddleware = require('./fire/routes');
 
 const app = express();
 app.use(express.static('public'));
-
+app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
 app.use(session({
