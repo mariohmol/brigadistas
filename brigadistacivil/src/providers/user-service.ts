@@ -71,6 +71,13 @@ export class UserService extends BaseService {
     return this.doPost("/attrs/cadastrar/residencial/",data);
   }
 
+  saveLocation(lat, lng, fireId) {
+    let data = {
+      lat, lng
+    }
+    this.doPost("/fire/position/"+fireId, data);
+  }
+
 
 
   checkcpfvalido(cpf){
