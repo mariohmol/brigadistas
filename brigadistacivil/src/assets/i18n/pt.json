@@ -1,1 +1,11 @@
-{}
+{
+  "app": {
+    "name": "Brigadista Civil"
+  },
+  "brigades": {
+    "title": "Brigadas"
+  },
+  "brigade": {
+    
+  }
+}

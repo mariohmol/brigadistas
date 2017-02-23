@@ -11,8 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class BaseService {
   apiUrl: string;
-  env: string = "production";
-  //env: string = "development";
+  env: string = "development"; //production or development
   profile: any;
 
   constructor(public http: Http) {
@@ -34,7 +33,7 @@ export class BaseService {
     if(!this.profile && 'profile' in localStorage){
       this.profile  = JSON.parse(localStorage['profile']);
     }
-    if(this.profile && !data && !data.username){
+    if(this.profile && (!data || !data.username)){
       headers = new Headers({
         'Content-Type': 'application/json' ,
         'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)

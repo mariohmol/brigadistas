@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const Brigade = require('./models');
+const { Brigade } = require('./models');
 const passport = require('passport');
 
 router.get('/', function (req, res, next) {

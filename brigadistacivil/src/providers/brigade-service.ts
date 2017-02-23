@@ -12,4 +12,12 @@ export class BrigadeService extends BaseService {
     console.log('Hello BrigadeService Provider');
   }
 
+  getBrigades(){
+    return this.doGet("/brigade/");
+  }
+
+  addBrigade(brigade){
+    return this.doPost("/brigade/",brigade);
+  }
+
 }

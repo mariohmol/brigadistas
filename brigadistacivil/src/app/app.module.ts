@@ -12,9 +12,11 @@ import { BrigadesPage } from '../pages/brigade/brigades';
 import {BaseService} from '../providers/base-service';
 import {GeneralService} from '../providers/general-service';
 import {UserService} from '../providers/user-service';
+import {FireService} from '../providers/fire-service';
+import {BrigadeService} from '../providers/brigade-service';
 
-import { TranslateModule } from 'ng2-translate/ng2-translate';
-import {HttpModule} from '@angular/http';
+import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
+import {HttpModule,Http} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 
 let pages = [
@@ -29,10 +31,15 @@ let pages = [
     BrowserModule,
     HttpModule,
     IonicModule.forRoot(MyApp),
-    TranslateModule.forRoot()
+    TranslateModule.forRoot({
+        provide: TranslateLoader,
+        useFactory: (http: Http) => new TranslateStaticLoader(http, '/assets/i18n', '.json'),
+        deps: [Http]
+    })
   ],
   bootstrap: [IonicApp],
   entryComponents: pages,
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,UserService,BaseService]
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,BaseService,
+              UserService,FireService,BrigadeService]
 })
 export class AppModule {}

@@ -1,6 +1,6 @@
 <ion-header>
   <ion-navbar>
-    <ion-title> {{ "brigades.title" | translate }}</ion-title>
+    <ion-title>{{ "brigades.title" | translate }}</ion-title>
 
     <button ion-button menuToggle icon-only>
      <ion-icon name="menu"></ion-icon>
@@ -14,8 +14,53 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="chats-page-content">
-  <ion-list class="chats">
+<ion-content >
+<!--
+  <div *ngIf="brigades">
+
+    <ion-card *ngFor="let pedido of brigades; let i = index;">
+
+
+      <ion-item text-wrap *ngIf="isConsumidor()">
+          <ion-avatar item-left>
+            <img src="assets/images/revenda{{i%2}}.png">
+          </ion-avatar>
+          <h2>{{pedido.empresaR.nome}}</h2>
+          <p>#{{pedido.id}} - {{pedido.getStatus}}</p>
+        </ion-item>
+
+      <ion-list>
+        <ion-item *ngIf="isRevenda()" text-wrap>
+          <ion-icon name="md-pin" item-left large></ion-icon>
+          <h2>{{pedido.usuarioR.fullname}}</h2>
+          <p>{{pedido.enderecoR.ENDERECO}}, {{pedido.enderecoR.NUMERO}} {{pedido.enderecoR.COMPLEMENTO}}</p>
+        </ion-item>
+
+        <ion-item text-wrap >
+          <ion-icon name="md-calendar" item-left large></ion-icon>
+          <h2>{{pedido.data.substring(0,16)}}</h2>
+        </ion-item>
+
+        <ion-item  text-wrap>
+          <ion-icon name="md-pricetag" item-left large></ion-icon>
+          <h2>R$ {{pedido.valor}}</h2>
+        </ion-item>
+
+        <ion-item actions>
+          <button (click)="ver(pedido)" ion-button color="secondary" clear item-right icon-left>
+            <ion-icon name='md-checkmark'></ion-icon>
+            Ver Pedido
+          </button>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card>
+
+  </div>
+-->
+  <!--
+  <ion-list >
     <ion-item-sliding *ngFor="let brigade of brigades">
       <button ion-item class="chat" (click)="showBrigade(brigade)">
         <div class="chat-info">
@@ -33,4 +78,8 @@
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>
+-->
+  <div *ngIf="!brigades" padding>
+    Não foram encontradas brigadas
+  </div>
 </ion-content>

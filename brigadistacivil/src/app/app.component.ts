@@ -8,7 +8,7 @@ import { LoginPage } from '../pages/user/login';
 
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadesPage } from '../pages/brigade/brigades';
-
+import {TranslateService} from 'ng2-translate';
 
 @Component({
   templateUrl: 'app.html'
@@ -20,8 +20,13 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform) {
+  constructor(public platform: Platform,translate: TranslateService) {
     this.initializeApp();
+    // this language will be used as a fallback when a translation isn't found in the current language
+    translate.setDefaultLang('pt');
+
+     // the lang to use, if the lang isn't available, it will use the current loader to get them
+    translate.use('pt');
 
     // used for an example of ngFor and navigation
     this.pages = [
