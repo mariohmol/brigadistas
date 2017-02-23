@@ -2,10 +2,17 @@
   "app": {
     "name": "Brigadista Civil"
   },
+  "login": {
+    "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
+    "email": "Seu email",
+    "password": "Sua senha",
+    "enter": "Entrar",
+    "signin": "Cadastrar"
+  },
   "brigades": {
     "title": "Brigadas"
   },
   "brigade": {
-    
+    "title": "Brigada"
   }
 }

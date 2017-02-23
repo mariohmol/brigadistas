@@ -7,19 +7,20 @@
 <ion-content padding class="login-page-content">
   <div class="instructions">
     <div>
-      Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.
+      {{ "login.name" | translate }}
     </div>
     <br>
   </div>
 
   <ion-item>
-    <ion-input [(ngModel)]="username"  type="email" placeholder="Seu email"></ion-input>
+    <ion-input [(ngModel)]="username"  type="email"
+    placeholder="{{ 'login.email' | translate }}"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input [(ngModel)]="password"  type="password" placeholder="Sua senha"></ion-input>
+    <ion-input [(ngModel)]="password"  type="password" placeholder="{{ 'login.password' | translate }}"></ion-input>
   </ion-item>
   <ion-content padding>
-    <button ion-button block (click)="loginPage(username,password)">Entrar</button>
-    <button ion-button block (click)="signin()">Cadastrar</button>
+    <button ion-button block (click)="loginPage(username,password)">{{ "login.enter" | translate }}</button>
+    <button ion-button block (click)="signin()">{{ "login.signin" | translate }}</button>
   </ion-content>
 </ion-content>
