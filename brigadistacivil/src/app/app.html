@@ -2,8 +2,8 @@
   <ion-header>
     <ion-toolbar secondary>
       <ion-title>BrigadistaCivil</ion-title>
-      <ion-buttons end>
-        <button ion-button color="royal" menuClose="menuUser">
+      <ion-buttons start>
+        <button ion-button menuClose="menuUser">
           <ion-icon name="md-close"></ion-icon>
         </button>
       </ion-buttons>
@@ -13,11 +13,11 @@
   <ion-content>
     <ion-list>
       <button ion-item (click)="openPageName('FiresPage')">
-          <ion-icon name="md-add" item-left></ion-icon>
+          <ion-icon name="md-flame" item-left></ion-icon>
         Fires
       </button>
       <button ion-item (click)="openPageName('BrigadesPage')">
-          <ion-icon name="md-cart" item-left></ion-icon>
+          <ion-icon name="md-people" item-left></ion-icon>
         Brigades
       </button>
       <button ion-item (click)="openPageName('ContactPage')">

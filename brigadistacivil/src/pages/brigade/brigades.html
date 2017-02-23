@@ -1,11 +1,15 @@
 <ion-header>
-  <ion-navbar brigadistacivil>
-    <button class="options-button" menuToggle ><ion-icon name="menu"></ion-icon></button>
-
+  <ion-navbar>
     <ion-title> {{ "brigades.title" | translate }}</ion-title>
 
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
+
     <ion-buttons end>
-      <button class="add-chat-button" (click)="addBrigade()"><ion-icon name="add"></ion-icon></button>
+      <button ion-button (click)="addBrigade()">
+        <ion-icon name="add"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
