@@ -65,6 +65,8 @@
     <icon src="resources/ios/icon/icon-small@2x.png" width="58" height="58"/>
     <icon src="resources/ios/icon/icon-small@3x.png" width="87" height="87"/>
   </platform>
+  <preference name="android-minSdkVersion" value="19" />
+  <preference name="android-targetSdkVersion" value="24"/>
   <preference name="phonegap-version" value="cli-6.4.0"/>
   <preference name="webviewbounce" value="false"/>
   <preference name="UIWebViewBounce" value="false"/>

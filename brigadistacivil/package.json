@@ -12,18 +12,19 @@
     "build:before": "build",
     "run:before": "build",
     "clean": "cordova clean",
-    "savestate": "ionic state save",
-    "startandroid": "ionic run android",
+    "servelab": "ionic serve --lab",
+    "android-start": "ionic run android",
+    "android-install": "adb install platforms/android/build/outputs/apk/android-debug.apk",
+    "cordova-update": "cordova platform update android && cordova platform update ios",
     "deploy-mongo": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
-    "updatecordova": "cordova platform update android && cordova platform update ios",
+    "savestate": "ionic state save",
     "typings-install": "typings install",
     "install-plugins": "cordova plugin add cordova-plugin-console cordova-plugin-device cordova-plugin-splashscreen cordova-plugin-statusbar cordova-plugin-whitelist ionic-plugin-keyboard",
     "format-patch": "git format-patch step-by-step --root --stdout > tutorial/step-by-step.patch && git add tutorial/step-by-step.patch && git commit -m \"Format patch file for step-by-step branch\"",
     "createpage": "ionic g page myPage",
     "createprovider": "ionic g provider MyData",
     "deviceshow": "adb devices",
-    "servelab": "ionic serve --lab",
     "gen": "npm run gen:release && npm run gen:jarsign && npm run gen:zipalign",
     "gen:release": "cordova build --release android",
     "gen:keytool": "keytool -genkey -v -keystore brigadistas.keystore -alias brigadistas -keyalg RSA -keysize 2048 -validity 10000",
@@ -55,13 +56,17 @@
     "typescript": "2.0.9"
   },
   "cordovaPlugins": [
-    "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-device",
     "cordova-plugin-console",
     "cordova-plugin-whitelist",
     "cordova-plugin-splashscreen",
     "cordova-plugin-statusbar",
     "ionic-plugin-keyboard",
+    {
+      "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
+      "id": "com.googlemaps.ios"
+    },
+    "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-googlemaps"
   ],
   "cordovaPlatforms": [
