@@ -1,7 +1,7 @@
 import { App, Platform, NavController, MenuController, AlertController,
-            LoadingController, ToastController } from 'ionic-angular'; //ModalController
+  LoadingController, ToastController } from 'ionic-angular'; //ModalController
 import {UserService} from '../providers/user-service';
-import {  ViewChild,ElementRef } from '@angular/core';
+import {  ViewChild, ElementRef } from '@angular/core';
 declare var google;
 
 export default class BasePage {
@@ -83,15 +83,14 @@ export default class BasePage {
   }
 
   openPageParam(page, param) {
-    console.log("aeeeeeee333")
     if (this.menuCtrl) this.menuCtrl.close();
-
     if (this.app) {
       if (param) this.app.getRootNav().push(page, param);
       else this.app.getRootNav().setRoot(page);
     }
     //let nav = this.app.getActiveNav();nav.push(page);
   }
+
   openPage(page) {
     return this.openPageParam(page, null);
   }
@@ -275,74 +274,75 @@ export default class BasePage {
 
 
 
-    loadMap(position){
-      if(!this.mapElement) return;
+  loadMap(position) {
+    console.log("eii",this.mapElement)
+    if (!this.mapElement) return;
 
-       var drawingManager;
+    var drawingManager;
 
-        //-34.9290, 138.6010
-       let latLng = new google.maps.LatLng(position.latitude, position.longitude);
+    //-34.9290, 138.6010
+    let latLng = new google.maps.LatLng(position.latitude, position.longitude);
 
-       let mapOptions = {
-         center: latLng,
-         zoom: 15,
-         mapTypeId: google.maps.MapTypeId.ROADMAP
-       };
+    let mapOptions = {
+      center: latLng,
+      zoom: 15,
+      mapTypeId: google.maps.MapTypeId.ROADMAP
+    };
 
-       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
-       var polyOptions = {
-          strokeWeight: 0,
-          fillOpacity: 0.45,
-          editable: true
-        };
+    var polyOptions = {
+      strokeWeight: 0,
+      fillOpacity: 0.45,
+      editable: true
+    };
+    /*
+    drawingManager = new google.maps.drawing.DrawingManager({
+      drawingControl: true,
+      drawingControlOptions: {
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON,
+        ]
+      },
+      polygonOptions: polyOptions,
+      map: this.map
+    });*/
+    /*
+  google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
 
-        drawingManager = new google.maps.drawing.DrawingManager({
-          drawingControl: true,
-          drawingControlOptions: {
-            drawingModes: [
-            google.maps.drawing.OverlayType.POLYGON,
-            ]
-          },
-          polygonOptions: polyOptions,
-          map: this.map
-        });
-          /*
-        google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
+      this.selectedShape=e.overlay
 
-            this.selectedShape=e.overlay
+      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+          // Switch back to non-drawing mode after drawing a shape.
+          drawingManager.setDrawingMode(null);
 
-            if (e.type != google.maps.drawing.OverlayType.MARKER) {
-                // Switch back to non-drawing mode after drawing a shape.
-                drawingManager.setDrawingMode(null);
+          // Add an event listener that selects the newly-drawn shape when the user
+          // mouses down on it.
+          newShape = e.overlay;
+          newShape.type = e.type;
 
-                // Add an event listener that selects the newly-drawn shape when the user
-                // mouses down on it.
-                newShape = e.overlay;
-                newShape.type = e.type;
+          google.maps.event.addListener(newShape, 'click', ()=> {
 
-                google.maps.event.addListener(newShape, 'click', ()=> {
-
-                  this.setSelection(newShape);
-
-
-                });
-              }
-        })
-
-        */
-      /* map.addPolygon({
-          'points': GORYOKAKU_POINTS,
-          'strokeColor' : '#AA00FF',
-          'strokeWidth': 5,
-          'fillColor' : '#880000'
-        }, function(polygon) {
-          setTimeout(function() {
-            polygon.remove();
-          }, 3000);
-        });*/
+            this.setSelection(newShape);
 
 
-   }
+          });
+        }
+  })
+
+  */
+    /* map.addPolygon({
+        'points': GORYOKAKU_POINTS,
+        'strokeColor' : '#AA00FF',
+        'strokeWidth': 5,
+        'fillColor' : '#880000'
+      }, function(polygon) {
+        setTimeout(function() {
+          polygon.remove();
+        }, 3000);
+      });*/
+
+
+  }
 
 }

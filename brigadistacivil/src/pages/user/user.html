@@ -1,11 +1,11 @@
 <ion-header>
-    <ion-toolbar brigadistacivil>
+    <ion-navbar>
         <ion-title>{{ "brigades.new.title" | translate }}</ion-title>
         <ion-buttons end>
           <button class="dismiss-button" *ngIf="!isReadonly()" (click)="defaultAction()"><ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
             <button class="dismiss-button" (click)="viewCtrl.dismiss()"><ion-icon name="close"></ion-icon></button>
         </ion-buttons>
-    </ion-toolbar>
+    </ion-navbar>
 </ion-header>
 
 <ion-content class="new-chat">

@@ -1,13 +1,11 @@
 <ion-header>
   <ion-navbar>
-
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
     <ion-buttons end>
       <button ion-button *ngIf="!isReadonly()" (click)="save()">
-            <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
-
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
