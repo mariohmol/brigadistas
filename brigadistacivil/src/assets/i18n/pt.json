@@ -10,7 +10,8 @@
     "signin": "Cadastrar"
   },
   "brigades": {
-    "title": "Brigadas"
+    "title": "Brigadas",
+    "see": "Ver brigada"
   },
   "brigade": {
     "title": "Brigada"

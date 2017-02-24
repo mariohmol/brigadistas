@@ -14,71 +14,40 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content >
+<ion-content>
 
   <div *ngIf="brigades">
 
-    <ion-card *ngFor="let pedido of brigades; let i = index;">
+    <ion-card *ngFor="let brigade of brigades; let i = index;">
 
-
-      <ion-item text-wrap *ngIf="isConsumidor()">
-          <ion-avatar item-left>
-            <img src="assets/images/revenda{{i%2}}.png">
-          </ion-avatar>
-          <h2>{{pedido.empresaR.nome}}</h2>
-          <p>#{{pedido.id}} - {{pedido.getStatus}}</p>
-        </ion-item>
+      <ion-item text-wrap >
+        <h2>{{brigade.name}}</h2>
+        <p>{{brigade.description}}</p>
+      </ion-item>
 
       <ion-list>
-        <ion-item *ngIf="isRevenda()" text-wrap>
-          <ion-icon name="md-pin" item-left large></ion-icon>
-          <h2>{{pedido.usuarioR.fullname}}</h2>
-          <p>{{pedido.enderecoR.ENDERECO}}, {{pedido.enderecoR.NUMERO}} {{pedido.enderecoR.COMPLEMENTO}}</p>
-        </ion-item>
-
-        <ion-item text-wrap >
+        <ion-item text-wrap *ngIf="brigade.createdAt">
           <ion-icon name="md-calendar" item-left large></ion-icon>
-          <h2>{{pedido.data.substring(0,16)}}</h2>
+          <h2>{{brigade.createdAt.substring(0,16)}}</h2>
         </ion-item>
 
-        <ion-item  text-wrap>
+        <ion-item text-wrap>
           <ion-icon name="md-pricetag" item-left large></ion-icon>
-          <h2>R$ {{pedido.valor}}</h2>
+          <h2>{{brigade.city}}</h2>
         </ion-item>
 
         <ion-item actions>
-          <button (click)="ver(pedido)" ion-button color="secondary" clear item-right icon-left>
+          <button (click)="showBrigade(brigade)" ion-button color="secondary" clear item-right icon-left>
             <ion-icon name='md-checkmark'></ion-icon>
-            Ver Pedido
+            {{ "brigades.see" | translate }}
           </button>
         </ion-item>
 
       </ion-list>
 
     </ion-card>
-
+    <div id="map_canvas"></div>
   </div>
-
-  <!--
-  <ion-list >
-    <ion-item-sliding *ngFor="let brigade of brigades">
-      <button ion-item class="chat" (click)="showBrigade(brigade)">
-        <div class="chat-info">
-          <h2 class="chat-title">{{brigade.name}}</h2>
-
-          <span *ngIf="brigade.city" class="last-message">
-            <p class="last-message-content">{{brigade.city}}</p>
-            <span class="last-message-timestamp">{{brigade.createdAt}}</span>
-          </span>
-        </div>
-      </button>
-
-      <ion-item-options class="chat-options">
-        <button danger class="option option-remove" (click)="removeBrigade(brigade)">Remove</button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
--->
   <div *ngIf="!brigades" padding>
     Não foram encontradas brigadas
   </div>
