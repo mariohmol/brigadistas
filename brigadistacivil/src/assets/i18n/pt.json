@@ -14,5 +14,12 @@
   },
   "brigade": {
     "title": "Brigada"
-  }
+  },
+  "brigadenew": {
+    "title": "Nova brigada"
+  },
+  "name": "Nome",
+  "city": "Cidade",
+  "description": "Descrição",
+  "done": "OK"
 }
