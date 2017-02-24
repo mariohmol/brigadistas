@@ -16,7 +16,7 @@ export class FireService extends BaseService {
     return this.doGet("/fire/");
   }
 
-  addFires(fire){
+  addFire(fire){
     return this.doPost("/fire/",fire);
   }
 }

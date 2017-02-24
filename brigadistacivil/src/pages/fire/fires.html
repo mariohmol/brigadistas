@@ -18,22 +18,41 @@
 
 <ion-content class="chats-page-content">
   <button ion-button block (click)="tracking()">Tracking Test</button>
-  <ion-list class="chats">
-    <ion-item-sliding *ngFor="let fire of fires">
-      <button ion-item (click)="showFire(fire)">
-        <div class="chat-info">
-          <h2 class="chat-title">{{fire.name}}</h2>
 
-          <span *ngIf="brigade.city" class="last-message">
-            <p class="last-message-content">{{fire.city}}</p>
-            <span class="last-message-timestamp">{{fire.createdAt}}</span>
-          </span>
-        </div>
-      </button>
 
-      <ion-item-options class="chat-options">
-        <button danger class="option option-remove" (click)="removeBrigade(brigade)">Remove</button>
-      </ion-item-options>
-    </ion-item-sliding>
-  </ion-list>
+  <div *ngIf="fires">
+
+    <ion-card *ngFor="let fire of fires; let i = index;">
+
+      <ion-item text-wrap >
+        <h2>{{fire.name}}</h2>
+        <p>{{fire.description}}</p>
+      </ion-item>
+
+      <ion-list>
+        <ion-item text-wrap *ngIf="fire.createdAt">
+          <ion-icon name="md-calendar" item-left large></ion-icon>
+          <h2>{{fire.createdAt.substring(0,16)}}</h2>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="md-pricetag" item-left large></ion-icon>
+          <h2>{{fire.city}}</h2>
+        </ion-item>
+
+        <ion-item actions>
+          <button (click)="showFire(fire)" ion-button color="secondary" clear item-right icon-left>
+            <ion-icon name='md-checkmark'></ion-icon>
+            {{ "fire.see" | translate }}
+          </button>
+        </ion-item>
+
+      </ion-list>
+
+    </ion-card>
+    <div id="map_canvas"></div>
+  </div>
+  <div *ngIf="!fires" padding>
+    Não foram encontradas fire
+  </div>
 </ion-content>

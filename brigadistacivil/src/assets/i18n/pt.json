@@ -19,6 +19,9 @@
   "brigadenew": {
     "title": "Nova brigada"
   },
+  "fire":{
+    "see": "Ver Fogo"
+  },
   "name": "Nome",
   "city": "Cidade",
   "description": "Descrição",

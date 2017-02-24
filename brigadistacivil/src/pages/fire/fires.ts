@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { FireService } from '../../providers/fire-service'
+
 import BasePage from '../basepage';
 import { FirePage } from './fire';
 import { BackgroundGeolocation } from 'ionic-native';
 import { UserService } from '../../providers/user-service';
+import { FireService } from '../../providers/fire-service'
+
 /*
   Generated class for the Fire page.
 
@@ -16,21 +18,27 @@ import { UserService } from '../../providers/user-service';
   templateUrl: 'fires.html'
 })
 export class FiresPage extends BasePage{
-  public fires: any;
+  public fires: Array<any>;
   public static isTracking: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserService, public fireService: FireService) {
     super();
+    this.fires = [];
   }
-
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FirePage');
-    this.fires = this.fireService.getFires();
+    console.log('ionViewDidLoad BrigadesPage');
+    this.fireService.getFires().then(d => {
+      this.fires = <Array<any>>d;
+    });
   }
 
-  showFire(fire:any){
-    this.openPageParam(FirePage,fire)
+  addFire() {
+    this.navCtrl.push(FirePage);
+  }
+
+  showFire(fire) {
+    this.navCtrl.push(FirePage,{ fire});
   }
 
   tracking(){
