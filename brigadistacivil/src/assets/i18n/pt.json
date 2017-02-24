@@ -14,13 +14,20 @@
     "see": "Ver brigada"
   },
   "brigade": {
-    "title": "Brigada"
+    "title": "Brigada",
+    "new": {
+        "title": "Nova brigada"
+    }
   },
-  "brigadenew": {
-    "title": "Nova brigada"
+  "fires":{
+    "title": "Incêndios",
+    "see": "Ver Incêndio"
   },
   "fire":{
-    "see": "Ver Fogo"
+    "title": "Ver Incêndio",
+    "new": {
+        "title": "Reporta Incêndio"
+    }
   },
   "name": "Nome",
   "city": "Cidade",

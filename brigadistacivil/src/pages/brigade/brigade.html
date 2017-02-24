@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar>
 
-    <ion-title>{{ "brigadenew.title" | translate }}</ion-title>
+    <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
     <ion-buttons end>
       <button ion-button *ngIf="!isReadonly()" (click)="save()">
             <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
@@ -27,5 +27,5 @@
     </ion-item>
   </ion-list>
 
-   <div #map id="map"></div> 
+   <div #map id="map"></div>
 </ion-content>

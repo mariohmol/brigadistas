@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { Nav, Platform, ToastController } from 'ionic-angular';
+import { Nav, Platform, ToastController,MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen } from 'ionic-native';
 import { Push } from 'ionic-native';
 //import { Page1 } from '../pages/page1/page1';import { Page2 } from '../pages/page2/page2';
@@ -21,7 +21,7 @@ export class MyApp {
 
   pages: Array<{title: string, component: any}>;
 
-  constructor(public platform: Platform,public translate: TranslateService,
+  constructor(public platform: Platform,public translate: TranslateService, public menuCtrl: MenuController,
     public toastCtrl: ToastController , public userService: UserService) {
     this.initializeApp();
 
@@ -58,6 +58,7 @@ export class MyApp {
   openPage(page) {
     // Reset the content nav to have just this page
     // we wouldn't want the back button to show in this scenario
+    if(this.menuCtrl) this.menuCtrl.close();
     this.nav.setRoot(page.component);
   }
 

@@ -83,6 +83,7 @@ export default class BasePage {
   }
 
   openPageParam(page, param) {
+    console.log("aeeeeeee333")
     if (this.menuCtrl) this.menuCtrl.close();
 
     if (this.app) {
