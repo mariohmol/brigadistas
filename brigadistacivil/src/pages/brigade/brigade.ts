@@ -31,7 +31,10 @@ export class BrigadePage  extends BasePage{
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BrigadePage');
-    this.loadMap();
+      Geolocation.getCurrentPosition().then((position) => {
+        this.loadMap(position.coords);
+      });
+
   }
 
   save(){
@@ -51,24 +54,66 @@ export class BrigadePage  extends BasePage{
 
     let content = "<h4>Information!</h4>";
 
-    this.addInfoWindow(marker, content);
+    //this.addInfoWindow(marker, content);
 
   }
 
 
-  loadMap(){
-    Geolocation.getCurrentPosition().then((position) => {
+  loadMap(position){
+     var drawingManager;
+
+
       //-34.9290, 138.6010
-     let latLng = new google.maps.LatLng(position.coords.latitude, position.coords.longitude);
+     let latLng = new google.maps.LatLng(position.latitude, position.longitude);
 
      let mapOptions = {
        center: latLng,
        zoom: 15,
        mapTypeId: google.maps.MapTypeId.ROADMAP
-     }
+     };
 
      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
 
+     var polyOptions = {
+        strokeWeight: 0,
+        fillOpacity: 0.45,
+        editable: true
+      };
+
+      drawingManager = new google.maps.drawing.DrawingManager({
+        drawingControl: true,
+        drawingControlOptions: {
+          drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON,
+          ]
+        },
+        polygonOptions: polyOptions,
+        map: this.map
+      });
+        /*
+      google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
+
+          this.selectedShape=e.overlay
+
+          if (e.type != google.maps.drawing.OverlayType.MARKER) {
+              // Switch back to non-drawing mode after drawing a shape.
+              drawingManager.setDrawingMode(null);
+
+              // Add an event listener that selects the newly-drawn shape when the user
+              // mouses down on it.
+              newShape = e.overlay;
+              newShape.type = e.type;
+
+              google.maps.event.addListener(newShape, 'click', ()=> {
+
+                this.setSelection(newShape);
+
+
+              });
+            }
+      })
+
+      */
     /* map.addPolygon({
         'points': GORYOKAKU_POINTS,
         'strokeColor' : '#AA00FF',
@@ -79,7 +124,7 @@ export class BrigadePage  extends BasePage{
           polygon.remove();
         }, 3000);
       });*/
-    });
+
 
  }
 
