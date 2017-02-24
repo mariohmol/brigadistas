@@ -30,11 +30,15 @@ export class MyApp {
 
     // used for an example of ngFor and navigation
     this.pages = [
-      { title: 'Brigades', component: BrigadesPage },
-      { title: 'Fires', component: FiresPage },
-      { title: 'Profile', component: UserPage }
+      { title: 'BrigadesPage', component: BrigadesPage },
+      { title: 'FiresPage', component: FiresPage },
+      { title: 'ProfilePage', component: UserPage }
     ];
 
+  }
+
+  openPageName(page) {
+    this.openPage(this.pages.find(v=> { return v.title === page; }));
   }
 
   initializeApp() {
