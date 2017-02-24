@@ -57,18 +57,18 @@ export class UserService extends BaseService {
 
   removeDeviceToken(type,id) {
      if(type=="android"){
-      return this.doPost("/attrs/pushunregister/android/",{ androidkey: id});
+      return this.doPost("/users/pushunregister/android/",{ androidkey: id});
     }else {
-      return this.doPost("/attrs/pushunregister/ios/",{ ioskey: id});
+      return this.doPost("/users/pushunregister/ios/",{ ioskey: id});
     }
   }
 
-  recuperarsenha(email) {
-    return this.doPost("/attrs/recuperarsenha/"+email+"/",{});
+  recover(email) {
+    return this.doPost("/users/recover/"+email+"/",{});
   }
 
-  cadastrarresidencial(data) {
-    return this.doPost("/attrs/cadastrar/residencial/",data);
+  register(data) {
+    return this.doPost("/users/register",data);
   }
 
   saveLocation(lat, lng, fireId) {

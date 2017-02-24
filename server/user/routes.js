@@ -86,6 +86,25 @@ router.get("/logout", (req,res)=>{
   res.json({"success":"ok"});
 });
 
+router.get("/pushregister/:type", (req,res)=>{
+  var set={};
+  if(req.params.type=="android") set={androidkey: req.body.androidkey};
+  else set={ioskey: req.body.ioskey};//ios
+  User.findOneAndUpdate(req.user._id,{$set: set}).exec(v=>{
+    console.log(v);
+    res.json({"success":"ok"});
+  });
+});
+
+router.get("/pushunregister/:type", (req,res)=>{
+  if(req.params.type=="android") set={androidkey: null};
+  else set={ioskey: null};
+  User.findOneAndUpdate(req.user._id,{$set: set}).exec(v=>{
+    console.log(v);
+    res.json({"success":"ok"});
+  });
+});
+
 
 passport.serializeUser(function(user, done) {
   done(null, user.id);

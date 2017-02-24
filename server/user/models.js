@@ -11,6 +11,8 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  androidkey: { type: String},
+  ioskey: {type: String},
   avatar: { type: String },
   bio: { type: String },
   url: { type: String },
