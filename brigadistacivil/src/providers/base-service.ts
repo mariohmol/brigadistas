@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
-
+import envj from '../env.json';
 /*
   Generated class for the BaseService provider.
 
@@ -17,9 +17,10 @@ export class BaseService {
   constructor(public http: Http) {
     this.http=http;
 
-    if(window.location.hostname==="app.brigadistacivil.com.br") this.env=="production";
+    if(window.location.hostname==="app.brigadistacivil.com.br") this.env="production";
+    else if(envj && envj.env) this.env=envj.env;
     //if(window.location.pathname.contains("assets")) this.env=="production";
-
+    
     if(this.env=="development"){
       this.apiUrl = "http://localhost:8484";
     }else if(this.env=="test"){

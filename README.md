@@ -41,6 +41,12 @@ cordova.system.library.3=com.google.android.gms:play-services-location:+
 cordova.system.library.4=com.android.support:support-v4:+
 ```
 
+Configure the enviroment that you are working creating a file inside  `brigadistacivil\src\env.json` with your needs. `default` is production, `test` to using in mobiles and `developement` to run on browser):
+
+```
+{ "env": "development" }
+```
+
 To run this app :
 
 * `npm run dev` to run express server on port 8484
