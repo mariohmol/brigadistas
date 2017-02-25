@@ -56,10 +56,9 @@ export class MyApp {
   }
 
   openPage(page) {
-    // Reset the content nav to have just this page
-    // we wouldn't want the back button to show in this scenario
     if(this.menuCtrl) this.menuCtrl.close();
-    this.nav.setRoot(page.component);
+    if(page.component)this.nav.setRoot(page.component);
+    else this.nav.setRoot(page);
   }
 
   startPush(){

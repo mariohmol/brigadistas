@@ -14,7 +14,8 @@ router.put('/:id', function (req, res, next) {
 
 
 router.post('/', function (req, res, next) {
-  Brigade.findOneAndUpdate({},req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
+  let data=Object.assign(req.body, { user: req.user._id} );
+  Brigade.create(req.body).then(d => { res.json(d);});
 });
 
 

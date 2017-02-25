@@ -16,6 +16,7 @@ export default class BasePage {
   public loading: any;
   public password;
   public username;
+  public currentLocation: any;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
@@ -273,11 +274,12 @@ export default class BasePage {
 
 
 
-
+  /**
+   * [loadMap description]
+   * @param  {[type]} position [description]
+   * @return {[type]}          [description]
+   */
   loadMap(position) {
-    console.log("eii",this.mapElement)
-    if (!this.mapElement) return;
-
     var drawingManager;
 
     //-34.9290, 138.6010
@@ -289,15 +291,21 @@ export default class BasePage {
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
 
-    this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    console.log("eii",this.mapElement)
+    if(this.mapElement){
+      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
+    }else{
+      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
+    }
+
 
     var polyOptions = {
       strokeWeight: 0,
       fillOpacity: 0.45,
       editable: true
     };
-    /*
-    drawingManager = new google.maps.drawing.DrawingManager({
+
+    /*drawingManager = new google.maps.drawing.DrawingManager({
       drawingControl: true,
       drawingControlOptions: {
         drawingModes: [
@@ -307,6 +315,7 @@ export default class BasePage {
       polygonOptions: polyOptions,
       map: this.map
     });*/
+    /**/
     /*
   google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
 
@@ -344,5 +353,28 @@ export default class BasePage {
 
 
   }
+
+
+  addMarker(position,info){
+    if(!position) position=this.map.getCenter();
+    let marker = new google.maps.Marker({
+      map: this.map,
+      animation: google.maps.Animation.DROP,
+      position: position
+    });
+    if(!info) return;
+
+    let content = info;
+    this.addInfoWindow(marker, content);
+  }
+
+  addInfoWindow(marker, content){
+   let infoWindow = new google.maps.InfoWindow({
+     content: content
+   });
+   google.maps.event.addListener(marker, 'click', () => {
+     infoWindow.open(this.map, marker);
+   });
+ }
 
 }

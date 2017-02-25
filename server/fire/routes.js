@@ -2,6 +2,7 @@ const express = require('express');
 const router = express.Router();
 const { Fire } = require('./models');
 const passport = require('passport');
+const mongoose = require('mongoose');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   Fire.find().then(d => { res.json(d);});
@@ -14,7 +15,10 @@ router.put('/:id', passport.authenticate('basic', { session: false }), function 
 
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.findOneAndUpdate({},req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
+  let data=Object.assign(req.body, { users:  [req.user._id] } );
+  Fire.create(data).then(d => { res.json(d);}).catch(e=>{
+    console.log(e);
+  });
 });
 
 

@@ -18,16 +18,15 @@ import BasePage from '../basepage';
 })
 export class LoginPage extends BasePage {
 
-  constructor(public app:App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-    public translate: TranslateService, public alertCtrl: AlertController,   public menuCtrl: MenuController) {
-      super();
-    }
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
+    public translate: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController) {
+    super();
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad LoginPage');
-    if(localStorage["profile"]){
-      this.openPage(BrigadesPage);
-      this.setMenu();
+    if (localStorage["profile"]) {
+      this.openPage(FiresPage);
     }
   }
 
@@ -36,22 +35,22 @@ export class LoginPage extends BasePage {
     this.setMenu();
   }
 
-  loginPage(username,password){
+  loginPage(username, password) {
     this.login(username, password);
   }
 
-  signin(){
+  signin() {
     this.openPage(UserPage);
   }
 
-  isReadonly(){
+  isReadonly() {
     return true;
   }
 
   onInputKeyPress(event: KeyboardEvent) {
-      if(event.keyCode != 9 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 46) {
-          event.preventDefault();
-      }
+    if (event.keyCode != 9 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 46) {
+      event.preventDefault();
+    }
   }
 
 }

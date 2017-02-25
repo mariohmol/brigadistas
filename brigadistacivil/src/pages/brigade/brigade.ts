@@ -14,7 +14,7 @@ declare var google;
 export class BrigadePage  extends BasePage{
   public brigade: any;
   public readonly: boolean;
-  
+  @ViewChild('map') mapElement: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public brigadeService: BrigadeService) {
     super();
@@ -41,20 +41,6 @@ export class BrigadePage  extends BasePage{
       console.log("hehehehe",d);
       this.openPage(BrigadesPage);
     });
-  }
-
-  addMarker(){
-
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: this.map.getCenter()
-    });
-
-    let content = "<h4>Information!</h4>";
-
-    //this.addInfoWindow(marker, content);
-
   }
 
   isReadonly(){
