@@ -271,7 +271,9 @@ export default class BasePage {
       alert.present();
     }
   }
-
+  currentUser(){
+    return UserService.loginData;
+  }
 
 
   /**

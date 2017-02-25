@@ -112,4 +112,6 @@ export class MyApp {
     this.userService.logout();
     this.openPage(LoginPage);
   }
+
+  
 }

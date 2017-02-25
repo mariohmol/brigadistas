@@ -7,6 +7,7 @@ const FireSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  intensity:{ type: String},
   status: { type: String },
   city: { type: String },
   createdAt: { type: Date },

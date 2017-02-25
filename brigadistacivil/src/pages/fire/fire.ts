@@ -22,7 +22,10 @@ export class FirePage extends BasePage {
     super();
     if (this.navParams.get("fire")) {
       this.fire = this.navParams.get("fire");
-      this.readonly = true;
+      console.log(this.fire)
+      if(this.fire.users && this.fire.users.find(v=>{ return this.currentUser()._id == v})) 
+        this.readonly = false;
+      else this.readonly = true;
     } else {
       this.fire = {};
       this.readonly = false;
@@ -32,7 +35,13 @@ export class FirePage extends BasePage {
   ionViewDidLoad() {
     console.log('ionViewDidLoad BrigadePage');
     let cb = ()=>{
-      this.loadMap(this.position);
+      if(this.fire && this.fire.coordinates){
+        this.loadMap(this.fire.coordinates);
+        this.marker = this.addMarker(this.fire.coordinates,"Posição do Fogo");
+      }else{
+        this.loadMap(this.position);
+      }
+
       this.confMap();
     }
     if(!this.position){
@@ -44,6 +53,7 @@ export class FirePage extends BasePage {
   }
 
   confMap(){
+    if(this.isReadonly()) return;
     google.maps.event.addListener(this.map, 'click', event => {
       if(this.marker) this.marker.setMap(null);
       console.log(event.latLng);
@@ -55,6 +65,7 @@ export class FirePage extends BasePage {
 
   save() {
     this.fireService.addFire(this.fire).then(d => {
+      console.log(d);
       this.openPage(FiresPage);
     });
   }
@@ -63,15 +74,6 @@ export class FirePage extends BasePage {
     return this.readonly;
   }
 
-
-  addInfoWindow(marker, content){
-   let infoWindow = new google.maps.InfoWindow({
-     content: content
-   });
-   google.maps.event.addListener(marker, 'click', () => {
-     infoWindow.open(this.map, marker);
-   });
- }
 
  findTransit(){
    var request = {

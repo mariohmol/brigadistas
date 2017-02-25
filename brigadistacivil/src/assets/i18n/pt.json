@@ -26,11 +26,15 @@
   "fire":{
     "title": "Ver Incêndio",
     "new": {
-        "title": "Reporta Incêndio"
+        "title": "Reporta Incêndio",
+        "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
+        "fieldDescription": "Mais informações como acesso, contato.."
     }
   },
-  "name": "Nome",
   "city": "Cidade",
   "description": "Descrição",
-  "done": "OK"
+  "done": "OK",
+  "intensity": "Intensidade",
+  "name": "Nome",
+  "title": "Título"
 }
