@@ -25,6 +25,8 @@
   },
   "fire":{
     "title": "Ver Incêndio",
+    "startCombat": "Combater Incêndio",
+    "stopCombat": "Sair do Combate",
     "new": {
         "title": "Reporta Incêndio",
         "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",

@@ -5,17 +5,18 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.find().then(d => { res.json(d);});
+  Fire.find().populate("users").then(d => { res.json(d);});
 });
 
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.findOneAndUpdate(req.params.id,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
+  let data=Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
+  Fire.findOneAndUpdate(req.params.id,data,{new:true,$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  let data=Object.assign(req.body, { users:  [req.user._id] } );
+  let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date() } );
   Fire.create(data).then(d => { res.json(d);}).catch(e=>{
     console.log(e);
   });

@@ -15,33 +15,34 @@
 </ion-header>
 
 <ion-content >
-  <button ion-button block (click)="tracking()">Tracking Test</button>
-
-
   <div *ngIf="fires">
 
     <ion-card *ngFor="let fire of fires; let i = index;">
 
-      <ion-item text-wrap >
-        <h2>{{fire.name}}</h2>
-        <p>{{fire.description}}</p>
-      </ion-item>
-
       <ion-list>
+        <ion-item text-wrap >
+          <h2>{{fire.title}}</h2>
+          <p>{{fire.description}}</p>
+        </ion-item>
         <ion-item text-wrap *ngIf="fire.createdAt">
           <ion-icon name="md-calendar" item-left large></ion-icon>
           <h2>{{fire.createdAt.substring(0,16)}}</h2>
         </ion-item>
 
         <ion-item text-wrap>
-          <ion-icon name="md-pricetag" item-left large></ion-icon>
-          <h2>{{fire.city}}</h2>
+          <ion-icon name="md-thermometer" item-left large></ion-icon>
+          <h2>{{fire.intensity}}</h2>
+        </ion-item>
+
+        <ion-item text-wrap>
+          <ion-icon name="md-person" item-left large></ion-icon>
+          <h2>{{fire.users[0].username}}</h2>
         </ion-item>
 
         <ion-item actions>
           <button (click)="showFire(fire)" ion-button color="secondary" clear item-right icon-left>
             <ion-icon name='md-checkmark'></ion-icon>
-            {{ "fire.see" | translate }}
+            {{ "fires.see" | translate }}
           </button>
         </ion-item>
 

@@ -10,19 +10,27 @@
 </ion-header>
 
 <ion-content class="new-chat">
+  <div *ngIf="fire._id">
+    <button ion-button block (click)="tracking()" *ngIf="!isTracking()">{{ "fire.startCombat" | translate }}</button>
+    <button ion-button block (click)="tracking()" *ngIf="isTracking()">{{ "fire.stopCombar" | translate }}</button>
+  </div>
   <ion-list class="users">
     <ion-item>
-      <ion-label floating>{{ "fire.new.fieldTitle" | translate }} </ion-label>
+      <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
       <ion-input [(ngModel)]="fire.title" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
     </ion-item>
     <ion-list-header>
     {{ "intensity" | translate }}
     </ion-list-header>
     <ion-item>
-      <ion-range min="1000" max="2000" step="200" snaps="true" [(ngModel)]="fire.intensity" color="danger">
+      <ion-range min="20" max="100" step="20" snaps="true" [(ngModel)]="fire.intensity" color="danger">
         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
       </ion-range>
+    </ion-item>
+    <ion-item text-wrap *ngIf="fire.users">
+      <ion-icon name="md-person" item-left large></ion-icon>
+      <h2>{{fire.users[0].username}}</h2>
     </ion-item>
     <ion-item>
       <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>

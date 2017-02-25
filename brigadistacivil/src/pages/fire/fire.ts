@@ -23,7 +23,7 @@ export class FirePage extends BasePage {
     if (this.navParams.get("fire")) {
       this.fire = this.navParams.get("fire");
       console.log(this.fire)
-      if(this.fire.users && this.fire.users.find(v=>{ return this.currentUser()._id == v})) 
+      if(this.fire.users && this.fire.users.find(v=>{ return this.currentUser()._id == v}))
         this.readonly = false;
       else this.readonly = true;
     } else {
@@ -36,8 +36,9 @@ export class FirePage extends BasePage {
     console.log('ionViewDidLoad BrigadePage');
     let cb = ()=>{
       if(this.fire && this.fire.coordinates){
-        this.loadMap(this.fire.coordinates);
-        this.marker = this.addMarker(this.fire.coordinates,"Posição do Fogo");
+        this.loadMap({latitude: this.fire.coordinates[0], longitude: this.fire.coordinates[1]});
+        let latlng = new google.maps.LatLng(this.fire.coordinates[0], this.fire.coordinates[1]);
+        this.marker = this.addMarker(latlng,"Posição do Fogo");
       }else{
         this.loadMap(this.position);
       }
@@ -74,6 +75,25 @@ export class FirePage extends BasePage {
     return this.readonly;
   }
 
+  isTracking(){
+    return FiresPage.isTracking;
+  }
+
+  tracking(){
+    if (!FiresPage.isTracking) {
+      let cb = (location,id)=>{
+        this.userService.saveLocation(location.latitude, location.longitude, this.fire._id);
+        FiresPage.isTracking = true;
+      };
+      let errcb = ()=>{
+        alert('Error ao conectar comseu GPS');
+        FiresPage.isTracking = false;
+      }
+      this.fireService.startTracking(cb,errcb);
+    }else {
+      this.fireService.stopTracking();
+    }
+  }
 
  findTransit(){
    var request = {
