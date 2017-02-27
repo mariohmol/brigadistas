@@ -1,28 +1,9 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const { User , Chat, Message} = require('./models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-const BasicStrategy = require('passport-http').BasicStrategy;
-
-
-passport.use('basic', new BasicStrategy(
-  function(username, password, done) {
-    User.findOne({ username: username }, (err, user) => {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, {message: "Incorrect username"});
-      }
-      user.validatePassword(password, (error,isValid) => {
-        if (error || !isValid) {
-          return done(null, false, {message: "Incorrect username"});
-        } else {
-          return done(null, user);
-        }
-      });
-    });
-  }
-));
 
 
 router.get('/', function (req, res, next) {
@@ -39,12 +20,13 @@ router.delete('/:id', function (req, res, next) {
   User.findOneAndDelete(req.params.id,{},{}).then(d => { res.json(d);});
 });
 
+
 router.post('/login', passport.authenticate('basic'), (req, res) => {
   if (req.user) {
     req.user.password = req.body.password;
     res.status(200).json( req.user  );
   }else{
-    res.status(403).json({  "error": "No auth"  });
+    res.status(403).json({  'error': 'No auth'  });
   }
 });
 
@@ -81,46 +63,33 @@ router.post('/signin', (req, res) => {
     });
 });
 
-router.get("/logout", (req,res)=>{
+
+router.get('/logout', (req,res)=>{
   req.logout();
-  res.json({"success":"ok"});
+  res.json({'success':'ok'});
 });
 
-router.get("/pushregister/:type", (req,res)=>{
+
+router.get('/pushregister/:type', (req,res)=>{
   var set={};
-  if(req.params.type=="android") set={androidkey: req.body.androidkey};
+  if(req.params.type=='android') set={androidkey: req.body.androidkey};
   else set={ioskey: req.body.ioskey};//ios
   User.findOneAndUpdate(req.user._id,{$set: set}).exec(v=>{
     console.log(v);
-    res.json({"success":"ok"});
+    res.json({'success':'ok'});
   });
 });
 
-router.get("/pushunregister/:type", (req,res)=>{
-  if(req.params.type=="android") set={androidkey: null};
+
+router.get('/pushunregister/:type', (req,res)=>{
+  var set='';
+  if(req.params.type==='android') set={androidkey: null};
   else set={ioskey: null};
   User.findOneAndUpdate(req.user._id,{$set: set}).exec(v=>{
     console.log(v);
-    res.json({"success":"ok"});
+    res.json({'success':'ok'});
   });
 });
 
-
-passport.serializeUser(function(user, done) {
-  done(null, user.id);
-});
-
-passport.deserializeUser(function(id, done) {
-  User.findById(id, function(err, user) {
-    done(err, user);
-  });
-});
-
-function ensureAuthenticated(req, res, next) {
-  if (req.isAuthenticated()) {
-    return next();
-  }
-  res.sendStatus(403);
-}
 
 module.exports = router;

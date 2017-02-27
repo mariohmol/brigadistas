@@ -1,3 +1,4 @@
+'use strict';
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
@@ -14,7 +15,6 @@ const BrigadeSchema = new mongoose.Schema({
   createdAt: { type: Date },
   deletedAt: { type: Date }
 });
-
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);
 

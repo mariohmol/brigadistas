@@ -1,14 +1,16 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config');
+const config = require('./config/config');
 const bodyParser = require('body-parser');
 const request = require('request');
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 const session = require('express-session');
-
+const morgan = require('morgan');
 const passport = require('passport');
-
+require('./config/passport');
+require('./config/emailer');
+const {logger,doErrorEmailAlerts} = require('./config/logger');
 
 const userMiddleware = require('./user/routes');
 const brigadeMiddleware = require('./brigade/routes');
@@ -26,8 +28,11 @@ app.use(session({
 
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(express.static(__dirname+ "/../brigadistacivil/www/"));
 
+app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
+
+app.use(morgan('common', {stream: logger.stream}));
+app.use(doErrorEmailAlerts);
 
 app.use('/user',userMiddleware);
 app.use('/brigade',brigadeMiddleware);

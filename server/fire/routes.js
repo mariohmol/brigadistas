@@ -1,3 +1,4 @@
+'use strict';
 const express = require('express');
 const router = express.Router();
 const { Fire } = require('./models');
@@ -5,7 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.find().populate("users").then(d => { res.json(d);});
+  Fire.find().populate('users').then(d => { res.json(d);});
 });
 
 
@@ -44,6 +45,5 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
     res.json(d);
   });
 });
-
 
 module.exports = router;
