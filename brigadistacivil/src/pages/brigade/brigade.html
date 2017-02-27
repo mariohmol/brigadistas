@@ -7,6 +7,7 @@
       </button>
     </ion-buttons>
   </ion-navbar>
+
 </ion-header>
 
 <ion-content class="new-chat">
@@ -26,4 +27,50 @@
   </ion-list>
 
    <div #map id="map"></div>
+
+
+   <ion-list class="leaders">
+     <ion-list-header>
+      Leaders
+    </ion-list-header>
+     <ion-item>
+       <ion-label floating>{{ "name" | translate }} </ion-label>
+       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
+     </ion-item>
+   </ion-list>
+
+
+   <ion-list class="brigades">
+     <ion-list-header>
+      Brigades
+    </ion-list-header>
+     <ion-item>
+       <ion-label floating>{{ "name" | translate }} </ion-label>
+       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
+     </ion-item>
+   </ion-list>
+
+
+   <ion-list class="brigades">
+     <ion-list-header>
+      Requested
+    </ion-list-header>
+     <ion-item>
+       <ion-label floating>{{ "name" | translate }} </ion-label>
+       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
+     </ion-item>
+   </ion-list>
+
+
+
+
+
+   <ion-segment>
+     <ion-segment-button value="new">
+       Entrar na Brigada
+     </ion-segment-button>
+     <ion-segment-button value="hot">
+       Sair da Brigada
+     </ion-segment-button>
+   </ion-segment>
 </ion-content>

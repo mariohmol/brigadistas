@@ -5,7 +5,8 @@
   "brigade": {
     "title": "Brigada",
     "new": {
-        "title": "Nova brigada"
+        "title": "Nova brigada",
+        "warning": "Your brigade was created! Our team will revise your info and soon approve to be part of our nextworks"
     }
   },
   "brigades": {

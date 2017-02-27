@@ -9,11 +9,16 @@ const BrigadeSchema = new mongoose.Schema({
     unique: true
   },
   desc: { type: String },
+  status: {type: String},
   ownership: { type: String },
+  leaders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']}],
+  brigades: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']}],
+  requested: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']}],
+  followers: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']}],
   city: { type: String },
   location: { type: String },
   createdAt: { type: Date },
-  deletedAt: { type: Date }
+  deletedAt: { type: Date },
 });
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);

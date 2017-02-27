@@ -1,10 +1,10 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 import BasePage from '../basepage';
 import BrigadesPage from './brigades'
 import { BrigadeService} from '../../providers/brigade-service';
 import { Geolocation } from 'ionic-native';
-
+import {TranslateService} from 'ng2-translate';
 declare var google;
 
 @Component({
@@ -15,7 +15,8 @@ export class BrigadePage  extends BasePage{
   public brigade: any;
   @ViewChild('map') mapElement: ElementRef;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public brigadeService: BrigadeService) {
+  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
+    public translate: TranslateService,public brigadeService: BrigadeService) {
     super();
 
     if(this.navParams.get("brigade")){
@@ -38,6 +39,7 @@ export class BrigadePage  extends BasePage{
   save(){
     this.brigadeService.addBrigade(this.brigade).then(d=>{
       console.log("hehehehe",d);
+      this.showToast(this.translate.get("brigade.new.warning"));
       this.openPage(BrigadesPage);
     });
   }

@@ -14,7 +14,7 @@ const FireSchema = new mongoose.Schema({
   deletedAt: { type: Date },
   coordinates: { type: [Number], index: '2dsphere'},
   positions: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'posts',required: [true,'No post id found']},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No post id found']},
     coordinates: { type: [Number], index: '2dsphere'},
     activityType: { type: String },
     date: {type: Date}

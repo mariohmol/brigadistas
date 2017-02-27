@@ -32,7 +32,7 @@ export class BaseService {
     }
   }
 
-  doHeaders(data){
+  doHeaders(data:any=null){
     let headers;
     if(!this.profile && 'profile' in localStorage){
       this.profile  = JSON.parse(localStorage['profile']);
@@ -52,12 +52,9 @@ export class BaseService {
   doGet(url: string){
     return new Promise( (resolve,reject) => {
       let headers=this.doHeaders(null);
-        //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
       let options = new RequestOptions({ headers: headers, method: "get" });
-
       return this.http.get(this.apiUrl+url, options  )
         .map(res => res.json())
-
         .subscribe(data => {
           resolve(data);
           },
@@ -67,18 +64,29 @@ export class BaseService {
     });
   }
 
-
-
   doPost(url: string,data: any){
     return new Promise( (resolve,reject) => {
-      let headers=this.doHeaders(data);
-        //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      let headers=this.doHeaders(data);  //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
       let options = new RequestOptions({ headers: headers, method:  'post' });
       if(!data) data={};
 
       return this.http.post(this.apiUrl+url,  JSON.stringify(data), options  )
         .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+          },
+          error => {
+            reject(error);
+        });
+    });
+  }
 
+  doDelete(url: string){
+    return new Promise( (resolve,reject) => {
+      let headers=this.doHeaders();
+      let options = new RequestOptions({ headers: headers, method:  'delete' });
+      return this.http.delete(this.apiUrl+url, options  )
+        .map(res => res.json())
         .subscribe(data => {
           resolve(data);
           },
