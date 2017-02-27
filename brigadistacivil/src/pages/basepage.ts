@@ -17,6 +17,7 @@ export default class BasePage {
   public password;
   public username;
   public currentLocation: any;
+  public readonly: boolean;
   @ViewChild('map') mapElement: ElementRef;
   map: any;
 
@@ -65,6 +66,13 @@ export default class BasePage {
     if (keyCode == 13) {
       this.formsubmit();
     }
+    /*if (event.keyCode != 9 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 46) {
+      event.preventDefault();
+    }*/
+  }
+
+  isReadonly(){
+    return this.readonly;
   }
 
   toDate(mydate) {

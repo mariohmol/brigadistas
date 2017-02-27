@@ -2,26 +2,15 @@
   "app": {
     "name": "Brigadista Civil"
   },
-  "login": {
-    "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
-    "email": "Seu email",
-    "password": "Sua senha",
-    "enter": "Entrar",
-    "signin": "Cadastrar"
-  },
-  "brigades": {
-    "title": "Brigadas",
-    "see": "Ver brigada"
-  },
   "brigade": {
     "title": "Brigada",
     "new": {
         "title": "Nova brigada"
     }
   },
-  "fires":{
-    "title": "Incêndios",
-    "see": "Ver Incêndio"
+  "brigades": {
+    "title": "Brigadas",
+    "see": "Ver brigada"
   },
   "fire":{
     "title": "Ver Incêndio",
@@ -31,6 +20,20 @@
         "title": "Reporta Incêndio",
         "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
         "fieldDescription": "Mais informações como acesso, contato.."
+    }
+  },
+  "fires":{
+    "title": "Incêndios",
+    "see": "Ver Incêndio"
+  },
+  "user": {
+    "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
+    "email": "Seu email",
+    "password": "Sua senha",
+    "enter": "Entrar",
+    "signin": "Cadastrar",
+    "new": {
+      "title": "Cadastrar"
     }
   },
   "city": "Cidade",

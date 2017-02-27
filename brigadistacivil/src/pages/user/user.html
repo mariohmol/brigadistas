@@ -1,26 +1,35 @@
 <ion-header>
-    <ion-navbar>
-        <ion-title>{{ "brigades.new.title" | translate }}</ion-title>
-        <ion-buttons end>
-          <button class="dismiss-button" *ngIf="!isReadonly()" (click)="defaultAction()"><ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}</button>
-            <button class="dismiss-button" (click)="viewCtrl.dismiss()"><ion-icon name="close"></ion-icon></button>
-        </ion-buttons>
-    </ion-navbar>
+  <ion-navbar>
+    <ion-title>{{ "user.new.title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="!isReadonly()" (click)="save()">
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
 </ion-header>
 
-<ion-content class="new-chat">
+<ion-content class="new-user">
     <ion-list class="users">
         <ion-item>
             <ion-label floating>{{ "name" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.name" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="text"></ion-input>
+            <ion-input [(ngModel)]="user.name" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="text"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{ "email" | translate }} </ion-label>
+            <ion-input [(ngModel)]="user.email" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="email"></ion-input>
+        </ion-item>
+        <ion-item>
+            <ion-label floating>{{ "password" | translate }} </ion-label>
+            <ion-input [(ngModel)]="user.password" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="password"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "city" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.city" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
+            <ion-input [(ngModel)]="user.city" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "description" | translate }} </ion-label>
-            <ion-input [(ngModel)]="brigade.description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
+            <ion-input [(ngModel)]="user.description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
         </ion-item>
     </ion-list>
 </ion-content>

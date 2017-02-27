@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar brigadistacivil>
+  <ion-navbar >
     <ion-title>{{ "app.name" | translate }}</ion-title>
   </ion-navbar>
 </ion-header>
@@ -7,20 +7,20 @@
 <ion-content padding class="login-page-content">
   <div class="instructions">
     <div>
-      {{ "login.name" | translate }}
+      {{ "user.name" | translate }}
     </div>
     <br>
   </div>
 
   <ion-item>
     <ion-input [(ngModel)]="username"  type="email"
-    placeholder="{{ 'login.email' | translate }}"></ion-input>
+    placeholder="{{ 'user.email' | translate }}"></ion-input>
   </ion-item>
   <ion-item>
-    <ion-input [(ngModel)]="password"  type="password" placeholder="{{ 'login.password' | translate }}"></ion-input>
+    <ion-input [(ngModel)]="password"  type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
   </ion-item>
   <ion-content padding>
-    <button ion-button block (click)="loginPage(username,password)">{{ "login.enter" | translate }}</button>
-    <button ion-button block (click)="signin()">{{ "login.signin" | translate }}</button>
+    <button ion-button block (click)="loginPage(username,password)">{{ "user.enter" | translate }}</button>
+    <button ion-button block (click)="register()">{{ "user.signin" | translate }}</button>
   </ion-content>
 </ion-content>

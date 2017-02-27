@@ -13,7 +13,6 @@ declare var google;
 })
 export class BrigadePage  extends BasePage{
   public brigade: any;
-  public readonly: boolean;
   @ViewChild('map') mapElement: ElementRef;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public brigadeService: BrigadeService) {
@@ -41,10 +40,6 @@ export class BrigadePage  extends BasePage{
       console.log("hehehehe",d);
       this.openPage(BrigadesPage);
     });
-  }
-
-  isReadonly(){
-    return this.readonly;
   }
 
 }

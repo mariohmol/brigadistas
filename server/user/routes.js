@@ -4,7 +4,7 @@ const router = express.Router();
 const { User , Chat, Message} = require('./models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-
+const { sendMail,sendEmailAdmins } = require('../config/emailer');
 
 router.get('/', function (req, res, next) {
   User.find().then(d => { res.json(d);});
@@ -31,7 +31,7 @@ router.post('/login', passport.authenticate('basic'), (req, res) => {
 });
 
 
-router.post('/signin', (req, res) => {
+router.post('/register', (req, res) => {
   let username = req.body.username.trim();
   let password = req.body.password.trim();
 
@@ -47,6 +47,9 @@ router.post('/signin', (req, res) => {
         let userObj = {
           username: username,
           password: hash,
+          name: req.body.name.trim(),
+          description: req.body.description.trim(),
+          city: req.body.city.trim(),
           createdAt: new Date()
         };
 
@@ -57,6 +60,8 @@ router.post('/signin', (req, res) => {
             });
           }
           delete result.password;
+
+          sendEmailAdmins("Novo cadastro",JSON.stringify(result));
           res.status(201).json(result);
         });
       });

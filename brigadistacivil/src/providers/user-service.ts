@@ -49,26 +49,30 @@ export class UserService extends BaseService {
 
   storeDeviceToken(type,id) {
      if(type=="android"){
-  		return this.doPost("/attrs/pushregister/android/",{ androidkey: id});
+  		return this.doPost("/user/pushregister/android/",{ androidkey: id});
   	}else {
-      return this.doPost("/attrs/pushregister/ios/",{ ioskey: id});
+      return this.doPost("/user/pushregister/ios/",{ ioskey: id});
     }
   }
 
   removeDeviceToken(type,id) {
      if(type=="android"){
-      return this.doPost("/users/pushunregister/android/",{ androidkey: id});
+      return this.doPost("/user/pushunregister/android/",{ androidkey: id});
     }else {
-      return this.doPost("/users/pushunregister/ios/",{ ioskey: id});
+      return this.doPost("/user/pushunregister/ios/",{ ioskey: id});
     }
   }
 
   recover(email) {
-    return this.doPost("/users/recover/"+email+"/",{});
+    return this.doPost("/user/recover/"+email+"/",{});
   }
 
   register(data) {
-    return this.doPost("/users/register",data);
+    return this.doPost("/user/register",data);
+  }
+
+  updateProfile(data) {
+    return this.doPost("/user/update",data);
   }
 
   saveLocation(lat, lng, fireId) {
@@ -77,8 +81,6 @@ export class UserService extends BaseService {
     }
     this.doPost("/fire/position/"+fireId, data);
   }
-
-
 
   checkcpfvalido(cpf){
     let rev,add,i;
@@ -118,11 +120,11 @@ export class UserService extends BaseService {
     return true;
   }
   checkcpf(cpf) {
-    return this.doPost("/attrs/cliente/checkcpf/0/"+cpf+"/",{});
+    return this.doPost("/user/checkcpf/0/"+cpf+"/",{});
   }
 
   checkcnpj(cnpj) {
-    return this.doPost("/attrs/cliente/checkcnpj/0/${cnpj}/",{});
+    return this.doPost("/brigade/checkcnpj/0/${cnpj}/",{});
   }
 
 }

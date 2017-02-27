@@ -1,32 +1,45 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams, MenuController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
-/*
-  Generated class for the User page.
+import BasePage from '../basepage';
+import { FiresPage } from '../fire/fires';
 
-  See http://ionicframework.com/docs/v2/components/#navigation for more info on
-  Ionic pages and navigation.
-*/
 @Component({
   selector: 'page-user',
   templateUrl: 'user.html'
 })
-export class UserPage {
+export class UserPage extends BasePage {
+  public user: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-              public translate: TranslateService) {}
+    public translate: TranslateService, public menuCtrl: MenuController) {
+    super();
+    this.user={};
+  }
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad UserPage');
   }
 
-  login(){
-    this.userService.login("m","123456");
+  save() {
+    if(this.user._id){
+      this.userService.updateProfile(this.user).then((d:any) => {
+        this.login(d.username, d.password);
+      });
+    }else{
+      this.userService.register(this.user).then((d:any) => {
+        this.login(d.username, d.password);
+      });
+    }
   }
 
-  isReadonly(){
-    return true;
+  afterLogin() {
+    this.openPage(FiresPage);
+  }
+
+  loginPage(username, password) {
+    this.login(username, password);
   }
 
 }
