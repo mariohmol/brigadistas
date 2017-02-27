@@ -1,7 +1,7 @@
 'use strict';
 const nodemailer = require('nodemailer');
 const {logger} = require('./logger');
-const {SMTP_URL} = require('./config');
+const {SMTP_PORT, SMTP_HOST,SMTP_USER, SMTP_PASS,DONTREPLY_EMAIL,ADMIN_EMAIL} = require('./config');
 
 // `emailData` is an object that looks like this:
 // {
@@ -11,8 +11,17 @@ const {SMTP_URL} = require('./config');
 //  text: 'Plain text content',
 //  html: '<p>HTML version</p>'
 // }
-const sendEmail = (emailData, smtpUrl=SMTP_URL) => {
-  const transporter = nodemailer.createTransport(SMTP_URL);
+const sendEmail = (emailData, smtpUrl=SMTP_HOST) => {
+  const transporter = nodemailer.createTransport({
+    host: smtpUrl,
+    port: SMTP_PORT,
+    secure: true,
+    auth: {
+        user: SMTP_USER,
+        pass: SMTP_PASS
+    }
+  });
+  if(!emailData.from) emailData.from=DONTREPLY_EMAIL;
   logger.info(`Attempting to send email from ${emailData.from}`);
   return transporter
     .sendMail(emailData)
@@ -20,4 +29,21 @@ const sendEmail = (emailData, smtpUrl=SMTP_URL) => {
     .catch(err => console.log(`Problem sending email: ${err}`));
 };
 
-module.exports = {sendEmail};
+const doErrorEmailAlerts = (err, req, res, next) => {
+  if (err) {
+    logger.info(`Sending error alert email to ${ADMIN_EMAIL}`);
+
+    const emailData = {
+      from: DONTREPLY_EMAIL,
+      to: ADMIN_EMAIL,
+      subject: `SERVICE ALERT: ${err.name}`,
+      text: `Something went wrong. \n\n${err.stack}`
+    };
+    sendEmail(emailData).catch(er=>{
+      console.log(er);
+    });
+  }
+  next();
+};
+
+module.exports = { sendEmail,doErrorEmailAlerts };

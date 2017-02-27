@@ -1,7 +1,5 @@
 'use strict';
 const winston = require('winston');
-const {DONTREPLY_EMAIL,ADMIN_EMAIL} = require('./config');
-const { sendEmail } = require('./emailer');
 
 /**
  * Use winston to loge inside the moudles
@@ -26,19 +24,4 @@ logger.stream = {
   }
 };
 
-const doErrorEmailAlerts = (err, req, res, next) => {
-  if (err) {
-    logger.info(`Sending error alert email to ${ADMIN_EMAIL}`);
-
-    const emailData = {
-      from: DONTREPLY_EMAIL,
-      to: ADMIN_EMAIL,
-      subject: `SERVICE ALERT: ${err.name}`,
-      text: `Something went wrong. \n\n${err.stack}`
-    };
-    sendEmail(emailData);
-  }
-  next();
-};
-
-module.exports = {logger,doErrorEmailAlerts};
+module.exports = {logger};

@@ -1,6 +1,6 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const config = require('./config/config');
+const { ENV , DATABASE_URL , PORT} = require('./config/config');
 const bodyParser = require('body-parser');
 const request = require('request');
 const cors = require('cors');
@@ -8,10 +8,9 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const passport = require('passport');
-require('./config/passport');
-require('./config/emailer');
-const {logger,doErrorEmailAlerts} = require('./config/logger');
-
+const { ensureAuthenticated } = require('./config/passport');
+const { doErrorEmailAlerts } = require('./config/emailer');
+const {logger} = require('./config/logger');
 const userMiddleware = require('./user/routes');
 const brigadeMiddleware = require('./brigade/routes');
 const fireMiddleware = require('./fire/routes');
@@ -32,22 +31,34 @@ app.use(passport.session());
 app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
 
 app.use(morgan('common', {stream: logger.stream}));
-app.use(doErrorEmailAlerts);
 
 app.use('/user',userMiddleware);
 app.use('/brigade',brigadeMiddleware);
 app.use('/fire',fireMiddleware);
 
+app.get("/error", ()=>{
+  throw new Error("teste error");
+});
+
+if(ENV=="production"){
+  app.use(doErrorEmailAlerts);
+  app.use((err, req, res, next) => {
+    logger.error(err);
+    res.status(500).json({error: 'Something went wrong'}).end();
+  });  
+}
+
+
 // Startup server
 const runServer = function(callback) {
-  mongoose.connect(config.DATABASE_URL, err => {
+  mongoose.connect(DATABASE_URL, err => {
     if (err && callback) {
       return callback(err);
     }
 
-    console.log(`Connected to db at ${config.DATABASE_URL}`);
+    console.log(`Connected to db at ${DATABASE_URL}`);
 
-    app.listen(config.PORT, () => {
+    app.listen(PORT, () => {
       if (callback) {
         callback();
       }
