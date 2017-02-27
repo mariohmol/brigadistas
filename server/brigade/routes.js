@@ -3,6 +3,8 @@ const express = require('express');
 const router = express.Router();
 const { Brigade } = require('./models');
 const passport = require('passport');
+const { sendEmailAdmins,sendEmail } = require('../config/emailer');
+const { ensureAdmin } = require('../config/passport');
 
 router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
@@ -21,14 +23,23 @@ router.put('/:id', passport.authenticate('basic', { session: false }),
 router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
   let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting"} );
-  Brigade.create(req.body).then(d => { res.json(d);});
+  Brigade.create(req.body).then(d => {
+    let email= `Activate this brigade by accessinh http://brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    sendEmailAdmins("Nova Brigada criada",email);
+    res.json(d);
+  });
 });
-
 
 router.delete('/:id', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
   var query={_id: req.params.id, leaders: { $in: req.users._id }};
   Brigade.findOneAndDelete(query,{},{}).then(d => { res.json(d);});
+});
+
+router.put('/activate/:id', passport.authenticate('basic', { session: false }), ensureAdmin,
+ function (req, res, next) {
+  var query={_id: req.params.id, status: "active"};
+  Brigade.findOneAndUpdate(query,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
 /**

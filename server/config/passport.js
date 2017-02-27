@@ -41,4 +41,11 @@ function ensureAuthenticated(req, res, next) {
   res.sendStatus(403);
 }
 
-module.exports = {ensureAuthenticated};
+function ensureAdmin(req, res, next) {
+  if (req.isAuthenticated() && req.user.profile===10) {
+    return next();
+  }
+  res.sendStatus(403);
+}
+
+module.exports = {ensureAuthenticated , ensureAdmin};

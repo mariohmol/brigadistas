@@ -50,7 +50,8 @@ router.post('/register', (req, res) => {
           name: req.body.name.trim(),
           description: req.body.description.trim(),
           city: req.body.city.trim(),
-          createdAt: new Date()
+          createdAt: new Date(),
+          role: 1
         };
 
         User.create(userObj, (err, result) => {
