@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
 });
 router.get('/:id', function (req, res, next) {
-  Brigade.find(req.params.id).then(d => { res.json(d);});
+  Brigade.findOne({_id: req.params.id}).populate("leaders").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }),
@@ -24,9 +24,9 @@ router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
   let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting"} );
   Brigade.create(req.body).then(d => {
-    let email= `Activate this brigade by accessinh http://brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
-    sendEmailAdmins("Nova Brigada criada",email);
     res.json(d);
+    let email= `Activate this brigade by accessing http://brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    sendEmailAdmins("Nova Brigada criada",email);
   });
 });
 
@@ -36,10 +36,12 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
   Brigade.findOneAndDelete(query,{},{}).then(d => { res.json(d);});
 });
 
-router.put('/activate/:id', passport.authenticate('basic', { session: false }), ensureAdmin,
+router.get('/activate/:id', passport.authenticate('basic', { session: false }), ensureAdmin,
  function (req, res, next) {
-  var query={_id: req.params.id, status: "active"};
-  Brigade.findOneAndUpdate(query,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
+  var query={_id: req.params.id, status: "waiting"};
+  Brigade.findOneAndUpdate(query,{status: "active"})
+  .then(d => { res.json(d);})
+  .catch(e=> { res.json(e); });
 });
 
 /**

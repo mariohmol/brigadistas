@@ -42,7 +42,7 @@ function ensureAuthenticated(req, res, next) {
 }
 
 function ensureAdmin(req, res, next) {
-  if (req.isAuthenticated() && req.user.profile===10) {
+  if (req.isAuthenticated() && req.user.role===10) {
     return next();
   }
   res.sendStatus(403);

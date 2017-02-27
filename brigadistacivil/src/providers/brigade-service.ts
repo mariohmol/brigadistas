@@ -13,11 +13,15 @@ export class BrigadeService extends BaseService {
   }
 
   getBrigades(){
-    return this.doGet("/brigade/");
+    return this.doGet('/brigade/');
+  }
+
+  getBrigade(id){
+    return this.doGet(`/brigade/${id}`);
   }
 
   addBrigade(brigade){
-    return this.doPost("/brigade/",brigade);
+    return this.doPost('/brigade/',brigade);
   }
 
   addRelationBrigade(brigadeId,relation,userId){
