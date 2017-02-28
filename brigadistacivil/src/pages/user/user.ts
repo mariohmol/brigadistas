@@ -13,7 +13,7 @@ export class UserPage extends BasePage {
   public user: any;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-    public translate: TranslateService, public menuCtrl: MenuController) {
+    public transService: TranslateService, public menuCtrl: MenuController) {
     super();
     this.user={};
   }

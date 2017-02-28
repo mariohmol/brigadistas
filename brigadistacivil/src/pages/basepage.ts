@@ -1,11 +1,13 @@
 import { App, Platform, NavController, MenuController, AlertController,
   LoadingController, ToastController } from 'ionic-angular'; //ModalController
 import {UserService} from '../providers/user-service';
-import {  ViewChild, ElementRef } from '@angular/core';
+import {TranslateService} from 'ng2-translate';
+import {ViewChild, ElementRef} from '@angular/core';
 declare var google;
 
 export default class BasePage {
   public userService: UserService;
+  public transService: TranslateService;
   public navCtrl: NavController;
   public menuCtrl: MenuController;
   public alertCtrl: AlertController;
@@ -81,6 +83,16 @@ export default class BasePage {
 
   formsubmit() { }
 
+  /**
+   * get current translationfor a key
+   * @param  {string} key "brigade.requestEnter.confirm"
+   * @return {string}     [description]
+   */
+  translate(key){
+    let newKey = this.transService.get(key);
+    if(newKey && (<any>newKey).value) return (<any>newKey).value;
+    return key;
+  }
 
   /**
    * USUARIO
@@ -289,7 +301,7 @@ export default class BasePage {
    * @param  {[type]} position [description]
    * @return {[type]}          [description]
    */
-  loadMap(position) {
+  loadMap(position,options={}) {
     var drawingManager;
 
     //-34.9290, 138.6010
@@ -300,6 +312,7 @@ export default class BasePage {
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+    mapOptions=Object.assign(mapOptions,options)
 
     console.log("eii",this.mapElement)
     if(this.mapElement){

@@ -13,7 +13,7 @@ import BasePage from '../basepage';
 export class LoginPage extends BasePage {
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-    public translate: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController) {
+    public transService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController) {
     super();
   }
 

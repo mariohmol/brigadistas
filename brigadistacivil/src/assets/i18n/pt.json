@@ -4,26 +4,46 @@
   },
   "brigade": {
     "title": "Brigada",
+    "promoteBrigade": {
+      "action": "Promover a Líder",
+      "confirm": "Tem certeza que deseja promover este brigadista a um dos líderes da brigada?",
+      "feedback": "Parabéns, sua equipe tem mais um brigadista como líder de brigada."
+    },
+    "approveBrigade": {
+      "action": "Aprovar Brigadista",
+      "confirm": "Tem certeza que deseja aprovar este para ser um brigadista?",
+      "feedback": "Parabéns, sua equipe aumento com mais um brigadista!"
+    },
+    "requestEnter": {
+      "action": "Entrar na Brigada",
+      "confirm": "Tem certeza que deseja enviar um pedido de entrada para o líder da brigada?",
+      "feedback": "Seu pedido foi enviado e etá aguardando aprovação do líder da brigada."
+    },
+    "leaveBrigade": {
+      "action": "Sair da Brigada",
+      "confirm": "Tem certeza que deseja sair da sua brigada? Ao fazer isso você perderá o controle caso seja um líder.",
+      "feedback": "Você saiu da brigada com sucesso!"
+    },
     "new": {
-        "title": "Nova brigada",
-        "warning": "Your brigade was created! Our team will revise your info and soon approve to be part of our nextworks"
+      "title": "Nova brigada",
+      "warning": "Sua brigada foi criada! Nosso time vai revisar suas informações e em breve aprovaremos para fazer parte da nossa rede!"
     }
   },
   "brigades": {
     "title": "Brigadas",
     "see": "Ver brigada"
   },
-  "fire":{
+  "fire": {
     "title": "Ver Incêndio",
     "startCombat": "Combater Incêndio",
     "stopCombat": "Sair do Combate",
     "new": {
-        "title": "Reporta Incêndio",
-        "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
-        "fieldDescription": "Mais informações como acesso, contato.."
+      "title": "Reporta Incêndio",
+      "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
+      "fieldDescription": "Mais informações como acesso, contato.."
     }
   },
-  "fires":{
+  "fires": {
     "title": "Incêndios",
     "see": "Ver Incêndio"
   },
@@ -42,5 +62,6 @@
   "done": "OK",
   "intensity": "Intensidade",
   "name": "Nome",
+  "notfounditems": "Não foram encontrados informações.",
   "title": "Título"
 }

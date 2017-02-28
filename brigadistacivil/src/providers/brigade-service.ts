@@ -21,15 +21,22 @@ export class BrigadeService extends BaseService {
   }
 
   addBrigade(brigade){
+    if(brigade._id){
+      return this.updateBrigade(brigade);
+    }
     return this.doPost('/brigade/',brigade);
   }
 
-  addRelationBrigade(brigadeId,relation,userId){
-    return this.doPost(`/brigade/${brigadeId}/${relation}`,{userId});
+  updateBrigade(brigade){
+    return this.doPut('/brigade/',brigade);
   }
 
-  removeRelationBrigade(brigadeId,relation,userId){
-    return this.doDelete(`/brigade/${brigadeId}/${relation}/${userId}`);
+  addRelationBrigade(brigadeId,relation,userId=null){
+    return this.doPost(`/brigade/relation/${brigadeId}/${relation}`,{userId});
+  }
+
+  removeRelationBrigade(brigadeId,relation,userId=null){
+    return this.doDelete(`/brigade/relation/${brigadeId}/${relation}/${userId}`);
   }
 
 }

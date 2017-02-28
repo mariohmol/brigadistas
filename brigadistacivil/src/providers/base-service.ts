@@ -81,6 +81,24 @@ export class BaseService {
     });
   }
 
+
+  doPut(url: string,data: any){
+    return new Promise( (resolve,reject) => {
+      let headers=this.doHeaders(data);
+      let options = new RequestOptions({ headers: headers, method:  'put' });
+      if(!data) data={};
+
+      return this.http.put(this.apiUrl+url,  JSON.stringify(data), options  )
+        .map(res => res.json())
+        .subscribe(data => {
+          resolve(data);
+          },
+          error => {
+            reject(error);
+        });
+    });
+  }
+
   doDelete(url: string){
     return new Promise( (resolve,reject) => {
       let headers=this.doHeaders();

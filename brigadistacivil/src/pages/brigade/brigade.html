@@ -26,51 +26,62 @@
     </ion-item>
   </ion-list>
 
-   <div #map id="map"></div>
-
-
-   <ion-list class="leaders">
-     <ion-list-header>
+  <ion-list class="leaders">
+    <ion-list-header>
       Leaders
     </ion-list-header>
-     <ion-item>
-       <ion-label floating>{{ "name" | translate }} </ion-label>
-       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
-     </ion-item>
-   </ion-list>
+    <ion-item *ngFor="let user of brigade.leaders; let i = index;">
+      <!--<ion-thumbnail item-left>
+        <img src="img/thumbnail-totoro.png">
+      </ion-thumbnail>
+      <p>{{user.createdAt}}</p>-->
+      <h2>{{user.name}}</h2>
+      <!--<button ion-button clear item-right >View</button>-->
+    </ion-item>
+  </ion-list>
 
 
-   <ion-list class="brigades">
-     <ion-list-header>
+  <ion-list class="brigades">
+    <ion-list-header>
       Brigades
     </ion-list-header>
-     <ion-item>
-       <ion-label floating>{{ "name" | translate }} </ion-label>
-       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
-     </ion-item>
-   </ion-list>
+    <ion-item *ngIf="!brigade.brigades || brigade.brigades.length==0">
+      <h2>{{ "notfounditems" | translate }}</h2>
+    </ion-item>
+    <ion-item *ngFor="let user of brigade.brigades; let i = index;">
+      <h2>{{user.name}}</h2>
+      <ion-note item-right>{{user.createdAt}}</ion-note>
+      <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="!isReadonly()">Promote</button>
+    </ion-item>
+  </ion-list>
 
 
-   <ion-list class="brigades">
-     <ion-list-header>
+  <ion-list *ngIf="!isReadonly()">
+    <ion-list-header>
       Requested
     </ion-list-header>
-     <ion-item>
-       <ion-label floating>{{ "name" | translate }} </ion-label>
-       <ion-input [(ngModel)]="brigade.leaders" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
-     </ion-item>
-   </ion-list>
+    <ion-item *ngIf="!brigade.requested || brigade.requested.length==0">
+      <h2>{{ "notfounditems" | translate }}</h2>
+    </ion-item>
+    <ion-item *ngFor="let user of brigade.requested; let i = index;">
+      <h2>{{user.name}}</h2>
+      <p>{{user.createdAt}}</p>
+      <button ion-button clear item-right  (click)="approveBrigade(user._id)" *ngIf="!isReadonly()">Approve</button>
+    </ion-item>
+  </ion-list>
 
+  <ion-segment>
+    <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
+      Entrar na Brigada
+    </ion-segment-button>
+    <ion-segment-button value="leave" *ngIf="isInBrigade()" (click)="leaveBrigade()">
+      Sair da Brigada
+    </ion-segment-button>
+    <ion-segment-button value="area" (click)="showMap()">
+      Ver Área
+    </ion-segment-button>
+  </ion-segment>
 
+  <div #map id="map"></div>
 
-
-
-   <ion-segment>
-     <ion-segment-button value="new">
-       Entrar na Brigada
-     </ion-segment-button>
-     <ion-segment-button value="hot">
-       Sair da Brigada
-     </ion-segment-button>
-   </ion-segment>
 </ion-content>

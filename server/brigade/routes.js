@@ -10,7 +10,7 @@ router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
 });
 router.get('/:id', function (req, res, next) {
-  Brigade.findOne({_id: req.params.id}).populate("leaders").then(d => { res.json(d);});
+  Brigade.findOne({_id: req.params.id}).populate("leaders").populate("requested").populate("brigades").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }),
@@ -57,24 +57,37 @@ function (req, res, next) {
 
 router.post('/relation/:brigadeId/:type', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
+   let userId;
+   if(req.body.userId) userId=req.body.userId;
+   else userId=req.user._id;
+
   let push={};
-  push[req.params.type]= req.body.userId;
+  push[req.params.type]=userId;
 
   let query={_id: req.params.brigadeId};
-  if((req.params.type ==='leaders' && req.params.type==='brigades') || req.body.userId!==req.user._id)
-    query.leaders={ $in: req.users._id };
+  if((req.params.type ==='leaders' && req.params.type==='brigades') || userId!==req.user._id)
+    query.leaders={ $in: [req.user._id] };
 
-  Brigade.findOneAndUpdate(query ,{$push: push }).then(d => { res.json(d);});
+  Brigade.findOneAndUpdate(query ,{$addToSet: push }).then(d => {
+    if(req.params.type=="brigades"){
+      Brigade.findOneAndUpdate(query , {$pop: {requested: userId} }).then(r=> {res.json(d);}).catch(e=>res.json(e));
+    }else res.json(d);
+  }).catch(e=>res.json(e));
 });
 
 router.delete('/relation/:brigadeId/:type/:userId', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
+
+  let userId;
+  if(req.body.userId) userId=req.body.userId;
+  else userId=req.user._id;
+
   let pop={};
-  pop[req.params.type]= req.params.userId;
+  pop[req.params.type]= userId;
 
   let query={_id: req.params.brigadeId};
-  if((req.params.type ==='leaders' && req.params.type==='brigades') || req.params.userId!==req.user._id)
-    query.leaders={ $in: req.users._id };
+  if((req.params.type ==='leaders' && req.params.type==='brigades') || userId!==req.user._id)
+    query.leaders={ $in: [req.users._id] };
 
   Brigade.findOneAndUpdate(query , {$pop: pop }).then(d => { res.json(d);});
 });
