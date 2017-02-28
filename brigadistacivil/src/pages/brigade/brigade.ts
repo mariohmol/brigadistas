@@ -66,8 +66,12 @@ export class BrigadePage  extends BasePage{
 
   save(){
     this.brigadeService.addBrigade(this.brigade).then(d=>{
-      this.showToast(this.translate("brigade.new.warning"));
-      this.openPage(BrigadesPage);
+      if(this.brigade._id){
+        this.showToast(this.translate("brigade.update"));
+      }else{
+        this.showToast(this.translate("brigade.new.warning"));
+        this.openPage(BrigadesPage);
+      }
     });
   }
 

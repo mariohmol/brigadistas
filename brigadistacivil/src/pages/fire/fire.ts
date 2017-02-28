@@ -27,7 +27,7 @@ export class FirePage extends BasePage {
         this.readonly = false;
       else this.readonly = true;
     } else {
-      this.fire = {};
+      this.fire = {createdAt: new Date()};
       this.readonly = false;
     }
   }

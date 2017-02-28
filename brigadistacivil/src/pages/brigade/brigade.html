@@ -50,7 +50,7 @@
     </ion-item>
     <ion-item *ngFor="let user of brigade.brigades; let i = index;">
       <h2>{{user.name}}</h2>
-      <ion-note item-right>{{user.createdAt}}</ion-note>
+      <ion-note item-right>{{user.createdAt |  date: 'dd/MM/yyyy'}}</ion-note>
       <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="!isReadonly()">Promote</button>
     </ion-item>
   </ion-list>
@@ -65,7 +65,7 @@
     </ion-item>
     <ion-item *ngFor="let user of brigade.requested; let i = index;">
       <h2>{{user.name}}</h2>
-      <p>{{user.createdAt}}</p>
+      <p>{{user.createdAt |  date: 'dd/MM/yyyy' }}</p>
       <button ion-button clear item-right  (click)="approveBrigade(user._id)" *ngIf="!isReadonly()">Approve</button>
     </ion-item>
   </ion-list>

@@ -8,7 +8,7 @@ const BrigadeSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
-  desc: { type: String },
+  description: { type: String },
   status: {type: String},
   ownership: { type: String },
   leaders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: true, required: [true,'No user id found']}],

@@ -19,6 +19,14 @@
       <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
       <ion-input [(ngModel)]="fire.title" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
     </ion-item>
+    <ion-item text-wrap *ngIf="fire.users">
+      <ion-icon name="md-calendar" item-left large></ion-icon>
+      <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
+    </ion-item>
+    <ion-item text-wrap *ngIf="fire.users">
+      <ion-icon name="md-person" item-left large></ion-icon>
+      <h2>{{fire.users[0].name}}</h2>
+    </ion-item>
     <ion-list-header>
     {{ "intensity" | translate }}
     </ion-list-header>
@@ -27,10 +35,6 @@
         <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
         <ion-icon range-right color="danger" name="thermometer"></ion-icon>
       </ion-range>
-    </ion-item>
-    <ion-item text-wrap *ngIf="fire.users">
-      <ion-icon name="md-person" item-left large></ion-icon>
-      <h2>{{fire.users[0].username}}</h2>
     </ion-item>
     <ion-item>
       <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>

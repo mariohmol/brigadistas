@@ -24,7 +24,7 @@
         </ion-item>
         <ion-item text-wrap *ngIf="fire.createdAt">
           <ion-icon name="md-calendar" item-left large></ion-icon>
-          <h2>{{fire.createdAt.substring(0,16)}}</h2>
+          <h2>{{fire.createdAt |  date: 'dd/MM/yyyy H:mm' }}</h2>
         </ion-item>
 
         <ion-item text-wrap>
@@ -34,7 +34,7 @@
 
         <ion-item text-wrap>
           <ion-icon name="md-person" item-left large></ion-icon>
-          <h2>{{fire.users[0].username}}</h2>
+          <h2>{{fire.users[0].name}}</h2>
         </ion-item>
 
         <ion-item actions>

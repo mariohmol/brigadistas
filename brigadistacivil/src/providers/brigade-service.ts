@@ -28,7 +28,7 @@ export class BrigadeService extends BaseService {
   }
 
   updateBrigade(brigade){
-    return this.doPut('/brigade/',brigade);
+    return this.doPut(`/brigade/${brigade._id}`,brigade);
   }
 
   addRelationBrigade(brigadeId,relation,userId=null){

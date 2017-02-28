@@ -27,7 +27,8 @@
     "new": {
       "title": "Nova brigada",
       "warning": "Sua brigada foi criada! Nosso time vai revisar suas informações e em breve aprovaremos para fazer parte da nossa rede!"
-    }
+    },
+    "update": "Sua brigada foi atualizada com sucesso!"
   },
   "brigades": {
     "title": "Brigadas",
