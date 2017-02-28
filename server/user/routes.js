@@ -32,7 +32,9 @@ router.post('/login', passport.authenticate('basic'), (req, res) => {
 
 
 router.post('/register', (req, res) => {
-  let username = req.body.username.trim();
+  let username;
+  if(req.body.username) username= req.body.username.trim();
+  else if(req.body.email) username= req.body.email.trim();
   let password = req.body.password.trim();
 
   bcrypt.genSalt(10, (err, salt) => {

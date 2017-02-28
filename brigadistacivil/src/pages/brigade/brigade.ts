@@ -33,7 +33,7 @@ export class BrigadePage  extends BasePage{
   }
 
   isInBrigade(){
-    return this.isbrigade;
+    return this.isbrigade && this.brigade._id!=null;
   }
 
   ionViewDidLoad() {
