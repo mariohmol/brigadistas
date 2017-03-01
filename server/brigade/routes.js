@@ -70,10 +70,10 @@ router.post('/relation/:brigadeId/:type', passport.authenticate('basic', { sessi
   let query={_id: req.params.brigadeId};
   if((req.params.type ==='leaders' && req.params.type==='brigades') || userId!==req.user._id)
     query.leaders={ $in: [req.user._id] };
-
   Brigade.findOneAndUpdate(query ,{$addToSet: push }).then(d => {
+    console.log(d);
     if(req.params.type=="brigades"){
-      Brigade.findOneAndUpdate(query , {$pop: {requested: userId} }).then(r=> {res.json(d);}).catch(e=>res.json(e));
+      Brigade.findOneAndUpdate(query , {$pull: {requested: userId} }).then(r=> {res.json(d);}).catch(e=>res.json(e));
     }else res.json(d);
   }).catch(e=>res.json(e));
 });
@@ -92,7 +92,7 @@ router.delete('/relation/:brigadeId/:type/:userId', passport.authenticate('basic
   if((req.params.type ==='leaders' && req.params.type==='brigades') || userId!==req.user._id)
     query.leaders={ $in: [req.user._id] };
 
-  Brigade.findOneAndUpdate(query , {$pop: pop }).then(d => { res.json(d);});
+  Brigade.findOneAndUpdate(query , {$pull: pop }).then(d => { res.json(d);});
 });
 
 module.exports = router;

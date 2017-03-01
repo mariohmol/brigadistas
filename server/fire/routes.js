@@ -30,30 +30,34 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
 
 
 router.put('/status/:id/:status', passport.authenticate('basic', { session: false }), function (req, res, next) {
-
   let data={status: req.params.status};
-
+  let statusHistory;
   Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
-  Fire.findOne(req.params.id,data,{new:true,$new: true, upsert: true}).populate("brigades").then(d => {
-      console.log(d);
+  Fire.findOne({_id: req.params.id},data,{new:true,$new: true, upsert: true}).populate("brigades").then(d => {
+
+      //TODO: Send the push notifications based in the change in flow
       if(d.status=='open' && req.params.status=='checking'){
-        //send
-        const { initPush } = require('./config/push');
+        statusHistory=req.params.status;
       }else if(d.status=='checking' && req.params.status=='confirmed'){
-
+        statusHistory=req.params.status;
       }else if(d.status=='checking' && req.params.status=='not_confirmed'){
-
+        statusHistory=req.params.status;
       }else if(d.status=='confirmed' && req.params.status=='fighting'){
-
+        statusHistory=req.params.status;
       }else if(d.status=='fighting' && req.params.status=='aftermath'){
-
+        statusHistory=req.params.status;
       }else if(d.status=='aftermath' && req.params.status=='finished'){
-
+        statusHistory=req.params.status;
       }//expire?
+      console.log(statusHistory,d);
+      if(!statusHistory) res.json(d);
+      else{
+        data.statusHistory={$addToSet: {status: req.params.status, date: new Date(), user: req.user._id}};
+        Fire.findOneAndUpdate({_id: req.params.id},data).then(d => {
+          res.json(d);
+        });
+      }
 
-      Fire.findOneAndUpdate(req.params.id,data).then(d => {
-        res.json(d);
-      });
   });
 });
 
@@ -103,7 +107,7 @@ router.post('/relation/:brigadeId/:type', passport.authenticate('basic', { sessi
 
   Fire.findOneAndUpdate(query ,{$addToSet: push }).then(d => {
     if(req.params.type=="brigades"){
-      Fire.findOneAndUpdate(query , {$pop: {requested: userId} }).then(r=> {res.json(d);}).catch(e=>res.json(e));
+      Fire.findOneAndUpdate(query , {$pull: {requested: userId} }).then(r=> {res.json(d);}).catch(e=>res.json(e));
     }else res.json(d);
   }).catch(e=>res.json(e));
 });
@@ -121,7 +125,7 @@ router.delete('/relation/:fireId/:type/:userId', passport.authenticate('basic', 
   let query={_id: req.params.fireId};
   if(userId!==req.user._id) return;
 
-  Fire.findOneAndUpdate(query , {$pop: pop }).then(d => { res.json(d);});
+  Fire.findOneAndUpdate(query , {$pull: pop }).then(d => { res.json(d);});
 });
 
 

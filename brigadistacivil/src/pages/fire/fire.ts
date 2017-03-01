@@ -5,7 +5,6 @@ import BasePage from '../basepage';
 import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
-import { UserService } from '../../providers/user-service';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 declare var google;
@@ -19,7 +18,7 @@ export class FirePage extends BasePage {
   public readonly: boolean;
   public marker: any;
   public position: any;
-  public isbrigade: boolean;
+  public isBrigade: boolean;
   @ViewChild('map') mapElement: ElementRef;
   fireForm: FormGroup;
   fireFormFields: any;
@@ -92,12 +91,12 @@ export class FirePage extends BasePage {
           if(findUser) return true;
           return false;
         });
-        if(findUser)  this.isbrigade = true;
-        else   this.isbrigade = false;
+        if(findUser)  this.isBrigade = true;
+        else   this.isBrigade = false;
       }
-      else this.isbrigade = false;
+      else this.isBrigade = false;
 
-      if(this.fire && this.isbrigade)
+      if(this.fire && this.isBrigade)
         this.readonly=false;
       else this.readonly=true;
     });
@@ -121,11 +120,12 @@ export class FirePage extends BasePage {
   changeStatus(status){
     this.fireService.doPut(`/fire/status/${this.fire._id}/${status}`).then(d=>{
       this.showToast(this.translate("fire.status.updated"));
+      this.loadData();
     });
   }
 
   isInBrigade(){
-    return this.isbrigade && this.fire._id!=null;
+    return this.isBrigade && this.fire._id!=null;
   }
 
   isReadonly() {

@@ -11,6 +11,11 @@ const FireSchema = new mongoose.Schema({
   createdAt: { type: Date },
   deletedAt: { type: Date },
   coordinates: { type: [Number], index: '2dsphere'},
+  statusHistory: [{
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No post id found']},
+    status: { type: String },
+    date: {type: Date}
+  }],
   positions: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No post id found']},
     coordinates: { type: [Number], index: '2dsphere'},

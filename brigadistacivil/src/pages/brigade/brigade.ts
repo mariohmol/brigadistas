@@ -16,7 +16,8 @@ declare var google;
 export class BrigadePage  extends BasePage{
   public brigade: any;
   public position: any;
-  public isbrigade: boolean;
+  public isBrigade: boolean;
+  public isLeader: boolean;
   @ViewChild('map') mapElement: ElementRef;
   brigadeForm: FormGroup;
 
@@ -41,7 +42,11 @@ export class BrigadePage  extends BasePage{
   }
 
   isInBrigade(){
-    return this.isbrigade && this.brigade._id!=null;
+    return this.isBrigade && this.brigade._id!=null;
+  }
+
+  isInLeaderes(){
+    return this.isLeader && this.brigade._id!=null;
   }
 
   ionViewDidLoad() {
@@ -61,7 +66,9 @@ export class BrigadePage  extends BasePage{
     this.brigadeService.getBrigade(this.brigade._id).then(d=>{
       this.brigade=d;
 
-      this.isbrigade = this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id})!=null ||
+      this.isLeader = this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id})!=null
+
+      this.isBrigade = this.isLeader ||
               this.brigade.brigades && this.brigade.brigades.find(d=>{return d._id==UserService.loginData._id})!=null ||
               this.brigade.requested && this.brigade.requested.find(d=>{return d._id==UserService.loginData._id})!=null;
 
