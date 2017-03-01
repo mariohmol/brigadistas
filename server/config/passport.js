@@ -6,7 +6,7 @@ const { User } = require('../user/models');
  * Use example
  * router.post('/login', passport.authenticate('basic'), (req, res) => { req.user })
  */
-passport.use('basic', new BasicStrategy(
+passport.use('basic', new BasicStrategy({ disableBasicChallenge: true },
   function(username, password, done) {
     User.findOne({ username: username }, (err, user) => {
       if (err) { return done(err); }

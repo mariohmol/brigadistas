@@ -68,9 +68,6 @@ export default class BasePage {
     if (keyCode == 13) {
       this.formsubmit();
     }
-    /*if (event.keyCode != 9 && event.keyCode != 8 && event.keyCode != 37 && event.keyCode != 39 && event.keyCode != 46) {
-      event.preventDefault();
-    }*/
   }
 
   isReadonly(){
@@ -95,7 +92,7 @@ export default class BasePage {
   }
 
   /**
-   * USUARIO
+   * User
    */
   isUser() {
     if (UserService && UserService.loginData)
@@ -134,18 +131,18 @@ export default class BasePage {
   }
 
   showConfirm(message, title, callback) {
-    if (!title) title = "Confirmação de operação";
+    if (!title) title = this.translate("confirmOperation");
     let confirm = this.alertCtrl.create({
       title: title,
       message: message,
       buttons: [
         {
-          text: 'Cancelar',
+          text: this.translate("cancel"),
           handler: () => {
           }
         },
         {
-          text: 'Sim, desejo continuar',
+          text: this.translate("yesContinue"),
           handler: () => {
             callback();
           }
@@ -161,7 +158,7 @@ export default class BasePage {
 
     alertConfirm = this.alertCtrl.create();
 
-    if (!title) title = "Escolha uma opção"
+    if (!title) title = this.translate("chooseOption");
     alertConfirm.setTitle(title);
     alertConfirm.setMessage(message);
 
@@ -174,16 +171,15 @@ export default class BasePage {
       });
     }
 
-    alertConfirm.addButton('Cancelar');
+    alertConfirm.addButton(this.translate("cancel"));
     alertConfirm.addButton({
       text: 'Ok',
       handler: (data: any) => {
         if (data) {
           callback(data);
         } else {
-          alert('Por favor, selecione sua nota para continuar a avliação.')
+          alert(this.translate("chooseOptionFail"))
           return false;
-          //alert('Selecione uma opção para avaliar');
         }
       }
     });
@@ -191,7 +187,6 @@ export default class BasePage {
     alertConfirm.present().then(() => {
 
     });
-
   }
 
 
@@ -200,12 +195,12 @@ export default class BasePage {
     console.log(error)
     this.dismissLoading();
     if (error && error.status === 0) {
-      error = "Provável problema com a sua internet, tente novamente."
+      error = this.translate("cancel")
     }
 
     if (this.alertCtrl) {
       let alert = this.alertCtrl.create({
-        title: "Ocorreu um erro ao conectar",
+        title: this.translate("connectionFail"),
         subTitle: error,
         buttons: ['OK']
       });
@@ -213,9 +208,6 @@ export default class BasePage {
     }
   }
 
-  showValidacao(desc) {
-    this.showAlert("Validação de informações", desc);
-  }
 
   showToast(desc, fixed = false) {
     if (!this.toastCtrl) return;
@@ -257,7 +249,7 @@ export default class BasePage {
       //this.userService.storeDeviceToken(type, localStorage['deviceToken']);
     }
     this.afterLogin();
-    this.showToast(user.fullname + ', seja bem vindo(a)!');
+    this.showToast(user.name + this.translate("user.new.welcome"));
   }
 
   login(username: any = null, password: any = null, callback: any = null): void {
@@ -284,8 +276,8 @@ export default class BasePage {
   errorlogin(): void {
     if (this.alertCtrl) {
       let alert = this.alertCtrl.create({
-        title: 'Não foi possível entrar',
-        subTitle: 'Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!',
+        title: this.translate("user.login.title"),
+        subTitle: this.translate("user.login.subTitle"),
         buttons: ['OK']
       });
       alert.present();

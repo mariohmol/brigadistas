@@ -21,7 +21,7 @@ router.delete('/:id', function (req, res, next) {
 });
 
 
-router.post('/login', passport.authenticate('basic'), (req, res) => {
+router.post('/login', passport.authenticate('basic',{failWithError: true}), (req, res) => {
   if (req.user) {
     req.user.password = req.body.password;
     res.status(200).json( req.user  );

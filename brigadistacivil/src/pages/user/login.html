@@ -11,16 +11,16 @@
     </div>
     <br>
   </div>
+   <form [formGroup]="loginForm" (ngSubmit)="loginPage(loginForm.value)">
+  <ion-item>
+    <ion-input [formControl]="loginForm.controls['username']" type="email" required placeholder="{{ 'user.email' | translate }}"></ion-input>
+  </ion-item>
+  <ion-item>
+    <ion-input  [formControl]="loginForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
+  </ion-item>
+  <button ion-button block >{{ "user.enter" | translate }}</button>
+  </form>
 
-  <ion-item>
-    <ion-input [(ngModel)]="username"  type="email"
-    placeholder="{{ 'user.email' | translate }}"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input [(ngModel)]="password"  type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
-  </ion-item>
-  <ion-content padding>
-    <button ion-button block (click)="loginPage(username,password)">{{ "user.enter" | translate }}</button>
     <button ion-button block (click)="register()">{{ "user.signin" | translate }}</button>
-  </ion-content>
+
 </ion-content>

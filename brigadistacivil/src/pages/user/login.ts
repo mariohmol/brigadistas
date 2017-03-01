@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams, AlertController, App, MenuController } from 'ionic-angular';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { NavController, NavParams, AlertController, App, MenuController,ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
@@ -11,10 +12,22 @@ import BasePage from '../basepage';
   templateUrl: 'login.html'
 })
 export class LoginPage extends BasePage {
+  loginForm: FormGroup;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-    public transService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController) {
+    public transService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
+    public fb: FormBuilder, public toastCtrl: ToastController) {
     super();
+    this.loginForm = fb.group({
+      'username': [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(5)])
+      ],
+      'password': [
+        '',
+        Validators.compose([Validators.required, Validators.minLength(5)])
+      ]
+    });
   }
 
   ionViewDidLoad() {
@@ -29,8 +42,8 @@ export class LoginPage extends BasePage {
     this.setMenu();
   }
 
-  loginPage(username, password) {
-    this.login(username, password);
+  loginPage(form) {
+    this.login(form.username, form.password);
   }
 
   register() {

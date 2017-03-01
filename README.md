@@ -67,3 +67,45 @@ cordova.gradle.include.1=cordova-plugin-mauron85-background-geolocation/brigadis
 cordova.system.library.3=com.google.android.gms:play-services-location:+
 cordova.system.library.4=com.android.support:support-v4:+
 ```
+
+### Server
+
+Machine using apache (or nginx) where proxy it to a supervisord. To configure the apache follow this configuration:
+
+*General*
+
+Need to set headers to prevent browser to open the Basic Challenge Dialog
+
+```
+Header unset WWW-Authenticate
+```
+
+
+You can configure you enviroments
+
+```
+SetEnv MONGO_URL mongodb://localhost:27017/mybd\
+```
+
+*Using Proxy*
+
+```
+ProxyPass / http://localhost:8484/
+ProxyPassReverse / http://localhost:8484/
+```
+
+*Using Passenger*
+
+Tell Passenger that your app is a bundled Meteor app
+
+```
+PassengerAppRoot /home/myapp/brigadistas/
+PassengerAppType node
+PassengerStartupFile server/server.js
+PassengerStickySessions on
+```
+
+
+# Want to help?
+
+Pickup a issue e contact us if you need more instructions!

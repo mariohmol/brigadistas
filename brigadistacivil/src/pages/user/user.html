@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>{{ "user.new.title" | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button *ngIf="!isReadonly()" (click)="save()">
+      <button ion-button *ngIf="!isReadonly()" [disabled]="!userForm.valid" (click)="save()">
         <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
       </button>
     </ion-buttons>
@@ -11,25 +11,31 @@
 
 <ion-content class="new-user">
     <ion-list class="users">
+      <form #form [formGroup]="userForm" novalidate >
+
         <ion-item>
             <ion-label floating>{{ "name" | translate }} </ion-label>
-            <ion-input [(ngModel)]="user.name" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="text"></ion-input>
+            <ion-input formControlName="name"  [readonly]="readOnly" type="text"></ion-input>
+            <small [hidden]="userForm.controls.name.valid || (userForm.controls.name.pristine && !submitted)">
+                Name is required (minimum 5 characters).
+            </small>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "email" | translate }} </ion-label>
-            <ion-input [(ngModel)]="user.email" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="email"></ion-input>
+            <ion-input formControlName="email"  [readonly]="readOnly" type="email"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "password" | translate }} </ion-label>
-            <ion-input [(ngModel)]="user.password" (keypress)="onInputKeypress($event)" [readonly]="readOnly" type="password"></ion-input>
+            <ion-input formControlName="password"  [readonly]="readOnly" type="password"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "city" | translate }} </ion-label>
-            <ion-input [(ngModel)]="user.city" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
+            <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
         </ion-item>
         <ion-item>
             <ion-label floating>{{ "description" | translate }} </ion-label>
-            <ion-input [(ngModel)]="user.description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
+            <ion-input formControlName="description"  [readonly]="isReadonly()" type="textarea"></ion-input>
         </ion-item>
+        </form>
     </ion-list>
 </ion-content>

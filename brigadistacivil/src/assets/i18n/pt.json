@@ -54,15 +54,31 @@
     "password": "Sua senha",
     "enter": "Entrar",
     "signin": "Cadastrar",
+    "login":{
+      "title": "Não foi possível entrar",
+      "subTitle": "Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!"
+    },
     "new": {
-      "title": "Cadastrar"
+      "title": "Cadastrar",
+      "error": "Não foi possível se cadastrar pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
+      "welcome": ", seja bem vindo(a)!"
+    },
+    "update": {
+      "title": "Perfil",
+      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
     }
   },
+  "cancel": "Cancelar",
+  "chooseOption": "Escolha uma opção",
+  "chooseOptionFail": "Por favor, selecione uma opção para continuar.",
   "city": "Cidade",
+  "confirmOperation": "Confirmação de operação",
+  "connectionFail": "Provável problema com a sua internet, tente novamente.",
   "description": "Descrição",
   "done": "OK",
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
-  "title": "Título"
+  "title": "Título",
+  "yesContinue": "Sim, desejo continuar"
 }
