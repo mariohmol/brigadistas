@@ -11,8 +11,7 @@
 
 <ion-content class="new-user">
     <ion-list class="users">
-      <form #form [formGroup]="userForm" novalidate >
-
+      <form [formGroup]="userForm" novalidate >
         <ion-item>
             <ion-label floating>{{ "name" | translate }} </ion-label>
             <ion-input formControlName="name"  [readonly]="readOnly" type="text"></ion-input>
@@ -33,8 +32,8 @@
             <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>{{ "description" | translate }} </ion-label>
-            <ion-input formControlName="description"  [readonly]="isReadonly()" type="textarea"></ion-input>
+            <ion-label floating>{{ "bio" | translate }} </ion-label>
+            <ion-input formControlName="bio"  [readonly]="isReadonly()" type="textarea"></ion-input>
         </ion-item>
         </form>
     </ion-list>

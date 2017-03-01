@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { NavController, NavParams } from 'ionic-angular';
 import BasePage from '../basepage';
 import { Geolocation } from 'ionic-native';
@@ -17,6 +18,7 @@ export class FirePage extends BasePage {
   public marker: any;
   public position: any;
   @ViewChild('map') mapElement: ElementRef;
+  fireForm: FormGroup;
 
   constructor(public navCtrl: NavController, public navParams: NavParams, public fireService: FireService) {
     super();
@@ -27,9 +29,15 @@ export class FirePage extends BasePage {
         this.readonly = false;
       else this.readonly = true;
     } else {
-      this.fire = {createdAt: new Date()};
+      this.fire = {};
       this.readonly = false;
     }
+
+    this.fireForm = this.fb.group({
+      title: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      description: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      intensity: ['', [<any>Validators.required]]
+    });
   }
 
   ionViewDidLoad() {
@@ -57,7 +65,6 @@ export class FirePage extends BasePage {
     if(this.isReadonly()) return;
     google.maps.event.addListener(this.map, 'click', event => {
       if(this.marker) this.marker.setMap(null);
-      console.log(event.latLng);
       this.fire.coordinates=[event.latLng.lat(), event.latLng.lng()];
       this.marker = this.addMarker(event.latLng,"Posição do Fogo");
     });
@@ -65,10 +72,18 @@ export class FirePage extends BasePage {
 
 
   save() {
-    this.fireService.addFire(this.fire).then(d => {
-      console.log(d);
-      this.openPage(FiresPage);
-    });
+    if(this.fire._id){
+      this.fire = Object.assign(this.fire, this.fireForm.value);
+      this.fireService.updateFire(this.fire).then(d => {
+        this.openPage(FiresPage);
+      });
+    }else{
+      this.fire = Object.assign(this.fire, this.fireForm.value);
+      this.fireService.addFire(this.fire).then(d => {
+        this.openPage(FiresPage);
+      });
+    }
+
   }
 
   isReadonly() {
@@ -81,7 +96,7 @@ export class FirePage extends BasePage {
 
   tracking(){
     if (!FiresPage.isTracking) {
-      let cb = (location,id)=>{
+      let cb = (location)=>{
         this.userService.saveLocation(location.latitude, location.longitude, this.fire._id);
         FiresPage.isTracking = true;
       };

@@ -33,7 +33,7 @@ export class UserPage extends BasePage {
       email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      description: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
+      bio: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
     });
   }
 

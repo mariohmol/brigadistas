@@ -14,11 +14,15 @@ export class FireService extends BaseService {
   }
 
   getFires(){
-    return this.doGet("/fire/");
+    return this.doGet('/fire/');
   }
 
   addFire(fire){
-    return this.doPost("/fire/",fire);
+    return this.doPost('/fire/',fire);
+  }
+
+  updateFire(fire){
+    return this.doPut(`/fire/${fire._id}`,fire);
   }
 
 
@@ -35,7 +39,7 @@ export class FireService extends BaseService {
     BackgroundGeolocation.configure((location) => {
       console.log('[js] BackgroundGeolocation callback:  ' + location.latitude + ',' + location.longitude);
 
-      cb(location, "58add2eabb0a92800936a211");
+      cb(location);
 
       // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
       // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
@@ -54,8 +58,4 @@ export class FireService extends BaseService {
   stopTracking(){
     BackgroundGeolocation.stop();
   }
-
-
-
-
 }
