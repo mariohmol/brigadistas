@@ -44,6 +44,7 @@
     "initCombat": "Iniciar Combate",
     "endCombat": "Sair do Combate",
     "aftermath": "Inicar Rescaldo",
+    "closeCombat": "Encerrar Combate",
     "finished": "Incêndio Combatido",
     "new": {
       "title": "Reporta Incêndio",

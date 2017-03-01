@@ -20,6 +20,7 @@ export class BrigadePage  extends BasePage{
   public isLeader: boolean;
   @ViewChild('map') mapElement: ElementRef;
   brigadeForm: FormGroup;
+  brigadeFormFields: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
@@ -33,12 +34,12 @@ export class BrigadePage  extends BasePage{
       this.brigade={};
       this.readonly=false;
     }
-
-    this.brigadeForm = this.fb.group({
+    this.brigadeFormFields={
       name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      description: ['', [<any>Validators.required]]
-    });
+      description: ['']
+    };
+    this.brigadeForm = this.fb.group(this.brigadeFormFields);
   }
 
   isInBrigade(){
@@ -65,7 +66,7 @@ export class BrigadePage  extends BasePage{
     if(!this.brigade) return;
     this.brigadeService.getBrigade(this.brigade._id).then(d=>{
       this.brigade=d;
-
+      this.setDataForm(this.brigadeForm,this.brigadeFormFields,this.brigade);
       this.isLeader = this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id})!=null
 
       this.isBrigade = this.isLeader ||
