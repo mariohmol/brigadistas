@@ -3,10 +3,8 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 
 const FireSchema = new mongoose.Schema({
-  title: {
-    type: String,
-    required: true
-  },
+  title: {  type: String, required: true },
+  description: {  type: String },
   intensity:{ type: String},
   status: { type: String },
   city: { type: String },

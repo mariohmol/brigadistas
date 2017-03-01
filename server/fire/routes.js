@@ -6,7 +6,7 @@ const passport = require('passport');
 const mongoose = require('mongoose');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.find().populate('users').then(d => { res.json(d);});
+  Fire.find({},'_id title description intensity users createdAt').populate('users').then(d => { res.json(d);});
 });
 
 
@@ -18,9 +18,7 @@ router.put('/:id', passport.authenticate('basic', { session: false }), function 
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date() } );
-  Fire.create(data).then(d => { res.json(d);}).catch(e=>{
-    console.log(e);
-  });
+  Fire.create(data).then(d => { res.json(d);});
 });
 
 
@@ -87,7 +85,7 @@ router.delete('/relation/:fireId/:type/:userId', passport.authenticate('basic', 
 
   let query={_id: req.params.fireId};
   if(userId!==req.user._id) return;
-  
+
   Fire.findOneAndUpdate(query , {$pop: pop }).then(d => { res.json(d);});
 });
 

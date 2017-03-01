@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>{{ "fire.new.title" | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button *ngIf="!isReadonly()" (click)="save()">
+      <button ion-button *ngIf="!isReadonly()" [disabled]="!fireForm.valid" (click)="save()">
             <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
           </button>
     </ion-buttons>
@@ -10,10 +10,7 @@
 </ion-header>
 
 <ion-content >
-  <div *ngIf="fire._id">
-    <button ion-button block (click)="tracking()" *ngIf="!isTracking()">{{ "fire.startCombat" | translate }}</button>
-    <button ion-button block (click)="tracking()" *ngIf="isTracking()">{{ "fire.stopCombar" | translate }}</button>
-  </div>
+
   <ion-list >
     <form [formGroup]="fireForm" novalidate >
       <ion-item>
@@ -39,10 +36,17 @@
       </ion-item>
       <ion-item>
         <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>
-        <ion-input formControlName="description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
+        <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
       </ion-item>
     </form>
   </ion-list>
 
+  <div *ngIf="fire._id">
+    <button ion-button block (click)="tracking()" *ngIf="!isTracking()">{{ "fire.startCombat" | translate }}</button>
+    <button ion-button block (click)="tracking()" *ngIf="isTracking()">{{ "fire.stopCombar" | translate }}</button>
+  </div>
+
   <div #map id="map"></div>
+
+
 </ion-content>

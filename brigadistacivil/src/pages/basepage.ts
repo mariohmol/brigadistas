@@ -1,5 +1,6 @@
 import { App, Platform, NavController, MenuController, AlertController,
-  LoadingController, ToastController } from 'ionic-angular'; //ModalController
+          LoadingController, ToastController } from 'ionic-angular'; 
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import {UserService} from '../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import {ViewChild, ElementRef} from '@angular/core';
@@ -34,7 +35,6 @@ export default class BasePage {
   /**
    * ESTRUTURA
    */
-
   setMenu() {
     if (!this.menuCtrl) return;
     if (this.isUser()) {
@@ -64,6 +64,25 @@ export default class BasePage {
   /**
    * FORMS
    */
+
+   /**
+    * [setDataForm description]  Ex.: this.setDataForm(this.fireForm,this.fireFormFields,this.fire);
+    * @param  {[type]} form ex.: this.fireForm
+    * @param  {[type]} keys ex.: [name: [], title: []]
+    * @param  {[type]} data ex.: this.fire
+    * @return {[type]}      [description]
+    */
+  setDataForm(form,keys,data){
+    let formData={};
+    for(let key in keys){
+      formData[key]=data[key];
+    }
+    (<FormGroup>form).setValue(formData, { onlySelf: true });
+  }
+
+
+
+
   onInputKeypress({keyCode}: KeyboardEvent): void {
     if (keyCode == 13) {
       this.formsubmit();

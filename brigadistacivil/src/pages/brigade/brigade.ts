@@ -1,4 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
+import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import {BrigadesPage} from './brigades'
@@ -17,10 +18,11 @@ export class BrigadePage  extends BasePage{
   public position: any;
   public isbrigade: boolean;
   @ViewChild('map') mapElement: ElementRef;
+  brigadeForm: FormGroup;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public transService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
-    public userService: UserService,public toastCtrl: ToastController) {
+    public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder) {
     super();
 
     if(this.navParams.get("brigade")){
@@ -30,6 +32,12 @@ export class BrigadePage  extends BasePage{
       this.brigade={};
       this.readonly=false;
     }
+
+    this.brigadeForm = this.fb.group({
+      name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      description: ['', [<any>Validators.required]]
+    });
   }
 
   isInBrigade(){
@@ -57,7 +65,6 @@ export class BrigadePage  extends BasePage{
               this.brigade.brigades && this.brigade.brigades.find(d=>{return d._id==UserService.loginData._id})!=null ||
               this.brigade.requested && this.brigade.requested.find(d=>{return d._id==UserService.loginData._id})!=null;
 
-      console.log(this.brigade);
       if(this.brigade && this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id}))
         this.readonly=false;
       else this.readonly=true;

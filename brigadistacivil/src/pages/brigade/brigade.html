@@ -2,7 +2,7 @@
   <ion-navbar>
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button *ngIf="!isReadonly()" (click)="save()">
+      <button ion-button *ngIf="!isReadonly()" [disabled]="!brigadeForm.valid" (click)="save()">
         <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
       </button>
     </ion-buttons>
@@ -10,20 +10,22 @@
 
 </ion-header>
 
-<ion-content class="new-chat">
-  <ion-list class="users">
-    <ion-item>
-      <ion-label floating>{{ "name" | translate }} </ion-label>
-      <ion-input [(ngModel)]="brigade.name" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{ "city" | translate }} </ion-label>
-      <ion-input [(ngModel)]="brigade.city" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="text"></ion-input>
-    </ion-item>
-    <ion-item>
-      <ion-label floating>{{ "description" | translate }} </ion-label>
-      <ion-input [(ngModel)]="brigade.description" (keypress)="onInputKeypress($event)" [readonly]="isReadonly()" type="textarea"></ion-input>
-    </ion-item>
+<ion-content >
+  <ion-list >
+    <form [formGroup]="brigadeForm" novalidate >
+      <ion-item>
+        <ion-label floating>{{ "name" | translate }} </ion-label>
+        <ion-input formControlName="name"  [readonly]="isReadonly()" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ "city" | translate }} </ion-label>
+        <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
+      </ion-item>
+      <ion-item>
+        <ion-label floating>{{ "description" | translate }} </ion-label>
+        <ion-input formControlName="description"  [readonly]="isReadonly()" type="textarea"></ion-input>
+      </ion-item>
+    </form>
   </ion-list>
 
   <ion-list class="leaders">

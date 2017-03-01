@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams } from 'ionic-angular';
 import BasePage from '../basepage';
 import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
@@ -19,12 +19,23 @@ export class FirePage extends BasePage {
   public position: any;
   @ViewChild('map') mapElement: ElementRef;
   fireForm: FormGroup;
+  fireFormFields: any;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public fireService: FireService) {
+  constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
+    public fb: FormBuilder) {
     super();
+
+    this.fireFormFields = {
+      title: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      description: ['', [<any>Validators.required]],
+      intensity: ['', [<any>Validators.required]]
+    };
+
+    this.fireForm = this.fb.group(this.fireFormFields);
+
     if (this.navParams.get("fire")) {
       this.fire = this.navParams.get("fire");
-      console.log(this.fire)
+      this.setDataForm(this.fireForm,this.fireFormFields,this.fire);
       if(this.fire.users && this.fire.users.find(v=>{ return this.currentUser()._id == v}))
         this.readonly = false;
       else this.readonly = true;
@@ -32,12 +43,6 @@ export class FirePage extends BasePage {
       this.fire = {};
       this.readonly = false;
     }
-
-    this.fireForm = this.fb.group({
-      title: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      description: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      intensity: ['', [<any>Validators.required]]
-    });
   }
 
   ionViewDidLoad() {

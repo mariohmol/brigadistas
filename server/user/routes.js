@@ -50,7 +50,7 @@ router.post('/register', (req, res) => {
           username: username,
           password: hash,
           name: req.body.name.trim(),
-          description: req.body.description.trim(),
+          bio: req.body.bio.trim(),
           city: req.body.city.trim(),
           createdAt: new Date(),
           role: 1
