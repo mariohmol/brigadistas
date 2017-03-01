@@ -15,7 +15,7 @@ export class UserPage extends BasePage {
   public user: any;
 
   constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fb: FormBuilder,
-    public userService: UserService, public transService: TranslateService, public menuCtrl: MenuController,
+    public userService: UserService, public translateService: TranslateService, public menuCtrl: MenuController,
     public toastCtrl: ToastController) {
     super();
 

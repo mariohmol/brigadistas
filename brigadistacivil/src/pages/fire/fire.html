@@ -25,6 +25,10 @@
         <ion-icon name="md-person" item-left large></ion-icon>
         <h2>{{fire.users[0].name}}</h2>
       </ion-item>
+      <ion-item text-wrap *ngIf="fire.brigades">
+        <ion-icon name="md-contacts" item-left large></ion-icon>
+        <h2 *ngFor="let brigade of fire.brigades">{{brigade.name}}</h2>
+      </ion-item>
       <ion-list-header>
       {{ "intensity" | translate }}
       </ion-list-header>
@@ -41,10 +45,36 @@
     </form>
   </ion-list>
 
-  <div *ngIf="fire._id">
-    <button ion-button block (click)="tracking()" *ngIf="!isTracking()">{{ "fire.startCombat" | translate }}</button>
-    <button ion-button block (click)="tracking()" *ngIf="isTracking()">{{ "fire.stopCombar" | translate }}</button>
-  </div>
+  <ion-segment  *ngIf="fire._id && isInBrigade()">
+    <ion-segment-button value="enter" *ngIf="fire.status=='open'" (click)="status('checking')">
+      {{ "fire.checking" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='checking'" (click)="status('confirmed')">
+      {{ "fire.confirmed" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='checking'" (click)="status('not_confirmed')">
+      {{ "fire.not_confirmed" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='confirmed'" (click)="status('fighting')">
+      {{ "fire.startCombat" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='fighting' && !isTracking()" (click)="tracking()">
+      {{ "fire.startCombat" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='fighting' && isTracking()" (click)="tracking()">
+      {{ "fire.stopCombat" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='fighting'" (click)="status('fighting')">
+      {{ "fire.endCombat" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='fighting'" (click)="status('aftermath')">
+      {{ "fire.aftermath" | translate }}
+    </ion-segment-button>
+    <ion-segment-button value="enter" *ngIf="fire.status=='aftermath'" (click)="status('finished')">
+      {{ "fire.finished" | translate }}
+    </ion-segment-button>
+  </ion-segment>
+
 
   <div #map id="map"></div>
 

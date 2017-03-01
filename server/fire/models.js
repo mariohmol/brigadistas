@@ -6,7 +6,7 @@ const FireSchema = new mongoose.Schema({
   title: {  type: String, required: true },
   description: {  type: String },
   intensity:{ type: String},
-  status: { type: String },
+  status: { type: String }, //open, checking, confirmed, fighting, aftermath, finished, expire, not_confirmed
   city: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },

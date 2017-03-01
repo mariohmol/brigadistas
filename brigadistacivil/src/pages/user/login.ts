@@ -15,7 +15,7 @@ export class LoginPage extends BasePage {
   loginForm: FormGroup;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
-    public transService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
+    public translateService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
     public fb: FormBuilder, public toastCtrl: ToastController) {
     super();
     this.loginForm = fb.group({

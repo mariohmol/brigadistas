@@ -1,11 +1,13 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams } from 'ionic-angular';
+import { App, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
+import { UserService } from '../../providers/user-service';
 import {  ViewChild, ElementRef } from '@angular/core';
+import {TranslateService} from 'ng2-translate';
 declare var google;
 
 @Component({
@@ -17,12 +19,13 @@ export class FirePage extends BasePage {
   public readonly: boolean;
   public marker: any;
   public position: any;
+  public isbrigade: boolean;
   @ViewChild('map') mapElement: ElementRef;
   fireForm: FormGroup;
   fireFormFields: any;
 
   constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
-    public fb: FormBuilder) {
+    public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService) {
     super();
 
     this.fireFormFields = {
@@ -35,10 +38,7 @@ export class FirePage extends BasePage {
 
     if (this.navParams.get("fire")) {
       this.fire = this.navParams.get("fire");
-      this.setDataForm(this.fireForm,this.fireFormFields,this.fire);
-      if(this.fire.users && this.fire.users.find(v=>{ return this.currentUser()._id == v}))
-        this.readonly = false;
-      else this.readonly = true;
+      this.loadData();
     } else {
       this.fire = {};
       this.readonly = false;
@@ -75,6 +75,34 @@ export class FirePage extends BasePage {
     });
   }
 
+  loadData(){
+    if(!this.fire) return;
+    this.fireService.getFire(this.fire._id).then(d=>{
+      this.fire=d;
+      console.log(d)
+      this.setDataForm(this.fireForm,this.fireFormFields,this.fire);
+
+      if(this.fire.brigades){
+        let userId=this.currentUser()._id;
+        let findUser= this.fire.brigades.find(b=>{
+          if(!b.brigades) return;
+          let findUser = b.brigades.find(bu=>{
+            return  userId==bu;
+          })
+          if(findUser) return true;
+          return false;
+        });
+        if(findUser)  this.isbrigade = true;
+        else   this.isbrigade = false;
+      }
+      else this.isbrigade = false;
+
+      if(this.fire && this.isbrigade)
+        this.readonly=false;
+      else this.readonly=true;
+    });
+  }
+
 
   save() {
     if(this.fire._id){
@@ -88,7 +116,16 @@ export class FirePage extends BasePage {
         this.openPage(FiresPage);
       });
     }
+  }
 
+  changeStatus(status){
+    this.fireService.doPut(`/fire/status/${this.fire._id}/${status}`).then(d=>{
+      this.showToast(this.translate("fire.status.updated"));
+    });
+  }
+
+  isInBrigade(){
+    return this.isbrigade && this.fire._id!=null;
   }
 
   isReadonly() {

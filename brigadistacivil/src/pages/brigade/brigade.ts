@@ -21,7 +21,7 @@ export class BrigadePage  extends BasePage{
   brigadeForm: FormGroup;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
-    public transService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
+    public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder) {
     super();
 

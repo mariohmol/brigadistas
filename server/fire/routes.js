@@ -2,13 +2,16 @@
 const express = require('express');
 const router = express.Router();
 const { Fire } = require('./models');
+const { Brigade } = require('../brigade/models');
 const passport = require('passport');
 const mongoose = require('mongoose');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.find({},'_id title description intensity users createdAt').populate('users').then(d => { res.json(d);});
+  Fire.find({},'_id title description intensity users createdAt coordinates').populate('users').then(d => { res.json(d);});
 });
-
+router.get('/:id', function (req, res, next) {
+  Fire.findOne({_id: req.params.id}).populate("brigades").then(d => { res.json(d);});
+});
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
@@ -17,10 +20,42 @@ router.put('/:id', passport.authenticate('basic', { session: false }), function 
 
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date() } );
-  Fire.create(data).then(d => { res.json(d);});
+  let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date(), status: 'open' } );
+  Brigade.find({status: 'active'},'_id').then(b=>{
+    //TODO: Make brigades getting from polygon are
+    data.brigades = b.map(bi=>{return bi._id;});
+    Fire.create(data).then(d => { res.json(d);});
+  });
 });
 
+
+router.put('/status/:id/:status', passport.authenticate('basic', { session: false }), function (req, res, next) {
+
+  let data={status: req.params.status};
+
+  Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
+  Fire.findOne(req.params.id,data,{new:true,$new: true, upsert: true}).populate("brigades").then(d => {
+      console.log(d);
+      if(d.status=='open' && req.params.status=='checking'){
+        //send
+        const { initPush } = require('./config/push');
+      }else if(d.status=='checking' && req.params.status=='confirmed'){
+
+      }else if(d.status=='checking' && req.params.status=='not_confirmed'){
+
+      }else if(d.status=='confirmed' && req.params.status=='fighting'){
+
+      }else if(d.status=='fighting' && req.params.status=='aftermath'){
+
+      }else if(d.status=='aftermath' && req.params.status=='finished'){
+
+      }//expire?
+
+      Fire.findOneAndUpdate(req.params.id,data).then(d => {
+        res.json(d);
+      });
+  });
+});
 
 router.delete('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
   Fire.findOneAndDelete(req.params.id,{},{}).then(d => { res.json(d);});

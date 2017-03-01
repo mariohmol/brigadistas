@@ -9,3 +9,6 @@ exports.SMTP_HOST=process.env.SMTP_HOST || 'SES_SMTP_URL';
 exports.SMTP_PORT=process.env.SMTP_PORT || '465';
 exports.SMTP_USER=process.env.SMTP_USER || 'USER';
 exports.SMTP_PASS=process.env.SMTP_PASS || 'PASS';
+exports.APN_KEYID=process.env.APN_KEYID || 'T0K3NK3Y1D';
+exports.APN_TEAMID=process.env.APN_TEAMID || 'T34M1D';
+exports.ANDROID_GCMKEY=process.env.ANDROID_GCMKEY || 'YOUR_API_KEY_HERE';

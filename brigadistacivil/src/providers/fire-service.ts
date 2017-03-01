@@ -16,6 +16,9 @@ export class FireService extends BaseService {
   getFires(){
     return this.doGet('/fire/');
   }
+  getFire(id){
+    return this.doGet(`/fire/${id}`);
+  }
 
   addFire(fire){
     return this.doPost('/fire/',fire);
@@ -23,6 +26,10 @@ export class FireService extends BaseService {
 
   updateFire(fire){
     return this.doPut(`/fire/${fire._id}`,fire);
+  }
+
+  changeStatus(fire,status){
+    return this.doPut(`/fire/status/${fire._id}/${status}`);
   }
 
 

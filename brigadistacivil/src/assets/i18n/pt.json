@@ -38,10 +38,20 @@
     "title": "Ver Incêndio",
     "startCombat": "Combater Incêndio",
     "stopCombat": "Sair do Combate",
+    "checking": "Verificar Incêndio",
+    "confirmed": "Confirmar Incêndio",
+    "not_confirmed": "Não confirmar",
+    "initCombat": "Iniciar Combate",
+    "endCombat": "Sair do Combate",
+    "aftermath": "Inicar Rescaldo",
+    "finished": "Incêndio Combatido",
     "new": {
       "title": "Reporta Incêndio",
       "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
       "fieldDescription": "Mais informações como acesso, contato.."
+    },
+    "status": {
+      "updated": "O status do incêndio foi alterado com sucesso"
     }
   },
   "fires": {

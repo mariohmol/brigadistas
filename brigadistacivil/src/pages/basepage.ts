@@ -1,6 +1,6 @@
 import { App, Platform, NavController, MenuController, AlertController,
-          LoadingController, ToastController } from 'ionic-angular'; 
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+          LoadingController, ToastController } from 'ionic-angular';
+import {FormGroup} from '@angular/forms';
 import {UserService} from '../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import {ViewChild, ElementRef} from '@angular/core';
@@ -8,7 +8,7 @@ declare var google;
 
 export default class BasePage {
   public userService: UserService;
-  public transService: TranslateService;
+  public translateService: TranslateService;
   public navCtrl: NavController;
   public menuCtrl: MenuController;
   public alertCtrl: AlertController;
@@ -105,7 +105,7 @@ export default class BasePage {
    * @return {string}     [description]
    */
   translate(key){
-    let newKey = this.transService.get(key);
+    let newKey = this.translateService.get(key);
     if(newKey && (<any>newKey).value) return (<any>newKey).value;
     return key;
   }
@@ -313,7 +313,7 @@ export default class BasePage {
    * @return {[type]}          [description]
    */
   loadMap(position,options={}) {
-    var drawingManager;
+
 
     //-34.9290, 138.6010
     let latLng = new google.maps.LatLng(position.latitude, position.longitude);
@@ -333,13 +333,18 @@ export default class BasePage {
     }
 
 
+
+
+    /*
+    var drawingManager;
+    
     var polyOptions = {
       strokeWeight: 0,
       fillOpacity: 0.45,
       editable: true
     };
 
-    /*drawingManager = new google.maps.drawing.DrawingManager({
+     drawingManager = new google.maps.drawing.DrawingManager({
       drawingControl: true,
       drawingControlOptions: {
         drawingModes: [

@@ -11,6 +11,7 @@ const passport = require('passport');
 const { ensureAuthenticated } = require('./config/passport');
 const { doErrorEmailAlerts } = require('./config/emailer');
 const {logger} = require('./config/logger');
+const { initPush } = require('./config/push');
 const userMiddleware = require('./user/routes');
 const brigadeMiddleware = require('./brigade/routes');
 const fireMiddleware = require('./fire/routes');
@@ -59,6 +60,7 @@ const runServer = function(callback) {
     console.log(`Connected to db at ${DATABASE_URL}`);
 
     app.listen(PORT, () => {
+      initPush();
       if (callback) {
         callback();
       }
