@@ -67,7 +67,8 @@
       "id": "com.googlemaps.ios"
     },
     "cordova-plugin-mauron85-background-geolocation",
-    "cordova-plugin-googlemaps"
+    "cordova-plugin-googlemaps",
+    "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [
     "ios",
