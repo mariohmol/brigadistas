@@ -75,7 +75,8 @@ export default class BasePage {
   setDataForm(form,keys,data){
     let formData={};
     for(let key in keys){
-      formData[key]=data[key];
+      if(key in data) formData[key]=data[key];
+      else formData[key]="";
     }
     (<FormGroup>form).setValue(formData, { onlySelf: true });
   }
@@ -337,7 +338,7 @@ export default class BasePage {
 
     /*
     var drawingManager;
-    
+
     var polyOptions = {
       strokeWeight: 0,
       fillOpacity: 0.45,
