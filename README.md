@@ -37,11 +37,7 @@ To run this app :
 
 ### Configure
 
-*Frontend* : Configure the enviroment that you are working creating a file inside  `brigadistacivil\src\env.json` with your needs. `default` is production, `test` to using in mobiles and `developement` to run on browser):
-
-```
-{ "env": "development" }
-```
+*Frontend* : The default enviroment is development, you can change to `test` if you would like to test in mobile conecting to your local server. The task `npm run gen` makes the apk taking the production enviroment file in place as default enviroment. 
 
 *Backend* : Configure the server side creating a `/.env` file with some important config variables, for example:
 
