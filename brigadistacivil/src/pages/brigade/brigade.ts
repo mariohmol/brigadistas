@@ -21,6 +21,7 @@ export class BrigadePage  extends BasePage{
   @ViewChild('map') mapElement: ElementRef;
   brigadeForm: FormGroup;
   brigadeFormFields: any;
+  public readonly: boolean;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,

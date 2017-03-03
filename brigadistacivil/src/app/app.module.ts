@@ -15,6 +15,8 @@ import {UserService} from '../providers/user-service';
 import {FireService} from '../providers/fire-service';
 import {BrigadeService} from '../providers/brigade-service';
 
+import {ReadOnlyClass} from './directives/readonlyclass';
+
 import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {HttpModule,Http} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
@@ -25,8 +27,10 @@ let pages = [
   FirePage, FiresPage,
   BrigadePage, BrigadesPage
 ];
+
+let declarations = [...pages, ReadOnlyClass ];
 @NgModule({
-  declarations: pages,
+  declarations: declarations,
   imports: [
     BrowserModule,
     HttpModule,

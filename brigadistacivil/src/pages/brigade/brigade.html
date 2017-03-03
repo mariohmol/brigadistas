@@ -13,15 +13,15 @@
 <ion-content >
   <ion-list >
     <form [formGroup]="brigadeForm" novalidate >
-      <ion-item>
-        <ion-label floating>{{ "name" | translate }} </ion-label>
+      <ion-item [class.readonlyInput]="isReadonly()==true">
+        <ion-label floating>{{ "name" | translate }}</ion-label>
         <ion-input formControlName="name"  [readonly]="isReadonly()" type="text"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item [class.readonlyInput]="isReadonly()==true">
         <ion-label floating>{{ "city" | translate }} </ion-label>
         <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
       </ion-item>
-      <ion-item>
+      <ion-item [class.readonlyInput]="isReadonly()==true">
         <ion-label floating>{{ "description" | translate }} </ion-label>
         <ion-input formControlName="description"  [readonly]="isReadonly()" type="textarea"></ion-input>
       </ion-item>

@@ -13,32 +13,32 @@
 
   <ion-list >
     <form [formGroup]="fireForm" novalidate >
-      <ion-item>
+      <ion-item [class.readonlyInput]="isReadonly()==true">
         <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
         <ion-input formControlName="title" [readonly]="isReadonly()" type="text"></ion-input>
       </ion-item>
-      <ion-item text-wrap *ngIf="fire.users">
+      <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-calendar" item-left large></ion-icon>
         <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
       </ion-item>
-      <ion-item text-wrap *ngIf="fire.users">
+      <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-person" item-left large></ion-icon>
         <h2>{{fire.users[0].name}}</h2>
       </ion-item>
-      <ion-item text-wrap *ngIf="fire.brigades">
+      <ion-item text-wrap *ngIf="fire.brigades" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-contacts" item-left large></ion-icon>
         <h2 *ngFor="let brigade of fire.brigades">{{brigade.name}}</h2>
       </ion-item>
       <ion-list-header>
       {{ "intensity" | translate }}
       </ion-list-header>
-      <ion-item>
-        <ion-range min="20" max="100" step="20" snaps="true" formControlName="intensity" color="danger">
+      <ion-item >
+        <ion-range min="20" max="100" step="20" snaps="true" [disabled]="isReadonly()" formControlName="intensity" color="danger">
           <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
           <ion-icon range-right color="danger" name="thermometer"></ion-icon>
         </ion-range>
       </ion-item>
-      <ion-item>
+      <ion-item [class.readonlyInput]="isReadonly()==true">
         <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>
         <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
       </ion-item>

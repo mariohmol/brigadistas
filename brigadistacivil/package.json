@@ -28,8 +28,8 @@
     "gen": "cp src/production.ts src/environment.ts && npm run gen:release && npm run gen:jarsign && npm run gen:zipalign",
     "gen:release": "cordova build --release android",
     "gen:keytool": "keytool -genkey -v -keystore brigadistas.keystore -alias brigadistas -keyalg RSA -keysize 2048 -validity 10000",
-    "gen:jarsign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore brigadistas.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk brigadistas",
-    "gen:zipalign": "rm -f Brigadistas.apk && /Users/mariohmol/projetos/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk Brigadistas.apk",
+    "gen:jarsign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore brigadistas.keystore platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk brigadistas",
+    "gen:zipalign": "rm -f Brigadistas.apk && /Users/mariohmol/projetos/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk Brigadistas.apk",
     "gen:lookkey": "keytool -list -v -keystore brigadistas.keystore"
   },
   "dependencies": {
