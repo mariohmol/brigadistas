@@ -1,5 +1,5 @@
 <ion-header>
-  <ion-navbar>
+  <ion-navbar color="primary">
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
     <ion-buttons end>
       <button ion-button *ngIf="!isReadonly()" [disabled]="!brigadeForm.valid" (click)="save()">
