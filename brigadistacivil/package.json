@@ -25,7 +25,7 @@
     "createpage": "ionic g page myPage",
     "createprovider": "ionic g provider MyData",
     "deviceshow": "adb devices",
-    "gen": "npm run gen:release && npm run gen:jarsign && npm run gen:zipalign",
+    "gen": "cp src/production.ts src/environment.ts && npm run gen:release && npm run gen:jarsign && npm run gen:zipalign",
     "gen:release": "cordova build --release android",
     "gen:keytool": "keytool -genkey -v -keystore brigadistas.keystore -alias brigadistas -keyalg RSA -keysize 2048 -validity 10000",
     "gen:jarsign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore brigadistas.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk brigadistas",

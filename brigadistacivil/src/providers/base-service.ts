@@ -1,7 +1,8 @@
 import { Injectable } from '@angular/core';
 import { Http, Headers, RequestOptions} from '@angular/http';
 import 'rxjs/add/operator/map';
-import envj from '../env.json';
+import Environment from '../environment';
+
 /*
   Generated class for the BaseService provider.
 
@@ -18,9 +19,7 @@ export class BaseService {
     this.http=http;
 
     if(window.location.hostname==="app.brigadistacivil.com.br") this.env="production";
-    else if(envj && envj.env) this.env=envj.env;
-    else if(window.location.pathname.includes("android_asset")) this.env="mobile";
-    //if(window.location.pathname.contains("assets")) this.env=="production";
+    else this.env=Environment.env;
 
     if(this.env=="development"){
       this.apiUrl = "http://localhost:8484";
