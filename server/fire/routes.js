@@ -5,6 +5,7 @@ const { Fire } = require('./models');
 const { Brigade } = require('../brigade/models');
 const passport = require('passport');
 const mongoose = require('mongoose');
+const {sendAndroid,sendiOS} = require('../config/push');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates').populate('users').then(d => { res.json(d);});
@@ -24,6 +25,21 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
   Brigade.find({status: 'active'},'_id').then(b=>{
     //TODO: Make brigades getting from polygon are
     data.brigades = b.map(bi=>{return bi._id;});
+
+    let android=[];
+    let ios=[];
+
+    //Send alert of fire to all Brigades in the fire
+    b.forEach(bItem=>{
+      bItem.brigades.forEach(userItem=>{
+        if(userItem.androidkey) android.push(userItem.androidkey);
+        if(userItem.ioskey) ios.push(userItem.androidkey);
+      });
+    });
+    if(android) sendAndroid("New fire!",android);
+    if(ios) sendiOS("New fire!",ios);
+
+    //Create the fire
     Fire.create(data).then(d => { res.json(d);});
   });
 });

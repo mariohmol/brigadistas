@@ -73,14 +73,12 @@ export class MyApp {
       },
       windows: {}
     });
-    console.log(this.push);
 
     if(!this.push) return;
     try{
       this.push.on('registration', (data) => {
-        console.log("device token ->", data.registrationId);
         localStorage['deviceToken']=data.registrationId;
-        //TODO - send device token to server
+        this.userService.storeDeviceToken('android',data.registrationId);
       });
 
       this.push.on('notification', (data) => {
@@ -113,5 +111,5 @@ export class MyApp {
     this.openPage(LoginPage);
   }
 
-  
+
 }

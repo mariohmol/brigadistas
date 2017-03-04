@@ -17,7 +17,7 @@ export class UserService extends BaseService {
   }
 
   login(username: string, password: string) {
-    console.log("USER S LOGIN",UserService.loginData)
+    console.log('USER S LOGIN',UserService.loginData)
     UserService.loginData=null;
     if (UserService.loginData) {
       return Promise.resolve(UserService.loginData);
@@ -25,19 +25,19 @@ export class UserService extends BaseService {
 
     return new Promise( (resolve,reject) => {
       let data = {username: username,password: password};
-        console.log("USER S LOGIN",data)
-      this.doPost("/user/login",data).then(retorno => {
+        console.log('USER S LOGIN',data)
+      this.doPost('/user/login',data).then(retorno => {
         if(!('error' in retorno)) UserService.loginData = retorno;
         resolve(UserService.loginData);
       }).catch( error => {
-        console.log("error",error)
+        console.log('error',error)
         reject(error);
       });
     });
   }
 
   logout(){
-    let retorno =  null;//this.doPost("/attrs/logout/",{});
+    let retorno =  null;//this.doPost('/attrs/logout/',{});
     localStorage['profile']=null;
     localStorage.removeItem('profile');
     let deviceToken = localStorage['deviceToken']
@@ -48,38 +48,38 @@ export class UserService extends BaseService {
   }
 
   storeDeviceToken(type,id) {
-     if(type=="android"){
-  		return this.doPost("/user/pushregister/android/",{ androidkey: id});
+     if(type=='android'){
+  		return this.doPost('/user/pushregister/android/',{ androidkey: id});
   	}else {
-      return this.doPost("/user/pushregister/ios/",{ ioskey: id});
+      return this.doPost('/user/pushregister/ios/',{ ioskey: id});
     }
   }
 
   removeDeviceToken(type,id) {
-     if(type=="android"){
-      return this.doPost("/user/pushunregister/android/",{ androidkey: id});
+     if(type=='android'){
+      return this.doPost('/user/pushunregister/android/',{ androidkey: id});
     }else {
-      return this.doPost("/user/pushunregister/ios/",{ ioskey: id});
+      return this.doPost('/user/pushunregister/ios/',{ ioskey: id});
     }
   }
 
   recover(email) {
-    return this.doPost("/user/recover/"+email+"/",{});
+    return this.doPost('/user/recover/'+email+'/',{});
   }
 
   register(data) {
-    return this.doPost("/user/register",data);
+    return this.doPost('/user/register',data);
   }
 
   updateProfile(data) {
-    return this.doPost("/user/update",data);
+    return this.doPost('/user/update',data);
   }
 
   saveLocation(lat, lng, fireId) {
     let data = {
       lat, lng
     }
-    this.doPost("/fire/position/"+fireId, data);
+    this.doPost('/fire/position/'+fireId, data);
   }
 
   checkcpfvalido(cpf){
@@ -88,16 +88,16 @@ export class UserService extends BaseService {
     if(cpf == '') return false;
     // Elimina CPFs invalidos conhecidos
     if (cpf.length != 11 ||
-        cpf == "00000000000" ||
-        cpf == "11111111111" ||
-        cpf == "22222222222" ||
-        cpf == "33333333333" ||
-        cpf == "44444444444" ||
-        cpf == "55555555555" ||
-        cpf == "66666666666" ||
-        cpf == "77777777777" ||
-        cpf == "88888888888" ||
-        cpf == "99999999999")
+        cpf == '00000000000' ||
+        cpf == '11111111111' ||
+        cpf == '22222222222' ||
+        cpf == '33333333333' ||
+        cpf == '44444444444' ||
+        cpf == '55555555555' ||
+        cpf == '66666666666' ||
+        cpf == '77777777777' ||
+        cpf == '88888888888' ||
+        cpf == '99999999999')
             return false;
     // Valida 1o digito
     add = 0;
@@ -120,11 +120,11 @@ export class UserService extends BaseService {
     return true;
   }
   checkcpf(cpf) {
-    return this.doPost("/user/checkcpf/0/"+cpf+"/",{});
+    return this.doPost('/user/checkcpf/0/'+cpf+'/',{});
   }
 
   checkcnpj(cnpj) {
-    return this.doPost("/brigade/checkcnpj/0/${cnpj}/",{});
+    return this.doPost('/brigade/checkcnpj/0/${cnpj}/',{});
   }
 
 }
