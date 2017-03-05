@@ -18,18 +18,16 @@ export class BaseService {
   constructor(public http: Http) {
     this.http=http;
 
-    if(window.location.hostname==="app.brigadistacivil.com.br") this.env="production";
+    if(window.location.hostname.includes("brigadistacivil.com.br")) this.env="production";
     else this.env=Environment.env;
 
     if(this.env=="development" && window.location.pathname.includes("asset")) this.env="test";
 
-    if(this.env=="development"){
-      this.apiUrl = "http://localhost:8484";
-    }else if(this.env=="test"){
+    if(this.env=="test"){
       this.apiUrl = "http://10.0.0.4:8484";
     }
     else{
-      this.apiUrl = "http://app.brigadistacivil.com.br";
+      this.apiUrl = Environment.apiBase;
     }
   }
 
