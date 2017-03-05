@@ -78,7 +78,7 @@ router.get('/logout', (req,res)=>{
 });
 
 
-router.get('/pushregister/:type/', (req,res)=>{
+router.post('/pushregister/:type/', (req,res)=>{
   var set={};
   if(req.params.type=='android') set={androidkey: req.body.androidkey};
   else set={ioskey: req.body.ioskey};//ios
@@ -89,7 +89,7 @@ router.get('/pushregister/:type/', (req,res)=>{
 });
 
 
-router.get('/pushunregister/:type/', (req,res)=>{
+router.post('/pushunregister/:type/', (req,res)=>{
   var set='';
   if(req.params.type==='android') set={androidkey: null};
   else set={ioskey: null};
