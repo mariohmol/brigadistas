@@ -47,7 +47,8 @@ router.put('/status/:id/:status', passport.authenticate('basic', { session: fals
   let data={status: req.params.status};
   let statusHistory;
   Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
-  Fire.findOne({_id: req.params.id},data,{new:true,$new: true, upsert: true}).populate("brigades").then(d => {
+  
+  Fire.findOne({_id: req.params.id}).deepPopulate("brigades.brigades").then(d => {
 
       //TODO: Send the push notifications based in the change in flow
       if(d.status=='open' && req.params.status=='checking'){
@@ -63,11 +64,10 @@ router.put('/status/:id/:status', passport.authenticate('basic', { session: fals
       }else if(d.status=='aftermath' && req.params.status=='finished'){
         statusHistory=req.params.status;
       }//expire?
-      console.log(statusHistory,d);
       if(!statusHistory) res.json(d);
       else{
         data.statusHistory={$addToSet: {status: req.params.status, date: new Date(), user: req.user._id}};
-        Fire.findOneAndUpdate({_id: req.params.id},data).then(d => {
+        Fire.findOneAndUpdate({_id: req.params.id},data).then(foundFire => {
           Brigade.pushToBrigades(d.brigades,`Fire update: ${req.params.status}`);
           res.json(d);
         });

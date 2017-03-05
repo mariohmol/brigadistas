@@ -3,6 +3,7 @@ const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
 const {sendAndroid,sendiOS} = require('../config/push');
 const {logger} = require('../config/logger');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const BrigadeSchema = new mongoose.Schema({
   name: {
@@ -22,6 +23,7 @@ const BrigadeSchema = new mongoose.Schema({
   createdAt: { type: Date },
   deletedAt: { type: Date },
 });
+BrigadeSchema.plugin(deepPopulate);
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);
 
@@ -33,11 +35,8 @@ const Brigade = mongoose.model('Brigade', BrigadeSchema);
 Brigade.pushToBrigades = function(brigades,message){
   let android=[];
   let ios=[];
-  logger.info(`pushToBrigades`);
   brigades.forEach(bItem=>{
-    logger.info(`First bItem`);
     bItem.brigades.forEach(userItem=>{
-      logger.info(`brigades`);
       if(userItem.androidkey) android.push(userItem.androidkey);
       if(userItem.ioskey) ios.push(userItem.androidkey);
     });
@@ -48,5 +47,6 @@ Brigade.pushToBrigades = function(brigades,message){
   if(ios) returnInfo.ios=sendiOS(message,ios);
   return returnInfo;
 };
+
 
 module.exports = { Brigade };

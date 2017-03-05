@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const FireSchema = new mongoose.Schema({
   title: {  type: String, required: true },
@@ -29,6 +30,7 @@ const FireSchema = new mongoose.Schema({
   fighting: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: false,required: [true,'No user id found']}],
   fighters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: false,required: [true,'No user id found']}]
 });
+FireSchema.plugin(deepPopulate);
 
 const Fire = mongoose.model('Fire', FireSchema);
 

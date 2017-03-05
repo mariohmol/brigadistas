@@ -3,6 +3,7 @@ var gcm = require('node-gcm');
 var apn = require('apn');
 const {APN_KEYID, APN_TEAMID,ANDROID_GCMKEY} = require('./config');
 var options,sender,apnProvider;
+const {logger} = require('../config/logger');
 
 function initPush(){
   options = {
@@ -32,8 +33,8 @@ function sendAndroid(message,regTokens){
   var messageObject = new gcm.Message({message});
   // Actually send the message
   sender.send(messageObject, { registrationTokens: regTokens }, function (err, response) {
-      if (err) console.error(err);
-      else console.log(response);
+      if (err) logger.error(`Error sending android token ${err}`);
+      else logger.info(`Response sending android token ${response}`);
   });
 }
 
