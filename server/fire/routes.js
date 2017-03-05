@@ -8,6 +8,7 @@ const mongoose = require('mongoose');
 const {sendAndroid,sendiOS} = require('../config/push');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const {logger} = require('../config/logger');
+const {URL} = require('../config/config');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates').populate('users').then(d => { res.json(d);});
@@ -40,9 +41,9 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
 const newFire =  function(res,data,b=null){
   logger.info(`Creating a new fire ${JSON.stringify(data)}`);
   Fire.create(data).then(d => {
-    let email= `New Fire is open, check it out in http://app.brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    let email= `New Fire is open, check it out in ${URL}/fire/${d._id}. Full details ${JSON.stringify(d)}`;
     logger.info(`Sending email to admins in post fire`);
-    sendEmailAdmins("Nova Brigada criada",email);
+    sendEmailAdmins("New Fire is reported",email);
 
     logger.info(`Sending push messages to brigades`);
     Brigade.pushToBrigades(b,{message:`New fire update: ${d.title}`});

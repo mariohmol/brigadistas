@@ -5,6 +5,7 @@ const { Brigade } = require('./models');
 const passport = require('passport');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
+const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
@@ -28,8 +29,8 @@ router.post('/', passport.authenticate('basic', { session: false }),
   let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date()} );
   Brigade.create(req.body).then(d => {
     res.json(d);
-    let email= `Activate this brigade by accessing http://app.brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
-    sendEmailAdmins("Nova Brigada criada",email);
+    let email= `Activate this brigade by accessing ${URL}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    sendEmailAdmins("New Brigade created",email);
   });
 });
 
