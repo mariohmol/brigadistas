@@ -79,6 +79,7 @@ export class FirePage extends BasePage {
           this.map.moveCamera(position);*/
         }, error => {
           console.log(error);
+          cb();
         }, options);
       }else {
 
