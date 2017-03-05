@@ -61,6 +61,8 @@ export class FirePage extends BasePage {
       Geolocation.getCurrentPosition().then((pos) => {
         this.position=pos.coords;
         cb();
+      }).catch(err=>{
+        cb();
       });
     }else  cb();
   }

@@ -57,10 +57,15 @@ export class BrigadePage  extends BasePage{
   }
 
   showMap(){
-    Geolocation.getCurrentPosition().then((position) => {
-      this.position=position;
-      this.loadMap(position.coords,{scrollwheel: false,});
-    });
+    if(this.position){
+        this.loadMap(this.position.coords,{scrollwheel: false,});
+    }else{
+      Geolocation.getCurrentPosition().then((position) => {
+        this.position=position;
+        this.loadMap(position.coords,{scrollwheel: false,});
+      });
+    }
+
   }
 
   loadData(){
