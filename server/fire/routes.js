@@ -35,7 +35,7 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
       sendEmailAdmins("Nova Brigada criada",email);
 
       logger.info(`Sending push messages to brigades`);
-      Brigade.pushToBrigades(b,"New fire!");
+      Brigade.pushToBrigades(b,{message:`New fire update: ${d.title}`});
 
       logger.info(`Returning new fire`);
       res.json(d);});
@@ -47,7 +47,7 @@ router.put('/status/:id/:status', passport.authenticate('basic', { session: fals
   let data={status: req.params.status};
   let statusHistory;
   Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
-  
+
   Fire.findOne({_id: req.params.id}).deepPopulate("brigades.brigades").then(d => {
 
       //TODO: Send the push notifications based in the change in flow
@@ -68,7 +68,7 @@ router.put('/status/:id/:status', passport.authenticate('basic', { session: fals
       else{
         data.statusHistory={$addToSet: {status: req.params.status, date: new Date(), user: req.user._id}};
         Fire.findOneAndUpdate({_id: req.params.id},data).then(foundFire => {
-          Brigade.pushToBrigades(d.brigades,`Fire update: ${req.params.status}`);
+          Brigade.pushToBrigades(d.brigades,{message:`Fire update: ${req.params.status}`});
           res.json(d);
         });
       }

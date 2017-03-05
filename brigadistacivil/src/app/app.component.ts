@@ -64,7 +64,7 @@ export class MyApp {
   startPush(){
     this.push = Push.init({
       android: {
-        senderID: '228916749774'
+        senderID: '651174488283'
       },
       ios: {
         alert: 'true',
@@ -82,7 +82,7 @@ export class MyApp {
 
       this.push.on('notification', (data) => {
         new Promise( resolve => {
-          var snd = new (<any>window).Audio( "assets/mp3/pedido.mp3"); snd.play();
+          var snd = new (<any>window).Audio( "assets/mp3/atraso.mp3"); snd.play();
           resolve();
         })
 

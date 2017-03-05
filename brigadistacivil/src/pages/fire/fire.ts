@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { Geolocation } from 'ionic-native';
+//import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
 import {  ViewChild, ElementRef } from '@angular/core';
@@ -57,14 +57,44 @@ export class FirePage extends BasePage {
 
       this.confMap();
     }
+
     if(!this.position){
-      Geolocation.getCurrentPosition().then((pos) => {
+
+      //using navigator
+      if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
+
+        //position.coords.latitude,position.coords.longitude
+        navigator.geolocation.getCurrentPosition(pos=> {
+          this.position=pos.coords
+          cb();
+
+          /*let position: CameraPosition = {
+            target: pos.coords,
+            zoom: 18,
+            tilt: 30
+          };
+          this.map.moveCamera(position);*/
+        }, error => {
+          console.log(error);
+        }, options);
+      }else {
+
+        if(this.map.getMyLocation){
+          this.map.getMyLocation().then(pos => {
+            this.position=pos.latLng;
+          }).catch(err=>{});
+        }
+      }
+
+
+      /*Geolocation.getCurrentPosition().then((pos) => {
         this.position=pos.coords;
         cb();
-      }).catch(err=>{
-        cb();
-      });
-    }else  cb();
+      })*/
+    }
   }
 
   confMap(){
@@ -80,7 +110,6 @@ export class FirePage extends BasePage {
     if(!this.fire) return;
     this.fireService.getFire(this.fire._id).then(d=>{
       this.fire=d;
-      console.log(d)
       this.setDataForm(this.fireForm,this.fireFormFields,this.fire);
 
       if(this.fire.brigades){
