@@ -4,20 +4,32 @@ App that connects civil fire brigades with civil society to fight against the fi
 
 Here is the web version:
 
-* http://app.brigadistacivil.com.br/
+* https://brigadistacivil.com.br/
 
 Development enviroment:
 
 * https://brigadistas.herokuapp.com/
 
-### Techs
+## How that works
+
+![Main menu](docs/menu.png)
+
+![See fires](docs/fires.png)
+![Fire Details](docs/fire.png)
+
+
+![See brigades](docs/brigades.png)
+![Brigade Details](docs/brigade.png)
+![See fires](docs/enterbrigade.png)
+
+## Techs
 
 - [ionic2](ionicframework.com/docs/v2)
 - [angular2](angular.io)
 - [webpack](webpack.com)
 
 
-## Install
+### Install
 
 
 Start with npm packages:
@@ -37,7 +49,7 @@ To run this app :
 
 ### Configure
 
-*Frontend* : The default enviroment is development, you can change to `test` if you would like to test in mobile conecting to your local server. The task `npm run gen` makes the apk taking the production enviroment file in place as default enviroment. 
+*Frontend* : The default enviroment is development, you can change to `test` if you would like to test in mobile conecting to your local server. The task `npm run gen` makes the apk taking the production enviroment file in place as default enviroment.
 
 *Backend* : Configure the server side creating a `/.env` file with some important config variables, for example:
 
