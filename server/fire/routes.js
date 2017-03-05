@@ -25,23 +25,32 @@ router.put('/:id', passport.authenticate('basic', { session: false }), function 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date(), status: 'open' } );
   Brigade.find({status: 'active'},'_id brigades').populate("brigades").then(b=>{
-    //TODO: Make brigades getting from polygon are
-    data.brigades = b.map(bi=>{return bi._id;});
-
-    //Create the fire
-    Fire.create(data).then(d => {
-      let email= `New Fire is open, check it out in http://app.brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
-      logger.info(`Sending email to admins in post fire`);
-      sendEmailAdmins("Nova Brigada criada",email);
-
-      logger.info(`Sending push messages to brigades`);
-      Brigade.pushToBrigades(b,{message:`New fire update: ${d.title}`});
-
-      logger.info(`Returning new fire`);
-      res.json(d);});
+    if(b){
+      //TODO: Make brigades getting from polygon are
+      data.brigades = b.map(bi=>{return bi._id;});
+    }
+    newFire(res,data,b);
+  }).catch(e=>{
+    logger.error(`ERROR Creating a new fire`,e);
+    newFire(res,data);
   });
 });
 
+//Create the fire
+const newFire =  function(res,data,b=null){
+  logger.info(`Creating a new fire`);
+  Fire.create(data).then(d => {
+    let email= `New Fire is open, check it out in http://app.brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    logger.info(`Sending email to admins in post fire`);
+    sendEmailAdmins("Nova Brigada criada",email);
+
+    logger.info(`Sending push messages to brigades`);
+    Brigade.pushToBrigades(b,{message:`New fire update: ${d.title}`});
+
+    logger.info(`Returning new fire`);
+    res.json(d);
+  });
+};
 
 router.put('/status/:id/:status', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data={status: req.params.status};

@@ -30,7 +30,7 @@ export class GeneralService extends BaseService {
     let map;
 
     if (BaseService.device == 'mobile') {
-      map = new GoogleMap(mapElement);
+      map = new GoogleMap(mapElement.nativeElement);
 
       // listen to MAP_READY event
       map.one(GoogleMapsEvent.MAP_READY).then(() => {

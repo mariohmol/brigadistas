@@ -5,6 +5,7 @@ import BasePage from '../basepage';
 import {BrigadesPage} from './brigades'
 import { UserService } from '../../providers/user-service';
 import { BrigadeService } from '../../providers/brigade-service';
+import { GeneralService } from '../../providers/general-service';
 import { Geolocation } from 'ionic-native';
 import {TranslateService} from 'ng2-translate';
 declare var google;
@@ -25,7 +26,8 @@ export class BrigadePage  extends BasePage{
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
-    public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder) {
+    public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
+    public generalService: GeneralService) {
     super();
 
     if(this.navParams.get("brigade")){

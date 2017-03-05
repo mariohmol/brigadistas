@@ -35,7 +35,7 @@ export class BaseService {
     }
 
     if(window.location.pathname.includes("asset")) BaseService.device="mobile";
-    else BaseService.device="mobile";
+    else BaseService.device="web";
   }
 
   doHeaders(data:any=null){

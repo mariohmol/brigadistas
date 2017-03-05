@@ -5,6 +5,7 @@ import BasePage from '../basepage';
 import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
+import { GeneralService } from '../../providers/general-service';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 declare var google;
@@ -24,7 +25,8 @@ export class FirePage extends BasePage {
   fireFormFields: any;
 
   constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
-    public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService) {
+    public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
+    public generalService: GeneralService) {
     super();
 
     this.fireFormFields = {

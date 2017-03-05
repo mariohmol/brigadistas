@@ -33,6 +33,7 @@ const Brigade = mongoose.model('Brigade', BrigadeSchema);
  * @return {[type]}          [description]
  */
 Brigade.pushToBrigades = function(brigades,message){
+  if(!brigades) return;
   let android=[];
   let ios=[];
   brigades.forEach(bItem=>{
