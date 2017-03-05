@@ -11,24 +11,31 @@ import Environment from '../environment';
 */
 @Injectable()
 export class BaseService {
-  apiUrl: string;
-  env: string = "production"; //production or development or test
+  public static apiUrl: string;
+  public static env: string = "production"; //production or development or test
+  public static device: string; //mobile or web
   profile: any;
 
   constructor(public http: Http) {
     this.http=http;
+    if(!BaseService.device) this.initEnvVars();
+  }
 
-    if(window.location.hostname.includes("brigadistacivil.com.br")) this.env="production";
-    else this.env=Environment.env;
+  initEnvVars(){
+    if(window.location.hostname.includes("brigadistacivil.com.br")) BaseService.env="production";
+    else BaseService.env=Environment.env;
 
-    if(this.env=="development" && window.location.pathname.includes("asset")) this.env="test";
+    if(BaseService.env=="development" && window.location.pathname.includes("asset")) BaseService.env="test";
 
-    if(this.env=="test"){
-      this.apiUrl = "http://10.0.0.4:8484";
+    if(BaseService.env=="test"){
+      BaseService.apiUrl = "http://10.0.0.4:8484";
     }
     else{
-      this.apiUrl = Environment.apiBase;
+      BaseService.apiUrl = Environment.apiBase;
     }
+
+    if(window.location.pathname.includes("asset")) BaseService.device="mobile";
+    else BaseService.device="mobile";
   }
 
   doHeaders(data:any=null){
@@ -52,7 +59,7 @@ export class BaseService {
     return new Promise( (resolve,reject) => {
       let headers=this.doHeaders(null);
       let options = new RequestOptions({ headers: headers, method: "get" });
-      return this.http.get(this.apiUrl+url, options  )
+      return this.http.get(BaseService.apiUrl+url, options  )
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -69,7 +76,7 @@ export class BaseService {
       let options = new RequestOptions({ headers: headers, method:  'post' });
       if(!data) data={};
 
-      return this.http.post(this.apiUrl+url,  JSON.stringify(data), options  )
+      return this.http.post(BaseService.apiUrl+url,  JSON.stringify(data), options  )
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -87,7 +94,7 @@ export class BaseService {
       let options = new RequestOptions({ headers: headers, method:  'put' });
       if(!data) data={};
 
-      return this.http.put(this.apiUrl+url,  JSON.stringify(data), options  )
+      return this.http.put(BaseService.apiUrl+url,  JSON.stringify(data), options  )
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);
@@ -102,7 +109,7 @@ export class BaseService {
     return new Promise( (resolve,reject) => {
       let headers=this.doHeaders();
       let options = new RequestOptions({ headers: headers, method:  'delete' });
-      return this.http.delete(this.apiUrl+url, options  )
+      return this.http.delete(BaseService.apiUrl+url, options  )
         .map(res => res.json())
         .subscribe(data => {
           resolve(data);

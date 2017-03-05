@@ -2,12 +2,14 @@ import { App, Platform, NavController, MenuController, AlertController,
           LoadingController, ToastController } from 'ionic-angular';
 import {FormGroup} from '@angular/forms';
 import {UserService} from '../providers/user-service';
+import {GeneralService} from '../providers/general-service';
 import {TranslateService} from 'ng2-translate';
 import {ViewChild, ElementRef} from '@angular/core';
 declare var google;
 
 export default class BasePage {
   public userService: UserService;
+  public generalService: GeneralService;
   public translateService: TranslateService;
   public navCtrl: NavController;
   public menuCtrl: MenuController;
@@ -314,106 +316,16 @@ export default class BasePage {
    * @return {[type]}          [description]
    */
   loadMap(position,options={}) {
-
-
-
-    let mapOptions = {
-      zoom: 15,
-      mapTypeId: google.maps.MapTypeId.ROADMAP
-    };
-
-    if(position){
-      //-34.9290, 138.6010
-      let latLng = new google.maps.LatLng(position.latitude, position.longitude);
-      mapOptions=Object.assign(mapOptions,{center: latLng});
-    }
-    mapOptions=Object.assign(mapOptions,options)
-
-    if(this.mapElement){
-      this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
-    }else{
-      this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
-    }
-
-    /*
-    var drawingManager;
-
-    var polyOptions = {
-      strokeWeight: 0,
-      fillOpacity: 0.45,
-      editable: true
-    };
-
-     drawingManager = new google.maps.drawing.DrawingManager({
-      drawingControl: true,
-      drawingControlOptions: {
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON,
-        ]
-      },
-      polygonOptions: polyOptions,
-      map: this.map
-    });*/
-    /**/
-    /*
-  google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-
-      this.selectedShape=e.overlay
-
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
-          // Switch back to non-drawing mode after drawing a shape.
-          drawingManager.setDrawingMode(null);
-
-          // Add an event listener that selects the newly-drawn shape when the user
-          // mouses down on it.
-          newShape = e.overlay;
-          newShape.type = e.type;
-
-          google.maps.event.addListener(newShape, 'click', ()=> {
-
-            this.setSelection(newShape);
-
-
-          });
-        }
-  })
-
-  */
-    /* map.addPolygon({
-        'points': GORYOKAKU_POINTS,
-        'strokeColor' : '#AA00FF',
-        'strokeWidth': 5,
-        'fillColor' : '#880000'
-      }, function(polygon) {
-        setTimeout(function() {
-          polygon.remove();
-        }, 3000);
-      });*/
-
-
+    this.map = this.generalService.loadMap(this.mapElement,position,options);
   }
 
 
   addMarker(position,info){
-    if(!position) position=this.map.getCenter();
-    let marker = new google.maps.Marker({
-      map: this.map,
-      animation: google.maps.Animation.DROP,
-      position: position
-    });
-    if(!info) return;
-
-    let content = info;
-    this.addInfoWindow(marker, content);
+    this.generalService.addMarker(this.map,position,info);
   }
 
   addInfoWindow(marker, content){
-   let infoWindow = new google.maps.InfoWindow({
-     content: content
-   });
-   google.maps.event.addListener(marker, 'click', () => {
-     infoWindow.open(this.map, marker);
-   });
+    this.generalService.addMarker(this.map,marker,content);
  }
 
 }
