@@ -66,6 +66,7 @@
       "locator": "https://github.com/mapsplugin/cordova-plugin-googlemaps-sdk",
       "id": "com.googlemaps.ios"
     },
+    "cordova-plugin-geolocation",
     "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-googlemaps",
     "phonegap-plugin-push",

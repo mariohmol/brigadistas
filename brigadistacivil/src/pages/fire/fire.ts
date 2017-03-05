@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-//import { Geolocation } from 'ionic-native';
+import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
 import {  ViewChild, ElementRef } from '@angular/core';
@@ -59,7 +59,11 @@ export class FirePage extends BasePage {
     }
 
     if(!this.position){
-
+      Geolocation.getCurrentPosition().then((pos) => {
+        this.position=pos.coords;
+        cb();
+      }).catch(e=>{ cb(); });
+      /*
       //using navigator
       if (navigator.geolocation) {
         var options = {
@@ -70,31 +74,17 @@ export class FirePage extends BasePage {
         navigator.geolocation.getCurrentPosition(pos=> {
           this.position=pos.coords
           cb();
-
-          /*let position: CameraPosition = {
-            target: pos.coords,
-            zoom: 18,
-            tilt: 30
-          };
-          this.map.moveCamera(position);*/
         }, error => {
           console.log(error);
           cb();
         }, options);
       }else {
-
         if(this.map.getMyLocation){
           this.map.getMyLocation().then(pos => {
             this.position=pos.latLng;
           }).catch(err=>{});
         }
-      }
-
-
-      /*Geolocation.getCurrentPosition().then((pos) => {
-        this.position=pos.coords;
-        cb();
-      })*/
+      }*/
     }
   }
 
