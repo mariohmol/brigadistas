@@ -31,7 +31,7 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
     }
     newFire(res,data,b);
   }).catch(e=>{
-    logger.error(`ERROR Creating a new fire`,e);
+    logger.error(`ERROR Gettin Brigades for Create a new fire`,e);
     newFire(res,data);
   });
 });
@@ -49,6 +49,8 @@ const newFire =  function(res,data,b=null){
 
     logger.info(`Returning new fire`);
     res.json(d);
+  }).catch(e=>{
+    logger.error(`ERROR: Creating a new fire ${e}`);
   });
 };
 
