@@ -52,8 +52,6 @@ const newFire =  function(res,data,b=null){
   }).catch(e=>{
     logger.error(`ERROR: Creating a new fire ${e}`);
     res.json(e);
-  }).finally(()=>{
-    logger.error(`Finally for Creating a new fire`);
   });
 };
 
