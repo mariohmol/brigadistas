@@ -316,25 +316,24 @@ export default class BasePage {
   loadMap(position,options={}) {
 
 
-    //-34.9290, 138.6010
-    let latLng = new google.maps.LatLng(position.latitude, position.longitude);
 
     let mapOptions = {
-      center: latLng,
       zoom: 15,
       mapTypeId: google.maps.MapTypeId.ROADMAP
     };
+
+    if(position){
+      //-34.9290, 138.6010
+      let latLng = new google.maps.LatLng(position.latitude, position.longitude);
+      mapOptions.center= latLng;
+    }
     mapOptions=Object.assign(mapOptions,options)
 
-    console.log("eii",this.mapElement)
     if(this.mapElement){
       this.map = new google.maps.Map(this.mapElement.nativeElement, mapOptions);
     }else{
       this.map = new google.maps.Map(document.getElementById('map'), mapOptions);
     }
-
-
-
 
     /*
     var drawingManager;
