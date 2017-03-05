@@ -11,13 +11,13 @@ router.get('/', function (req, res, next) {
 });
 
 
-router.put('/:id', function (req, res, next) {
-  User.findOneAndUpdate(req.params.id,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
+router.put('/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {
+  User.findOneAndUpdate(req.user._id,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
 
-router.delete('/:id', function (req, res, next) {
-  User.findOneAndDelete(req.params.id,{},{}).then(d => { res.json(d);});
+router.delete('/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
+  User.findOneAndDelete(req.user._id,{},{}).then(d => { res.json(d);});
 });
 
 
@@ -78,7 +78,7 @@ router.get('/logout', (req,res)=>{
 });
 
 
-router.post('/pushregister/:type/', (req,res)=>{
+router.post('/pushregister/:type/',passport.authenticate('basic', { session: false }), (req,res)=>{
   var set={};
   if(req.params.type=='android') set={androidkey: req.body.androidkey};
   else set={ioskey: req.body.ioskey};//ios
@@ -89,7 +89,7 @@ router.post('/pushregister/:type/', (req,res)=>{
 });
 
 
-router.post('/pushunregister/:type/', (req,res)=>{
+router.post('/pushunregister/:type/',passport.authenticate('basic', { session: false }), (req,res)=>{
   var set='';
   if(req.params.type==='android') set={androidkey: null};
   else set={ioskey: null};
