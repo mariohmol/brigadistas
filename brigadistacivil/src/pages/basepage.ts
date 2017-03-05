@@ -325,7 +325,7 @@ export default class BasePage {
     if(position){
       //-34.9290, 138.6010
       let latLng = new google.maps.LatLng(position.latitude, position.longitude);
-      mapOptions.center= latLng;
+      mapOptions=Object.assign(mapOptions,{center: latLng});
     }
     mapOptions=Object.assign(mapOptions,options)
 
