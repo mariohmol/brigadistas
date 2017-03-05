@@ -12,14 +12,14 @@ Development enviroment:
 
 ## How that works
 
-<img src="docs/menu.png" alt="Main menu" style="width: 200px;"/>
-<img src="docs/fires.png" alt="See fires" style="width: 200px;"/>
-<img src="docs/fire.png" alt="Fire Details" style="width: 200px;"/>
+<img src="docs/menu.png" alt="Main menu" width="200px"/>
+<img src="docs/fires.png" alt="See fires" width="200px"/>
+<img src="docs/fire.png" alt="Fire Details" width="200px"/>
 
 
-<img src="docs/brigades.png" alt="See brigades" style="width: 200px;"/>
-<img src="docs/brigade.png" alt="Brigade Details" style="width: 200px;"/>
-<img src="docs/enterbrigade.png" alt="Enter Brigade" style="width: 200px;"/>
+<img src="docs/brigades.png" alt="See brigades" width="200px"/>
+<img src="docs/brigade.png" alt="Brigade Details" width="200px"/>
+<img src="docs/enterbrigade.png" alt="Enter Brigade" width="200px"/>
 
 ## Techs
 
