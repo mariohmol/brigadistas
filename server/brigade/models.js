@@ -1,6 +1,7 @@
 'use strict';
 const mongoose = require('mongoose');
 const bcrypt = require('bcryptjs');
+const {sendAndroid,sendiOS} = require('../config/push');
 
 const BrigadeSchema = new mongoose.Schema({
   name: {
@@ -22,5 +23,26 @@ const BrigadeSchema = new mongoose.Schema({
 });
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);
+
+/**
+ * Send alert of fire to all Brigades in the fire
+ * @param  {[type]} brigades [description]
+ * @return {[type]}          [description]
+ */
+Brigade.pushToBrigades = function(brigades,message){
+  let android=[];
+  let ios=[];
+  brigades.forEach(bItem=>{
+    bItem.brigades.forEach(userItem=>{
+      if(userItem.androidkey) android.push(userItem.androidkey);
+      if(userItem.ioskey) ios.push(userItem.androidkey);
+    });
+  });
+  let returnInfo={};
+
+  if(android) returnInfo.android=sendAndroid(message,android);
+  if(ios) returnInfo.ios=sendiOS(message,ios);
+  return returnInfo;
+};
 
 module.exports = { Brigade };

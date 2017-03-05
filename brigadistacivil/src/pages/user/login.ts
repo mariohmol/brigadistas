@@ -38,6 +38,8 @@ export class LoginPage extends BasePage {
   }
 
   afterLogin() {
+    if('deviceToken' in localStorage)
+      this.userService.storeDeviceToken('android',localStorage['deviceToken']);
     this.openPage(FiresPage);
     this.setMenu();
   }

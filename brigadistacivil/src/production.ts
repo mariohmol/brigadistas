@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 
 @Injectable()
-export class Environment{
+export default class Environment{
   public static env: string = "production";
 }

@@ -68,6 +68,7 @@
     },
     "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-googlemaps",
+    "phonegap-plugin-push",
     "cordova-plugin-crosswalk-webview"
   ],
   "cordovaPlatforms": [

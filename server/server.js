@@ -1,6 +1,5 @@
 const express = require('express');
 const mongoose = require('mongoose');
-const { ENV , DATABASE_URL , PORT} = require('./config/config');
 const bodyParser = require('body-parser');
 const request = require('request');
 const cors = require('cors');
@@ -8,15 +7,20 @@ const cookieParser = require('cookie-parser');
 const session = require('express-session');
 const morgan = require('morgan');
 const passport = require('passport');
+const i18n = require("i18n");
+
+const { ENV , DATABASE_URL , PORT} = require('./config/config');
 const { ensureAuthenticated } = require('./config/passport');
 const { doErrorEmailAlerts } = require('./config/emailer');
 const {logger} = require('./config/logger');
 const { initPush } = require('./config/push');
+
 const userMiddleware = require('./user/routes');
 const brigadeMiddleware = require('./brigade/routes');
 const fireMiddleware = require('./fire/routes');
 
 const app = express();
+
 app.use(cors());
 app.use(cookieParser());
 app.use(bodyParser.json());
@@ -25,6 +29,11 @@ app.use(session({
   resave: true,
   saveUninitialized: true,
 }));
+i18n.configure({
+    locales:['pt', 'en','es'],
+    directory: __dirname + '/config/i18n'
+});
+app.use(i18n.init);
 
 app.use(passport.initialize());
 app.use(passport.session());
