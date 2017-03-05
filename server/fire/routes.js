@@ -38,7 +38,7 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
 
 //Create the fire
 const newFire =  function(res,data,b=null){
-  logger.info(`Creating a new fire ${data}`);
+  logger.info(`Creating a new fire ${JSON.stringify(data)}`);
   Fire.create(data).then(d => {
     let email= `New Fire is open, check it out in http://app.brigadistacivil.com.br/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
     logger.info(`Sending email to admins in post fire`);
@@ -51,6 +51,9 @@ const newFire =  function(res,data,b=null){
     res.json(d);
   }).catch(e=>{
     logger.error(`ERROR: Creating a new fire ${e}`);
+    res.json(e);
+  }).finally(()=>{
+    logger.error(`Finally for Creating a new fire`);
   });
 };
 
