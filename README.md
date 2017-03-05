@@ -55,7 +55,7 @@ To run this app :
 ```
 SMTP_URL=smtp://ENCODED_USER:ENCODED_PASS@SES_SMTP_URL:465
 DATABASE_URL='mongodb://localhost/brigadistas'
-``
+```
 
 
 ### Android
@@ -88,7 +88,7 @@ Header unset WWW-Authenticate
 ```
 
 
-You can configure you enviroments
+You can configure you environments
 
 ```
 SetEnv MONGO_URL mongodb://localhost:27017/mybd\
