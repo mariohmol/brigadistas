@@ -10,16 +10,15 @@
       {{ "user.recover.title" | translate }}
     </div>
     <br>
+    <p *ngIf="user">
+      Olá {{user.name}}, este é um pedido para reiniciar senha feito através do email: {{user.email}}
+    </p>
   </div>
-   <form [formGroup]="recoverForm" (ngSubmit)="recoverPage(recoverForm.value)">
-  <ion-item>
-    Seu email: {{email}}
-  </ion-item>
-  <ion-item>
-    <ion-input  [formControl]="recoverForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
-  </ion-item>
-  <button ion-button block >{{ "user.recover.enter" | translate }}</button>
+  <form [formGroup]="recoverForm" (ngSubmit)="recoverPage(recoverForm.value)">
+
+    <ion-item>
+      <ion-input [formControl]="recoverForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
+    </ion-item>
+    <button ion-button block>{{ "user.recover.enter" | translate }}</button>
   </form>
-
-
 </ion-content>

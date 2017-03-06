@@ -85,7 +85,8 @@
       "title": "Recuperar Senha",
       "enter": "Alterar Senha",
       "confirm": "Você tem certeza que deseja receber um email de recuperação de senha no email ",
-      "response": "Nós enviamos um email com os passos para alterar sua senha."
+      "response": "Nós enviamos um email com os passos para alterar sua senha.",
+      "changed": "A sua senha foi alterada com sucesso, você poderá utilizá-la para entrar."
     },
     "update": {
       "title": "Perfil",
@@ -101,6 +102,7 @@
   "description": "Descrição",
   "done": "OK",
   "email": "Email",
+  "generalError": "Tivemos um erro durante a sua solicitação",
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",

@@ -4,7 +4,6 @@ import { NavController, NavParams, AlertController, App, MenuController,ToastCon
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { LoginPage } from './login';
-import { FiresPage } from '../fire/fires';
 import BasePage from '../basepage';
 
 @Component({
@@ -13,7 +12,8 @@ import BasePage from '../basepage';
 })
 export class RecoverPage extends BasePage {
   recoverForm: FormGroup;
-  user: string;
+  user: any;
+  token: string;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
     public translateService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
@@ -29,15 +29,19 @@ export class RecoverPage extends BasePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecoverPage');
-      let token = this.navParams.get("token");
-      this.userService.recoverCheck(token).then(u=>{
+      this.token = this.navParams.get("token");
+      this.userService.recoverCheck(this.token).then(u=>{
         this.user=u;
       });
   }
 
 
-  recoverPage() {
-    this.navCtrl.push(LoginPage);
+  recoverPage(form) {
+    this.userService.recoverPassword(this.token,form.password).then(u=>{
+      if(u) this.showToast(this.translate("user.recover.changed"));
+      else this.showToast(this.translate("generalError"));
+      this.navCtrl.push(LoginPage);
+    });
   }
 
 }

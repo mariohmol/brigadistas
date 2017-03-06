@@ -36,7 +36,7 @@ let declarations = [...pages, ReadOnlyClass ];
 let links=[
       { component: UserPage, name: 'User', segment: 'register' },
       { component: LoginPage, name: 'Login', segment: 'login' },
-      { component: RecoverPage, name: 'Recover', segment: 'recover/:key' },
+      { component: RecoverPage, name: 'Recover', segment: 'recover/:token' },
       { component: FiresPage, name: 'Fires', segment: 'fires/' },
       { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
       { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },

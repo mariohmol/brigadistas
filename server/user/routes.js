@@ -118,8 +118,7 @@ router.get('/recover/:username/', (req, res) => {
   });
 });
 
-
-router.post('/recovercheck/:key/',(req, res) => {
+router.get('/recovercheck/:key/',(req, res) => {
   User.findOne({token: req.params.key}).then(u=>{
     if(!u) return res.sendStatus(404);
     res.status(200).json( u );
