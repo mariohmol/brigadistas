@@ -1,8 +1,9 @@
 'use strict';
 const nodemailer = require('nodemailer');
 const {logger} = require('./logger');
+const EmailTemplate = require('email-templates').EmailTemplate;
+const path = require('path');
 const {SMTP_PORT, SMTP_HOST,SMTP_USER, SMTP_PASS,DONTREPLY_EMAIL,ADMIN_EMAIL} = require('./config');
-
 
 /**
  * [sendEmail description]
@@ -64,4 +65,50 @@ const doErrorEmailAlerts = (err, req, res, next) => {
   next();
 };
 
-module.exports = { sendEmail,doErrorEmailAlerts, sendEmailAdmins };
+
+/**
+ * [doTemplate description]
+ * @param  {[type]}   template Ex.: "welcome-page"
+ * @param  {[type]}   data     Ex: {user: 10}
+ * @param  {Function} cb       Ex.: function (err, result) {
+                                   // result.html , result.text and result.subject
+                                 })
+ * @return {[type]}            [description]
+ */
+const makeTemplate = (template,data,cb)=>{
+  var templateDir = path.join(__dirname, '../', template);
+  var newsletter = new EmailTemplate(templateDir);
+  newsletter.render(data, cb);
+};
+
+
+/**
+ * [sendEmailTemplate description]
+ * @param  {[type]} emailto   [description]
+ * @param  {[type]} template  [description]
+ * @param  {[type]} data      [description]
+ * @param  {[type]} [cb=null] ex.: function(err,data){}
+ * @return {[type]}           [description]
+ */
+const sendEmailTemplate = (emailto, template,data,cb=null)=>{
+  let emailData={
+   from: DONTREPLY_EMAIL,
+   to: emailto
+ };
+
+  makeTemplate(template,data,function(err,result){
+    if(err) {
+      if(cb) cb(err);
+      return err;
+    }
+    emailData.subject=result.subject;
+    emailData.text=result.text;
+    emailData.html=result.html;
+    let returnSend = sendEmail(emailData);
+    if(cb) cb(null,returnSend);
+  });
+
+};
+
+
+module.exports = { sendEmail,doErrorEmailAlerts, sendEmailAdmins, makeTemplate, sendEmailTemplate };

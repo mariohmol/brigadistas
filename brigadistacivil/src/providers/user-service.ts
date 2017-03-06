@@ -64,6 +64,10 @@ export class UserService extends BaseService {
     return this.doPost('/user/recover/'+email+'/',{});
   }
 
+  recoverPassword(key,password) {
+    return this.doPost('/user/recoverpass/'+key+'/',{password});
+  }
+
   register(data) {
     return this.doPost('/user/register',data);
   }

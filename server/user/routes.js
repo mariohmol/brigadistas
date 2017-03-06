@@ -4,7 +4,7 @@ const router = express.Router();
 const { User , Chat, Message} = require('./models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
-const { sendMail,sendEmailAdmins } = require('../config/emailer');
+const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
 
 router.get('/', function (req, res, next) {
   User.find().then(d => { res.json(d);});
@@ -65,6 +65,7 @@ router.post('/register', (req, res) => {
           delete result.password;
 
           sendEmailAdmins("Novo cadastro",JSON.stringify(result));
+          makeTemplate("welcome-page")
           res.status(201).json(result);
         });
       });
@@ -99,5 +100,25 @@ router.post('/pushunregister/:type/',passport.authenticate('basic', { session: f
   });
 });
 
+
+router.get('/recover/:username/', (req, res) => {
+
+  User.findOne({username: req.params.username}).then(u=>{
+    if(!u)res.status(200).json( u );
+    sendEmailTemplate(u.username, "user/templates/welcome-email",{user: u},(err,resp)=>{
+      if(err) res.status(500).json(err );
+      else res.status(200).json( resp  );
+    });
+  });
+});
+
+router.post('/recoverpass/:key/',(req, res) => {
+  if (req.user) {
+    req.user.password = req.body.password;
+    res.status(200).json( req.user  );
+  }else{
+    res.status(403).json({  'error': 'No auth'  });
+  }
+});
 
 module.exports = router;
