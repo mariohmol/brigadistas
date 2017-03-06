@@ -36,6 +36,7 @@
   },
   "fire": {
     "title": "Ver Incêndio",
+    "chooseLocation": "Clique no mapa e informe o local do incêndio",
     "startCombat": "Combater Incêndio",
     "stopCombat": "Sair do Combate",
     "checking": "Verificar Incêndio",

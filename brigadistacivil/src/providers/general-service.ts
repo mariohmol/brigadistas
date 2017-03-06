@@ -31,8 +31,7 @@ export class GeneralService extends BaseService {
     let map;
     console.log(BaseService.device);
     if (BaseService.device == 'mobile') {
-      let element: HTMLElement = document.getElementById('map');
-      map = new GoogleMap(mapElement.nativeElement); //mapElement.nativeElement
+      map = new GoogleMap(mapElement.nativeElement);
 
       // listen to MAP_READY event
       map.one(GoogleMapsEvent.MAP_READY).then(() => {
@@ -78,13 +77,13 @@ export class GeneralService extends BaseService {
   }
 
 
-  addMarker(map, position, title) {
+  addMarker(map, position, title, cb = null) {
     if (BaseService.device == 'mobile') {
       let posLatLng: GoogleMapsLatLng;
 
       if (!position) posLatLng = map.getCenter();
       else {
-         posLatLng= new GoogleMapsLatLng(position.latitude, position.longitude);
+        posLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
       }
       // create new marker
       let markerOptions: GoogleMapsMarkerOptions = {
@@ -94,13 +93,14 @@ export class GeneralService extends BaseService {
 
       map.addMarker(markerOptions)
         .then((marker: GoogleMapsMarker) => {
+          if (cb) cb(marker);
           marker.showInfoWindow();
         });
 
     } else {
       let latlng;
       if (!position) position = map.getCenter();
-      else{
+      else {
         latlng = new google.maps.LatLng(position.latitude, position.longitude);
       }
       let marker = new google.maps.Marker({
@@ -110,6 +110,7 @@ export class GeneralService extends BaseService {
       });
       if (!title) return;
       this.addInfoWindow(map, marker, title);
+      cb(marker);
     }
 
   }
@@ -126,36 +127,36 @@ export class GeneralService extends BaseService {
     }
   }
 
-  addPolygon(map, points) {
+  addPolygon(map, points, cb) {
     map.addPolygon({
       'points': points,
       'strokeColor': '#AA00FF',
       'strokeWidth': 5,
       'fillColor': '#880000'
     }, function(polygon) {
-      setTimeout(function() {
-        polygon.remove();
-      }, 3000);
+      cb(polygon);
+      map.animateCamera({
+        'target': polygon.getPoints()
+      });
     });
   }
 
-  getPosition(cb){
+  getPosition(cb) {
     if (BaseService.device == 'mobile') {
       Geolocation.getCurrentPosition().then((pos) => {
         console.log(pos);
         cb(pos.coords);
-      }).catch(e=>{ console.log(e); cb(); });
+      }).catch(e => { console.log(e); cb(); });
 
-      let watch = Geolocation.watchPosition();
-
+      /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
         console.log(data);
        // data can be a set of coordinates, or an error (if an error occurred).
        // data.coords.latitude
        // data.coords.longitude
-      });
+     });*/
     }
-    else{
+    else {
       //using navigator
       if (navigator.geolocation) {
         var options = {
@@ -163,7 +164,7 @@ export class GeneralService extends BaseService {
         };
 
         //position.coords.latitude,position.coords.longitude
-        navigator.geolocation.getCurrentPosition(pos=> {
+        navigator.geolocation.getCurrentPosition(pos => {
           cb(pos.coords);
         }, error => {
           cb();
@@ -172,15 +173,34 @@ export class GeneralService extends BaseService {
     }
   }
 
-  drawMarker(map,cb){
-    if (BaseService.device == 'mobile') {}
-    else{
+  drawMarker(map, cb) {
+    if (BaseService.device == 'mobile') {
+      map.addEventListener(GoogleMapsEvent.MAP_CLICK).subscribe(cb);
+    } else {
       google.maps.event.addListener(map, 'click', event => {
         cb(event)
       });
     }
   }
-  drawPolygon() {
+
+  removeElement(element){
+    if(element.setMap){
+      element.setMap(null);
+    }else{
+      element.remove();
+    }
+  }
+
+  drawPolygon(map, points, cb) {
+    google.maps.event.addListener(map, 'click', event => {
+      cb(event)
+    });
+
+    let doPolygon = d => {
+
+    };
+    this.addPolygon(map, points, doPolygon);
+
     /*
     var drawingManager;
 

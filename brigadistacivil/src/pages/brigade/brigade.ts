@@ -6,7 +6,6 @@ import {BrigadesPage} from './brigades'
 import { UserService } from '../../providers/user-service';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
-import { Geolocation } from 'ionic-native';
 import {TranslateService} from 'ng2-translate';
 declare var google;
 
@@ -59,13 +58,21 @@ export class BrigadePage  extends BasePage{
   }
 
   showMap(){
-    if(this.position){
-        this.loadMap(this.position.coords,{scrollwheel: false,});
+    let cb = ()=>{
+        this.map = this.generalService.loadMap(this.mapElement,this.position.coords,{scrollwheel: false});
+        this.generalService.drawPolygon(this.map, [],cb) ;
+
+    }
+
+    let addPosition= (pos)=>{
+      this.position=pos;
+      cb();
+    }
+
+    if(!this.position){
+      this.generalService.getPosition(addPosition);
     }else{
-      Geolocation.getCurrentPosition().then((position) => {
-        this.position=position;
-        this.loadMap(position.coords,{scrollwheel: false,});
-      });
+      cb();
     }
 
   }

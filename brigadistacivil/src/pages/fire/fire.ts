@@ -73,9 +73,18 @@ export class FirePage extends BasePage {
   confMap(){
     if(this.isReadonly()) return;
     this.generalService.drawMarker(this.map,event=>{
-      if(this.marker) this.marker.setMap(null);
-      this.fire.coordinates=[event.latLng.lat(), event.latLng.lng()];
-      this.marker = this.addMarker(event.latLng,"Posição do Fogo");
+      if(this.marker)  this.generalService.removeElement(this.marker) ;
+      let latlng;
+      if(event.latLng){
+        latlng = {latitude: event.latLng.lat(), longitude: event.latLng.lng()};
+      }else{
+        latlng = {latitude: event.latitude, longitude: event.longitude};
+      }
+      this.fire.coordinates=[latlng.latitude, latlng.longitude];
+
+      this.generalService.addMarker(this.map,latlng,"Posição do Fogo",m=>{
+        this.marker=m;
+      });
     });
 
   }
@@ -109,6 +118,9 @@ export class FirePage extends BasePage {
 
 
   save() {
+    if(!this.fire.coordinates){
+      return this.showToast(this.translate("fire.chooseLocation"));
+    }
     if(this.fire._id){
       this.fire = Object.assign(this.fire, this.fireForm.value);
       this.fireService.updateFire(this.fire).then(d => {

@@ -321,11 +321,11 @@ export default class BasePage {
 
 
   addMarker(position,info){
-    this.generalService.addMarker(this.map,position,info);
+    return this.generalService.addMarker(this.map,position,info);
   }
 
   addInfoWindow(marker, content){
-    this.generalService.addMarker(this.map,marker,content);
+    return this.generalService.addMarker(this.map,marker,content);
  }
 
 }
