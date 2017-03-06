@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { BaseService } from './base-service';
+import { Geolocation } from 'ionic-native';
 import {
   GoogleMap,
   GoogleMapsEvent,
@@ -28,20 +29,20 @@ export class GeneralService extends BaseService {
    */
   loadMap(mapElement, position, options = {}) {
     let map;
-
+    console.log(BaseService.device);
     if (BaseService.device == 'mobile') {
-      map = new GoogleMap(mapElement.nativeElement);
+      let element: HTMLElement = document.getElementById('map');
+      map = new GoogleMap(mapElement.nativeElement); //mapElement.nativeElement
 
       // listen to MAP_READY event
       map.one(GoogleMapsEvent.MAP_READY).then(() => {
-
         if (position) {
           // create LatLng object
-          let ionic: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
+          let posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
 
           // create CameraPosition
           let cameraPos: CameraPosition = {
-            target: ionic,
+            target: posLatLng,
             zoom: 18,
             tilt: 30
           };
@@ -79,10 +80,15 @@ export class GeneralService extends BaseService {
 
   addMarker(map, position, title) {
     if (BaseService.device == 'mobile') {
-      if (!position) position = map.getCenter();
+      let posLatLng: GoogleMapsLatLng;
+
+      if (!position) posLatLng = map.getCenter();
+      else {
+         posLatLng= new GoogleMapsLatLng(position.latitude, position.longitude);
+      }
       // create new marker
       let markerOptions: GoogleMapsMarkerOptions = {
-        position: position,
+        position: posLatLng,
         title: title
       };
 
@@ -92,11 +98,15 @@ export class GeneralService extends BaseService {
         });
 
     } else {
+      let latlng;
       if (!position) position = map.getCenter();
+      else{
+        latlng = new google.maps.LatLng(position.latitude, position.longitude);
+      }
       let marker = new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
-        position: position
+        position: latlng
       });
       if (!title) return;
       this.addInfoWindow(map, marker, title);
@@ -129,6 +139,47 @@ export class GeneralService extends BaseService {
     });
   }
 
+  getPosition(cb){
+    if (BaseService.device == 'mobile') {
+      Geolocation.getCurrentPosition().then((pos) => {
+        console.log(pos);
+        cb(pos.coords);
+      }).catch(e=>{ console.log(e); cb(); });
+
+      let watch = Geolocation.watchPosition();
+
+      watch.subscribe((data) => {
+        console.log(data);
+       // data can be a set of coordinates, or an error (if an error occurred).
+       // data.coords.latitude
+       // data.coords.longitude
+      });
+    }
+    else{
+      //using navigator
+      if (navigator.geolocation) {
+        var options = {
+          enableHighAccuracy: true
+        };
+
+        //position.coords.latitude,position.coords.longitude
+        navigator.geolocation.getCurrentPosition(pos=> {
+          cb(pos.coords);
+        }, error => {
+          cb();
+        }, options);
+      }
+    }
+  }
+
+  drawMarker(map,cb){
+    if (BaseService.device == 'mobile') {}
+    else{
+      google.maps.event.addListener(map, 'click', event => {
+        cb(event)
+      });
+    }
+  }
   drawPolygon() {
     /*
     var drawingManager;

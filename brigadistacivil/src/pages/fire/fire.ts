@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { Geolocation } from 'ionic-native';
 import { FiresPage } from './fires';
 import { FireService } from '../../providers/fire-service';
 import { GeneralService } from '../../providers/general-service';
@@ -50,53 +49,35 @@ export class FirePage extends BasePage {
     console.log('ionViewDidLoad BrigadePage');
     let cb = ()=>{
       if(this.fire && this.fire.coordinates){
-        this.loadMap({latitude: this.fire.coordinates[0], longitude: this.fire.coordinates[1]});
-        let latlng = new google.maps.LatLng(this.fire.coordinates[0], this.fire.coordinates[1]);
-        this.marker = this.addMarker(latlng,"Posição do Fogo");
-      }else{
+        let pos={latitude: this.fire.coordinates[0], longitude: this.fire.coordinates[1]};
+        this.loadMap(pos);
+        this.marker = this.addMarker(pos,"Posição do Fogo");
+      }else if(this.position){
         this.loadMap(this.position);
       }
-
       this.confMap();
     }
 
-    if(!this.position){
-      Geolocation.getCurrentPosition().then((pos) => {
-        this.position=pos.coords;
+    if(!this.position && !(this.fire && this.fire.coordinates)){
+      let addPosition= (pos)=>{
+        this.position=pos;
         cb();
-      }).catch(e=>{ cb(); });
-      /*
-      //using navigator
-      if (navigator.geolocation) {
-        var options = {
-          enableHighAccuracy: true
-        };
+      }
+      this.generalService.getPosition(addPosition);
 
-        //position.coords.latitude,position.coords.longitude
-        navigator.geolocation.getCurrentPosition(pos=> {
-          this.position=pos.coords
-          cb();
-        }, error => {
-          console.log(error);
-          cb();
-        }, options);
-      }else {
-        if(this.map.getMyLocation){
-          this.map.getMyLocation().then(pos => {
-            this.position=pos.latLng;
-          }).catch(err=>{});
-        }
-      }*/
+    }else{
+      cb();
     }
   }
 
   confMap(){
     if(this.isReadonly()) return;
-    google.maps.event.addListener(this.map, 'click', event => {
+    this.generalService.drawMarker(this.map,event=>{
       if(this.marker) this.marker.setMap(null);
       this.fire.coordinates=[event.latLng.lat(), event.latLng.lng()];
       this.marker = this.addMarker(event.latLng,"Posição do Fogo");
     });
+
   }
 
   loadData(){

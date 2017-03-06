@@ -17,7 +17,6 @@ export class UserService extends BaseService {
   }
 
   login(username: string, password: string) {
-    console.log('USER S LOGIN',UserService.loginData)
     UserService.loginData=null;
     if (UserService.loginData) {
       return Promise.resolve(UserService.loginData);
@@ -25,12 +24,10 @@ export class UserService extends BaseService {
 
     return new Promise( (resolve,reject) => {
       let data = {username: username,password: password};
-        console.log('USER S LOGIN',data)
       this.doPost('/user/login',data).then(retorno => {
         if(!('error' in retorno)) UserService.loginData = retorno;
         resolve(UserService.loginData);
       }).catch( error => {
-        console.log('error',error)
         reject(error);
       });
     });
