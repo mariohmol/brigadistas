@@ -9,49 +9,47 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content class="new-user">
-    <ion-list class="users">
-      <form [formGroup]="userForm" novalidate >
-        <ion-item>
-            <ion-label floating>{{ "user.name" | translate }}</ion-label>
-            <ion-input formControlName="name"  [readonly]="readOnly" type="text"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="!userForm.controls.name.valid  && (userForm.controls.name.dirty || submitted)">
-                  {{ "user.name" | translate }} {{ "require.minString" | translate }}
-        </ion-item>
+<ion-content padding class="login-page-content">
+  <form [formGroup]="userForm"  >
+    <ion-item>
+        <ion-label floating>{{ "user.name" | translate }}</ion-label>
+        <ion-input formControlName="name"  [readonly]="readOnly" type="text"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!userForm.controls.name.valid  && (userForm.controls.name.dirty || submitted)">
+            <small>{{ "user.name" | translate }} {{ "require.minString" | translate }}</small>
+    </ion-item>
 
-        <ion-item>
-            <ion-label floating>{{ "user.email" | translate }} </ion-label>
-            <ion-input formControlName="email"  [readonly]="readOnly" type="email"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="!userForm.controls.email.valid  && (userForm.controls.email.dirty || submitted)">
-                  {{ "user.email" | translate }} {{ "require.minString" | translate }} 
-        </ion-item>
+    <ion-item>
+        <ion-label floating>{{ "user.email" | translate }} </ion-label>
+        <ion-input formControlName="email"  [readonly]="readOnly" type="email"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!userForm.controls.email.valid  && (userForm.controls.email.dirty || submitted)">
+              <small>{{ "user.email" | translate }} {{ "require.minString" | translate }} </small>
+    </ion-item>
 
-        <ion-item>
-            <ion-label floating>{{ "user.password" | translate }} </ion-label>
-            <ion-input formControlName="password"  [readonly]="readOnly" type="password"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="!userForm.controls.password.valid  && (userForm.controls.password.dirty || submitted)">
-                  {{ "user.password" | translate }} {{ "require.minString" | translate }}
-        </ion-item>
+    <ion-item>
+        <ion-label floating>{{ "user.password" | translate }} </ion-label>
+        <ion-input formControlName="password"  [readonly]="readOnly" type="password"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!userForm.controls.password.valid  && (userForm.controls.password.dirty || submitted)">
+              <small>{{ "user.password" | translate }} {{ "require.minString" | translate }}</small>
+    </ion-item>
 
-        <ion-item>
-            <ion-label floating>{{ "user.city" | translate }} </ion-label>
-            <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="!userForm.controls.city.valid  && (userForm.controls.city.dirty || submitted)">
-                  {{ "user.city" | translate }} {{ "require.minString" | translate }}
-        </ion-item>
+    <ion-item>
+        <ion-label floating>{{ "user.city" | translate }} </ion-label>
+        <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!userForm.controls.city.valid  && (userForm.controls.city.dirty || submitted)">
+              <small>{{ "user.city" | translate }} {{ "require.minString" | translate }}</small>
+    </ion-item>
 
-        <ion-item>
-            <ion-label floating>{{ "user.bio" | translate }} </ion-label>
-            <ion-input formControlName="bio"  [readonly]="isReadonly()" type="textarea"></ion-input>
-        </ion-item>
-        <ion-item *ngIf="!userForm.controls.bio.valid  && (userForm.controls.bio.dirty || submitted)">
-                  {{ "user.bio" | translate }} {{ "require.minString" | translate }}
-        </ion-item>
+    <ion-item>
+        <ion-label floating>{{ "user.bio" | translate }} </ion-label>
+        <ion-input formControlName="bio"  [readonly]="isReadonly()" type="textarea"></ion-input>
+    </ion-item>
+    <ion-item *ngIf="!userForm.controls.bio.valid  && (userForm.controls.bio.dirty || submitted)">
+              <small>{{ "user.bio" | translate }} {{ "require.minString" | translate }}</small>
+    </ion-item>
 
-        </form>
-    </ion-list>
+    </form>
 </ion-content>

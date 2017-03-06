@@ -11,18 +11,18 @@
     </div>
     <br>
   </div>
-   <form [formGroup]="loginForm" (ngSubmit)="loginPage(loginForm.value)">
-  <ion-item>
-    <ion-input [formControl]="loginForm.controls['username']" type="email" required placeholder="{{ 'user.email' | translate }}"></ion-input>
-  </ion-item>
-  <ion-item>
-    <ion-input  [formControl]="loginForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
-  </ion-item>
-  <button ion-button block >{{ "user.enter" | translate }}</button>
+  <form [formGroup]="loginForm" (ngSubmit)="loginPage(loginForm.value)">
+    <ion-item>
+      <ion-input [formControl]="loginForm.controls['username']" type="email" required placeholder="{{ 'user.email' | translate }}"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-input [formControl]="loginForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
+    </ion-item>
+    <button ion-button block>{{ "user.enter" | translate }}</button>
   </form>
 
-    <button ion-button block (click)="register()">{{ "user.signin" | translate }}</button>
-    <br/>
-    <a href="#" (click)="recover(loginForm.value)">Esqueceu a sua senha?</a>
+  <button ion-button block (click)="register()">{{ "user.signin" | translate }}</button>
+  <br/>
+  <a href="#" (click)="recover(loginForm.value)">Esqueceu a sua senha?</a>
 
 </ion-content>
