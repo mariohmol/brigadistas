@@ -62,7 +62,10 @@
   },
   "user": {
     "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
+    "bio": "Fale como você pode ajudar",
+    "city": "Sua cidade",
     "email": "Seu email",
+    "name": "Seu nome",
     "password": "Sua senha",
     "enter": "Entrar",
     "signin": "Cadastrar",
@@ -88,9 +91,11 @@
   "connectionFail": "Provável problema com a sua internet, tente novamente.",
   "description": "Descrição",
   "done": "OK",
+  "email": "Email",
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
+  "password": "Senha",
   "title": "Título",
   "yesContinue": "Sim, desejo continuar"
 }

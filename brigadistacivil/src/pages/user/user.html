@@ -13,26 +13,26 @@
     <ion-list class="users">
       <form [formGroup]="userForm" novalidate >
         <ion-item>
-            <ion-label floating>{{ "name" | translate }} </ion-label>
+            <ion-label floating>{{ "user.name" | translate }} </ion-label>
             <ion-input formControlName="name"  [readonly]="readOnly" type="text"></ion-input>
             <small [hidden]="userForm.controls.name.valid || (userForm.controls.name.pristine && !submitted)">
                 Name is required (minimum 5 characters).
             </small>
         </ion-item>
         <ion-item>
-            <ion-label floating>{{ "email" | translate }} </ion-label>
+            <ion-label floating>{{ "user.email" | translate }} </ion-label>
             <ion-input formControlName="email"  [readonly]="readOnly" type="email"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>{{ "password" | translate }} </ion-label>
+            <ion-label floating>{{ "user.password" | translate }} </ion-label>
             <ion-input formControlName="password"  [readonly]="readOnly" type="password"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>{{ "city" | translate }} </ion-label>
+            <ion-label floating>{{ "user.city" | translate }} </ion-label>
             <ion-input formControlName="city"  [readonly]="isReadonly()" type="text"></ion-input>
         </ion-item>
         <ion-item>
-            <ion-label floating>{{ "bio" | translate }} </ion-label>
+            <ion-label floating>{{ "user.bio" | translate }} </ion-label>
             <ion-input formControlName="bio"  [readonly]="isReadonly()" type="textarea"></ion-input>
         </ion-item>
         </form>

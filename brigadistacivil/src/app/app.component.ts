@@ -78,11 +78,17 @@ export class MyApp {
     try{
       this.push.on('registration', (data) => {
         localStorage['deviceToken']=data.registrationId;
+
+        if(UserService.loginData)
+          this.userService.storeDeviceToken('android',localStorage['deviceToken']);
+
       });
 
       this.push.on('notification', (data) => {
+        console.log('message', data);
         new Promise( resolve => {
           var snd = new (<any>window).Audio( "assets/mp3/atraso.mp3"); snd.play();
+          console.log('Playing sound');
           resolve();
         })
 
@@ -94,7 +100,7 @@ export class MyApp {
           position: "top"
         });
         toast.present();
-        console.log('message', data);
+
       })
 
       this.push.on('error', (e) => {

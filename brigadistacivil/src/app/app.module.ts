@@ -2,6 +2,7 @@ import { NgModule, ErrorHandler } from '@angular/core';
 import { IonicApp, IonicModule, IonicErrorHandler } from 'ionic-angular';
 
 import { MyApp } from './app.component';
+
 import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { FirePage } from '../pages/fire/fire';
@@ -29,12 +30,24 @@ let pages = [
 ];
 
 let declarations = [...pages, ReadOnlyClass ];
+
+let links=[
+      { component: UserPage, name: 'User', segment: 'register' },
+      { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
+      { component: FiresPage, name: 'Fires', segment: 'fires/' },
+      { component: BrigadePage, name: 'Brigade', segment: 'brigade/:fireId' },
+      { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },
+      { component: LoginPage, name: 'Login', segment: 'login' },
+    ];
+
 @NgModule({
   declarations: declarations,
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp),
+    IonicModule.forRoot(MyApp,{},{
+      links: links
+    }),
     TranslateModule.forRoot({
         provide: TranslateLoader,
         useFactory: (http: Http) => new TranslateStaticLoader(http, 'assets/i18n', '.json'),
