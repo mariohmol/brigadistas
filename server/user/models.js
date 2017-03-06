@@ -17,6 +17,7 @@ const UserSchema = new mongoose.Schema({
   avatar: { type: String },
   bio: { type: String },
   url: { type: String },
+  token: { type: String },
   location: { type: String },
   createdAt: { type: Date },
   updatedAt: { type: Date },

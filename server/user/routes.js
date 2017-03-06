@@ -65,7 +65,7 @@ router.post('/register', (req, res) => {
           delete result.password;
 
           sendEmailAdmins("Novo cadastro",JSON.stringify(result));
-          makeTemplate("welcome-page")
+          sendEmailTemplate(result.username, "user/templates/welcome-email",{user: result});
           res.status(201).json(result);
         });
       });
@@ -102,23 +102,42 @@ router.post('/pushunregister/:type/',passport.authenticate('basic', { session: f
 
 
 router.get('/recover/:username/', (req, res) => {
-
   User.findOne({username: req.params.username}).then(u=>{
-    if(!u)res.status(200).json( u );
-    sendEmailTemplate(u.username, "user/templates/welcome-email",{user: u},(err,resp)=>{
-      if(err) res.status(500).json(err );
-      else res.status(200).json( resp  );
+    if(!u) res.sendStatus(404);
+
+    bcrypt.genSalt(10, (err, salt) => {
+      if(err)return res.status(500).json( err );
+      u.token=salt;
+      u.save();
+      sendEmailTemplate(u.username, "user/templates/recover-email",{user: u, token: u.token},(err,resp)=>{
+        if(err) res.status(500).json(err );
+        else res.status(200).json( resp  );
+      });
     });
+
   });
 });
 
 router.post('/recoverpass/:key/',(req, res) => {
-  if (req.user) {
-    req.user.password = req.body.password;
-    res.status(200).json( req.user  );
-  }else{
-    res.status(403).json({  'error': 'No auth'  });
-  }
+  User.findOne({token: req.params.key}).then(u=>{
+    if(!u) res.sendStatus(404);
+
+    bcrypt.genSalt(10, (err, salt) => {
+      if (err) {
+        return res.status(500).json( err );
+      }
+      bcrypt.hash(req.body.password, salt, (err, hash) => {
+          if (err) {
+            return res.status(500).json( err );
+          }
+          u.password=hash;
+          u.save();
+          res.status(200).json( u );
+      });
+    });
+
+  });
+
 });
 
 module.exports = router;
