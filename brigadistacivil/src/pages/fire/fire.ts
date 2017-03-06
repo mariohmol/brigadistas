@@ -74,12 +74,8 @@ export class FirePage extends BasePage {
     if(this.isReadonly()) return;
     this.generalService.drawMarker(this.map,event=>{
       if(this.marker)  this.generalService.removeElement(this.marker) ;
-      let latlng;
-      if(event.latLng){
-        latlng = {latitude: event.latLng.lat(), longitude: event.latLng.lng()};
-      }else{
-        latlng = {latitude: event.latitude, longitude: event.longitude};
-      }
+      let latlng=this.generalService.getEventLatLng(event);
+
       this.fire.coordinates=[latlng.latitude, latlng.longitude];
 
       this.generalService.addMarker(this.map,latlng,"Posição do Fogo",m=>{

@@ -183,6 +183,18 @@ export class GeneralService extends BaseService {
     }
   }
 
+  getEventLatLng(event){
+    let latlng;
+    if(event.latLng){
+      latlng = {latitude: event.latLng.lat(), longitude: event.latLng.lng()};
+    }else if(event.lat && event.lng){
+      latlng = {latitude: event.lat, longitude: event.lng};
+    }else{
+      latlng = {latitude: event.latitude, longitude: event.longitude};
+    }
+    return latlng;
+  }
+
   removeElement(element){
     if(element.setMap){
       element.setMap(null);
