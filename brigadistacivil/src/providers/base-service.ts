@@ -28,7 +28,7 @@ export class BaseService {
     if(BaseService.env=="development" && window.location.pathname.includes("asset")) BaseService.env="test";
 
     if(BaseService.env=="test"){
-      BaseService.apiUrl = "http://10.0.0.4:8484";
+      BaseService.apiUrl = "http://10.0.0.4:8484/api";
     }
     else{
       BaseService.apiUrl = Environment.apiBase;

@@ -42,9 +42,9 @@ app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
 
 app.use(morgan('common', {stream: logger.stream}));
 
-app.use('/user',userMiddleware);
-app.use('/brigade',brigadeMiddleware);
-app.use('/fire',fireMiddleware);
+app.use('/api/user',userMiddleware);
+app.use('/api/brigade',brigadeMiddleware);
+app.use('/api/fire',fireMiddleware);
 
 app.get("/error", ()=>{
   throw new Error("teste error");

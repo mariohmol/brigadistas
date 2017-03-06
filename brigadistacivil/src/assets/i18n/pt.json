@@ -60,6 +60,9 @@
     "title": "Incêndios",
     "see": "Ver Incêndio"
   },
+  "require": {
+    "minString": "é obrigatório (mínimo de 5 caracteres)."
+  },
   "user": {
     "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
     "bio": "Fale como você pode ajudar",
@@ -77,6 +80,10 @@
       "title": "Cadastrar",
       "error": "Não foi possível se cadastrar pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
       "welcome": ", seja bem vindo(a)!"
+    },
+    "recover": {
+      "title": "Recuperar Senha",
+      "enter": "Alterar Senha"
     },
     "update": {
       "title": "Perfil",

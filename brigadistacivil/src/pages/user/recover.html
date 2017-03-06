@@ -1,0 +1,25 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "app.name" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="login-page-content">
+  <div class="instructions">
+    <div>
+      {{ "user.recover.title" | translate }}
+    </div>
+    <br>
+  </div>
+   <form [formGroup]="recoverForm" (ngSubmit)="recoverPage(loginForm.value)">
+  <ion-item>
+    {{loginForm.controls.username.value}}
+  </ion-item>
+  <ion-item>
+    <ion-input  [formControl]="loginForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
+  </ion-item>
+  <button ion-button block >{{ "user.recover.enter" | translate }}</button>
+  </form>
+
+
+</ion-content>
