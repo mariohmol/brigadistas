@@ -16,6 +16,12 @@ declare var google;
 @Injectable()
 export class GeneralService extends BaseService {
   public static dados: any = {};
+  public static map: any;
+  public static marker: any;
+  public static polygon: any;
+  public static markers: [any];
+  public static polygons: [any];
+
 
   constructor(public http: Http) {
     super(http);
@@ -28,13 +34,13 @@ export class GeneralService extends BaseService {
    * @return {[type]}          [description]
    */
   loadMap(mapElement, position, options = {}) {
-    let map;
+    if(GeneralService.map && GeneralService.map.clear)GeneralService.map.clear();
     console.log(BaseService.device);
     if (BaseService.device == 'mobile') {
-      map = new GoogleMap(mapElement.nativeElement);
+      GeneralService.map = new GoogleMap(mapElement.nativeElement);
 
       // listen to MAP_READY event
-      map.one(GoogleMapsEvent.MAP_READY).then(() => {
+      GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {
         if (position) {
           // create LatLng object
           let posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
@@ -47,11 +53,11 @@ export class GeneralService extends BaseService {
           };
 
           // move the map's camera to position
-          map.moveCamera(cameraPos);
+          GeneralService.map.moveCamera(cameraPos);
         }
       });
 
-      return map;
+      return GeneralService.map;
     } else {
 
 
@@ -68,11 +74,11 @@ export class GeneralService extends BaseService {
       mapOptions = Object.assign(mapOptions, options)
 
       if (mapElement) {
-        map = new google.maps.Map(mapElement.nativeElement, mapOptions);
+        GeneralService.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
       } else {
-        map = new google.maps.Map(document.getElementById('map'), mapOptions);
+        GeneralService.map = new google.maps.Map(document.getElementById('map'), mapOptions);
       }
-      return map;
+      return GeneralService.map;
     }
   }
 
@@ -197,8 +203,10 @@ export class GeneralService extends BaseService {
 
   removeElement(element){
     if(element.setMap){
+      console.log("setMap()")
       element.setMap(null);
     }else{
+      console.log("remove()")
       element.remove();
     }
   }

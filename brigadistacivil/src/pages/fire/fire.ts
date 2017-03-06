@@ -16,7 +16,6 @@ declare var google;
 export class FirePage extends BasePage {
   public fire: any;
   public readonly: boolean;
-  public marker: any;
   public position: any;
   public isBrigade: boolean;
   @ViewChild('map') mapElement: ElementRef;
@@ -46,14 +45,17 @@ export class FirePage extends BasePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BrigadePage');
+    console.log('ionViewDidLoad FirePage');
     let cb = ()=>{
       if(this.fire && this.fire.coordinates){
         let pos={latitude: this.fire.coordinates[0], longitude: this.fire.coordinates[1]};
         this.loadMap(pos);
-        this.marker = this.addMarker(pos,"Posição do Fogo");
+        if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
+        GeneralService.marker = this.addMarker(pos,"Posição do Fogo");
       }else if(this.position){
         this.loadMap(this.position);
+      }else{
+        this.loadMap(null);
       }
       this.confMap();
     }
@@ -64,7 +66,7 @@ export class FirePage extends BasePage {
         cb();
       }
       this.generalService.getPosition(addPosition);
-
+      cb();
     }else{
       cb();
     }
@@ -72,14 +74,14 @@ export class FirePage extends BasePage {
 
   confMap(){
     if(this.isReadonly()) return;
-    this.generalService.drawMarker(this.map,event=>{
-      if(this.marker)  this.generalService.removeElement(this.marker) ;
+    this.generalService.drawMarker(GeneralService.map,event=>{
+      if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
       let latlng=this.generalService.getEventLatLng(event);
 
       this.fire.coordinates=[latlng.latitude, latlng.longitude];
 
-      this.generalService.addMarker(this.map,latlng,"Posição do Fogo",m=>{
-        this.marker=m;
+      this.generalService.addMarker(GeneralService.map,latlng,"Posição do Fogo",m=>{
+        GeneralService.marker=m;
       });
     });
 
@@ -174,7 +176,7 @@ export class FirePage extends BasePage {
 
    // Create the PlaceService and send the request.
    // Handle the callback with an anonymous function.
-   var service = new google.maps.places.PlacesService(this.map);
+   var service = new google.maps.places.PlacesService(GeneralService.map);
    service.nearbySearch(request, function(results, status) {
      if (status == google.maps.places.PlacesServiceStatus.OK) {
        for (var i = 0; i < results.length; i++) {
@@ -184,7 +186,7 @@ export class FirePage extends BasePage {
          // click on the marker.
          console.log(place.geometry.location);
          new google.maps.Marker({
-           map: this.map,
+           map: GeneralService.map,
            position: place.geometry.location
          });
        }

@@ -4,7 +4,6 @@ import { NavController, NavParams, AlertController, App, MenuController, ToastCo
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
-import { RecoverPage } from './recover';
 import { FiresPage } from '../fire/fires';
 import BasePage from '../basepage';
 
@@ -58,7 +57,7 @@ export class LoginPage extends BasePage {
       this.translate("user.recover.title"), () => {
         this.userService.recover(form.username).then(r => {
           this.showToast(this.translate("user.recover.response"));
-        }); 
+        });
       });
   }
 
