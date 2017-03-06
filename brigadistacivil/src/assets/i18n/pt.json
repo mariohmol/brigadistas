@@ -83,7 +83,9 @@
     },
     "recover": {
       "title": "Recuperar Senha",
-      "enter": "Alterar Senha"
+      "enter": "Alterar Senha",
+      "confirm": "Você tem certeza que deseja receber um email de recuperação de senha no email ",
+      "response": "Nós enviamos um email com os passos para alterar sua senha."
     },
     "update": {
       "title": "Perfil",

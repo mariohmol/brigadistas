@@ -118,9 +118,17 @@ router.get('/recover/:username/', (req, res) => {
   });
 });
 
+
+router.post('/recovercheck/:key/',(req, res) => {
+  User.findOne({token: req.params.key}).then(u=>{
+    if(!u) return res.sendStatus(404);
+    res.status(200).json( u );
+  });
+});
+
 router.post('/recoverpass/:key/',(req, res) => {
   User.findOne({token: req.params.key}).then(u=>{
-    if(!u) res.sendStatus(404);
+    if(!u) return res.sendStatus(404);
 
     bcrypt.genSalt(10, (err, salt) => {
       if (err) {
@@ -135,9 +143,7 @@ router.post('/recoverpass/:key/',(req, res) => {
           res.status(200).json( u );
       });
     });
-
   });
-
 });
 
 module.exports = router;

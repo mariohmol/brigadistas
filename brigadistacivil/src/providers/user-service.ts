@@ -61,7 +61,11 @@ export class UserService extends BaseService {
   }
 
   recover(email) {
-    return this.doPost('/user/recover/'+email+'/',{});
+    return this.doGet('/user/recover/'+email+'/');
+  }
+
+  recoverCheck(key) {
+    return this.doGet('/user/recovercheck/'+key+'/');
   }
 
   recoverPassword(key,password) {

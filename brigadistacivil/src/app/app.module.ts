@@ -27,7 +27,8 @@ let pages = [
   MyApp,
   UserPage,LoginPage,
   FirePage, FiresPage,
-  BrigadePage, BrigadesPage
+  BrigadePage, BrigadesPage,
+  RecoverPage
 ];
 
 let declarations = [...pages, ReadOnlyClass ];

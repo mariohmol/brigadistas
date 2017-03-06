@@ -11,12 +11,12 @@
     </div>
     <br>
   </div>
-   <form [formGroup]="recoverForm" (ngSubmit)="recoverPage(loginForm.value)">
+   <form [formGroup]="recoverForm" (ngSubmit)="recoverPage(recoverForm.value)">
   <ion-item>
-    {{loginForm.controls.username.value}}
+    Seu email: {{email}}
   </ion-item>
   <ion-item>
-    <ion-input  [formControl]="loginForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
+    <ion-input  [formControl]="recoverForm.controls['password']" required type="password" placeholder="{{ 'user.password' | translate }}"></ion-input>
   </ion-item>
   <button ion-button block >{{ "user.recover.enter" | translate }}</button>
   </form>

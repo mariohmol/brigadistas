@@ -1,9 +1,10 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { NavController, NavParams, AlertController, App, MenuController,ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, App, MenuController, ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
+import { RecoverPage } from './recover';
 import { FiresPage } from '../fire/fires';
 import BasePage from '../basepage';
 
@@ -38,8 +39,8 @@ export class LoginPage extends BasePage {
   }
 
   afterLogin() {
-    if('deviceToken' in localStorage)
-      this.userService.storeDeviceToken('android',localStorage['deviceToken']);
+    if ('deviceToken' in localStorage)
+      this.userService.storeDeviceToken('android', localStorage['deviceToken']);
     this.openPage(FiresPage);
     this.setMenu();
   }
@@ -50,6 +51,15 @@ export class LoginPage extends BasePage {
 
   register() {
     this.navCtrl.push(UserPage);
+  }
+
+  recover(form) {
+    this.showConfirm(this.translate("user.recover.confirm") + form.username,
+      this.translate("user.recover.title"), () => {
+        this.userService.recover(form.username).then(r => {
+          this.showToast(this.translate("user.recover.response"));
+        }); 
+      });
   }
 
 }

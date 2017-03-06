@@ -48,9 +48,11 @@ export class BaseService {
         'Content-Type': 'application/json' ,
         'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)
       });
-    }else{
+    }else if(data){
       headers = new Headers({'Content-Type': 'application/json',
       'Authorization': 'Basic ' + btoa(data.username + ':' + data.password)});
+    }else{
+        headers = new Headers({'Content-Type': 'application/json'});
     }
     return headers;
   }

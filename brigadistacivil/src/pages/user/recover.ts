@@ -13,6 +13,7 @@ import BasePage from '../basepage';
 })
 export class RecoverPage extends BasePage {
   recoverForm: FormGroup;
+  user: string;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
     public translateService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
@@ -28,7 +29,10 @@ export class RecoverPage extends BasePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RecoverPage');
-
+      let token = this.navParams.get("token");
+      this.userService.recoverCheck(token).then(u=>{
+        this.user=u;
+      });
   }
 
 
