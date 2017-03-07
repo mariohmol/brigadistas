@@ -11,7 +11,7 @@ const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
 router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  Fire.find({},'_id title description intensity users createdAt coordinates').populate('users').then(d => { res.json(d);});
+  Fire.find({},'_id title description intensity users createdAt coordinates').sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
 });
 
 router.get('/:id', function (req, res, next) {
