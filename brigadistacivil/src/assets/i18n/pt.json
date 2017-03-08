@@ -76,6 +76,9 @@
       "title": "Não foi possível entrar",
       "subTitle": "Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!"
     },
+    "logout":{
+      "title": "Sair"
+    },
     "new": {
       "title": "Cadastrar",
       "error": "Não foi possível se cadastrar pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
