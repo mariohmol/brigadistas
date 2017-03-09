@@ -37,10 +37,14 @@ export class MyApp {
       // Here you can do any higher level native things you might need.
       //
       // this language will be used as a fallback when a translation isn't found in the current language
-      this.translate.setDefaultLang('pt');
+      let language;
+      if (navigator && navigator.language) language = navigator.language.slice(0,2);
+      else language = 'en';
+
+      this.translate.setDefaultLang(language);
 
        // the lang to use, if the lang isn't available, it will use the current loader to get them
-      this.translate.use('pt');
+      this.translate.use(language);
 
       // used for an example of ngFor and navigation
       this.pages = [
