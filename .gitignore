@@ -32,3 +32,5 @@ UserInterfaceState.xcuserstate
 #cordova
 plugins/
 plugins2/
+
+.vscode
