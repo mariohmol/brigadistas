@@ -27,7 +27,7 @@ export class FiresPage extends BasePage{
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BrigadesPage');
+    console.log('ionViewDidLoad FiresPage');
     this.fireService.getFires().then(d => {
       this.fires = <Array<any>>d;
     });
