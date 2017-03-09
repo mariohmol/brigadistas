@@ -5,80 +5,80 @@
   "brigade": {
     "title": "Brigade",
     "promoteBrigade": {
-      "action": "Promoto to Leader",
+      "action": "Promote to Leader",
       "confirm": "Are you sure that want to promote this user as brigade leader?",
       "feedback": "Congratulations, your team have more than um brigade as leader."
     },
     "approveBrigade": {
-      "action": "Aprovar Brigadista",
-      "confirm": "Tem certeza que deseja aprovar este para ser um brigadista?",
-      "feedback": "Parabéns, sua equipe aumento com mais um brigadista!"
+      "action": "Approve Brigade",
+      "confirm": "Are you sure you want to approve this to be a brigade?",
+      "feedback": "Congratulations, your team has increased with one more brigadier!"
     },
     "requestEnter": {
-      "action": "Entrar na Brigada",
-      "confirm": "Tem certeza que deseja enviar um pedido de entrada para o líder da brigada?",
-      "feedback": "Seu pedido foi enviado e etá aguardando aprovação do líder da brigada."
+      "action": "Enter the Brigade",
+      "confirm": "Are you sure you want to send an application to the brigade leader?",
+      "feedback": "Your request has been submitted and is awaiting approval from the brigade leader."
     },
     "leaveBrigade": {
-      "action": "Sair da Brigada",
-      "confirm": "Tem certeza que deseja sair da sua brigada? Ao fazer isso você perderá o controle caso seja um líder.",
-      "feedback": "Você saiu da brigada com sucesso!"
+      "action": "Leave the Brigade",
+      "confirm": "Are you sure you want to leave your squad? By doing this you will lose control if you are a leader.",
+      "feedback": "You left the squad successfully!"
     },
     "new": {
-      "title": "Nova brigada",
-      "warning": "Sua brigada foi criada! Nosso time vai revisar suas informações e em breve aprovaremos para fazer parte da nossa rede!"
+      "title": "New Brigade",
+      "warning": "Your brigade was created! Our team will review your information and we will soon approve to become part of our network!"
     },
-    "update": "Sua brigada foi atualizada com sucesso!"
+    "update": "Your brigade has been updated successfully!"
   },
   "brigades": {
-    "title": "Brigadas",
-    "see": "Ver brigada"
+    "title": "Brigades",
+    "see": "See brigade"
   },
   "fire": {
-    "title": "Ver Incêndio",
-    "startCombat": "Combater Incêndio",
-    "stopCombat": "Sair do Combate",
+    "title": "View Fire",
+    "startCombat": "Fire Fighting",
+    "stopCombat": "Get out of combat",
     "new": {
-      "title": "Reporta Incêndio",
-      "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
-      "fieldDescription": "Mais informações como acesso, contato.."
+      "title": "Report Fire",
+      "fieldTitle": "Name (eg Fire in Alto da Serra)",
+      "fieldDescription": "More information like access, contact .."
     }
   },
   "fires": {
-    "title": "Incêndios",
-    "see": "Ver Incêndio"
+    "title": "Fires",
+    "see": "View Fire"
   },
   "user": {
-    "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
-    "email": "Seu email",
-    "password": "Sua senha",
-    "enter": "Entrar",
-    "signin": "Cadastrar",
-    "login":{
-      "title": "Não foi possível entrar",
-      "subTitle": "Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!"
+    "title": "Welcome to the Civilian Brigadist application! Enter your email and password.",
+    "email": "Your email",
+    "password": "Your password",
+    "enter": "Log in",
+    "signin": "Register",
+    "login": {
+      "title": "Could not login",
+      "subTitle": "Your username or password is incorrect! If you have not registered yet, do it now!"
     },
     "new": {
-      "title": "Cadastrar",
-      "error": "Não foi possível se cadastrar pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
-      "welcome": ", seja bem vindo(a)!"
+      "title": "Register",
+      "error": "It was not possible to register because your email already exists in our database or there was an error, please contact us.",
+      "welcome": ", Welcome!"
     },
     "update": {
-      "title": "Perfil",
-      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
+      "title": "Profile",
+      "error": "We were unable to change your profile because your email already exists in our database or there was an error, please contact us."
     }
   },
-  "cancel": "Cancelar",
-  "chooseOption": "Escolha uma opção",
-  "chooseOptionFail": "Por favor, selecione uma opção para continuar.",
-  "city": "Cidade",
-  "confirmOperation": "Confirmação de operação",
-  "connectionFail": "Provável problema com a sua internet, tente novamente.",
-  "description": "Descrição",
+  "cancel": "Cancel",
+  "chooseOption": "Choose an Option",
+  "chooseOptionFail": "Please select an option to continue.",
+  "city": "City",
+  "confirmOperation": "Operation Confirmation",
+  "connectionFail": "Likely problem with your internet, please try again.",
+  "description": "Description",
   "done": "OK",
-  "intensity": "Intensidade",
-  "name": "Nome",
-  "notfounditems": "Não foram encontrados informações.",
-  "title": "Título",
-  "yesContinue": "Sim, desejo continuar"
+  "intensity": "Intensity",
+  "name": "Name",
+  "notfounditems": "No information found.",
+  "title": "Title",
+  "yesContinue": "Yes, I want to continue"
 }
