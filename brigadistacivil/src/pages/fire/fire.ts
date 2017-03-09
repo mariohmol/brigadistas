@@ -46,9 +46,9 @@ export class FirePage extends BasePage {
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad FirePage');
-    let cb = ()=>{
+    let cb = () => {
       if(this.fire && this.fire.coordinates){
-        let pos={latitude: this.fire.coordinates[0], longitude: this.fire.coordinates[1]};
+        let pos={latitude: this.fire.coordinates[1], longitude: this.fire.coordinates[0]};
         this.loadMap(pos);
         if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
         GeneralService.marker = this.addMarker(pos,"Posição do Fogo");
@@ -78,7 +78,7 @@ export class FirePage extends BasePage {
       if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
       let latlng=this.generalService.getEventLatLng(event);
 
-      this.fire.coordinates=[latlng.latitude, latlng.longitude];
+      this.fire.coordinates=[latlng.longitude, latlng.latitude];
 
       this.generalService.addMarker(GeneralService.map,latlng,"Posição do Fogo",m=>{
         GeneralService.marker=m;

@@ -116,7 +116,7 @@ export class GeneralService extends BaseService {
       });
       if (!title) return;
       this.addInfoWindow(map, marker, title);
-      cb(marker);
+      if (cb) cb(marker);
     }
 
   }
