@@ -1,84 +1,84 @@
 {
   "app": {
-    "name": "Civil Brigade"
+    "name": "Brigada civil"
   },
   "brigade": {
-    "title": "Brigade",
+    "title": "Brigada",
     "promoteBrigade": {
-      "action": "Promoto to Leader",
-      "confirm": "Are you sure that want to promote this user as brigade leader?",
-      "feedback": "Congratulations, your team have more than um brigade as leader."
+      "action": "Promover al Líder",
+      "confirm": "¿Estás seguro de que quieres promocionar a este usuario como líder de la brigada?",
+      "feedback": "Enhorabuena, tu equipo tiene más de una brigada como líder."
     },
     "approveBrigade": {
-      "action": "Aprovar Brigadista",
-      "confirm": "Tem certeza que deseja aprovar este para ser um brigadista?",
-      "feedback": "Parabéns, sua equipe aumento com mais um brigadista!"
+      "action": "Aprobar la Brigada",
+      "confirm": "¿Estás seguro de que quieres aprobar esto para ser una brigada?",
+      "feedback": "¡Enhorabuena, su equipo ha aumentado con un brigadier más!"
     },
     "requestEnter": {
-      "action": "Entrar na Brigada",
-      "confirm": "Tem certeza que deseja enviar um pedido de entrada para o líder da brigada?",
-      "feedback": "Seu pedido foi enviado e etá aguardando aprovação do líder da brigada."
+      "action": "Entrar en la brigada",
+      "confirm": "¿Estás seguro de que quieres enviar una solicitud al líder de la brigada?",
+      "feedback": "Su solicitud ha sido enviada y está a la espera de la aprobación del líder de la brigada."
     },
     "leaveBrigade": {
-      "action": "Sair da Brigada",
-      "confirm": "Tem certeza que deseja sair da sua brigada? Ao fazer isso você perderá o controle caso seja um líder.",
-      "feedback": "Você saiu da brigada com sucesso!"
+      "action": "Salir de la brigada",
+      "confirm": "¿Seguro que quieres dejar tu plantilla? Haciendo esto usted perderá el control si usted es un líder.",
+      "feedback": "Usted dejó el equipo con éxito!"
     },
     "new": {
-      "title": "Nova brigada",
-      "warning": "Sua brigada foi criada! Nosso time vai revisar suas informações e em breve aprovaremos para fazer parte da nossa rede!"
+      "title": "Nueva brigada",
+      "warning": "¡Tu brigada fue creada! Nuestro equipo revisará su información y pronto aprobaremos para formar parte de nuestra red."
     },
-    "update": "Sua brigada foi atualizada com sucesso!"
+    "update": "Tu brigada se ha actualizado con éxito!"
   },
   "brigades": {
     "title": "Brigadas",
     "see": "Ver brigada"
   },
   "fire": {
-    "title": "Ver Incêndio",
-    "startCombat": "Combater Incêndio",
-    "stopCombat": "Sair do Combate",
+    "title": "Ver Fuego",
+    "startCombat": "Lucha contra incendios",
+    "stopCombat": "Salir del combate",
     "new": {
-      "title": "Reporta Incêndio",
-      "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
-      "fieldDescription": "Mais informações como acesso, contato.."
+      "title": "Informe de incendios",
+      "fieldTitle": "Nombre (por ejemplo: Fuego en Alto da Serra)",
+      "fieldDescription": "Más información como acceso, contacto .."
     }
   },
   "fires": {
-    "title": "Incêndios",
-    "see": "Ver Incêndio"
+    "title": "Fuegos",
+    "see": "Ver Fuego"
   },
   "user": {
-    "title": "Bem vindo ao aplicativo do Brigadista Civil! Entre com seu email e senha.",
-    "email": "Seu email",
-    "password": "Sua senha",
-    "enter": "Entrar",
-    "signin": "Cadastrar",
-    "login":{
-      "title": "Não foi possível entrar",
-      "subTitle": "Seu usuário ou senha está incorreto! Se ainda não e cadastrou, faça agora!"
+    "title": "¡Bienvenidos a la aplicación de Brigadistas Civiles! Introduce tu correo electrónico y contraseña.",
+    "email": "Tu correo electrónico",
+    "password": "Tu contraseña",
+    "enter": "Iniciar sesión",
+    "signin": "Registro",
+    "login": {
+      "title": "No pude entrar a la cuenta",
+      "subTitle": "¡Tu nombre de usuario o tu contraseña son incorrectos! Si aún no te has registrado, ¡hazlo ahora!"
     },
     "new": {
-      "title": "Cadastrar",
-      "error": "Não foi possível se cadastrar pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
-      "welcome": ", seja bem vindo(a)!"
+      "title": "Registro",
+      "error": "No fue posible registrarse porque su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor póngase en contacto con nosotros.",
+      "welcome": ", ¡Bienvenido!"
     },
     "update": {
       "title": "Perfil",
-      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
+      "error": "No hemos podido cambiar tu perfil porque tu correo electrónico ya existe en nuestra base de datos o hubo un error, por favor ponte en contacto con nosotros."
     }
   },
   "cancel": "Cancelar",
-  "chooseOption": "Escolha uma opção",
-  "chooseOptionFail": "Por favor, selecione uma opção para continuar.",
-  "city": "Cidade",
-  "confirmOperation": "Confirmação de operação",
-  "connectionFail": "Provável problema com a sua internet, tente novamente.",
-  "description": "Descrição",
-  "done": "OK",
-  "intensity": "Intensidade",
-  "name": "Nome",
-  "notfounditems": "Não foram encontrados informações.",
+  "chooseOption": "Escoge una opción",
+  "chooseOptionFail": "Por favor, seleccione una opción para continuar.",
+  "city": "Ciudad",
+  "confirmOperation": "Confirmación de operación",
+  "connectionFail": "Problema probable con su Internet, por favor, inténtelo de nuevo.",
+  "description": "Descripción",
+  "done": "DE ACUERDO",
+  "intensity": "Intensidad",
+  "name": "Nombre",
+  "notfounditems": "No se encontró información.",
   "title": "Título",
-  "yesContinue": "Sim, desejo continuar"
+  "yesContinue": "Si quiero continuar"
 }
