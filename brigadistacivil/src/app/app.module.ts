@@ -10,6 +10,8 @@ import { FirePage } from '../pages/fire/fire';
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadePage } from '../pages/brigade/brigade';
 import { BrigadesPage } from '../pages/brigade/brigades';
+import { ChatPage } from '../pages/chat/chat';
+import { ChatsPage } from '../pages/chat/chats';
 
 import {BaseService} from '../providers/base-service';
 import {GeneralService} from '../providers/general-service';
@@ -28,7 +30,8 @@ let pages = [
   UserPage,LoginPage,
   FirePage, FiresPage,
   BrigadePage, BrigadesPage,
-  RecoverPage
+  RecoverPage,
+  ChatsPage,ChatPage
 ];
 
 let declarations = [...pages, ReadOnlyClass ];
@@ -41,6 +44,8 @@ let links=[
       { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
       { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },
       { component: BrigadePage, name: 'Brigade', segment: 'brigade/:fireId' },
+      { component: ChatPage, name: 'Chat', segment: 'chats/' },
+      { component: ChatsPage, name: 'Chats', segment: 'chat/:fireId' }
     ];
 
 @NgModule({
