@@ -1,9 +1,8 @@
-import { Component, ViewChild, ElementRef } from '@angular/core';
-import {FormGroup, FormBuilder, Validators} from '@angular/forms';
+import { Component } from '@angular/core';
 import { App, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { UserService } from '../../providers/user-service';
-import { BrigadeService } from '../../providers/brigade-service';
+import { ChatService } from '../../providers/chat-service';
 import { GeneralService } from '../../providers/general-service';
 import {TranslateService} from 'ng2-translate';
 
@@ -13,30 +12,20 @@ import {TranslateService} from 'ng2-translate';
   templateUrl: 'chat.html'
 })
 export class ChatsPage extends BasePage {
-  chats;
+  chats: any;
   senderId: string;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService, public alertCtrl: AlertController,
-    public userService: UserService, public toastCtrl: ToastController,
+    public toastCtrl: ToastController, public chatService: ChatService,
     public generalService: GeneralService) {
-    super()
-
+    super();
+    this.loadData();
   }
 
-  findChats() {
-
+  loadData() {
+    this.chatService.getChats().then(chat=>{
+      this.chats=chat;
+    });
   }
-
-  findLastChatMessage(chatId: string) {
-
-  }
-
-  showMessages(chat): void {
-  }
-
-  removeChat(chat: any): void {
-
-  }
-
 }

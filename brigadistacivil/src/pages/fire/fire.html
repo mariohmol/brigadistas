@@ -76,6 +76,9 @@
     <ion-segment value="finished" *ngIf="fire.status=='finished'">
       {{ "fire.finished" | translate }}
     </ion-segment>
+    <ion-segment value="finished" *ngIf="fire.status!='finished'">
+      {{ "chat" | translate }}
+    </ion-segment>
   </ion-segment>
 
 

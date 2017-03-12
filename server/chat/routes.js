@@ -8,10 +8,16 @@ const { ensureAdmin } = require('../config/passport');
 const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
-  Chat.find({members: $in: {req.user._id}},'title lastMessage createdAt').then(d => { res.json(d);});
+  Chat.find({members: {$in: req.user._id}},'title lastMessage createdAt').then(d => { res.json(d);});
 });
 router.get('/:id', function (req, res, next) {
-  Chat.findOne({_id: req.params.id}).populate("messages").populate("requested").then(d => { res.json(d);});
+  Chat.findOne({
+    _id: req.params.id,
+    $or: {
+      public: true,
+      members: {$in: [req.params._id]}
+    }    
+  }).populate("messages").populate("requested").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }),
@@ -49,7 +55,7 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
    Message.findOne({_id: req.params.id}).populate("sender").then(d => { res.json(d);});
  });
 
- router.put('/message/:id', passport.authenticate('basic', { session: false }),
+ router.put('/message/:messageId', passport.authenticate('basic', { session: false }),
   function (req, res, next) {
     let data=Object.assign(req.body, { updatedAt: new Date()} );
    var query={_id: req.params.id, sender:  req.user._id };
@@ -58,12 +64,15 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
    .catch(e=> {res.json(e);});
  });
 
-
- router.post('/message', passport.authenticate('basic', { session: false }),
+ router.post('/message/:chatId', passport.authenticate('basic', { session: false }),
   function (req, res, next) {
-   let data=Object.assign(req.body, { sender: req.user._id,  createdAt: new Date()} );
-   Message.create(req.body).then(d => {
-     res.json(d);
+   let find = {_id: req.params.chatId, members: {$in: req.user._id}};
+   Chat.find().then(c=>{
+     if(!c) return res.sendStatus(404);
+     let data=Object.assign(req.body, { sender: req.user._id,  createdAt: new Date()} );
+     Message.create(req.body).then(d => {
+       res.json(d);
+     });
    });
  });
 
