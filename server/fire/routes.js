@@ -56,6 +56,9 @@ const newFire =  function(res,data,b=null){
     }).then(c=>{
       logger.info(`Returning new fire`);
       res.json(d);
+    }).catch(e=>{
+      logger.error(`ERROR: Creating a chat for the fire ${e}`);
+      res.json(d);
     });
   }).catch(e=>{
     logger.error(`ERROR: Creating a new fire ${e}`);
