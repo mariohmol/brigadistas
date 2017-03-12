@@ -7,16 +7,27 @@ const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
 const {URL} = require('../config/config');
 
-router.get('/', function (req, res, next) {
-  Chat.find({members: {$in: req.user._id}},'title lastMessage createdAt').then(d => { res.json(d);});
+router.get('/',passport.authenticate('basic', { session: false }), function (req, res, next) {
+  Chat.find({members: {$in: [req.user._id]}},'title lastMessage createdAt').then(d => { res.json(d);});
 });
-router.get('/:id', function (req, res, next) {
+
+router.get('/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {
   Chat.findOne({
     _id: req.params.id,
-    $or: {
-      public: true,
-      members: {$in: [req.params._id]}
-    }    
+    $or: [
+      {public: true},
+      {members: {$in: [req.user._id]}}
+    ]
+  }).populate("messages").populate("requested").then(d => { res.json(d);});
+});
+
+router.get('/fire/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {
+  Chat.findOne({
+    fire: req.params.id,
+    $or: [
+      {public: true},
+      {members: {$in: [req.user._id]}}
+    ]
   }).populate("messages").populate("requested").then(d => { res.json(d);});
 });
 
@@ -45,13 +56,12 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
 
 
 /**
- * leaders
- * @type {[type]}     leaders,brigades,requested,followers
+ * MESSAGES
  */
- router.get('/message', function (req, res, next) {
+ router.get('/message',passport.authenticate('basic', { session: false }), function (req, res, next) {
    Message.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
  });
- router.get('/message/:id', function (req, res, next) {
+ router.get('/message/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {
    Message.findOne({_id: req.params.id}).populate("sender").then(d => { res.json(d);});
  });
 
@@ -66,7 +76,7 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
 
  router.post('/message/:chatId', passport.authenticate('basic', { session: false }),
   function (req, res, next) {
-   let find = {_id: req.params.chatId, members: {$in: req.user._id}};
+   let find = {_id: req.params.chatId, members: {$in: [req.user._id]}};
    Chat.find().then(c=>{
      if(!c) return res.sendStatus(404);
      let data=Object.assign(req.body, { sender: req.user._id,  createdAt: new Date()} );

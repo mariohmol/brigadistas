@@ -2,6 +2,10 @@
   "app": {
     "name": "Civil Brigade"
   },
+  "chat": {
+    "title": "Chat",
+    "notfound": "Chat not found for this fire"
+  },
   "brigade": {
     "title": "Brigade",
     "promoteBrigade": {
@@ -69,7 +73,6 @@
     }
   },
   "cancel": "Cancel",
-  "chat": "Chat",
   "chooseOption": "Choose an Option",
   "chooseOptionFail": "Please select an option to continue.",
   "city": "City",

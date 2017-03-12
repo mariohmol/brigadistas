@@ -21,6 +21,10 @@ export class ChatService extends BaseService {
     return this.doGet(`/chat/${id}`);
   }
 
+  getChatByFire(fire){
+    return this.doGet(`/chat/fire/${fire._id}`);
+  }
+
   addChat(chat){
     return this.doPost('/chat/',chat);
   }

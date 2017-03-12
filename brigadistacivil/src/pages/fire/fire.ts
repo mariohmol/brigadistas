@@ -3,8 +3,10 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { FiresPage } from './fires';
+import { ChatPage } from '../chat/chat';
 import { FireService } from '../../providers/fire-service';
 import { GeneralService } from '../../providers/general-service';
+import { ChatService } from '../../providers/chat-service';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 declare var google;
@@ -24,7 +26,7 @@ export class FirePage extends BasePage {
 
   constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
     public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
-    public generalService: GeneralService) {
+    public generalService: GeneralService, public chatService: ChatService) {
     super();
 
     this.fireFormFields = {
@@ -136,6 +138,13 @@ export class FirePage extends BasePage {
     this.fireService.doPut(`/fire/status/${this.fire._id}/${status}`).then(d=>{
       this.showToast(this.translate("fire.status.updated"));
       this.loadData();
+    });
+  }
+
+  openChat(){
+    this.chatService.getChatByFire(this.fire).then(chat=>{
+      if(!chat) return this.showToast(this.translate("chat.notfound"));
+      this.navCtrl.push(ChatPage,{ chat});
     });
   }
 

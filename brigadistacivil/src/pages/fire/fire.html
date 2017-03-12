@@ -73,11 +73,11 @@
     <ion-segment-button value="closeCombat" *ngIf="fire.status=='aftermath'" (click)="changeStatus('finished')">
       {{ "fire.closeCombat" | translate }}
     </ion-segment-button>
+    <ion-segment-button value="chat" *ngIf="fire.status!='finished'" (click)="openChat()">
+      {{ "chat.title" | translate }}
+    </ion-segment-button>
     <ion-segment value="finished" *ngIf="fire.status=='finished'">
       {{ "fire.finished" | translate }}
-    </ion-segment>
-    <ion-segment value="finished" *ngIf="fire.status!='finished'">
-      {{ "chat" | translate }}
     </ion-segment>
   </ion-segment>
 

@@ -10,11 +10,9 @@ router.get('/', function (req, res, next) {
   User.find().then(d => { res.json(d);});
 });
 
-
 router.put('/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {
   User.findOneAndUpdate(req.user._id,req.body,{$new: true, upsert: true}).then(d => { res.json(d);});
 });
-
 
 router.delete('/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
   User.findOneAndDelete(req.user._id,{},{}).then(d => { res.json(d);});

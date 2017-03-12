@@ -18,6 +18,7 @@ import {GeneralService} from '../providers/general-service';
 import {UserService} from '../providers/user-service';
 import {FireService} from '../providers/fire-service';
 import {BrigadeService} from '../providers/brigade-service';
+import {ChatService} from '../providers/chat-service';
 
 import {ReadOnlyClass} from './directives/readonlyclass';
 
@@ -65,6 +66,6 @@ let links=[
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,BaseService,
-              UserService,FireService,BrigadeService]
+              UserService,FireService,BrigadeService,ChatService]
 })
 export class AppModule {}

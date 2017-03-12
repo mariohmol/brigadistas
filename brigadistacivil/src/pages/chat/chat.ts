@@ -5,7 +5,7 @@ import BasePage from '../basepage';
 import { UserService } from '../../providers/user-service';
 import { ChatService } from '../../providers/chat-service';
 import { GeneralService } from '../../providers/general-service';
-import {TranslateService} from 'ng2-translate';
+import { TranslateService } from 'ng2-translate';
 
 
 @Component({
