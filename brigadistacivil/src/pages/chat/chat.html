@@ -1,8 +1,9 @@
 <ion-header>
-  <ion-navbar color="whatsapp">
-    <ion-title>
-      Chats
-    </ion-title>
+  <ion-navbar color="primary">
+    <ion-title>{{ "chat.title" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
     <ion-buttons end>
       <button ion-button icon-only class="add-chat-button" (click)="addChat()">
         <ion-icon name="person-add"></ion-icon>
@@ -16,20 +17,15 @@
 
 <ion-content class="chats-page-content">
   <ion-list class="chats">
-    <ion-item-sliding *ngFor="let chat of chats | async">
-      <button ion-item class="chat" (click)="showMessages(chat)">
-        <img class="chat-picture" [src]="chat.picture">
+    <ion-item-sliding *ngFor="let message of chat.messages">
+      <button ion-item class="chat" >
+        <img class="chat-picture" [src]="message.picture">
         <div class="chat-info">
-          <h2 class="chat-title">{{chat.title}}</h2>
-
-          <span *ngIf="chat.lastMessage" class="last-message">
-            <p *ngIf="chat.lastMessage.type == 'text'" class="last-message-content last-message-content-text">{{chat.lastMessage.content}}</p>
-            <span class="last-message-timestamp">{{ chat.lastMessage.createdAt  }}</span>
-          </span>
+          <h2 class="chat-title">{{message.content}}</h2>
         </div>
       </button>
       <ion-item-options class="chat-options">
-        <button ion-button color="danger" class="option option-remove" (click)="removeChat(chat)">Remove</button>
+        <button ion-button color="danger" class="option option-remove" (click)="removeMessage(message)">Remove</button>
       </ion-item-options>
     </ion-item-sliding>
   </ion-list>

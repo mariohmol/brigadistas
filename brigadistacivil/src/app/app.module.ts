@@ -44,9 +44,9 @@ let links=[
       { component: FiresPage, name: 'Fires', segment: 'fires/' },
       { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
       { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },
-      { component: BrigadePage, name: 'Brigade', segment: 'brigade/:fireId' },
-      { component: ChatPage, name: 'Chat', segment: 'chats/' },
-      { component: ChatsPage, name: 'Chats', segment: 'chat/:fireId' }
+      { component: BrigadePage, name: 'Brigade', segment: 'brigade/:brigadeId' },
+      { component: ChatsPage, name: 'Chats', segment: 'chats/' },
+      { component: ChatPage, name: 'Chat', segment: 'chat/:chatId' }
     ];
 
 @NgModule({

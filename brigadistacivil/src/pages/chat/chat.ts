@@ -20,8 +20,10 @@ export class ChatPage extends BasePage {
     public translateService: TranslateService, public alertCtrl: AlertController,
     public userService: UserService, public toastCtrl: ToastController,
     public generalService: GeneralService, public chatService: ChatService) {
-    super();
+      super();
+    }
 
+  ionViewDidLoad() {
     if (this.navParams.get("chat")) {
       this.chat = this.navParams.get("chat");
       this.loadData();
@@ -29,7 +31,6 @@ export class ChatPage extends BasePage {
       this.chat = {};
       this.readonly = false;
     }
-
   }
 
   loadData() {
