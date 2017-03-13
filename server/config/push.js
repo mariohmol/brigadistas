@@ -32,9 +32,15 @@ function initPush(){
 function sendAndroid(message,regTokens){
   var messageObject = new gcm.Message({message});
   // Actually send the message
+  logger.info(`SendAndroid   ${regTokens.join(" , ")} and ${message}`);
   sender.send(messageObject, { registrationTokens: regTokens }, function (err, response) {
       if (err) logger.error(`Error sending android token ${err}`);
-      else logger.info(`Response sending android token ${response}`);
+      else if(response.failure>0){
+        response.results.forEach(c=>{
+          logger.error(`Error when sengin android ${c.error}`);
+        });
+      }
+      else logger.info(`Response sending android token ${JSON.stringify(response)}`);
   });
 }
 

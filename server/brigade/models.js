@@ -43,7 +43,7 @@ Brigade.pushToBrigades = function(brigades,message){
     });
   });
   let returnInfo={};
-  logger.info(`Final arrays ${android} and ${ios}`);
+  logger.info(`Final arrays ${android.join(" , ")} and ${ios.join(" , ")}`);
   if(android) returnInfo.android=sendAndroid(message,android);
   if(ios) returnInfo.ios=sendiOS(message,ios);
   return returnInfo;
