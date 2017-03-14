@@ -2,6 +2,10 @@
   "app": {
     "name": "Brigadista Civil"
   },
+  "chat": {
+    "title": "Conversa",
+    "notfound": "Conversa não encontrada para este fogo"
+  },
   "brigade": {
     "title": "Brigada",
     "promoteBrigade": {
@@ -44,7 +48,7 @@
     "not_confirmed": "Não confirmar",
     "initCombat": "Iniciar Combate",
     "endCombat": "Sair do Combate",
-    "aftermath": "Inicar Rescaldo",
+    "aftermath": "Iniciar Rescaldo",
     "closeCombat": "Encerrar Combate",
     "finished": "Incêndio Combatido",
     "new": {

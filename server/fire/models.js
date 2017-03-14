@@ -31,7 +31,6 @@ const FireSchema = new mongoose.Schema({
   fighters: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: false,required: [true,'No user id found']}]
 });
 FireSchema.plugin(deepPopulate);
-
 const Fire = mongoose.model('Fire', FireSchema);
 
 module.exports = { Fire };

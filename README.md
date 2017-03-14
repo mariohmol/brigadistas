@@ -57,6 +57,14 @@ SMTP_URL=smtp://ENCODED_USER:ENCODED_PASS@SES_SMTP_URL:465
 DATABASE_URL='mongodb://localhost/brigadistas'
 ```
 
+#### Plugins
+
+Google maps plugin needs to be installed manually in the app. Go to the `brigadistacivil` folder and run the follow example (changin `XYZ` with your real googleapikey):
+
+```
+cordova plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="XYZ" --variable API_KEY_FOR_IOS="XYZ"
+```
+
 
 ### Android
 

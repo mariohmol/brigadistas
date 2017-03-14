@@ -1,0 +1,35 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "chat.title" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
+    <ion-buttons end>
+      <button ion-button (click)="addChat()">
+        <ion-icon name="add"></ion-icon>
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content class="chats-page-content">
+  <ion-list class="chats">
+    <ion-item-sliding *ngFor="let chat of chats">
+      <button ion-item class="chat" (click)="showChat(chat)">
+        <img class="chat-picture" [src]="chat.picture" *ngIf="chat.picture">
+        <div class="chat-info">
+          <h2 class="chat-title">{{chat.title}}</h2>
+
+          <span *ngIf="chat.lastMessage" class="last-message">
+            <p *ngIf="chat.lastMessage.type == 'text'" class="last-message-content last-message-content-text">{{chat.lastMessage.content}}</p>
+            <span class="last-message-timestamp">{{ chat.lastMessage.createdAt }}</span>
+          </span>
+        </div>
+      </button>
+      <ion-item-options class="chat-options">
+        <button ion-button color="danger" class="option option-remove" (click)="removeChat(chat)">Remove</button>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>

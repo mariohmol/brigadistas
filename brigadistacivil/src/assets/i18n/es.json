@@ -2,6 +2,10 @@
   "app": {
     "name": "Brigada civil"
   },
+  "chat": {
+    "title": "Chat",
+    "notfound": "Chat no encontrado para este fuego"
+  },
   "brigade": {
     "title": "Brigada",
     "promoteBrigade": {

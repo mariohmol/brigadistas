@@ -5,11 +5,11 @@ import { Push } from 'ionic-native';
 //import { Page1 } from '../pages/page1/page1';import { Page2 } from '../pages/page2/page2';
 import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
-
+import { ChatsPage } from '../pages/chat/chats';
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadesPage } from '../pages/brigade/brigades';
-import {TranslateService} from 'ng2-translate';
-import {UserService} from '../providers/user-service';
+import { TranslateService } from 'ng2-translate';
+import { UserService } from '../providers/user-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -50,7 +50,8 @@ export class MyApp {
       this.pages = [
         { title: 'BrigadesPage', component: BrigadesPage },
         { title: 'FiresPage', component: FiresPage },
-        { title: 'ProfilePage', component: UserPage }
+        { title: 'ProfilePage', component: UserPage },
+        { title: 'ChatsPage', component: ChatsPage }
       ];
 
       this.startPush();

@@ -34,39 +34,4 @@ UserSchema.methods.validatePassword = function(password, callback) {
   });
 };
 const User = mongoose.model('User', UserSchema);
-
-
-const ChatSchema = new mongoose.Schema({
-  memberIds: [{
-    type: String,
-    required: true,
-    unique: true
-  }],
-  title: {
-    type: String,
-    required: true
-  },
-  picture: { type: String },
-  lastMessage: { type: String },
-  deletedAt: { type: Date }
-});
-const Chat = mongoose.model('Chat', ChatSchema);
-
-const MessageSchema = new mongoose.Schema({
-  chatId: {
-    type: String,
-    required: true,
-    unique: true
-  },
-  senderId: {
-    type: String,
-    required: true
-  },
-  ownership: { type: String },
-  content: { type: String },
-  createdAt: { type: Date },
-  deletedAt: { type: Date }
-});
-const Message = mongoose.model('Message', MessageSchema);
-
-module.exports = { User, Chat, Message};
+module.exports = { User };

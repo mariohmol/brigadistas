@@ -18,6 +18,7 @@ const { initPush } = require('./config/push');
 const userMiddleware = require('./user/routes');
 const brigadeMiddleware = require('./brigade/routes');
 const fireMiddleware = require('./fire/routes');
+const chatMiddleware = require('./chat/routes');
 
 const app = express();
 
@@ -45,6 +46,7 @@ app.use(morgan('common', {stream: logger.stream}));
 app.use('/api/user',userMiddleware);
 app.use('/api/brigade',brigadeMiddleware);
 app.use('/api/fire',fireMiddleware);
+app.use('/api/chat',chatMiddleware);
 
 app.get("/error", ()=>{
   throw new Error("teste error");

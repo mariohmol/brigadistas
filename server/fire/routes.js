@@ -3,6 +3,7 @@ const express = require('express');
 const router = express.Router();
 const { Fire } = require('./models');
 const { Brigade } = require('../brigade/models');
+const { Chat } = require('../chat/models');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const {sendAndroid,sendiOS} = require('../config/push');
@@ -47,9 +48,18 @@ const newFire =  function(res,data,b=null){
 
     logger.info(`Sending push messages to brigades`);
     Brigade.pushToBrigades(b,{message:`New fire update: ${d.title}`});
-
-    logger.info(`Returning new fire`);
-    res.json(d);
+    Chat.create({
+      fire: d._id,
+      createdAt: new Date(),
+      members: [data.users[0]],
+      title: d.title
+    }).then(c=>{
+      logger.info(`Returning new fire`);
+      res.json(d);
+    }).catch(e=>{
+      logger.error(`ERROR: Creating a chat for the fire ${e}`);
+      res.json(d);
+    });
   }).catch(e=>{
     logger.error(`ERROR: Creating a new fire ${e}`);
     res.json(e);
