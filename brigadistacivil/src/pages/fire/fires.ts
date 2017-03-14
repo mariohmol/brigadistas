@@ -38,7 +38,7 @@ export class FiresPage extends BasePage{
   }
 
   showFire(fire) {
-    this.navCtrl.push(FirePage,{ fire});
+    this.navCtrl.push(FirePage,{ fire,  fireId: fire._id});
   }
 
 }

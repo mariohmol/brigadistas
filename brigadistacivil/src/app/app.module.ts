@@ -9,6 +9,7 @@ import { RecoverPage } from '../pages/user/recover';
 import { FirePage } from '../pages/fire/fire';
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadePage } from '../pages/brigade/brigade';
+import { BrigadeAreaPage } from '../pages/brigade/area';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { ChatPage } from '../pages/chat/chat';
 import { ChatsPage } from '../pages/chat/chats';
@@ -30,7 +31,7 @@ let pages = [
   MyApp,
   UserPage,LoginPage,
   FirePage, FiresPage,
-  BrigadePage, BrigadesPage,
+  BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
   ChatsPage,ChatPage
 ];

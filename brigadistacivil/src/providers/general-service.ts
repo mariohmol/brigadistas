@@ -21,7 +21,7 @@ export class GeneralService extends BaseService {
   public static polygon: any;
   public static markers: [any];
   public static polygons: [any];
-
+  public selectedShape: any;
 
   constructor(public http: Http) {
     super(http);
@@ -121,6 +121,40 @@ export class GeneralService extends BaseService {
 
   }
 
+  clearSelection(shape) {
+    if (shape) {
+      shape.setEditable(false);
+      this.selectedShape = null;
+    }
+  }
+
+  setSelection(shape) {
+    this.clearSelection(shape);
+    this.selectedShape = shape;
+
+    console.log(shape.getPath())
+
+    shape.setEditable(true);
+    google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
+    google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
+  }
+
+  calcar(shape) {
+    const area = google.maps.geometry.spherical.computeArea(shape.getPath());
+    document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
+
+    this.selectedShape = shape;
+  }
+
+  deleteSelectedShape() {
+    if (this.selectedShape) {
+      this.selectedShape.setMap(null);
+    }
+  }
+
+
+
+
   addInfoWindow(map, marker, content) {
     if (BaseService.device == 'mobile') { }
     else {
@@ -134,7 +168,49 @@ export class GeneralService extends BaseService {
   }
 
   addPolygon(map, points, cb) {
-    map.addPolygon({
+     var minZoomLevel = 15, newShape;
+    const polyOptions = {
+       strokeWeight: 0,
+       fillOpacity: 0.45,
+       editable: true
+     };
+
+    const drawingManager = new google.maps.drawing.DrawingManager({
+       drawingControl: true,
+       drawingControlOptions: {
+         drawingModes: [
+           google.maps.drawing.OverlayType.POLYGON,
+         ]
+       },
+       polygonOptions: polyOptions,
+       map: map
+     });
+
+     google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
+        this.selectedShape = e.overlay;
+
+        if (e.type != google.maps.drawing.OverlayType.MARKER) {
+          drawingManager.setDrawingMode(null);
+
+          let newShape = e.overlay;
+          newShape.type = e.type;
+
+          google.maps.event.addListener(newShape, 'click', () => {
+            this.setSelection(newShape);
+          });
+
+          const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
+          document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
+
+          this.setSelection(newShape);
+        }
+      });
+
+      google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
+      //google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', () => { this.deleteSelectedShape(); });
+
+
+  /*  map.addPolygon({
       'points': points,
       'strokeColor': '#AA00FF',
       'strokeWidth': 5,
@@ -144,7 +220,7 @@ export class GeneralService extends BaseService {
       map.animateCamera({
         'target': polygon.getPoints()
       });
-    });
+    });*/
   }
 
   getPosition(cb) {

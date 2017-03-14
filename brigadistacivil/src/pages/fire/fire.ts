@@ -40,6 +40,9 @@ export class FirePage extends BasePage {
     if (this.navParams.get("fire")) {
       this.fire = this.navParams.get("fire");
       this.loadData();
+    }else if (this.navParams.get("fireId")) {
+      this.fire = {_id: this.navParams.get("fireId")};
+      this.loadData();
     } else {
       this.fire = {};
       this.readonly = false;
@@ -142,9 +145,9 @@ export class FirePage extends BasePage {
   }
 
   openChat(){
-    this.chatService.getChatByFire(this.fire).then(chat=>{
+    this.chatService.getChatByFire(this.fire).then((chat:any)=>{
       if(!chat) return this.showToast(this.translate("chat.notfound"));
-      this.navCtrl.push(ChatPage,{ chat});
+      this.navCtrl.push(ChatPage,{ chat, chatId: chat._id});
     });
   }
 

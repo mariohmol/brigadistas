@@ -29,7 +29,7 @@ export class BrigadesPage extends BasePage {
   }
 
   showBrigade(brigade) {
-    this.navCtrl.push(BrigadePage,{ brigade});
+    this.navCtrl.push(BrigadePage,{ brigade, brigadeId: brigade._id});
   }
 
 }

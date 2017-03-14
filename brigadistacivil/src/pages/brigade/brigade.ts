@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
+import { App, NavController, NavParams, AlertController,ToastController, ModalController } from 'ionic-angular';
 import BasePage from '../basepage';
-import {BrigadesPage} from './brigades'
+import { BrigadesPage } from './brigades';
+import { BrigadeAreaPage } from './area';
 import { UserService } from '../../providers/user-service';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
@@ -26,11 +27,14 @@ export class BrigadePage  extends BasePage{
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
-    public generalService: GeneralService) {
+    public modalCtrl: ModalController, public generalService: GeneralService) {
     super();
 
     if(this.navParams.get("brigade")){
       this.brigade=this.navParams.get("brigade");
+      this.loadData();
+    }else if(this.navParams.get("brigadeId")){
+      this.brigade={_id: this.navParams.get("brigade")};
       this.loadData();
     } else{
       this.brigade={};
@@ -54,27 +58,14 @@ export class BrigadePage  extends BasePage{
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad BrigadePage');
-
   }
 
   showMap(){
-    let cb = ()=>{
-        this.map = this.generalService.loadMap(this.mapElement,this.position.coords,{scrollwheel: false});
-        this.generalService.drawPolygon(this.map, [],cb) ;
-
-    }
-
-    let addPosition= (pos)=>{
-      this.position=pos;
-      cb();
-    }
-
-    if(!this.position){
-      this.generalService.getPosition(addPosition);
-    }else{
-      cb();
-    }
-
+    let modal = this.modalCtrl.create(BrigadeAreaPage,{
+      brigade: this.brigade,
+      readonly: this.readonly
+    });
+    modal.present();
   }
 
   loadData(){
