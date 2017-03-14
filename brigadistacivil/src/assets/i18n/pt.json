@@ -98,6 +98,9 @@
     "update": {
       "title": "Perfil",
       "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
+    },
+    "profile": {
+      "title": "Perfil do Usuário"
     }
   },
   "cancel": "Cancelar",

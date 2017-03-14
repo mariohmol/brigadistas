@@ -7,7 +7,11 @@ const bcrypt = require('bcryptjs');
 const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
 
 router.get('/', function (req, res, next) {
-  User.find().then(d => { res.json(d);});
+  User.find({deletedAt: null},'name avatar location createdAt').then(d => { res.json(d);});
+});
+
+router.get('/profile/:id/', function (req, res, next) {
+  User.findOne({_id: req.params.id, deletedAt: null},'name avatar bio url updatedAt location createdAt').then(d => { res.json(d);});
 });
 
 router.put('/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {

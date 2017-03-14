@@ -1,0 +1,31 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "user.profile.title" | translate }}</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding >
+
+  <div *ngIf="user">
+    <ion-item>
+        <ion-label floating>{{ "user.name" | translate }}</ion-label>
+        {{user.name}}
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>{{ "user.location" | translate }} </ion-label>
+        {{user.location}}
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>{{ "user.bio" | translate }} </ion-label>
+        {{user.bio}}
+    </ion-item>
+
+    <ion-item>
+        <ion-label floating>{{ "user.createdAt" | translate }} </ion-label>
+        {{user.createdAt}}
+    </ion-item>
+
+  </div>
+</ion-content>

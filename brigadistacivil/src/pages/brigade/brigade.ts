@@ -34,7 +34,7 @@ export class BrigadePage  extends BasePage{
       this.brigade=this.navParams.get("brigade");
       this.loadData();
     }else if(this.navParams.get("brigadeId")){
-      this.brigade={_id: this.navParams.get("brigade")};
+      this.brigade={_id: this.navParams.get("brigadeId")};
       this.loadData();
     } else{
       this.brigade={};

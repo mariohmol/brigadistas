@@ -70,6 +70,9 @@
     "update": {
       "title": "Profile",
       "error": "We were unable to change your profile because your email already exists in our database or there was an error, please contact us."
+    },
+    "profile": {
+      "title": "User Profile"
     }
   },
   "cancel": "Cancel",
