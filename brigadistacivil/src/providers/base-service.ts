@@ -26,7 +26,7 @@ export class BaseService {
     else BaseService.env=Environment.env;
 
     if(BaseService.env=="development" && window.location.pathname.includes("asset")) BaseService.env="test";
-
+    // use ip address if testing on mobile
     if(BaseService.env=="test"){
       BaseService.apiUrl = "http://10.0.0.4:8484/api";
     }

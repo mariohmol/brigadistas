@@ -95,7 +95,7 @@ export class BrigadePage  extends BasePage{
   }
 
   save(){
-    this.brigadeService.addBrigade(this.brigade).then(d=>{
+    this.brigadeService.addBrigade(this.brigadeForm.value).then(d=>{
       if(this.brigade._id){
         this.showToast(this.translate("brigade.update"));
       }else{
