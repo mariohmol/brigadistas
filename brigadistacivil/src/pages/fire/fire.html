@@ -17,17 +17,19 @@
         <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
         <ion-input formControlName="title" [readonly]="isReadonly()" type="text"></ion-input>
       </ion-item>
-      <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
+      <ion-item text-wrap *ngIf="fire.createdAt" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-calendar" item-left large></ion-icon>
         <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
       </ion-item>
       <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-person" item-left large></ion-icon>
-        <h2>{{fire.users[0].name}}</h2>
+        <h2><a href="#/profile/{{fire.users[0]._id}}">{{fire.users[0].name}}</a></h2>
       </ion-item>
       <ion-item text-wrap *ngIf="fire.brigades" [class.readonlyInput]="isReadonly()==true">
         <ion-icon name="md-contacts" item-left large></ion-icon>
-        <h2 *ngFor="let brigade of fire.brigades">{{brigade.name}}</h2>
+        <h2 *ngFor="let brigade of fire.brigades">
+          <a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a>
+          </h2>
       </ion-item>
       <ion-list-header>
       {{ "intensity" | translate }}

@@ -103,12 +103,14 @@
       "title": "Perfil do Usuário"
     }
   },
+  "bio": "Como pode ajudar",
   "cancel": "Cancelar",
   "chooseOption": "Escolha uma opção",
   "chooseOptionFail": "Por favor, selecione uma opção para continuar.",
   "city": "Cidade",
   "confirmOperation": "Confirmação de operação",
   "connectionFail": "Provável problema com a sua internet, tente novamente.",
+  "createdAt": "Criado em",
   "description": "Descrição",
   "done": "OK",
   "email": "Email",
@@ -116,6 +118,7 @@
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
+  "location": "Localização",
   "password": "Senha",
   "title": "Título",
   "yesContinue": "Sim, desejo continuar"

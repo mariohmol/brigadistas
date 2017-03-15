@@ -75,17 +75,20 @@
       "title": "Perfil"
     }
   },
+  "bio": "How i can help",
   "cancel": "Cancelar",
   "chooseOption": "Escoge una opción",
   "chooseOptionFail": "Por favor, seleccione una opción para continuar.",
   "city": "Ciudad",
   "confirmOperation": "Confirmación de operación",
   "connectionFail": "Problema probable con su Internet, por favor, inténtelo de nuevo.",
+  "createdAt": "Creado en",
   "description": "Descripción",
   "done": "DE ACUERDO",
   "intensity": "Intensidad",
   "name": "Nombre",
   "notfounditems": "No se encontró información.",
+  "location": "Localizacion",
   "title": "Título",
   "yesContinue": "Si quiero continuar"
 }
