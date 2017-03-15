@@ -16,7 +16,7 @@ router.get('/', passport.authenticate('basic', { session: false }), function (re
 });
 
 router.get('/:id', function (req, res, next) {
-  Fire.findOne({_id: req.params.id}).populate("brigades").then(d => { res.json(d);});
+  Fire.findOne({_id: req.params.id}).populate("users").populate("brigades").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {

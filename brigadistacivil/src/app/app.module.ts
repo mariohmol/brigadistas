@@ -6,9 +6,11 @@ import { MyApp } from './app.component';
 import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { RecoverPage } from '../pages/user/recover';
+import { UserProfilePage } from '../pages/user/profile';
 import { FirePage } from '../pages/fire/fire';
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadePage } from '../pages/brigade/brigade';
+import { BrigadeAreaPage } from '../pages/brigade/area';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { ChatPage } from '../pages/chat/chat';
 import { ChatsPage } from '../pages/chat/chats';
@@ -28,9 +30,9 @@ import {BrowserModule} from '@angular/platform-browser';
 
 let pages = [
   MyApp,
-  UserPage,LoginPage,
+  UserPage,LoginPage,UserProfilePage,
   FirePage, FiresPage,
-  BrigadePage, BrigadesPage,
+  BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
   ChatsPage,ChatPage
 ];
@@ -41,6 +43,7 @@ let links=[
       { component: UserPage, name: 'User', segment: 'register' },
       { component: LoginPage, name: 'Login', segment: 'login' },
       { component: RecoverPage, name: 'Recover', segment: 'recover/:token' },
+      { component: UserProfilePage, name: 'UserProfilePage', segment: 'profile/:userId' },
       { component: FiresPage, name: 'Fires', segment: 'fires/' },
       { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
       { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },

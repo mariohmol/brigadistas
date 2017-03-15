@@ -70,17 +70,23 @@
     "update": {
       "title": "Profile",
       "error": "We were unable to change your profile because your email already exists in our database or there was an error, please contact us."
+    },
+    "profile": {
+      "title": "User Profile"
     }
   },
+  "bio": "How I can help",
   "cancel": "Cancel",
   "chooseOption": "Choose an Option",
   "chooseOptionFail": "Please select an option to continue.",
   "city": "City",
   "confirmOperation": "Operation Confirmation",
   "connectionFail": "Likely problem with your internet, please try again.",
+  "createdAt": "Created at",
   "description": "Description",
   "done": "OK",
   "intensity": "Intensity",
+  "location": "Location",
   "name": "Name",
   "notfounditems": "No information found.",
   "title": "Title",

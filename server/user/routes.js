@@ -1,13 +1,57 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const { User , Chat, Message} = require('./models');
+const { User , Chat, Message } = require('./models');
+const { Brigade } = require('../brigade/models');
+const { Fire } = require('../fire/models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
 
 router.get('/', function (req, res, next) {
-  User.find().then(d => { res.json(d);});
+  User.find({deletedAt: null},'name avatar location createdAt').then(d => { res.json(d);});
+});
+
+router.get('/profile/:id/', function (req, res, next) {
+  User.findOne({_id: req.params.id, deletedAt: null},'name avatar bio url updatedAt location createdAt')
+  .then(d => {
+    Brigade.find({
+        members: {$in: [d._id]}
+    })
+    .then(b=>{
+      d.brigades=b;
+      Fire.find({
+        $or: [
+          {fighters: {$in: [d._id]}},
+          {users: {$in: [d._id]}}
+        ]
+      },"title createdAt intensity users fighters").then(f=>{
+        let userId=String(d._id).trim();
+        let fightes=f.filter(ff=>{
+          if(!ff.fighters) return false;
+          let found=ff.fighters.find(dd=>{return String(dd).trim()==userId;});
+          return found!==undefined;
+        });
+        let fires=f.filter(ff=>{
+          if(!ff.users) return false;
+          let findu=ff.users.find(dd=>{ return String(dd).trim()==userId;});
+          return findu!==undefined;
+        });
+        //console.log(d.firesUsers,fires)
+        res.json({user:d,fires,fightes});
+      }).catch(e=>{
+        console.log(e);
+        res.json(d);
+      });
+    })
+    .catch(e=>{
+      console.log(e);
+      res.json(d);
+    });
+  }).catch(e=>{
+    console.log(e)
+    res.json(e);
+  });
 });
 
 router.put('/:id',passport.authenticate('basic', { session: false }), function (req, res, next) {

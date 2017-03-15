@@ -237,7 +237,7 @@ export default class BasePage {
       message: desc,
       position: "top",
       closeButtonText: "OK",
-      showCloseButton: false,
+      showCloseButton: true,
       duration: 5000
     };
 

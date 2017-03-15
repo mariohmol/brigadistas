@@ -1,0 +1,51 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "user.profile.title" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
+  </ion-navbar>
+</ion-header>
+
+
+<ion-content padding>
+
+  <div *ngIf="user">
+    <ion-item>
+      {{ "name" | translate }} : {{user.user.name}}
+    </ion-item>
+
+    <ion-item *ngIf="user.user.location">
+      {{ "location" | translate }} : {{user.user.location}}
+    </ion-item>
+
+    <ion-item *ngIf="user.user.bio">
+      {{ "bio" | translate }} : {{user.user.bio}}
+    </ion-item>
+
+    <ion-item *ngIf="user.user.createdAt">
+      {{ "createdAt" | translate }} : {{user.user.createdAt | date: 'dd/MM/yyyy'}}
+    </ion-item>
+
+    <ion-list>
+      <ion-item-group *ngIf="user.fires && user.fires.length>0">
+        <ion-item-divider color="light">Fire</ion-item-divider>
+        <ion-item *ngFor="let f of user.fires">
+          <h2><a href="#/fire/{{f._id}}">{{f.title}}</a></h2>
+          <ion-note item-right>{{f.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
+          <p>{{ "intensity" | translate }}: {{f.intensity}}</p>
+        </ion-item>
+      </ion-item-group>
+
+
+      <ion-item-group *ngIf="user.fightes && user.fightes.length>0">
+        <ion-item-divider color="light">{{ "fightes" | translate }}</ion-item-divider>
+        <ion-item *ngFor="let f of user.fightes">
+          <h2><a href="#/fire/{{f._id}}">{{f.title}}</a></h2>
+          <ion-note item-right>{{f.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
+          <p>{{ "intensity" | translate }}: {{f.intensity}}</p>
+        </ion-item>
+      </ion-item-group>
+    </ion-list>
+  </div>
+</ion-content>

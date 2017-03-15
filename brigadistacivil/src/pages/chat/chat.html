@@ -16,7 +16,7 @@
 </ion-header>
 
 <ion-content class="chats-page-content">
-  <ion-list class="chats">
+  <ion-list class="chats" *ngIf="chat">
     <ion-item-sliding *ngFor="let message of chat.messages">
       <button ion-item class="chat" >
         <img class="chat-picture" [src]="message.picture">

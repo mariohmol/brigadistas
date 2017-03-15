@@ -34,10 +34,9 @@ export class ChatsPage extends BasePage {
   }
 
   showChat(chat){
-    this.chatService.getChat(chat._id).then(chat=>{
+    this.chatService.getChat(chat._id).then((chat:any)=>{
       if(!chat) return this.showToast(this.translate("chat.notfound"));
-      console.log(ChatPage,{ chat});
-      this.navCtrl.push(ChatPage,{ chat});
+      this.navCtrl.push(ChatPage,{ chat, chatId: chat._id});
     });
   }
 
