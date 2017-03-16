@@ -28,7 +28,6 @@ export class RecoverPage extends BasePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad RecoverPage');
       this.token = this.navParams.get("token");
       this.userService.recoverCheck(this.token).then(u=>{
         this.user=u;

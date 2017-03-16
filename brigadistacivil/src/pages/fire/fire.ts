@@ -50,7 +50,6 @@ export class FirePage extends BasePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad FirePage');
     let cb = () => {
       if(this.fire && this.fire.coordinates){
         let pos={latitude: this.fire.coordinates[1], longitude: this.fire.coordinates[0]};
@@ -196,7 +195,6 @@ export class FirePage extends BasePage {
          // If the request succeeds, draw the place location on
          // the map as a marker, and register an event to handle a
          // click on the marker.
-         console.log(place.geometry.location);
          new google.maps.Marker({
            map: GeneralService.map,
            position: place.geometry.location

@@ -9,7 +9,6 @@ export class BrigadeService extends BaseService {
 
   constructor(public http: Http) {
     super(http);
-    console.log('Hello BrigadeService Provider');
   }
 
   getBrigades(){

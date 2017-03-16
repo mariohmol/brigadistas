@@ -25,7 +25,6 @@ export class GeneralService extends BaseService {
 
   constructor(public http: Http) {
     super(http);
-    console.log('Hello GeneralService Provider');
   }
 
   /**
@@ -35,7 +34,6 @@ export class GeneralService extends BaseService {
    */
   loadMap(mapElement, position, options = {}) {
     if(GeneralService.map && GeneralService.map.clear)GeneralService.map.clear();
-    console.log(BaseService.device);
     if (BaseService.device == 'mobile') {
       GeneralService.map = new GoogleMap(mapElement.nativeElement);
 
@@ -132,8 +130,6 @@ export class GeneralService extends BaseService {
     this.clearSelection(shape);
     this.selectedShape = shape;
 
-    console.log(shape.getPath())
-
     shape.setEditable(true);
     google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
     google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
@@ -226,14 +222,12 @@ export class GeneralService extends BaseService {
   getPosition(cb) {
     if (BaseService.device == 'mobile') {
       Geolocation.getCurrentPosition().then((pos) => {
-        console.log(pos);
         cb(pos.coords);
-      }).catch(e => { console.log(e); cb(); });
+      }).catch(e => { cb(e); });
 
       /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
-        console.log(data);
-       // data can be a set of coordinates, or an error (if an error occurred).
+        // data can be a set of coordinates, or an error (if an error occurred).
        // data.coords.latitude
        // data.coords.longitude
      });*/
@@ -279,10 +273,8 @@ export class GeneralService extends BaseService {
 
   removeElement(element){
     if(element.setMap){
-      console.log("setMap()")
       element.setMap(null);
     }else{
-      console.log("remove()")
       element.remove();
     }
   }

@@ -10,7 +10,6 @@ export class ChatService extends BaseService {
 
   constructor(public http: Http) {
     super(http);
-    console.log('Hello ChatService Provider');
   }
 
   getChats(){

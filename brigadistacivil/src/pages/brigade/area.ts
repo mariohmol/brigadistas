@@ -1,6 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
-import BasePage from '../basepage';
+import { NavParams, AlertController,ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
@@ -22,13 +21,25 @@ export class BrigadeAreaPage {
   constructor(public navParams: NavParams,
     public translateService: TranslateService,public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController,
-    public generalService: GeneralService) {
+    public generalService: GeneralService, public brigadeService: BrigadeService) {
+  }
 
+  ionViewDidLoad() {
+    this.loadData();
+  }
+
+  loadData(){
     if(this.navParams.get("brigade")){
       this.brigade=this.navParams.get("brigade");
       this.readonly=this.navParams.get("readonly");
+      this.showMap();
       //TODO: this.valid=false;
-    } else{
+    } else if(this.navParams.get("brigadeId")){
+      this.brigadeService.getBrigade(this.navParams.get("brigadeId")).then(d=>{
+        this.brigade=d;
+        this.showMap();
+      });
+    }else{
       this.brigade={};
       this.readonly=false;
       this.valid=false;
@@ -56,6 +67,5 @@ export class BrigadeAreaPage {
     }
 
   }
-
 
 }

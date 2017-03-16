@@ -1,11 +1,7 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
-    <ion-buttons start>
-      <button ion-button (click)="close()">
-        <ion-icon name="arrow-back"></ion-icon>
-      </button>
-    </ion-buttons>
+  
     <ion-buttons end>
       <button ion-button *ngIf="!readonly" [disabled]="!valid" (click)="save()">
         <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}

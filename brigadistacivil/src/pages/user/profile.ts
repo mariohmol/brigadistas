@@ -19,7 +19,6 @@ export class UserProfilePage extends BasePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad UserProfilePage');
     if(this.navParams.get("userId")){
       this.userService.getUser(this.navParams.get("userId")).then(u=>{
         if(!u) return this.showToast("notfound");

@@ -48,6 +48,7 @@ let links=[
       { component: FirePage, name: 'Fire', segment: 'fire/:fireId' },
       { component: BrigadesPage, name: 'Brigades', segment: 'brigades/' },
       { component: BrigadePage, name: 'Brigade', segment: 'brigade/:brigadeId' },
+      { component: BrigadeAreaPage, name: 'BrigadeArea', segment: 'brigade/:brigadeId/area' },
       { component: ChatsPage, name: 'Chats', segment: 'chats/' },
       { component: ChatPage, name: 'Chat', segment: 'chat/:chatId' }
     ];

@@ -57,15 +57,16 @@ export class BrigadePage  extends BasePage{
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad BrigadePage');
+    this.showMap();
   }
 
   showMap(){
-    let modal = this.modalCtrl.create(BrigadeAreaPage,{
+    /*let modal = this.modalCtrl.create(BrigadeAreaPage,{
       brigade: this.brigade,
       readonly: this.readonly
     });
-    modal.present();
+    modal.present();*/
+    this.navCtrl.push(BrigadeAreaPage,{brigadeId: this.brigade._id, brigade: this.brigade})
   }
 
   loadData(){

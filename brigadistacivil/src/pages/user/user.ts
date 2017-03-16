@@ -19,6 +19,9 @@ export class UserPage extends BasePage {
     public toastCtrl: ToastController) {
     super();
 
+  }
+
+  ionViewDidLoad() {
     if (this.navParams.get("user")) {
       this.user = this.navParams.get("user");
       if(UserService.loginData && this.user._id===UserService.loginData._id) this.readonly = false;
@@ -35,10 +38,6 @@ export class UserPage extends BasePage {
       city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       bio: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
     });
-  }
-
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad UserPage');
   }
 
   save() {

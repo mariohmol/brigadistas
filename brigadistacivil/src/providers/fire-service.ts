@@ -10,7 +10,6 @@ export class FireService extends BaseService {
 
   constructor(public http: Http) {
     super(http);
-    console.log('Hello FireService Provider');
   }
 
   getFires(){
@@ -44,8 +43,6 @@ export class FireService extends BaseService {
     };
 
     BackgroundGeolocation.configure((location) => {
-      console.log('[js] BackgroundGeolocation callback:  ' + location.latitude + ',' + location.longitude);
-
       cb(location);
 
       // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
@@ -54,8 +51,7 @@ export class FireService extends BaseService {
       BackgroundGeolocation.finish(); // FOR IOS ONLY
 
      }, (error) => {
-       console.log('BackgroundGeolocation error');
-       errcb();
+       errcb(error);
      }, config);
 
     // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
