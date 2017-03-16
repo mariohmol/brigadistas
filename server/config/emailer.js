@@ -92,9 +92,9 @@ const makeTemplate = (template,data,cb)=>{
  */
 const sendEmailTemplate = (emailto, template,data,cb=null)=>{
   let emailData={
-   from: DONTREPLY_EMAIL,
-   to: emailto
- };
+    from: DONTREPLY_EMAIL,
+    to: emailto
+  };
 
   makeTemplate(template,data,function(err,result){
     if(err) {

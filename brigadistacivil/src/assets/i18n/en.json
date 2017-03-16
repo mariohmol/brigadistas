@@ -1,6 +1,6 @@
 {
   "app": {
-    "name": "Civil Brigade"
+    "name": "Civilian Brigadist"
   },
   "chat": {
     "title": "Chat",
@@ -9,9 +9,9 @@
   "brigade": {
     "title": "Brigade",
     "promoteBrigade": {
-      "action": "Promote to Leader",
-      "confirm": "Are you sure that want to promote this user as brigade leader?",
-      "feedback": "Congratulations, your team have more than um brigade as leader."
+      "action": "Promote Leader",
+      "confirm": "Are you sure you want to promote this brigadier to one of the brigade leaders?",
+      "feedback": "Congratulations, your team has one more brigadier as brigade leader."
     },
     "approveBrigade": {
       "action": "Approve Brigade",
@@ -40,21 +40,39 @@
   },
   "fire": {
     "title": "View Fire",
+    "chooseLocation": "Click on the map to report the location of the fire",
     "startCombat": "Fire Fighting",
     "stopCombat": "Get out of combat",
+    "checking": "Check for Fire",
+    "confirmed": "Confirm Fire",
+    "not_confirmed": "Do not confirm",
+    "initCombat": "Start Combat",
+    "endCombat": "Get out of combat",
+    "aftermath": "Start Aftermath",
+    "closeCombat": "Close Combat",
+    "finished": "Fire Fighting",
     "new": {
       "title": "Report Fire",
-      "fieldTitle": "Name (eg Fire in Alto da Serra)",
+      "fieldTitle": "Name (eg Fire in Joaquin Miller Park)",
       "fieldDescription": "More information like access, contact .."
+    },
+    "status": {
+      "updated": "Fire status changed successfully"
     }
   },
   "fires": {
     "title": "Fires",
     "see": "View Fire"
   },
+  "require": {
+    "minString": "Is required (minimum 5 characters)."
+  },
   "user": {
     "title": "Welcome to the Civilian Brigadist application! Enter your email and password.",
+    "bio": "Explain how you can help",
+    "city": "Your city",
     "email": "Your email",
+    "name": "Your name",
     "password": "Your password",
     "enter": "Log in",
     "signin": "Register",
@@ -62,10 +80,20 @@
       "title": "Could not login",
       "subTitle": "Your username or password is incorrect! If you have not registered yet, do it now!"
     },
+    "logout": {
+      "title": "Log out"
+    },
     "new": {
       "title": "Register",
       "error": "It was not possible to register because your email already exists in our database or there was an error, please contact us.",
       "welcome": ", Welcome!"
+    },
+    "recover": {
+      "title": "Recover Password",
+      "enter": "Change Password",
+      "confirm": "Are you sure you want to receive a password recovery email in the email",
+      "response": "We've sent you an email with the steps to change your password.",
+      "changed": "Your password has been successfully changed, you can use it to sign in."
     },
     "update": {
       "title": "Profile",
@@ -85,10 +113,13 @@
   "createdAt": "Created at",
   "description": "Description",
   "done": "OK",
+  "email": "Email",
+  "generalError": "We had an error during your request",
   "intensity": "Intensity",
   "location": "Location",
   "name": "Name",
   "notfounditems": "No information found.",
+  "password": "password",
   "title": "Title",
   "yesContinue": "Yes, I want to continue"
 }
