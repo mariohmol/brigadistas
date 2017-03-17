@@ -32,6 +32,10 @@
       "title": "Nueva brigada",
       "warning": "¡Tu brigada fue creada! Nuestro equipo revisará su información y pronto aprobaremos para formar parte de nuestra red."
     },
+    "area": {
+      "title": "Área de la Brigada",
+      "save": "Área de la Brigada guardada correctamente"
+    },
     "update": "Tu brigada se ha actualizado con éxito!"
   },
   "brigades": {

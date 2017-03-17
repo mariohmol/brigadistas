@@ -60,6 +60,7 @@ export class GeneralService extends BaseService {
 
 
       let mapOptions = {
+        center: new google.maps.LatLng(-19.9364705,-43.980769),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
@@ -129,16 +130,14 @@ export class GeneralService extends BaseService {
   setSelection(shape) {
     this.clearSelection(shape);
     this.selectedShape = shape;
-
     shape.setEditable(true);
     google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
     google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
   }
 
   calcar(shape) {
+    //"Area =" + area.toFixed(2);
     const area = google.maps.geometry.spherical.computeArea(shape.getPath());
-    document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
-
     this.selectedShape = shape;
   }
 
@@ -194,10 +193,9 @@ export class GeneralService extends BaseService {
           google.maps.event.addListener(newShape, 'click', () => {
             this.setSelection(newShape);
           });
-
+          //"Area =" + area.toFixed(2);
           const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-          document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
-
+          cb(newShape);
           this.setSelection(newShape);
         }
       });
@@ -205,18 +203,6 @@ export class GeneralService extends BaseService {
       google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
       //google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', () => { this.deleteSelectedShape(); });
 
-
-  /*  map.addPolygon({
-      'points': points,
-      'strokeColor': '#AA00FF',
-      'strokeWidth': 5,
-      'fillColor': '#880000'
-    }, function(polygon) {
-      cb(polygon);
-      map.animateCamera({
-        'target': polygon.getPoints()
-      });
-    });*/
   }
 
   getPosition(cb) {
@@ -280,59 +266,10 @@ export class GeneralService extends BaseService {
   }
 
   drawPolygon(map, points, cb) {
-    google.maps.event.addListener(map, 'click', event => {
+    /*google.maps.event.addListener(map, 'click', event => {
       cb(event)
-    });
-
-    let doPolygon = d => {
-
-    };
-    this.addPolygon(map, points, doPolygon);
-
-    /*
-    var drawingManager;
-
-    var polyOptions = {
-      strokeWeight: 0,
-      fillOpacity: 0.45,
-      editable: true
-    };
-
-     drawingManager = new google.maps.drawing.DrawingManager({
-      drawingControl: true,
-      drawingControlOptions: {
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON,
-        ]
-      },
-      polygonOptions: polyOptions,
-      map: this.map
     });*/
-    /**/
-    /*
-    google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-
-      this.selectedShape=e.overlay
-
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
-          // Switch back to non-drawing mode after drawing a shape.
-          drawingManager.setDrawingMode(null);
-
-          // Add an event listener that selects the newly-drawn shape when the user
-          // mouses down on it.
-          newShape = e.overlay;
-          newShape.type = e.type;
-
-          google.maps.event.addListener(newShape, 'click', ()=> {
-
-            this.setSelection(newShape);
-
-
-          });
-        }
-    })
-
-    */
+    this.addPolygon(map, points, cb);
   }
 
 }

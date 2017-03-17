@@ -22,8 +22,13 @@ const BrigadeSchema = new mongoose.Schema({
   location: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },
+  area: {
+    type : { type : String, default : 'Polygon' },
+    coordinates: []
+  }
 });
 BrigadeSchema.plugin(deepPopulate);
+BrigadeSchema.index({coordinates: '2dsphere'});
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);
 

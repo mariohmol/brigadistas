@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavParams, AlertController,ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
+import BasePage from '../basepage';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
 import {TranslateService} from 'ng2-translate';
@@ -10,7 +11,7 @@ declare var google;
   selector: 'page-brigadearea',
   templateUrl: 'area.html'
 })
-export class BrigadeAreaPage {
+export class BrigadeAreaPage extends BasePage {
   public brigade: any;
   public position: any;
   @ViewChild('map') mapElement: ElementRef;
@@ -22,6 +23,7 @@ export class BrigadeAreaPage {
     public translateService: TranslateService,public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController,
     public generalService: GeneralService, public brigadeService: BrigadeService) {
+      super();
   }
 
   ionViewDidLoad() {
@@ -51,8 +53,26 @@ export class BrigadeAreaPage {
       let coords;
       if(this.position)coords=this.position.coords;
         this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
-        //this.generalService.drawPolygon(this.map, [],cb) ;
 
+        if(this.map.area){
+          this.map.addPolygon({
+             'points': this.map.area,
+             'strokeColor': '#AA00FF',
+             'strokeWidth': 5,
+             'fillColor': '#880000'
+           }, function(polygon) {
+             this.map.animateCamera({
+               'target': polygon.getPoints()
+             });
+           });
+        }else{
+          this.generalService.drawPolygon(this.map, [],p=>{
+            if(p.getPath().b.length>2){
+              this.valid=true;
+              this.readonly=false;
+            }
+          });
+        }
     }
 
     let addPosition= (pos)=>{
@@ -66,6 +86,21 @@ export class BrigadeAreaPage {
       cb();
     }
 
+  }
+
+  save(){
+    let paths=[]
+    this.generalService.selectedShape.getPath().b.forEach(b=>{
+      paths.push([b.lng(), b.lat()]);
+    });
+
+    console.log(paths);
+    this.brigadeService.updateBrigade({
+      _id: this.brigade._id,
+      area: [ paths ]
+    }).then(c=>{
+      this.showToast(this.translate("brigade.area.save"))
+    });
   }
 
 }
