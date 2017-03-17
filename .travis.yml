@@ -1,8 +1,12 @@
 language: node_js
 node_js:
-  - "6.9.2"
+  - "0.12"
+before_install:
+  - "cd brigadistacivil | npm install"
+before_script:
+  - ""
 services:
-  - mongodb
+- mongodb
 addons:
   apt:
     sources:
