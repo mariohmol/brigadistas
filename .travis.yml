@@ -1,6 +1,4 @@
 language: node_js
-jdk:
-  - oraclejdk8
 node_js:
   - "6.9.2"
 before_install:
@@ -16,6 +14,8 @@ services:
 addons:
   apt:
     sources:
-    - mongodb-3.2-precise
+      - mongodb-3.2-precise
+      - google-chrome
     packages:
-    - mongodb-org-server
+      - mongodb-org-server
+      - google-chrome-stable
