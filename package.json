@@ -11,7 +11,8 @@
     "test-app:w": "npm run build:test && concurrently -k \"npm run build:test:w\" \"karma start test/karma.conf.js\" ",
     "test-e2e": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch\" ",
     "test-e2e:w": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch:w\" ",
-    "test": "npm run test-app && npm run test-server && cd brigadistacivil && npm run build && cd .. && npm run test-e2e",
+    "test": "npm run test-server && cd brigadistacivil && npm run build && cd .. && npm run test-e2e",
+    "test-full": "npm run test-app && npm run test-server && cd brigadistacivil && npm run build && cd .. && npm run test-e2e",
     "build:test": "webpack --config test/app/webpack.config.test.js",
     "build:test:w": "webpack --config test/app/webpack.config.test.js --watch",
     "ls:e2e": "lite-server --config test/helpers/browsersync.e2e.json"
