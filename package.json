@@ -109,6 +109,7 @@
     "ts-node": "^1.7.0",
     "tslint-ionic-rules": "0.0.3",
     "typings": "^2.0.0",
+    "wct-local": "^2.0.14",
     "webpack": "^1.13.1"
   },
   "repository": {
