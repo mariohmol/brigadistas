@@ -1,0 +1,8 @@
+{
+    "server": {
+        "baseDir": "./brigadistacivil/www"
+    },
+    "port": 8100,
+    "open": false,
+    "ui": false
+}
