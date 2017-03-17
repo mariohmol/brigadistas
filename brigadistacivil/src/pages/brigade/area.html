@@ -5,7 +5,7 @@
      <ion-icon name="menu"></ion-icon>
    </button>
     <ion-buttons end>
-      <button ion-button icon-only [disabled]="selectedShape ? true : false" (click)="remove()">
+      <button ion-button icon-only [disabled]="selectedShape ? false : true" (click)="remove()">
        <ion-icon name="trash"></ion-icon>
      </button>
       <button ion-button *ngIf="!readonly"  (click)="save()">

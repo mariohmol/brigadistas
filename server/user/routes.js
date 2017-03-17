@@ -40,16 +40,13 @@ router.get('/profile/:id/', function (req, res, next) {
         //console.log(d.firesUsers,fires)
         res.json({user:d,fires,fightes});
       }).catch(e=>{
-        console.log(e);
         res.json(d);
       });
     })
     .catch(e=>{
-      console.log(e);
       res.json(d);
     });
   }).catch(e=>{
-    console.log(e)
     res.json(e);
   });
 });
@@ -65,7 +62,7 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),functio
 
 router.post('/login', passport.authenticate('basic',{failWithError: true}), (req, res) => {
   if (req.user) {
-    req.user.password = req.body.password;
+    delete req.user.password;
     res.status(200).json( req.user  );
   }else{
     res.status(403).json({  'error': 'No auth'  });

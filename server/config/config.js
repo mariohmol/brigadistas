@@ -1,5 +1,5 @@
 require('dotenv').config();
-exports.ENV = process.env.DATABASE_URL || "production";
+exports.ENV = global.ENV || process.env.ENV || "production";
 exports.DATABASE_URL = process.env.DATABASE_URL || global.DATABASE_URL ||
                       (process.env.NODE_ENV === 'production' ? 'mongodb://localhost/brigadistas' : 'mongodb://localhost/brigadistas');
 exports.PORT = process.env.PORT || 8484;

@@ -41,7 +41,9 @@ app.use(passport.session());
 
 app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
 
-app.use(morgan('common', {stream: logger.stream}));
+if(ENV!=="test"){
+  app.use(morgan('common', {stream: logger.stream}));
+}
 
 app.use('/api/user',userMiddleware);
 app.use('/api/brigade',brigadeMiddleware);
@@ -63,7 +65,7 @@ if(ENV=="production"){
 
 // Startup server
 const runServer = function(callback) {
-  mongoose.connect(DATABASE_URL, err => {
+  mongoose.connect(global.DATABASE_URL || DATABASE_URL, err => {
     if (err && callback) {
       return callback(err);
     }

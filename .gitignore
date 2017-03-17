@@ -34,3 +34,6 @@ plugins/
 plugins2/
 
 .vscode
+
+test/.build/
+.awcache/
