@@ -120,6 +120,22 @@ PassengerStartupFile server/server.js
 PassengerStickySessions on
 ```
 
+# Tests
+
+We have tests for frontend, backend and e2e. First install global dependencies, `npm install karma-cli phantomjs-prebuilt -g` then to to run tests `npm run test`.
+
+## Frontend
+
+We have tests for frontend using `npm run test-app`.
+
+## Backend
+
+Testes for backend uses `mocha` and `chai-http` to make requests to backend. To run use `npm run test-server`
+
+## End to End
+
+In a test end to end we open a browser with a `PhantomJS`. To run this tests use `npm run test-e2e`.
+
 
 # Want to help?
 

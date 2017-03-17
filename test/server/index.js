@@ -1,6 +1,8 @@
 /*jshint expr: true*/
-const { DATABASE_URL } = require('../config');
+const { DATABASE_URL, PORT, ENV } = require('../config');
 global.DATABASE_URL = DATABASE_URL;
+global.PORT = PORT;
+global.ENV = ENV;
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const passport = require("passport");
@@ -14,9 +16,16 @@ const app = server.app;
 
 chai.use(chaiHttp);
 
-
-
 describe('Index page', () => {
+
+    before(function (done) {
+        mongoose.connect(DATABASE_URL, function(err, dbc){
+            mongoose.connection.db.dropDatabase(function(){
+                done();
+            });
+        });
+    });
+
     it('exists', done => {
         chai.request(app)
             .get('/')

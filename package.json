@@ -6,13 +6,15 @@
     "dev": "supervisor server/server.js",
     "watch": "cd brigadistacivil/ && npm run watch",
     "gen": "cd brigadistacivil && npm run gen",
-    "mocha": "mocha --recursive --timeout 15000",
+    "test-server": "mocha test/server --recursive --timeout 15000",
+    "test-app": "npm run build:test && karma start test/karma.conf.js --single-run",
+    "test-app:w": "npm run build:test && concurrently -k \"npm run build:test:w\" \"karma start test/karma.conf.js\" ",
+    "test-e2e": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch\" ",
+    "test-e2e:w": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch:w\" ",
+    "test": "npm run test-app && npm run test-server && cd brigadistacivil && npm run build && cd .. && npm run test-e2e",
     "build:test": "webpack --config test/app/webpack.config.test.js",
     "build:test:w": "webpack --config test/app/webpack.config.test.js --watch",
-    "ls:e2e": "lite-server --config test/helpers/browsersync.e2e.json",
-    "nightwatch": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch\" ",
-    "nightwatch:w": "concurrently -k \"npm run ls:e2e\" \"gulp nightwatch:w\" ",
-    "test": "npm run build:test && npm run mocha && cd brigadistacivil && npm run build && cd .. && concurrently -k \"npm run ls:e2e\" \"npm run nightwatch\" "
+    "ls:e2e": "lite-server --config test/helpers/browsersync.e2e.json"
   },
   "dependencies": {
     "apn": "^2.1.3",
@@ -52,6 +54,7 @@
     "zone.js": "0.6.26"
   },
   "devDependencies": {
+    "@types/jasmine": "^2.5.46",
     "awesome-typescript-loader": "^3.1.2",
     "babel-cli": "^6.18.0",
     "babel-plugin-espower": "^2.3.2",
@@ -66,6 +69,14 @@
     "gulp-nightwatch": "^0.3.2",
     "gulp-plumber": "^1.1.0",
     "istanbul": "^0.4.5",
+    "jasmine": "^2.5.3",
+    "karma": "^1.5.0",
+    "karma-coverage": "^1.1.1",
+    "karma-jasmine": "^1.1.0",
+    "karma-mocha": "^1.3.0",
+    "karma-mocha-reporter": "^2.2.2",
+    "karma-phantomjs-launcher": "^1.0.4",
+    "karma-sourcemap-loader": "^0.3.7",
     "lite-server": "^2.3.0",
     "lodash.camelcase": "^4.1.1",
     "lodash.upperfirst": "^4.2.0",

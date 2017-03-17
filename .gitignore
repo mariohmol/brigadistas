@@ -36,4 +36,5 @@ plugins2/
 .vscode
 
 test/.build/
+test/.bundles/
 .awcache/

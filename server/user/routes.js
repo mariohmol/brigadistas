@@ -98,7 +98,7 @@ router.post('/register', (req, res) => {
         User.create(userObj, (err, result) => {
           if (err) {
             return res.status(500).json({
-              message: 'Internal server error'
+              message: 'Internal server error on user.create'+JSON.stringify(err)
             });
           }
           delete result.password;
