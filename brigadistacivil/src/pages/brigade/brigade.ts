@@ -1,6 +1,6 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, AlertController,ToastController, ModalController } from 'ionic-angular';
+import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { BrigadesPage } from './brigades';
 import { BrigadeAreaPage } from './area';
@@ -25,9 +25,10 @@ export class BrigadePage  extends BasePage{
   public readonly: boolean;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
-    public translateService: TranslateService,public brigadeService: BrigadeService, public alertCtrl: AlertController,
+    public translateService: TranslateService,public brigadeService: BrigadeService,
+    public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
-    public modalCtrl: ModalController, public generalService: GeneralService) {
+    public generalService: GeneralService) {
     super();
 
     if(this.navParams.get("brigade")){
@@ -57,15 +58,10 @@ export class BrigadePage  extends BasePage{
   }
 
   ionViewDidLoad() {
-    this.showMap();
+
   }
 
   showMap(){
-    /*let modal = this.modalCtrl.create(BrigadeAreaPage,{
-      brigade: this.brigade,
-      readonly: this.readonly
-    });
-    modal.present();*/
     this.navCtrl.push(BrigadeAreaPage,{brigadeId: this.brigade._id, brigade: this.brigade})
   }
 

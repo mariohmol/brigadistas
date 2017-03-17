@@ -5,6 +5,9 @@
      <ion-icon name="menu"></ion-icon>
    </button>
     <ion-buttons end>
+      <button ion-button icon-only [disabled]="selectedShape ? true : false" (click)="remove()">
+       <ion-icon name="trash"></ion-icon>
+     </button>
       <button ion-button *ngIf="!readonly"  (click)="save()">
         <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
       </button>

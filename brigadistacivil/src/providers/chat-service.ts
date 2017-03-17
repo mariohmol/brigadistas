@@ -2,7 +2,6 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { BaseService } from './base-service';
-import { BackgroundGeolocation } from 'ionic-native';
 
 @Injectable()
 export class ChatService extends BaseService {

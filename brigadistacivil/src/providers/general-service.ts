@@ -21,7 +21,7 @@ export class GeneralService extends BaseService {
   public static polygon: any;
   public static markers: [any];
   public static polygons: [any];
-  public selectedShape: any;
+  public static selectedShape: any;
 
   constructor(public http: Http) {
     super(http);
@@ -123,32 +123,31 @@ export class GeneralService extends BaseService {
   clearSelection(shape) {
     if (shape) {
       shape.setEditable(false);
-      this.selectedShape = null;
+      GeneralService.selectedShape = null;
     }
   }
 
-  setSelection(shape) {
+  setSelection(shape,cb=null) {
     this.clearSelection(shape);
-    this.selectedShape = shape;
+    GeneralService.selectedShape = shape;
     shape.setEditable(true);
     google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
     google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
+    if(cb) cb(shape);
   }
 
   calcar(shape) {
     //"Area =" + area.toFixed(2);
     const area = google.maps.geometry.spherical.computeArea(shape.getPath());
-    this.selectedShape = shape;
+    GeneralService.selectedShape = shape;
+    return area;
   }
 
-  deleteSelectedShape() {
-    if (this.selectedShape) {
-      this.selectedShape.setMap(null);
+  deleteSelectedShape(selectedShape=GeneralService.selectedShape) {
+    if (selectedShape) {
+      selectedShape.setMap(null);
     }
   }
-
-
-
 
   addInfoWindow(map, marker, content) {
     if (BaseService.device == 'mobile') { }
@@ -162,8 +161,8 @@ export class GeneralService extends BaseService {
     }
   }
 
-  addPolygon(map, points, cb) {
-     var minZoomLevel = 15, newShape;
+  drawPolygon(map, points, cbAddPol, cbSelectPol=null) {
+     var newShape;
     const polyOptions = {
        strokeWeight: 0,
        fillOpacity: 0.45,
@@ -182,7 +181,7 @@ export class GeneralService extends BaseService {
      });
 
      google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-        this.selectedShape = e.overlay;
+        GeneralService.selectedShape = e.overlay;
 
         if (e.type != google.maps.drawing.OverlayType.MARKER) {
           drawingManager.setDrawingMode(null);
@@ -191,18 +190,15 @@ export class GeneralService extends BaseService {
           newShape.type = e.type;
 
           google.maps.event.addListener(newShape, 'click', () => {
-            this.setSelection(newShape);
+            this.setSelection(newShape,cbSelectPol);
           });
           //"Area =" + area.toFixed(2);
-          const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-          cb(newShape);
-          this.setSelection(newShape);
+          //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
+          cbAddPol(newShape);
+          this.setSelection(newShape,cbSelectPol);
         }
       });
-
       google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
-      //google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', () => { this.deleteSelectedShape(); });
-
   }
 
   getPosition(cb) {
@@ -265,11 +261,46 @@ export class GeneralService extends BaseService {
     }
   }
 
-  drawPolygon(map, points, cb) {
-    /*google.maps.event.addListener(map, 'click', event => {
-      cb(event)
-    });*/
-    this.addPolygon(map, points, cb);
+  addPolygon(map,areas,cbSelectPol=null) {
+    let options={
+       paths: areas,
+       strokeColor: '#FF0000',
+       strokeOpacity: 0.8,
+       strokeWeight: 2,
+       fillColor: '#FF0000',
+       fillOpacity: 0.35
+     };
+    if (BaseService.device == 'mobile') {
+      map.addPolygon(options, function(polygon) {
+         this.map.animateCamera({
+           'target': polygon.getPoints()
+         });
+       });
+    }else{
+      var pol = new google.maps.Polygon(options);
+       map.fitBounds(this.getBounds(pol.getPaths()));
+       pol.setMap(map);
+       google.maps.event.addListener(pol, 'click', () => {
+         this.setSelection(pol,cbSelectPol);
+       });
+    }
+  }
+
+  /**
+   * [addMissingMaps description]
+   * @param  {[type]} paths ex.:  polygon.getPaths();
+   * @return {[type]}       [description]
+   */
+  getBounds(paths){
+    var bounds = new google.maps.LatLngBounds();
+    var path;
+    for (var i = 0; i < paths.getLength(); i++) {
+        path = paths.getAt(i);
+        for (var ii = 0; ii < path.getLength(); ii++) {
+            bounds.extend(path.getAt(ii));
+        }
+    }
+    return bounds;
   }
 
 }

@@ -1,10 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavParams, AlertController,ToastController } from 'ionic-angular';
+import { App,NavParams, AlertController,ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import BasePage from '../basepage';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
 import {TranslateService} from 'ng2-translate';
+import { BrigadePage } from './brigade';
 declare var google;
 
 @Component({
@@ -18,8 +19,9 @@ export class BrigadeAreaPage extends BasePage {
   public readonly: boolean;
   map: any;
   valid: boolean;
+  public selectedShape: any;
 
-  constructor(public navParams: NavParams,
+  constructor(public app: App, public navParams: NavParams,
     public translateService: TranslateService,public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController,
     public generalService: GeneralService, public brigadeService: BrigadeService) {
@@ -27,11 +29,11 @@ export class BrigadeAreaPage extends BasePage {
   }
 
   ionViewDidLoad() {
-    this.loadData();
+    this.loadData(false);
   }
 
-  loadData(){
-    if(this.navParams.get("brigade")){
+  loadData(force){
+    if(this.navParams.get("brigade") && !force){
       this.brigade=this.navParams.get("brigade");
       this.readonly=this.navParams.get("readonly");
       this.showMap();
@@ -54,24 +56,27 @@ export class BrigadeAreaPage extends BasePage {
       if(this.position)coords=this.position.coords;
         this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
 
-        if(this.map.area){
-          this.map.addPolygon({
-             'points': this.map.area,
-             'strokeColor': '#AA00FF',
-             'strokeWidth': 5,
-             'fillColor': '#880000'
-           }, function(polygon) {
-             this.map.animateCamera({
-               'target': polygon.getPoints()
-             });
-           });
+        let selectShapeCb = (function(obj){
+            return shape=>{
+              obj.selectedShape = shape;
+            };
+          })(this);
+
+        if(this.brigade.area.coordinates && this.brigade.area.coordinates.length>0){
+          this.brigade.area.coordinates.forEach(area=>{
+            let areas= area.map(a=>{
+              return {lat: a[1], lng: a[0]};
+            });
+            this.generalService.addPolygon(this.map,areas,selectShapeCb);
+          });
         }else{
-          this.generalService.drawPolygon(this.map, [],p=>{
+          let newPolyCb = p=>{
             if(p.getPath().b.length>2){
               this.valid=true;
               this.readonly=false;
             }
-          });
+          };
+          this.generalService.drawPolygon(this.map, [],newPolyCb, selectShapeCb);
         }
     }
 
@@ -88,18 +93,30 @@ export class BrigadeAreaPage extends BasePage {
 
   }
 
+  remove(){
+    this.showConfirm(this.translate("remove"), null,c=>{
+      this.generalService.deleteSelectedShape();
+    });
+  }
+
   save(){
+    if(!GeneralService.selectedShape){
+      this.openPageParam(BrigadePage, {brigade: this.brigade, brigadeId: this.brigade._id});
+      return
+    }
     let paths=[]
-    this.generalService.selectedShape.getPath().b.forEach(b=>{
+    GeneralService.selectedShape.getPath().b.forEach(b=>{
       paths.push([b.lng(), b.lat()]);
     });
+    if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
+    this.brigade.area.coordinates.push(paths);
 
-    console.log(paths);
     this.brigadeService.updateBrigade({
       _id: this.brigade._id,
-      area: [ paths ]
+      area: this.brigade.area
     }).then(c=>{
-      this.showToast(this.translate("brigade.area.save"))
+      this.showToast(this.translate("brigade.area.save"));
+      this.loadData(true);
     });
   }
 
