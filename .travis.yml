@@ -1,12 +1,8 @@
 language: node_js
 node_js:
-  - "0.12"
-before_install:
-  - "curl -L https://raw.githubusercontent.com/arunoda/travis-ci-meteor-packages/master/configure.sh | /bin/sh"
-before_script:
-  - "export PATH=$HOME/.meteor:$PATH"
+  - "6.9.2"
 services:
-- mongodb
+  - mongodb
 addons:
   apt:
     sources:
