@@ -17,7 +17,7 @@ router.get('/:id', function (req, res, next) {
 router.put('/:id', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
    let data=Object.assign(req.body, { updatedAt: new Date()} );
-  var query={_id: req.params.id, leaders: { $in: req.user._id }};
+  var query={_id: req.params.id, leaders: { $in: [req.user._id] }};
   Brigade.findOneAndUpdate(query,data,{$new: true, upsert: true})
   .then(d => { res.json(d);})
   .catch(e=> {res.json(e);});
@@ -36,7 +36,7 @@ router.post('/', passport.authenticate('basic', { session: false }),
 
 router.delete('/:id', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  var query={_id: req.params.id, leaders: { $in: req.user._id }};
+  var query={_id: req.params.id, leaders: { $in: [req.user._id] }};
   Brigade.findOneAndDelete(query,{},{}).then(d => { res.json(d);});
 });
 

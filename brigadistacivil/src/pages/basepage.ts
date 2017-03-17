@@ -214,7 +214,6 @@ export default class BasePage {
 
 
   showError(error: any) {
-    console.log(error)
     this.dismissLoading();
     if (error && error.status === 0) {
       error = this.translate("cancel")
@@ -258,7 +257,6 @@ export default class BasePage {
   afterLogin() { }
 
   authSuccess(token, user) {
-    console.log(user, token)
     localStorage['profile'] = JSON.stringify(user);
     localStorage['id_token'] = token;
 

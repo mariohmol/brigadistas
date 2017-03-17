@@ -10,7 +10,6 @@ export class ReadOnlyClass{
     @Input('readonlyClass') readonlyClass: boolean;
 
     ngOnInit(){
-      console.log(this.readonlyClass);
       if(this.readonlyClass) this.changeClass("readonlyInput");
     }
 

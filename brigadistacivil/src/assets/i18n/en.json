@@ -28,6 +28,10 @@
       "confirm": "Are you sure you want to leave your squad? By doing this you will lose control if you are a leader.",
       "feedback": "You left the squad successfully!"
     },
+    "area": {
+      "title": "Brigade Area",
+      "save": "Area saved successfully"
+    },
     "new": {
       "title": "New Brigade",
       "warning": "Your brigade was created! Our team will review your information and we will soon approve to become part of our network!"

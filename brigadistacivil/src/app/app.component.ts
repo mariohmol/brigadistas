@@ -10,6 +10,7 @@ import { FiresPage } from '../pages/fire/fires';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { TranslateService } from 'ng2-translate';
 import { UserService } from '../providers/user-service';
+import { BaseService } from '../providers/base-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -53,10 +54,11 @@ export class MyApp {
         { title: 'ProfilePage', component: UserPage },
         { title: 'ChatsPage', component: ChatsPage }
       ];
-
-      this.startPush();
-      StatusBar.styleDefault();
-      Splashscreen.hide();
+      if(this.platform.is('cordova')) {
+        this.startPush();
+        StatusBar.styleDefault();
+        Splashscreen.hide();
+      }
     });
   }
 
@@ -67,6 +69,7 @@ export class MyApp {
   }
 
   startPush(){
+    if(!this.platform.is('cordova')) return;
     this.push = Push.init({
       android: {
         senderID: '651174488283'
@@ -79,7 +82,7 @@ export class MyApp {
       windows: {}
     });
 
-    if(!this.push) return;
+    if(!this.push || this.push.error) return;
     try{
       this.push.on('registration', (data) => {
         localStorage['deviceToken']=data.registrationId;
@@ -90,10 +93,9 @@ export class MyApp {
       });
 
       this.push.on('notification', (data) => {
-        console.log('message', data);
         new Promise( resolve => {
-          var snd = new (<any>window).Audio( "assets/mp3/atraso.mp3"); snd.play();
-          console.log('Playing sound');
+          var snd = new (<any>window).Audio( "assets/mp3/atraso.mp3");
+          snd.play();
           resolve();
         })
 

@@ -31,7 +31,6 @@ export class LoginPage extends BasePage {
   }
 
   ionViewDidLoad() {
-    console.log('ionViewDidLoad LoginPage');
     if (localStorage["profile"]) {
       this.openPage(FiresPage);
     }

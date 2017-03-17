@@ -21,11 +21,10 @@ export class GeneralService extends BaseService {
   public static polygon: any;
   public static markers: [any];
   public static polygons: [any];
-  public selectedShape: any;
+  public static selectedShape: any;
 
   constructor(public http: Http) {
     super(http);
-    console.log('Hello GeneralService Provider');
   }
 
   /**
@@ -35,7 +34,6 @@ export class GeneralService extends BaseService {
    */
   loadMap(mapElement, position, options = {}) {
     if(GeneralService.map && GeneralService.map.clear)GeneralService.map.clear();
-    console.log(BaseService.device);
     if (BaseService.device == 'mobile') {
       GeneralService.map = new GoogleMap(mapElement.nativeElement);
 
@@ -62,6 +60,7 @@ export class GeneralService extends BaseService {
 
 
       let mapOptions = {
+        center: new google.maps.LatLng(-19.9364705,-43.980769),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
@@ -124,36 +123,31 @@ export class GeneralService extends BaseService {
   clearSelection(shape) {
     if (shape) {
       shape.setEditable(false);
-      this.selectedShape = null;
+      GeneralService.selectedShape = null;
     }
   }
 
-  setSelection(shape) {
+  setSelection(shape,cb=null) {
     this.clearSelection(shape);
-    this.selectedShape = shape;
-
-    console.log(shape.getPath())
-
+    GeneralService.selectedShape = shape;
     shape.setEditable(true);
     google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
     google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
+    if(cb) cb(shape);
   }
 
   calcar(shape) {
+    //"Area =" + area.toFixed(2);
     const area = google.maps.geometry.spherical.computeArea(shape.getPath());
-    document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
-
-    this.selectedShape = shape;
+    GeneralService.selectedShape = shape;
+    return area;
   }
 
-  deleteSelectedShape() {
-    if (this.selectedShape) {
-      this.selectedShape.setMap(null);
+  deleteSelectedShape(selectedShape=GeneralService.selectedShape) {
+    if (selectedShape) {
+      selectedShape.setMap(null);
     }
   }
-
-
-
 
   addInfoWindow(map, marker, content) {
     if (BaseService.device == 'mobile') { }
@@ -167,8 +161,8 @@ export class GeneralService extends BaseService {
     }
   }
 
-  addPolygon(map, points, cb) {
-     var minZoomLevel = 15, newShape;
+  drawPolygon(map, points, cbAddPol, cbSelectPol=null) {
+     var newShape;
     const polyOptions = {
        strokeWeight: 0,
        fillOpacity: 0.45,
@@ -187,7 +181,7 @@ export class GeneralService extends BaseService {
      });
 
      google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-        this.selectedShape = e.overlay;
+        GeneralService.selectedShape = e.overlay;
 
         if (e.type != google.maps.drawing.OverlayType.MARKER) {
           drawingManager.setDrawingMode(null);
@@ -196,44 +190,26 @@ export class GeneralService extends BaseService {
           newShape.type = e.type;
 
           google.maps.event.addListener(newShape, 'click', () => {
-            this.setSelection(newShape);
+            this.setSelection(newShape,cbSelectPol);
           });
-
-          const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-          document.getElementById("area").innerHTML = "Area =" + area.toFixed(2);
-
-          this.setSelection(newShape);
+          //"Area =" + area.toFixed(2);
+          //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
+          cbAddPol(newShape);
+          this.setSelection(newShape,cbSelectPol);
         }
       });
-
       google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
-      //google.maps.event.addDomListener(document.getElementById('delete-button'), 'click', () => { this.deleteSelectedShape(); });
-
-
-  /*  map.addPolygon({
-      'points': points,
-      'strokeColor': '#AA00FF',
-      'strokeWidth': 5,
-      'fillColor': '#880000'
-    }, function(polygon) {
-      cb(polygon);
-      map.animateCamera({
-        'target': polygon.getPoints()
-      });
-    });*/
   }
 
   getPosition(cb) {
     if (BaseService.device == 'mobile') {
       Geolocation.getCurrentPosition().then((pos) => {
-        console.log(pos);
         cb(pos.coords);
-      }).catch(e => { console.log(e); cb(); });
+      }).catch(e => { cb(e); });
 
       /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
-        console.log(data);
-       // data can be a set of coordinates, or an error (if an error occurred).
+        // data can be a set of coordinates, or an error (if an error occurred).
        // data.coords.latitude
        // data.coords.longitude
      });*/
@@ -279,68 +255,52 @@ export class GeneralService extends BaseService {
 
   removeElement(element){
     if(element.setMap){
-      console.log("setMap()")
       element.setMap(null);
     }else{
-      console.log("remove()")
       element.remove();
     }
   }
 
-  drawPolygon(map, points, cb) {
-    google.maps.event.addListener(map, 'click', event => {
-      cb(event)
-    });
+  addPolygon(map,areas,cbSelectPol=null) {
+    let options={
+       paths: areas,
+       strokeColor: '#FF0000',
+       strokeOpacity: 0.8,
+       strokeWeight: 2,
+       fillColor: '#FF0000',
+       fillOpacity: 0.35
+     };
+    if (BaseService.device == 'mobile') {
+      map.addPolygon(options, function(polygon) {
+         this.map.animateCamera({
+           'target': polygon.getPoints()
+         });
+       });
+    }else{
+      var pol = new google.maps.Polygon(options);
+       map.fitBounds(this.getBounds(pol.getPaths()));
+       pol.setMap(map);
+       google.maps.event.addListener(pol, 'click', () => {
+         this.setSelection(pol,cbSelectPol);
+       });
+    }
+  }
 
-    let doPolygon = d => {
-
-    };
-    this.addPolygon(map, points, doPolygon);
-
-    /*
-    var drawingManager;
-
-    var polyOptions = {
-      strokeWeight: 0,
-      fillOpacity: 0.45,
-      editable: true
-    };
-
-     drawingManager = new google.maps.drawing.DrawingManager({
-      drawingControl: true,
-      drawingControlOptions: {
-        drawingModes: [
-          google.maps.drawing.OverlayType.POLYGON,
-        ]
-      },
-      polygonOptions: polyOptions,
-      map: this.map
-    });*/
-    /**/
-    /*
-    google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-
-      this.selectedShape=e.overlay
-
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
-          // Switch back to non-drawing mode after drawing a shape.
-          drawingManager.setDrawingMode(null);
-
-          // Add an event listener that selects the newly-drawn shape when the user
-          // mouses down on it.
-          newShape = e.overlay;
-          newShape.type = e.type;
-
-          google.maps.event.addListener(newShape, 'click', ()=> {
-
-            this.setSelection(newShape);
-
-
-          });
+  /**
+   * [addMissingMaps description]
+   * @param  {[type]} paths ex.:  polygon.getPaths();
+   * @return {[type]}       [description]
+   */
+  getBounds(paths){
+    var bounds = new google.maps.LatLngBounds();
+    var path;
+    for (var i = 0; i < paths.getLength(); i++) {
+        path = paths.getAt(i);
+        for (var ii = 0; ii < path.getLength(); ii++) {
+            bounds.extend(path.getAt(ii));
         }
-    })
-
-    */
+    }
+    return bounds;
   }
 
 }

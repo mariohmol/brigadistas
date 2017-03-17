@@ -1,6 +1,9 @@
 <ion-header>
   <ion-navbar color="primary">
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
     <ion-buttons end>
       <button ion-button *ngIf="!isReadonly()" [disabled]="!brigadeForm.valid" (click)="save()">
         <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
