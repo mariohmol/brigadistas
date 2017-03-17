@@ -3,6 +3,7 @@
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "scripts": {
     "check": "eval npm install",
+    "test": "mocha --recursive --timeout 15000",
     "dev": "supervisor server/server.js",
     "watch": "cd brigadistacivil/ && npm run watch",
     "gen": "cd brigadistacivil && npm run gen"
@@ -46,11 +47,14 @@
   "devDependencies": {
     "babel-cli": "^6.18.0",
     "chai": "^3.5.0",
+    "chai-http": "^3.0.0",
     "del": "2.2.0",
     "es6-promise": "^3.3.1",
+    "faker": "^4.1.0",
+    "istanbul": "^0.4.5",
     "lodash.camelcase": "^4.1.1",
     "lodash.upperfirst": "^4.2.0",
-    "mocha": "^3.1.2",
+    "mocha": "^3.2.0",
     "run-sequence": "1.1.5",
     "supervisor": "^0.12.0",
     "ts-loader": "^0.8.2",

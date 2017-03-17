@@ -62,7 +62,7 @@ export class BrigadeAreaPage extends BasePage {
             };
           })(this);
 
-        if(this.brigade.area.coordinates && this.brigade.area.coordinates.length>0){
+        if(this.brigade.area && this.brigade.area.coordinates && this.brigade.area.coordinates.length>0){
           this.brigade.area.coordinates.forEach(area=>{
             let areas= area.map(a=>{
               return {lat: a[1], lng: a[0]};
@@ -108,7 +108,8 @@ export class BrigadeAreaPage extends BasePage {
     GeneralService.selectedShape.getPath().b.forEach(b=>{
       paths.push([b.lng(), b.lat()]);
     });
-    if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
+    if(!this.brigade.area) this.brigade.area={coordinates: []};
+    else if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
     this.brigade.area.coordinates.push(paths);
 
     this.brigadeService.updateBrigade({
