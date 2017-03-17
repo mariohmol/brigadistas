@@ -15,7 +15,5 @@ addons:
   apt:
     sources:
       - mongodb-3.2-precise
-      - google-chrome
     packages:
       - mongodb-org-server
-      - google-chrome-stable
