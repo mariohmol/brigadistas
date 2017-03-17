@@ -1,8 +1,8 @@
 require('dotenv').config();
 exports.ENV = global.ENV || process.env.ENV || "production";
-exports.DATABASE_URL = process.env.DATABASE_URL || global.DATABASE_URL ||
+exports.DATABASE_URL = global.DATABASE_URL || process.env.DATABASE_URL || global.DATABASE_URL || 
                       (process.env.NODE_ENV === 'production' ? 'mongodb://localhost/brigadistas' : 'mongodb://localhost/brigadistas');
-exports.PORT = process.env.PORT || 8484;
+exports.PORT = global.PORT || process.env.PORT || 8484;
 exports.URL = process.env.URL || 'https://brigadistacivil.com.br';
 exports.DONTREPLY_EMAIL= process.env.DONTREPLY_EMAIL || 'emaildontreply@brigadistacivil.com.br';
 exports.ADMIN_EMAIL=process.env.ADMIN_EMAIL || 'administrators@brigadistacivil.com.br';

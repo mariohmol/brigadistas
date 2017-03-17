@@ -1,10 +1,12 @@
 const faker = require('faker');
 
-export const user = {
+const user = {
   "email": "test@test.com",
   "username": "test@test.com",
   "password": "123456",
   "name": faker.name.firstName(),
-  "location": faker.address.city(),
+  "city": faker.address.city(),
   "bio": faker.lorem.sentence()
 };
+
+module.exports={user};

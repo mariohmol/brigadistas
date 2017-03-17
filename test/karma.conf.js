@@ -11,7 +11,11 @@ module.exports = function (config) {
     // available frameworks: https://npmjs.org/browse/keyword/karma-adapter
     frameworks: ['mocha'], // jasmine
 
-
+    'plugins' : [
+        'karma-mocha',
+        'karma-mocha-reporter',
+        'karma-sourcemap-loader'
+    ],
     // list of files / patterns to load in the browser
     files: [
       './.bundles/webpack.bundle.spec.espowered.js'
@@ -32,7 +36,7 @@ module.exports = function (config) {
     // test results reporter to use
     // possible values: 'dots', 'progress'
     // available reporters: https://npmjs.org/browse/keyword/karma-reporter
-    reporters: ['mocha'], 
+    reporters: ['mocha'],
 
 
     // web server port
@@ -54,7 +58,7 @@ module.exports = function (config) {
 
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['PhantomJS'], // PhantomJS / Firefox / Chrome
+    browsers: ['Chrome','PhantomJS2'], // PhantomJS / Firefox / Chrome
 
 
     // Continuous Integration mode

@@ -1,6 +1,7 @@
 /*jshint expr: true*/
 const { DATABASE_URL } = require('../config');
 global.DATABASE_URL = DATABASE_URL;
+global.PORT = PORT;
 const chai = require('chai');
 const chaiHttp = require('chai-http');
 const passport = require("passport");
@@ -13,6 +14,7 @@ const should = chai.should();
 const app = server.app;
 
 const { user } =require("../fixtures/user");
+
 chai.use(chaiHttp);
 
 
@@ -30,9 +32,11 @@ describe('Authentication', () => {
 
 
     it('should allow user do signup', done => {
+        let userRegister = Object.assign({},user);
+        delete userRegister.email;
         chai.request(app)
             .post('/api/user/register')
-            .send(user)
+            .send(userRegister)
             .end((err, res) => {
                 res.should.have.status(201);
                 done();
