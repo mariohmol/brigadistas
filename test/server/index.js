@@ -26,14 +26,7 @@ describe('Index page', () => {
         });
     });
 
-    it('exists', done => {
-        chai.request(app)
-            .get('/')
-            .end((err, res) => {
-                res.should.have.status(200);
-                //alternative to res.should.be.html
-                expect(res).to.have.header('content-type', 'text/html; charset=UTF-8');
-                done();
-            });
+    it('empty the database for testing', done => {
+        done();
     });
 });
