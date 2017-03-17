@@ -12,7 +12,7 @@ const expect = chai.expect;
 const should = chai.should();
 const app = server.app;
 
-const userFixtures=require("./fixtures/user.json");
+const { user } =require("../fixtures/user");
 chai.use(chaiHttp);
 
 
@@ -20,40 +20,19 @@ describe('Authentication', () => {
 
     before(done => {
         server.runServer(()=> {
-          /*  app.request.isAuthenticated = () => {
-                return true;
-            };*/
             done();
         });
     });
 
     after(done => {
-        /*app.request.isAuthenticated = () => {
-            return false;
-        };*/
-        done();
-    });
-    /*
-    beforeEach(done => {
-        app.request.user = {
-            twitchId: 1,
-            username: "one",
-            clips: []
-        };
         done();
     });
 
-    afterEach(done => {
-        done();
-    });
-    */
 
     it('should allow user do signup', done => {
         chai.request(app)
             .post('/api/user/register')
-            .send({username: userFixtures.email, "password": userFixtures.password,
-              name: faker.name.firstName(),
-            bio: faker.lorem.sentence(), city: faker.address.city()})
+            .send(user)
             .end((err, res) => {
                 res.should.have.status(201);
                 done();
@@ -63,7 +42,7 @@ describe('Authentication', () => {
     it('should allow user to login', done => {
         chai.request(app)
             .post('/api/user/login')
-            .auth(userFixtures.username, userFixtures.password)
+            .auth(user.username, user.password)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');

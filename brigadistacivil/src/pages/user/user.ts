@@ -18,7 +18,13 @@ export class UserPage extends BasePage {
     public userService: UserService, public translateService: TranslateService, public menuCtrl: MenuController,
     public toastCtrl: ToastController) {
     super();
-
+    this.userForm = this.fb.group({
+      name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
+      bio: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
+    });
   }
 
   ionViewDidLoad() {
@@ -31,13 +37,7 @@ export class UserPage extends BasePage {
       this.readonly = false;
     }
 
-    this.userForm = this.fb.group({
-      name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      bio: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
-    });
+
   }
 
   save() {
