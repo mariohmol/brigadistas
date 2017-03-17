@@ -2,7 +2,7 @@ language: node_js
 node_js:
   - "6.9.2"
 before_install:
-  - "cd brigadistacivil && npm install"
+  - "cd brigadistacivil && npm install && cd .."
 before_script:
   - ""
 services:
