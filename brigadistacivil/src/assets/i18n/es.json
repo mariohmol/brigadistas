@@ -1,36 +1,32 @@
 {
   "app": {
-    "name": "Brigada civil"
-  },
-  "chat": {
-    "title": "Chat",
-    "notfound": "Chat no encontrado para este fuego"
+    "name": "Brigadista Civil"
   },
   "brigade": {
     "title": "Brigada",
     "promoteBrigade": {
-      "action": "Promover al Líder",
-      "confirm": "¿Estás seguro de que quieres promocionar a este usuario como líder de la brigada?",
-      "feedback": "Enhorabuena, tu equipo tiene más de una brigada como líder."
+      "action": "Promover a Líder",
+      "confirm": "¿Está seguro de que desea promover esta brigada a uno de los jefes de brigada?",
+      "feedback": "Felicitaciones, su equipo tiene otra brigada como líder de brigada."
     },
     "approveBrigade": {
-      "action": "Aprobar la Brigada",
-      "confirm": "¿Estás seguro de que quieres aprobar esto para ser una brigada?",
-      "feedback": "¡Enhorabuena, su equipo ha aumentado con un brigadier más!"
+      "action": "aprobar Brigadista",
+      "confirm": "¿Está seguro de que desea aprobar que se trata de un brigadier?",
+      "feedback": "Felicitaciones, su equipo aumentan con otra brigada!"
     },
     "requestEnter": {
-      "action": "Entrar en la brigada",
-      "confirm": "¿Estás seguro de que quieres enviar una solicitud al líder de la brigada?",
-      "feedback": "Su solicitud ha sido enviada y está a la espera de la aprobación del líder de la brigada."
+      "action": "Entrar na Brigada",
+      "confirm": "¿Está seguro de que desea enviar una solicitud entrante para el líder de la brigada?",
+      "feedback": "Su solicitud ha sido presentada y está esperando la aprobación del líder de la brigada."
     },
     "leaveBrigade": {
-      "action": "Salir de la brigada",
-      "confirm": "¿Seguro que quieres dejar tu plantilla? Haciendo esto usted perderá el control si usted es un líder.",
-      "feedback": "Usted dejó el equipo con éxito!"
+      "action": "Salir Brigada",
+      "confirm": "¿Está seguro de que quiere salir de su brigada? Al hacer esto va a perder el control si un líder.",
+      "feedback": "Dejaste la brigada correctamente!"
     },
     "new": {
-      "title": "Nueva brigada",
-      "warning": "¡Tu brigada fue creada! Nuestro equipo revisará su información y pronto aprobaremos para formar parte de nuestra red."
+      "title": "Nova brigada",
+      "warning": "Su brigada fue creado! Nuestro equipo revisará su información y pronto para aprobar una parte de nuestra red!"
     },
     "area": {
       "title": "Área de la Brigada",
@@ -43,56 +39,81 @@
     "see": "Ver brigada"
   },
   "fire": {
-    "title": "Ver Fuego",
-    "startCombat": "Lucha contra incendios",
-    "stopCombat": "Salir del combate",
+    "title": "ver Fuego",
+    "chooseLocation": "Haga clic en el mapa y entrar en el lugar del incendio",
+    "startCombat": "lucha contra incendios",
+    "stopCombat": "Salir de combate",
+    "checking": "anti-incendio",
+    "confirmed": "confirmar Fuego",
+    "not_confirmed": "no confirmar",
+    "initCombat": "Iniciar Combate",
+    "endCombat": "Salir de combate",
+    "aftermath": "Consecuencias Inicar",
+    "closeCombat": "Encerrar Combate",
+    "finished": "incendios combatidos",
     "new": {
-      "title": "Informe de incendios",
-      "fieldTitle": "Nombre (por ejemplo: Fuego en Alto da Serra)",
-      "fieldDescription": "Más información como acceso, contacto .."
+      "title": "informes de incendios",
+      "fieldTitle": "Nombre (por ejemplo. Fuego en la alta sierra)",
+      "fieldDescription": "Más información y el acceso, el contacto .."
+    },
+    "status": {
+      "updated": "El estado del fuego se ha cambiado correctamente"
     }
   },
   "fires": {
-    "title": "Fuegos",
-    "see": "Ver Fuego"
+    "title": "fuego",
+    "see": "ver Fuego"
+  },
+  "require": {
+    "minString": "se requiere (mínimo 5 caracteres)."
   },
   "user": {
-    "title": "¡Bienvenidos a la aplicación de Brigadistas Civiles! Introduce tu correo electrónico y contraseña.",
-    "email": "Tu correo electrónico",
-    "password": "Tu contraseña",
-    "enter": "Iniciar sesión",
-    "signin": "Registro",
+    "title": "Bienvenido a la aplicación brigadista Civil! Ingrese su correo electrónico y contraseña.",
+    "bio": "Decirle cómo puede ayudar",
+    "city": "Su ciudad",
+    "email": "Su e-mail",
+    "name": "Su nombre",
+    "password": "Su contraseña",
+    "enter": "Entrar",
+    "signin": "registrar",
     "login": {
-      "title": "No pude entrar a la cuenta",
-      "subTitle": "¡Tu nombre de usuario o tu contraseña son incorrectos! Si aún no te has registrado, ¡hazlo ahora!"
+      "title": "No se pudo obtener",
+      "subTitle": "Su nombre de usuario o contraseña son incorrectos! Si no lo hace y registrado, hazlo ahora!"
+    },
+    "logout": {
+      "title": "dejar"
     },
     "new": {
-      "title": "Registro",
-      "error": "No fue posible registrarse porque su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor póngase en contacto con nosotros.",
-      "welcome": ", ¡Bienvenido!"
+      "title": "registrar",
+      "error": "No se ha podido iniciar sesión en su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor, póngase en contacto con nosotros.",
+      "welcome": ", Bienvenido (a)!"
+    },
+    "recover": {
+      "title": "Recuperar contraseña",
+      "enter": "Cambiar contraseña",
+      "confirm": "¿Seguro que desea recibir un correo electrónico de recuperación de la contraseña en el correo electrónico",
+      "response": "Enviamos un correo electrónico con los pasos para cambiar su contraseña.",
+      "changed": "Su contraseña ha sido cambiada con éxito, se puede utilizar para entrar."
     },
     "update": {
       "title": "Perfil",
-      "error": "No hemos podido cambiar tu perfil porque tu correo electrónico ya existe en nuestra base de datos o hubo un error, por favor ponte en contacto con nosotros."
-    },
-    "profile": {
-      "title": "Perfil"
+      "error": "No se puede cambiar su perfil como su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor, póngase en contacto con nosotros."
     }
   },
-  "bio": "How i can help",
   "cancel": "Cancelar",
-  "chooseOption": "Escoge una opción",
+  "chooseOption": "Elija una opción",
   "chooseOptionFail": "Por favor, seleccione una opción para continuar.",
-  "city": "Ciudad",
-  "confirmOperation": "Confirmación de operación",
-  "connectionFail": "Problema probable con su Internet, por favor, inténtelo de nuevo.",
-  "createdAt": "Creado en",
-  "description": "Descripción",
+  "city": "ciudad",
+  "confirmOperation": "comprobación del funcionamiento",
+  "connectionFail": "problema que pueda llegar con su conexión a Internet, inténtelo de nuevo.",
+  "description": "descripción",
   "done": "DE ACUERDO",
-  "intensity": "Intensidad",
-  "name": "Nombre",
+  "email": "Email",
+  "generalError": "Tuvimos un error en su solicitud",
+  "intensity": "intensidad",
+  "name": "nombre",
   "notfounditems": "No se encontró información.",
-  "location": "Localizacion",
+  "password": "contraseña",
   "title": "Título",
-  "yesContinue": "Si quiero continuar"
+  "yesContinue": "Sí, quiero seguir"
 }
