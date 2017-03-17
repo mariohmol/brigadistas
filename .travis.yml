@@ -1,12 +1,16 @@
 language: node_js
 node_js:
-  - "0.12"
+  - "6.9.2"
 before_install:
-  - "curl -L https://raw.githubusercontent.com/arunoda/travis-ci-meteor-packages/master/configure.sh | /bin/sh"
+  - mkdir travis-phantomjs
+  - wget https://s3.amazonaws.com/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -O $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2
+  - tar -xvf $PWD/travis-phantomjs/phantomjs-2.0.0-ubuntu-12.04.tar.bz2 -C $PWD/travis-phantomjs
+  - export PATH=$PWD/travis-phantomjs:$PATH
+  - "cd brigadistacivil && npm install && cd .."
 before_script:
-  - "export PATH=$HOME/.meteor:$PATH"
+  - ""
 services:
-- mongodb
+  - mongodb
 addons:
   apt:
     sources:
