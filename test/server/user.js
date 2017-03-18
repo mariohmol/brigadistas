@@ -13,7 +13,7 @@ const expect = chai.expect;
 const should = chai.should();
 const app = server.app;
 
-const { user } =require("../fixtures/user");
+const { newUser } =require("../fixtures/user");
 
 chai.use(chaiHttp);
 
@@ -32,7 +32,7 @@ describe('Authentication', () => {
 
 
     it('should allow user do signup', done => {
-        let userRegister = Object.assign({},user);
+        let userRegister = Object.assign({},newUser);
         delete userRegister.email;
         chai.request(app)
             .post('/api/user/register')
@@ -46,7 +46,7 @@ describe('Authentication', () => {
     it('should allow user to login', done => {
         chai.request(app)
             .post('/api/user/login')
-            .auth(user.username, user.password)
+            .auth(newUser.username, newUser.password)
             .end((err, res) => {
                 res.should.have.status(200);
                 res.body.should.be.a('object');
