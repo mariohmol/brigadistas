@@ -67,7 +67,7 @@
     "@angular/platform-browser-dynamic": "2.2.1",
     "@angular/platform-server": "2.2.1",
     "@ionic/storage": "1.1.7",
-    "@types/jasmine": "^2.5.46",
+    "@types/jasmine": "2.5.41",
     "awesome-typescript-loader": "^3.1.2",
     "babel-cli": "^6.18.0",
     "babel-plugin-espower": "^2.3.2",
