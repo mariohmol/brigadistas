@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<widget id="br.com.brigadistacivil"
-  android-packageName="br.com.brigadistacivil" ios-CFBundleIdentifier="br.com.brigadistacivil.ios" 
-  version="0.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
+<widget id="br.com.brigadistacivil" android-packageName="br.com.brigadistacivil" ios-CFBundleIdentifier="br.com.brigadistacivil.ios" version="0.2.1" xmlns="http://www.w3.org/ns/widgets" xmlns:cdv="http://cordova.apache.org/ns/1.0">
   <name>Brigadista Civil</name>
   <description>Plataforma para ajudar a brigada civil a combater incendio.</description>
   <author email="hi@ionicframework" href="http://brigadistacivil.com.br/">Brigadistas Team</author>
   <content src="index.html"/>
   <access origin="*"/>
-  <allow-navigation href="http://ionic.local/*"/>
+  <allow-navigation href="https://brigadistacivil.com.br/*"/>
+  <allow-navigation href="http://10.0.0.5:8100"/>
   <allow-intent href="http://*/*"/>
   <allow-intent href="https://*/*"/>
   <allow-intent href="tel:*"/>
