@@ -37,6 +37,7 @@ export class UserService extends BaseService {
     let retorno =  null;//this.doPost('/attrs/logout/',{});
     localStorage['profile']=null;
     localStorage.removeItem('profile');
+    localStorage.removeItem('base_token');
     let deviceToken = localStorage['deviceToken']
     localStorage.clear();
     localStorage['deviceToken']=deviceToken;
