@@ -41,6 +41,11 @@ In case of typings problems:
 * typings install
 * npm run install-plugins
 
+Install libs mostly for iOS enviroment:
+
+* sudo gem install cocoapods
+* pod setup
+
 To run this app :
 
 * `npm run dev` to run express server on port 8484
