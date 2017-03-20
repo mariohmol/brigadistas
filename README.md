@@ -41,10 +41,19 @@ In case of typings problems:
 * typings install
 * npm run install-plugins
 
+Install libs mostly for iOS enviroment:
+
+* npm install -g ios-deploy --unsafe-perm=true --allow-root
+* sudo gem install cocoapods
+* pod setup
+
+
 To run this app :
 
 * `npm run dev` to run express server on port 8484
 * `npm run watch` to keep watching angular2 files
+
+Throubleshooting with mobile is very usual to remove the platform, add again and build: ex.: `ionic platform remove ios`
 
 ### Configure
 

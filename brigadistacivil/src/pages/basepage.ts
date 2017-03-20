@@ -256,10 +256,10 @@ export default class BasePage {
    */
   afterLogin() { }
 
-  authSuccess(token, user) {
+  authSuccess(token, user,password) {
     localStorage['profile'] = JSON.stringify(user);
     localStorage['id_token'] = token;
-
+    localStorage['base_token'] = btoa(user.username + ':' + password);
 
     if (localStorage['deviceToken']) {
       let type = "android"; //windows
@@ -280,7 +280,7 @@ export default class BasePage {
     this.userService.login(username, password).then(user => {
       this.dismissLoading();
       if (user) {
-        this.authSuccess(true, user);
+        this.authSuccess(true, user,password);
         if (callback) callback();
       }
       else {
