@@ -33,6 +33,7 @@ UserInterfaceState.xcuserstate
 plugins/
 plugins2/
 bower_components/
+brigadistacivil/resources/*
 brigadistacivil/resources/android/**/*
 brigadistacivil/resources/ios/**/*
 
