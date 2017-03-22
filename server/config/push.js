@@ -1,14 +1,14 @@
 'use strict';
 var gcm = require('node-gcm');
 var apn = require('apn');
-const {APN_KEYID, APN_TEAMID,ANDROID_GCMKEY} = require('./config');
+const {APN_KEYID, APN_TEAMID,ANDROID_GCMKEY,APN_PATHKEY} = require('./config');
 var options,sender,apnProvider;
 const {logger} = require('../config/logger');
 
 function initPush(){
   options = {
     token: {
-      key: "path/to/key.p8",
+      key: APN_PATHKEY,
       keyId: APN_KEYID,
       teamId: APN_TEAMID
     },
@@ -37,7 +37,7 @@ function sendAndroid(message,regTokens){
       if (err) logger.error(`Error sending android token ${err}`);
       else if(response.failure>0){
         response.results.forEach(c=>{
-          logger.error(`Error when sengin android ${c.error}`);
+          logger.error(`Error when sending android ${c.error}`);
         });
       }
       else logger.info(`Response sending android token ${JSON.stringify(response)}`);
@@ -50,15 +50,20 @@ function sendAndroid(message,regTokens){
  * @param  {[type]} payload ex.: 'John Appleseed'
  * @return {[type]}         [description]
  */
-function sendiOS(alert,payload){
+function sendiOS(alert,regTokens){
   var note = new apn.Notification();
 
   note.expiry = Math.floor(Date.now() / 1000) + 3600; // Expires 1 hour from now.
   note.badge = 3;
-  note.sound = "ping.aiff";
+  note.sound = "assets/mp3/atraso.mp3";
   note.alert = alert;
-  note.payload = {'messageFrom': payload};
-  note.topic = "br.com.brigadistacivil";
+  note.payload = {'messageFrom': 'BrigadistaCivil'};
+  note.topic = "br.com.brigadistacivil.ios";
+
+  apnProvider.send(note, regTokens).then( (result) => {
+    if(result) logger.info(`Response sending iOS token ${JSON.stringify(result)}`);
+    else logger.error(`Error when sending iOS ${result}`);
+  });
 }
 
 module.exports = { initPush, sendAndroid, sendiOS};
