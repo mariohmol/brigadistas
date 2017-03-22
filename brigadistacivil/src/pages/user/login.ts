@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { NavController, NavParams, AlertController, App, MenuController, ToastController } from 'ionic-angular';
+import { NavController, NavParams, AlertController, App, MenuController,
+          ToastController,LoadingController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
@@ -16,7 +17,7 @@ export class LoginPage extends BasePage {
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams, public userService: UserService,
     public translateService: TranslateService, public alertCtrl: AlertController, public menuCtrl: MenuController,
-    public fb: FormBuilder, public toastCtrl: ToastController) {
+    public fb: FormBuilder, public toastCtrl: ToastController, public loadingCtrl: LoadingController) {
     super();
     this.loginForm = fb.group({
       'username': [

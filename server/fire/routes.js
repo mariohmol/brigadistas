@@ -11,7 +11,7 @@ const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
-router.get('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
+router.get('/', function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates').sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
 });
 
@@ -124,7 +124,7 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
 
 
 //users , watching , checking , fighting , fighters
-router.get('/relation/:fireId/:type', passport.authenticate('basic', { session: false }),
+router.get('/relation/:fireId/:type', 
 function (req, res, next) {
   Fire.find(req.params.fireId).then(d => {
     res.json(d);

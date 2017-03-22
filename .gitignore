@@ -32,6 +32,7 @@ UserInterfaceState.xcuserstate
 #cordova
 plugins/
 plugins2/
+bower_components/
 
 .vscode
 

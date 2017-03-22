@@ -44,9 +44,15 @@ export class BaseService {
       this.profile  = JSON.parse(localStorage['profile']);
     }
     if(this.profile && (!data || !data.username)){
+      let basictoken;
+      if('base_token' in localStorage){
+        basictoken = localStorage['base_token'];
+      }else{
+        basictoken = btoa(this.profile.username + ':' + this.profile.password);
+      }
       headers = new Headers({
         'Content-Type': 'application/json' ,
-        'Authorization': 'Basic ' + btoa(this.profile.username + ':' + this.profile.password)
+        'Authorization': 'Basic ' + basictoken
       });
     }else if(data){
       headers = new Headers({'Content-Type': 'application/json',
