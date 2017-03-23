@@ -25,9 +25,7 @@ typings/globals/
 typings/modules/
 platforms/
 
-.DS_Store
-Thumbs.db
-UserInterfaceState.xcuserstate
+
 
 #cordova
 plugins/
@@ -37,8 +35,18 @@ brigadistacivil/resources/*
 brigadistacivil/resources/android/**/*
 brigadistacivil/resources/ios/**/*
 
+# general
 .vscode
+.DS_Store
+Thumbs.db
+UserInterfaceState.xcuserstate
 
+# Tests
 test/.build/
 test/.bundles/
 .awcache/
+
+# Desktop electron
+brigadistacivil/BrigadistasLinux*
+brigadistacivil/BrigadistasOSX-*
+brigadistacivil/BrigadistasWin*

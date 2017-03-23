@@ -37,7 +37,13 @@
     "gen:zipalign": "rm -f Brigadistas.apk && /Users/mariohmol/projetos/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk Brigadistas.apk",
     "gen:lookkey": "keytool -list -v -keystore brigadistas.keystore",
     "electron": "ionic serve & electron .",
-    "electron-dist": "ionic build browser & electron ."
+    "electron-dist": "ionic build browser & electron .",
+    "genlinux": "electron-packager . BrigadistasLinux --platform=linux --arch=all",
+    "genlinux64": "electron-packager . BrigadistasLinux64 --platform=linux --arch=x64 && asar pack BrigadistasLinux64-linux-x64/resources/app BrigadistasLinux64-linux-x64/resources/app.asar",
+    "genwin": "electron-packager . BrigadistasWin --platform=win32 --arch=ia32",
+    "genwin64": "electron-packager . BrigadistasWin64 --platform=win32 --arch=x64",
+    "genwinarm": "electron-packager . BrigadistasWin64 --platform=win32 --arch=armv7l",
+    "genmac": "electron-packager . BrigadistasOSx --platform=darwin --arch=all"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -60,6 +66,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.1.0",
+    "asar": "^0.13.0",
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0",
+    "electron-prebuilt": "^1.4.13",
     "typescript": "2.1.6"
   },
   "cordovaPlugins": [

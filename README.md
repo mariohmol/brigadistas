@@ -41,12 +41,25 @@ In case of typings problems:
 * typings install
 * npm run install-plugins
 
+
+#### iOS
+
 Install libs mostly for iOS enviroment:
 
 * npm install -g ios-deploy --unsafe-perm=true --allow-root
 * sudo gem install cocoapods
 * pod setup
 
+
+#### Desktop
+
+We use electron to generate the desktop versions, its needed to install that globally:
+
+* npm install -g electron
+
+To build locally you can run `npm run electron`, if you would like to generate the app for each arch you can use for ex. `npm run genlinux`
+
+### Run
 
 To run this app :
 
