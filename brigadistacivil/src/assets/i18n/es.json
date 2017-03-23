@@ -100,6 +100,8 @@
       "error": "No se puede cambiar su perfil como su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor, póngase en contacto con nosotros."
     }
   },
+  "bio": "Como puede ajudar",
+  "blog": "Blog",
   "cancel": "Cancelar",
   "chooseOption": "Elija una opción",
   "chooseOptionFail": "Por favor, seleccione una opción para continuar.",
@@ -109,6 +111,7 @@
   "description": "descripción",
   "done": "DE ACUERDO",
   "email": "Email",
+  "enter": "Entrar",
   "generalError": "Tuvimos un error en su solicitud",
   "intensity": "intensidad",
   "name": "nombre",

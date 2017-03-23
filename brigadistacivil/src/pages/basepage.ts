@@ -39,11 +39,12 @@ export default class BasePage {
    */
   setMenu() {
     if (!this.menuCtrl) return;
-    if (this.isUser()) {
-      this.menuCtrl.enable(true, 'menuUser');
+    /*if (this.isUser()) {
+    this.menuCtrl.enable(true, 'menuUser');
       this.menuCtrl.swipeEnable(true);
     }
-    else this.menuCtrl.swipeEnable(false);
+    else this.menuCtrl.swipeEnable(false);*/
+    this.menuCtrl.enable(true, 'menuUser');
   }
 
   showLoading(): void {
