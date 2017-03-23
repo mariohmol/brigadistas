@@ -52,7 +52,8 @@ export class MyApp {
         { title: 'BrigadesPage', component: BrigadesPage },
         { title: 'FiresPage', component: FiresPage },
         { title: 'ProfilePage', component: UserPage },
-        { title: 'ChatsPage', component: ChatsPage }
+        { title: 'ChatsPage', component: ChatsPage },
+        { title: 'LoginPage', component: LoginPage }
       ];
       if(this.platform.is('cordova')) {
         this.startPush();
@@ -121,6 +122,10 @@ export class MyApp {
   logout(){
     this.userService.logout();
     this.openPage(LoginPage);
+  }
+
+  isLogged(){
+    return UserService.loginData!=null;
   }
 
 

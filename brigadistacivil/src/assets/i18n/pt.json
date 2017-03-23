@@ -108,6 +108,7 @@
     }
   },
   "bio": "Como pode ajudar",
+  "blog": "Blog",
   "cancel": "Cancelar",
   "chooseOption": "Escolha uma opção",
   "chooseOptionFail": "Por favor, selecione uma opção para continuar.",
@@ -118,6 +119,7 @@
   "description": "Descrição",
   "done": "OK",
   "email": "Email",
+  "enter": "Entrar",
   "generalError": "Tivemos um erro durante a sua solicitação",
   "intensity": "Intensidade",
   "name": "Nome",

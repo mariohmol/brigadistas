@@ -1,36 +1,46 @@
-<ion-menu [content]="content" id="menuUser">
-  <ion-header>
-    <ion-toolbar secondary color="primary">
-      <ion-title>Brigadista Civil</ion-title>
-      <ion-buttons start>
-        <button ion-button menuClose="menuUser">
-          <ion-icon name="md-close"></ion-icon>
+<ion-split-pane>
+  <ion-menu [content]="content" id="menuUser">
+    <ion-header>
+      <ion-toolbar secondary color="primary">
+        <ion-title>Brigadista Civil</ion-title>
+        <ion-buttons start>
+          <button ion-button menuClose="menuUser">
+            <ion-icon name="md-close"></ion-icon>
+          </button>
+        </ion-buttons>
+      </ion-toolbar>
+    </ion-header>
+
+    <ion-content>
+      <ion-list>
+        <button ion-item (click)="openPageName('FiresPage')">
+            <ion-icon name="md-flame" item-left></ion-icon>
+          {{"fires.title" | translate}}
         </button>
-      </ion-buttons>
-    </ion-toolbar>
-  </ion-header>
+        <button ion-item (click)="openPageName('BrigadesPage')">
+            <ion-icon name="md-people" item-left></ion-icon>
+          {{"brigades.title" | translate}}
+        </button>
+        <button ion-item (click)="openPageName('ChatsPage')" *ngIf="isLogged()">
+          <ion-icon name="md-mail" item-left></ion-icon>
+         {{"chat.title" | translate}}
+        </button>
+        <a ion-item href="http://www.brigadistacivil.com.br" target="_new">
+          <ion-icon name="md-paper" item-left></ion-icon>
+         {{"blog" | translate}}
+         </a>
+        <button ion-item (click)="openPageName('LoginPage')"  *ngIf="isLogged()!==true">
+          <ion-icon name="md-log-in" item-left></ion-icon>
+          {{"enter" | translate}}
+        </button>
+        <button ion-item (click)="logout()"  *ngIf="isLogged()">
+          <ion-icon name="md-log-out" item-left></ion-icon>
+          {{"user.logout.title" | translate}}
+        </button>
+      </ion-list>
+    </ion-content>
+  </ion-menu>
 
-  <ion-content>
-    <ion-list>
-      <button ion-item (click)="openPageName('FiresPage')">
-          <ion-icon name="md-flame" item-left></ion-icon>
-        {{"fires.title" | translate}}
-      </button>
-      <button ion-item (click)="openPageName('BrigadesPage')">
-          <ion-icon name="md-people" item-left></ion-icon>
-        {{"brigades.title" | translate}}
-      </button>
-      <button ion-item (click)="openPageName('ChatsPage')">
-        <ion-icon name="md-mail" item-left></ion-icon>
-       {{"chat.title" | translate}}
-      </button>
-      <button ion-item (click)="logout()" >
-        <ion-icon name="md-log-out" item-left></ion-icon>
-        {{"user.logout.title" | translate}}
-      </button>
-    </ion-list>
-  </ion-content>
-</ion-menu>
-
-<!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
-<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+  <!-- Disable swipe-to-go-back because it's poor UX to combine STGB with side menus -->
+  <ion-nav main [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>
+</ion-split-pane>
