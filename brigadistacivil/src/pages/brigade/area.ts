@@ -15,6 +15,8 @@ declare var google;
 export class BrigadeAreaPage extends BasePage {
   public brigade: any;
   public position: any;
+  public isBrigade: boolean;
+  public isLeader: boolean;
   @ViewChild('map') mapElement: ElementRef;
   public readonly: boolean;
   map: any;
@@ -36,11 +38,15 @@ export class BrigadeAreaPage extends BasePage {
     if(this.navParams.get("brigade") && !force){
       this.brigade=this.navParams.get("brigade");
       this.readonly=this.navParams.get("readonly");
+      const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
+      this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
       this.showMap();
       //TODO: this.valid=false;
     } else if(this.navParams.get("brigadeId")){
       this.brigadeService.getBrigade(this.navParams.get("brigadeId")).then(d=>{
         this.brigade=d;
+        const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
+        this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
         this.showMap();
       });
     }else{
@@ -53,6 +59,7 @@ export class BrigadeAreaPage extends BasePage {
   showMap(){
     let cb = ()=>{
       let coords;
+      GeneralService.polygons=<any>[];
       if(this.position)coords=this.position.coords;
         this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
 
@@ -62,13 +69,16 @@ export class BrigadeAreaPage extends BasePage {
             };
           })(this);
 
-        if(this.brigade.area && this.brigade.area.coordinates && this.brigade.area.coordinates.length>0){
-          this.brigade.area.coordinates.forEach(area=>{
+        if(this.brigade.area && (this.brigade.area.coordinates || this.brigade.area.length>0)){
+          let a=this.brigade.area;
+          if(this.brigade.area.coordinates) a=this.brigade.area.coordinates;
+          a.forEach(area=>{
             let areas= area.map(a=>{
               return {lat: a[1], lng: a[0]};
             });
             this.generalService.addPolygon(this.map,areas,selectShapeCb);
           });
+          if(a.length==0 && !this.readonly) this.generalService.drawPolygon(this.map, [],null, selectShapeCb);
         }else{
           let newPolyCb = p=>{
             if(p.getPath().b.length>2){
@@ -76,7 +86,7 @@ export class BrigadeAreaPage extends BasePage {
               this.readonly=false;
             }
           };
-          this.generalService.drawPolygon(this.map, [],newPolyCb, selectShapeCb);
+          if(!this.readonly) this.generalService.drawPolygon(this.map, [],newPolyCb, selectShapeCb);
         }
     }
 
@@ -105,12 +115,14 @@ export class BrigadeAreaPage extends BasePage {
       return
     }
     let paths=[]
-    GeneralService.selectedShape.getPath().b.forEach(b=>{
-      paths.push([b.lng(), b.lat()]);
+    GeneralService.polygons.forEach(p=>{
+      p.getPath().b.forEach(b=>{
+        paths.push([b.lng(), b.lat()]);
+      });
     });
     if(!this.brigade.area) this.brigade.area={coordinates: []};
     else if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
-    this.brigade.area.coordinates.push(paths);
+    this.brigade.area.coordinates = paths;
 
     this.brigadeService.updateBrigade({
       _id: this.brigade._id,
