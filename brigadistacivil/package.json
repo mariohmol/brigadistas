@@ -3,6 +3,7 @@
   "author": "Brigadista Civil",
   "homepage": "http://brigadistacivil.com.br/",
   "private": true,
+  "main": "electron.js",
   "scripts": {
     "build": "ionic-app-scripts build",
     "watch": "ionic-app-scripts watch",
@@ -13,11 +14,12 @@
     "run:before": "build",
     "clean": "cordova clean",
     "servelab": "ionic serve --lab",
+    "resources": "ionic resources",
     "android": "ionic run android",
     "android-install": "adb install platforms/android/build/outputs/apk/android-armv7-debug.apk",
     "ios": "ionic emulate ios -c -s",
     "iosrun": "ionic run ios -c -s",
-    "iosgen": "ionic build ios --release",
+    "iosgen": "cp src/production.ts src/environment.ts && ionic build ios --release",
     "cordova-update": "cordova platform update android && cordova platform update ios",
     "deploy-mongo": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
@@ -31,9 +33,17 @@
     "gen": "cp src/production.ts src/environment.ts && npm run gen:release && npm run gen:jarsign && npm run gen:zipalign",
     "gen:release": "cordova build --release android",
     "gen:keytool": "keytool -genkey -v -keystore brigadistas.keystore -alias brigadistas -keyalg RSA -keysize 2048 -validity 10000",
-    "gen:jarsign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore brigadistas.keystore platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk brigadistas",
-    "gen:zipalign": "rm -f Brigadistas.apk && /Users/mariohmol/projetos/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/build/outputs/apk/android-armv7-release-unsigned.apk Brigadistas.apk",
-    "gen:lookkey": "keytool -list -v -keystore brigadistas.keystore"
+    "gen:jarsign": "jarsigner -verbose -sigalg SHA1withRSA -digestalg SHA1 -keystore brigadistas.keystore platforms/android/build/outputs/apk/android-release-unsigned.apk brigadistas",
+    "gen:zipalign": "rm -f Brigadistas.apk && /Users/mariohmol/projetos/android-sdk-macosx/build-tools/19.1.0/zipalign -v 4 platforms/android/build/outputs/apk/android-release-unsigned.apk Brigadistas.apk",
+    "gen:lookkey": "keytool -list -v -keystore brigadistas.keystore",
+    "electron": "ionic serve & electron .",
+    "electron-dist": "ionic build browser & electron .",
+    "genlinux": "electron-packager . BrigadistasLinux --platform=linux --arch=all",
+    "genlinux64": "electron-packager . BrigadistasLinux64 --platform=linux --arch=x64 && asar pack BrigadistasLinux64-linux-x64/resources/app BrigadistasLinux64-linux-x64/resources/app.asar",
+    "genwin": "electron-packager . BrigadistasWin --platform=win32 --arch=ia32",
+    "genwin64": "electron-packager . BrigadistasWin64 --platform=win32 --arch=x64",
+    "genwinarm": "electron-packager . BrigadistasWin64 --platform=win32 --arch=armv7l",
+    "genmac": "electron-packager . BrigadistasOSx --platform=darwin --arch=all"
   },
   "dependencies": {
     "@angular/common": "2.2.1",
@@ -56,6 +66,10 @@
   },
   "devDependencies": {
     "@ionic/app-scripts": "1.1.0",
+    "asar": "^0.13.0",
+    "electron": "^1.6.2",
+    "electron-packager": "^8.6.0",
+    "electron-prebuilt": "^1.4.13",
     "typescript": "2.1.6"
   },
   "cordovaPlugins": [
