@@ -64,9 +64,30 @@
     "title": "fuego",
     "see": "ver Fuego"
   },
+  "item": {
+    "status": {
+      "updated": "Status do ítem do mapa atualizado!",
+      "new": "Ítem críado com sucesso",
+      "updated": "Ítem atualizado com sucesso"
+    },
+    "types": {
+      "plant": "Planta",
+      "rock":  "Pedra",
+      "water": "Água",
+      "hole": "Buraco",
+      "danger": "Perigo",
+      "trail": "Trilha",
+      "conservation": "Área de Conservação",
+      "city": "Cidade"
+    },
+    "categoria": "Categoria do ítem",
+    "chooseLocation": "Clique no mapa e informe o local do item que deseja adicionar no mapa",
+    "description": "Descrição sobre o item, ex: qual o tipo de planta, ou o sobre o perifo encontrado"
+  },
   "map": {
     "additem": "Add Item",
-    "addarea": "Add Area"
+    "addarea": "Add Area",
+    "title": "Mapa"
   },
   "require": {
     "minString": "se requiere (mínimo 5 caracteres)."
@@ -118,7 +139,6 @@
   "enter": "Entrar",
   "generalError": "Tuvimos un error en su solicitud",
   "intensity": "intensidad",
-  "map": "Mapa",
   "name": "nombre",
   "notfounditems": "No se encontró información.",
   "password": "contraseña",

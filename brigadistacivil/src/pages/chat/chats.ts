@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { App, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import {ChatPage} from './chat';
-import { UserService } from '../../providers/user-service';
 import { ChatService } from '../../providers/chat-service';
 import { GeneralService } from '../../providers/general-service';
 import {TranslateService} from 'ng2-translate';

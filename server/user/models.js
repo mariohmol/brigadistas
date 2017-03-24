@@ -9,8 +9,14 @@ const UserSchema = new mongoose.Schema({
     type: String,
     required: true
   },
+  /*
+  1-Normal user
+  2- Fire Brigader
+  3- Leader Brigade
+  10 - Admin
+   */
   role:{
-    type: Number
+    type: Number, enum: [1,10]
   },
   androidkey: { type: String},
   ioskey: {type: String},
