@@ -6,6 +6,7 @@ const passport = require('passport');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
 const {URL} = require('../config/config');
+const defaultArea={ type: 'Point', coordinates: [-122.424088, 37.529876] };
 
 router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
@@ -23,10 +24,18 @@ router.put('/:id', passport.authenticate('basic', { session: false }),
   .catch(e=> {res.json(e);});
 });
 
+router.delete('/area/:id', passport.authenticate('basic', { session: false }),
+ function (req, res, next) {
+  var query={_id: req.params.id, leaders: { $in: [req.user._id] }};
+  Brigade.findOneAndUpdate(query,{area: defaultArea})
+  .then(d => { res.json(d);})
+  .catch(e=> {res.json(e);});
+});
+
 
 router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: { type: 'Point', coordinates: [-122.424088, 37.529876] }} );
+  let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: defaultArea} );
   Brigade.create(data).then(d => {
     res.json(d);
     let email= `Activate this brigade by accessing ${URL}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;

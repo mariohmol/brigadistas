@@ -106,6 +106,7 @@ export class BrigadeAreaPage extends BasePage {
 
   remove(){
     this.showConfirm(this.translate("remove"), null,c=>{
+      this.brigadeService.deleteArea(this.brigade._id);
       this.generalService.deleteSelectedShape();
     });
   }

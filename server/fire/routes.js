@@ -28,20 +28,20 @@ router.put('/:id', passport.authenticate('basic', { session: false }), function 
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date(), status: 'open' } );
-
-
   let find={status: 'active'};
   //$geoIntersects, $geoWithin or $near
   find.area={
-       $near:
-        {
-          type: 'Point', coordinates: data.coordinates
-        }
-      };
+    $near: {
+       $geometry: {
+         type: 'Point', coordinates: data.coordinates,
+
+       },
+       $maxDistance: 100
+     }
+   };
 
   Brigade.find(find,'_id brigades').populate("brigades").then(b=>{
     if(b){
-      //TODO: Make brigades getting from polygon are
       data.brigades = b.map(bi=>{return bi._id;});
     }
     newFire(res,data,b);
