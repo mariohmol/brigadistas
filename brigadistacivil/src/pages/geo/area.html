@@ -1,0 +1,21 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "area" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
+    <ion-buttons end *ngIf="!readonly">
+      <button ion-button icon-only [disabled]="selectedShape ? false : true" (click)="remove()">
+       <ion-icon name="trash"></ion-icon>
+     </button>
+      <button ion-button  (click)="save()">
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+  <div #map id="map"></div>
+</ion-content>

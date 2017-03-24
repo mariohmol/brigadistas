@@ -7,10 +7,10 @@ import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { ChatsPage } from '../pages/chat/chats';
 import { FiresPage } from '../pages/fire/fires';
+import { MapPage } from '../pages/geo/map';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { TranslateService } from 'ng2-translate';
 import { UserService } from '../providers/user-service';
-import { BaseService } from '../providers/base-service';
 
 @Component({
   templateUrl: 'app.html'
@@ -53,7 +53,8 @@ export class MyApp {
         { title: 'FiresPage', component: FiresPage },
         { title: 'ProfilePage', component: UserPage },
         { title: 'ChatsPage', component: ChatsPage },
-        { title: 'LoginPage', component: LoginPage }
+        { title: 'LoginPage', component: LoginPage },
+        { title: 'MapPage', component: MapPage },
       ];
       if(this.platform.is('cordova')) {
         this.startPush();

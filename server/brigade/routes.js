@@ -26,11 +26,13 @@ router.put('/:id', passport.authenticate('basic', { session: false }),
 
 router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date()} );
-  Brigade.create(req.body).then(d => {
+  let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: { type: 'Point', coordinates: [-122.424088, 37.529876] }} );
+  Brigade.create(data).then(d => {
     res.json(d);
     let email= `Activate this brigade by accessing ${URL}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
     sendEmailAdmins("New Brigade created",email);
+  }).catch(e=>{
+    res.json(e);
   });
 });
 

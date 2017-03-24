@@ -1,0 +1,29 @@
+page-brigade {
+  #map {
+    width: 100%;
+    height: 100%;
+  }
+
+  ion-note {
+    font-size: 12px;
+    align-self: flex-start;
+    margin-top: 14px;
+  }
+}
+
+.ios, .md {
+
+    page-brigade {
+
+      .scroll-content {
+        height: 100%
+      }
+
+      #map {
+        width: 100%;
+        height: 100%;
+      }
+
+    }
+
+}

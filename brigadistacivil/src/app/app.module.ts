@@ -14,6 +14,10 @@ import { BrigadeAreaPage } from '../pages/brigade/area';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { ChatPage } from '../pages/chat/chat';
 import { ChatsPage } from '../pages/chat/chats';
+import { AreaPage } from '../pages/geo/area';
+import { ItemPage } from '../pages/geo/item';
+import { MapPage } from '../pages/geo/map';
+import { MapOptionsComponent } from '../pages/geo/mapoptions';
 
 import {BaseService} from '../providers/base-service';
 import {GeneralService} from '../providers/general-service';
@@ -34,7 +38,8 @@ let pages = [
   FirePage, FiresPage,
   BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
-  ChatsPage,ChatPage
+  ChatsPage,ChatPage,
+  AreaPage,ItemPage,MapPage,MapOptionsComponent
 ];
 
 let declarations = [...pages, ReadOnlyClass ];
@@ -50,7 +55,10 @@ let links=[
       { component: BrigadePage, name: 'Brigade', segment: 'brigade/:brigadeId' },
       { component: BrigadeAreaPage, name: 'BrigadeArea', segment: 'brigade/:brigadeId/area' },
       { component: ChatsPage, name: 'Chats', segment: 'chats/' },
-      { component: ChatPage, name: 'Chat', segment: 'chat/:chatId' }
+      { component: ChatPage, name: 'Chat', segment: 'chat/:chatId' },
+      { component: AreaPage, name: 'Area', segment: 'area/:areaId' },
+      { component: ItemPage, name: 'Item', segment: 'item/:itemId' },
+      { component: MapPage, name: 'Map', segment: 'map/' }
     ];
 
 @NgModule({

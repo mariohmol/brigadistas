@@ -68,6 +68,10 @@
     "title": "Fires",
     "see": "View Fire"
   },
+  "map": {
+    "additem": "Add Item",
+    "addarea": "Add Area"
+  },
   "require": {
     "minString": "Is required (minimum 5 characters)."
   },
@@ -122,6 +126,7 @@
   "enter": "Enter",
   "generalError": "We had an error during your request",
   "intensity": "Intensity",
+  "map": "Map",
   "location": "Location",
   "name": "Name",
   "notfounditems": "No information found.",
