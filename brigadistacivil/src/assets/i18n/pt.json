@@ -68,7 +68,28 @@
     "title": "Incêndios",
     "see": "Ver Incêndio"
   },
+  "item": {
+    "status": {
+      "updated": "Status do ítem do mapa atualizado!",
+      "new": "Ítem críado com sucesso",
+      "updated": "Ítem atualizado com sucesso"
+    },
+    "types": {
+      "plant": "Planta",
+      "rock":  "Pedra",
+      "water": "Água",
+      "hole": "Buraco",
+      "danger": "Perigo",
+      "trail": "Trilha",
+      "conservation": "Área de Conservação",
+      "city": "Cidade"
+    },
+    "categoria": "Categoria do ítem",
+    "chooseLocation": "Clique no mapa e informe o local do item que deseja adicionar no mapa",
+    "description": "Descrição sobre o item, ex: qual o tipo de planta, ou o sobre o perigo encontrado"
+  },
   "map": {
+    "title": "Mapa",
     "additem": "Adicionar Local",
     "addarea": "Adicionar Área"
   },
@@ -126,7 +147,6 @@
   "enter": "Entrar",
   "generalError": "Tivemos um erro durante a sua solicitação",
   "intensity": "Intensidade",
-  "map": "Mapa",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
   "location": "Localização",

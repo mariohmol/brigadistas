@@ -68,9 +68,30 @@
     "title": "Fires",
     "see": "View Fire"
   },
+  "item": {
+    "status": {
+      "updated": "Status do ítem do mapa atualizado!",
+      "new": "Ítem críado com sucesso",
+      "updated": "Ítem atualizado com sucesso"
+    },
+    "types": {
+      "plant": "Plant",
+      "rock":  "Rock",
+      "water": "Water",
+      "hole": "Hole",
+      "danger": "Dander",
+      "trail": "Trail",
+      "conservation": "Conservation Area",
+      "city": "City"
+    },
+    "categoria": "Item category",
+    "chooseLocation": "Click on the map to report the location of the item",
+    "description": "Describe about this item, for example: type of the plant found or about the danger found"
+  },
   "map": {
     "additem": "Add Item",
-    "addarea": "Add Area"
+    "addarea": "Add Area",
+    "title": "Map"
   },
   "require": {
     "minString": "Is required (minimum 5 characters)."
@@ -126,7 +147,6 @@
   "enter": "Enter",
   "generalError": "We had an error during your request",
   "intensity": "Intensity",
-  "map": "Map",
   "location": "Location",
   "name": "Name",
   "notfounditems": "No information found.",

@@ -14,6 +14,21 @@ const {URL} = require('../config/config');
 router.get('/', function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates')
   .sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
+
+  let find={status: 'active'};
+  //$geoIntersects, $geoWithin or $near
+  find.area={
+       $near: {
+        $geometry: {
+          type: 'Point', coordinates: [-44.213844537734985,-20.180690243594572],
+
+        },
+        $maxDistance: 100
+      }
+  };
+  console.log(find);
+  Brigade.find(find,'_id brigades').then(b=>{ console.log(b); });
+
 });
 
 router.get('/:id', function (req, res, next) {
