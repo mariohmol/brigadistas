@@ -63,10 +63,7 @@ function sendiOS(alert,regTokens){
   note.alert = alert;
   note.payload = {'messageFrom': 'BrigadistaCivil'};
   note.topic = "br.com.brigadistacivil.ios";
-  logger.info(`Trying send iOS msg ${JSON.stringify(note)} to ${regTokens}`);
-  
-  let deviceToken = Buffer.from(regTokens[0], 'base64').toString('hex');
-  console.log(regTokens[0],deviceToken);
+  logger.info(`Trying send iOS msg ${JSON.stringify(note)} to ${regTokens}`); //let deviceToken = Buffer.from(regTokens[0], 'base64').toString('hex');
   
   apnProvider.send(note, regTokens).then( (result) => {
     if(result) logger.info(`Response sending iOS token ${JSON.stringify(result)}`);
