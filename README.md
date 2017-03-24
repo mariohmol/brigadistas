@@ -1,4 +1,4 @@
-[![Build Status](https://travis-ci.org/mariohmol/brigadistas.svg?branch=master)](https://travis-ci.org/mariohmol/brigadistas)
+[![Build Status](https://travis-ci.org/ramalabs/brigadistas.svg?branch=master)](https://travis-ci.org/ramalabs/brigadistas)
 
 App that connects civil fire brigades with civil society to fight against the fire.
 

@@ -6,7 +6,6 @@ import { GeoService } from '../../providers/geo-service';
 import { GeneralService } from '../../providers/general-service';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
-import { MapPage } from './map';
 declare var google;
 
 @Component({

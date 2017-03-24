@@ -261,13 +261,10 @@ export default class BasePage {
     localStorage['profile'] = JSON.stringify(user);
     localStorage['id_token'] = token;
     localStorage['base_token'] = btoa(user.username + ':' + password);
-
+    console.log(localStorage);
     if (localStorage['deviceToken']) {
-      let type = "android"; //windows
-      if (this.platform && this.platform.is('ios')) {
-        type = "ios";
-      }
-      //this.userService.storeDeviceToken(type, localStorage['deviceToken']);
+      if (this.platform && this.platform.is('ios')) this.userService.storeDeviceToken("ios", localStorage['deviceToken']);
+      else this.userService.storeDeviceToken("android", localStorage['deviceToken']);
     }
     this.afterLogin();
     this.showToast(user.name + this.translate("user.new.welcome"));

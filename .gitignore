@@ -31,6 +31,10 @@ platforms/
 plugins/
 plugins2/
 bower_components/
+brigadistacivil/*.cer
+brigadistacivil/*.pem
+brigadistacivil/*.p12
+brigadistacivil/node_modules/
 brigadistacivil/resources/*
 brigadistacivil/resources/android/**/*
 brigadistacivil/resources/ios/**/*
