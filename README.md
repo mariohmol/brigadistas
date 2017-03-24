@@ -58,6 +58,7 @@ Need to create in Identifiers -> Your App -> Edit -> Push Notifications
 
 You need to create a CSR in your MAC and use to create a development certificate. Create another CSR in your server and use it to create a production certificate.
 
+To run the app in Xcode or deploy to applestore use .xcworkspace file genereated in `platforms/ios`.
 
 #### Desktop
 
