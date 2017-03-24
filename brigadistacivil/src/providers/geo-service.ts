@@ -14,6 +14,11 @@ export class GeoService extends BaseService {
   getItems(){
     return this.doGet('/geo/item/');
   }
+
+  getItemsByLoc(lng, lat){
+    return this.doGet(`/geo/item/${lng}/${lat}`);
+  }
+
   getItem(id){
     return this.doGet(`/geo/item/${id}`);
   }

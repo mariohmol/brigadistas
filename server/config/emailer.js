@@ -84,6 +84,8 @@ const makeTemplate = (template,data,cb)=>{
 
 /**
  * [sendEmailTemplate description]
+ *
+ * Ex:   sendEmailTemplate(result.username, "user/templates/welcome-email",{user: result});
  * @param  {[type]} emailto   [description]
  * @param  {[type]} template  [description]
  * @param  {[type]} data      [description]

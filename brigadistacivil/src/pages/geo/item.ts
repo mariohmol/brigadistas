@@ -6,7 +6,7 @@ import { GeoService } from '../../providers/geo-service';
 import { GeneralService } from '../../providers/general-service';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
-import { MapPage } from '.map';
+import { MapPage } from './map';
 declare var google;
 
 @Component({
@@ -48,7 +48,7 @@ export class ItemPage extends BasePage {
   }
 
   ionViewDidLoad() {
-    if(!this.position && !(this.item && this.item.coordinates)){
+    if(!this.position && !(this.item && this.item.loc && this.item.loc.coordinates)){
       this.generalService.getPosition((pos)=>{
         this.position=pos;
         this.initMap();
@@ -60,11 +60,11 @@ export class ItemPage extends BasePage {
   }
 
   initMap(){
-    if(this.item && this.item.coordinates){
-      let pos={latitude: this.item.coordinates[1], longitude: this.item.coordinates[0]};
+    if(this.item && this.item.loc){
+      let pos={latitude: this.item.loc.coordinates[1], longitude: this.item.loc.coordinates[0]};
       this.loadMap(pos);
       if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
-      GeneralService.marker = this.addMarker(pos,"Posição do Fogo");
+      GeneralService.marker = this.addMarker(pos,"Posição do Ítem");
     }else if(this.position){
       this.loadMap(this.position);
     }else{
@@ -79,7 +79,7 @@ export class ItemPage extends BasePage {
       if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
       let latlng=this.generalService.getEventLatLng(event);
 
-      this.item.coordinates=[latlng.longitude, latlng.latitude];
+      this.item.loc={type: "Point", coordinates: [latlng.longitude, latlng.latitude]};
 
       this.generalService.addMarker(GeneralService.map,latlng,"Posição do Item",m=>{
         GeneralService.marker=m;
@@ -103,7 +103,7 @@ export class ItemPage extends BasePage {
 
 
   save() {
-    if(!this.item.coordinates){
+    if(!this.item.loc){
       return this.showToast(this.translate("item.chooseLocation"));
     }
     if(this.item._id){

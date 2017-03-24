@@ -1,8 +1,8 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { App, NavController, NavParams, AlertController,ToastController, PopoverController } from 'ionic-angular';
+import { App, NavController, NavParams, AlertController, ToastController, PopoverController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { UserService } from '../../providers/user-service';
-import { BrigadeService } from '../../providers/brigade-service';
+import { GeoService } from '../../providers/geo-service';
 import { GeneralService } from '../../providers/general-service';
 import { MapOptionsComponent } from './mapoptions';
 import {TranslateService} from 'ng2-translate';
@@ -12,71 +12,78 @@ declare var google;
   selector: 'page-map',
   templateUrl: 'map.html'
 })
-export class MapPage  extends BasePage{
-  public brigade: any;
+export class MapPage extends BasePage {
   public position: any;
+  public items: [any];
   @ViewChild('map') mapElement: ElementRef;
   public readonly: boolean;
-  valid: boolean;
   public selectedShape: any;
 
   constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
     public popoverCtrl: PopoverController,
-    public translateService: TranslateService,public brigadeService: BrigadeService,
+    public translateService: TranslateService, public geoService: GeoService,
     public alertCtrl: AlertController,
-    public userService: UserService,public toastCtrl: ToastController,
+    public userService: UserService, public toastCtrl: ToastController,
     public generalService: GeneralService) {
     super();
-    this.readonly=true;
+    this.readonly = true;
 
   }
 
   ionViewDidLoad() {
-      this.showMap();
+    this.showMap();
   }
 
-  showMap(){
-    let cb = ()=>{
-      let coords;
-      GeneralService.polygons=<any>[];
-      if(this.position)coords=this.position.coords;
-        this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
 
-        let selectShapeCb = (function(obj){
-            return shape=>{
-              obj.selectedShape = shape;
-            };
-          })(this);
+  showMap() {
 
-        /*if(this.brigade.area && (this.brigade.area.coordinates || this.brigade.area.length>0)){
-          let a=this.brigade.area;
-          if(this.brigade.area.coordinates) a=this.brigade.area.coordinates;
-          a.forEach(area=>{
-            let areas= area.map(a=>{
-              return {lat: a[1], lng: a[0]};
-            });
-            this.generalService.addPolygon(this.map,areas,selectShapeCb);
-          });
-        }else{
-          let newPolyCb = p=>{
-            if(p.getPath().b.length>2){
-              this.valid=true;
-              this.readonly=false;
-            }
-          };
-        }*/
+    let addPosition = (pos) => {
+      this.position = pos;
+      this.initMap();
     }
 
-    let addPosition= (pos)=>{
-      this.position=pos;
-      cb();
-    }
-
-    if(!this.position){
+    if (!this.position) {
       this.generalService.getPosition(addPosition);
-    }else{
-      cb();
+    } else {
+      this.initMap();
     }
+  }
+
+  initMap() {
+    let coords;
+    GeneralService.polygons = <any>[];
+    if (this.position && this.position.coords) coords = this.position.coords;
+    else if (this.position) coords = this.position;
+    this.map = this.generalService.loadMap(this.mapElement, coords, { scrollwheel: false });
+
+    let selectShapeCb = (function(obj) {
+      return shape => {
+        obj.selectedShape = shape;
+      };
+    })(this);
+
+    this.geoService.getItemsByLoc(coords.longitude, coords.latitude).then(d => {
+      this.items = <any>d;
+      if (this.items) {
+        this.items.forEach(item => {
+          if (item.loc && item.loc.coordinates && item.loc.coordinates.length) {
+            let c = item.loc.coordinates;
+            if(item.loc.type=="Point"){
+              let pos={latitude: c[1], longitude: c[0]};
+              this.generalService.addMarker(this.map,pos,`${item.title} (${item.category})`);
+            }else if(item.loc.type=="Polygon"){
+              c.forEach(area => {
+                let areas = area.map(a => {
+                  return { lat: a[1], lng: a[0] };
+                });
+                this.generalService.addPolygon(this.map, areas, selectShapeCb);
+              });
+            }
+          }
+        });
+      }
+    });
+
 
   }
 

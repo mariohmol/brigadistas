@@ -25,11 +25,7 @@ const BrigadeSchema = new mongoose.Schema({
   area: {
     type : { type : String, "enum": [
             "Point",
-            "MultiPoint",
-            "LineString",
-            "MultiLineString",
-            "Polygon",
-            "MultiPolygon"
+            "Polygon"
         ] },
     coordinates: {type: Array}
   }

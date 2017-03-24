@@ -19,11 +19,22 @@ const ItemSchema = new mongoose.Schema({
   city: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },
-  coordinates: { type: [Number], index: '2dsphere'},
+  loc: {
+    type : { type : String, "enum": [
+            "Point",
+            "MultiPoint",
+            "LineString",
+            "MultiLineString",
+            "Polygon",
+            "MultiPolygon"
+        ] },
+    coordinates: {type: Array}
+  },
   brigades: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Brigade',unique: false,required: [true,'No user id found']}],
   users: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: false,required: [true,'No user id found']}]
 });
 ItemSchema.plugin(deepPopulate);
+ItemSchema.index({loc: '2dsphere'});
 const Item = mongoose.model('Item', ItemSchema);
 
 module.exports = { Item };

@@ -47,6 +47,10 @@ export class AreaPage extends BasePage {
     }
   }
 
+  loadData(){
+    
+  }
+
   ionViewDidLoad() {
     if(!this.position && !(this.item && this.item.coordinates)){
       this.generalService.getPosition((pos)=>{
@@ -59,73 +63,82 @@ export class AreaPage extends BasePage {
     }
   }
 
-  initMap(){
-    if(this.item && this.item.coordinates){
-      let pos={latitude: this.item.coordinates[1], longitude: this.item.coordinates[0]};
-      this.loadMap(pos);
-      if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
-      GeneralService.marker = this.addMarker(pos,"Posição do Fogo");
-    }else if(this.position){
-      this.loadMap(this.position);
-    }else{
-      this.loadMap(null);
-    }
-    this.confMap();
-  }
-
-  confMap(){
-    if(this.isReadonly()) return;
-    this.generalService.drawMarker(GeneralService.map,event=>{
-      if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
-      let latlng=this.generalService.getEventLatLng(event);
-
-      this.item.coordinates=[latlng.longitude, latlng.latitude];
-
-      this.generalService.addMarker(GeneralService.map,latlng,"Posição do Item",m=>{
-        GeneralService.marker=m;
-      });
-    });
-  }
-
-  loadData(){
-    if(!this.item) return;
-    this.geoService.getItem(this.item._id).then(d=>{
-      this.item=d;
-      this.setDataForm(this.itemForm,this.itemFormFields,this.item);
-      this.readonly=false;
-      if(this.item && this.item.users){
-        let userId=this.currentUser()._id;
-        let findUser= this.item.users.find(b=>{ return b==userId });
-        if(findUser) this.readonly=false;
-      }
-    });
-  }
-
-
-  save() {
-    if(!this.item.coordinates){
-      return this.showToast(this.translate("item.chooseLocation"));
-    }
-    if(this.item._id){
-      this.item = Object.assign(this.item, this.itemForm.value);
-      this.geoService.updateItem(this.item).then(d => {
-        this.showToast(this.translate("item.status.updated"));
-        this.openPage(MapPage);
-      });
-    }else{
-      this.item = Object.assign(this.item, this.itemForm.value);
-      this.geoService.addItem(this.item).then(d => {
-        this.showToast(this.translate("item.status.new"));
-        this.openPage(MapPage);
-      });
-    }
-  }
 
   changeStatus(status){
     this.geoService.changeItemStatus(this.item._id,status).then(d=>{
       this.showToast(this.translate("item.status.updated"));
       this.loadData();
     });
+  }
+
+
+  initMap(){
+  /*  let coords;
+    GeneralService.polygons=<any>[];
+    if(this.position)coords=this.position.coords;
+      this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
+
+      let selectShapeCb = (function(obj){
+          return shape=>{
+            obj.selectedShape = shape;
+          };
+        })(this);
+
+      if(this.brigade.area && (this.brigade.area.coordinates || this.brigade.area.length>0)){
+        let a=this.brigade.area;
+        if(this.brigade.area.coordinates) a=this.brigade.area.coordinates;
+        a.forEach(area=>{
+          if(!area || !area.map) return;
+          let areas= area.map(a=>{
+            return {lat: a[1], lng: a[0]};
+          });
+          this.generalService.addPolygon(this.map,areas,selectShapeCb);
+        });
+        if(!this.readonly) this.generalService.drawPolygon(this.map, [],null, selectShapeCb);
+      }else{
+        let newPolyCb = p=>{
+          if(p.getPath().b.length>2){
+            this.valid=true;
+            this.readonly=false;
+          }
+        };
+        if(!this.readonly) this.generalService.drawPolygon(this.map, [],newPolyCb, selectShapeCb);
+      }*/
+  }
+
+  remove(){
+  /*  this.showConfirm(this.translate("remove"), null,c=>{
+      this.brigadeService.deleteArea(this.brigade._id);
+      this.generalService.deleteSelectedShape();
+    });*/
+  }
+
+  save(){
+  /*  if(!GeneralService.selectedShape){
+      this.openPageParam(BrigadePage, {brigade: this.brigade, brigadeId: this.brigade._id});
+      return
+    }
+    let paths=[];
+    console.log(GeneralService.polygons)
+    GeneralService.polygons.forEach(p=>{
+      let init;
+      p.getPath().b.forEach((b,i)=>{
+        if(i==0) init=[b.lng(), b.lat()];
+        paths.push([b.lng(), b.lat()]);
+      });
+      paths.push(init);
+    });
+    if(!this.brigade.area) this.brigade.area={coordinates: []};
+    else if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
+    this.brigade.area={type: 'Polygon',coordinates: [paths]};
+
+    this.brigadeService.updateBrigade({
+      _id: this.brigade._id,
+      area: this.brigade.area
+    }).then(c=>{
+      this.showToast(this.translate("brigade.area.save"));
+      this.loadData(true);
+    });*/
   }
 
 }

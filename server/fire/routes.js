@@ -14,21 +14,6 @@ const {URL} = require('../config/config');
 router.get('/', function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates')
   .sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
-
-  let find={status: 'active'};
-  //$geoIntersects, $geoWithin or $near
-  find.area={
-       $near: {
-        $geometry: {
-          type: 'Point', coordinates: [-44.213844537734985,-20.180690243594572],
-
-        },
-        $maxDistance: 100
-      }
-  };
-  console.log(find);
-  Brigade.find(find,'_id brigades').then(b=>{ console.log(b); });
-
 });
 
 router.get('/:id', function (req, res, next) {
@@ -37,7 +22,7 @@ router.get('/:id', function (req, res, next) {
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
-  let find={_id: req.params.id, $in: {users: [req.user._id]}};
+  let find={_id: req.params.id, users: {$in: [req.user._id]}};
   Fire.findOneAndUpdate(find,data,{new:true,$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
@@ -64,6 +49,21 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
     logger.error(`ERROR Gettin Brigades for Create a new fire`,e);
     newFire(res,data);
   });
+});
+
+router.get('/testgeonear', passport.authenticate('basic', { session: false }), function (req, res, next) {
+  let find={status: 'active'};
+  //$geoIntersects, $geoWithin or $near
+  find.area={
+       $near: {
+        $geometry: {
+          type: 'Point', coordinates: [-44.213844537734985,-20.180690243594572],
+
+        },
+        $maxDistance: 100
+      }
+  };
+  Brigade.find(find,'_id brigades').then(b=>{ console.log(b); res.json(b); });
 });
 
 //Create the fire
