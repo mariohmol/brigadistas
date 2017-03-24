@@ -66,10 +66,11 @@ router.get('/item/status/:id/:status', passport.authenticate('basic', { session:
   Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
   let find={_id: req.params.id};
   if(req.user.role!==10) find.users={$in: [req.user._id]};
-  Item.findOneAndUpdate(find,data).then(found=> {
+  Item.findOneAndUpdate(find,data).populate("users").then(found=> {
       res.json(found);
-      if(found)
-      sendEmailTemplate(found.users[0].username, "geo/templates/activate",{user: found.users[0], status: data.status});
+      if(found){
+        sendEmailTemplate(found.users[0].username, "geo/templates/activate",{user: found.users[0], status: data.status});
+      }
   }).catch(e=>{
     res.status(500).json(e);
   });
