@@ -39,6 +39,8 @@ brigadistacivil/resources/*
 brigadistacivil/resources/android/**/*
 brigadistacivil/resources/ios/**/*
 
+server/config/*.p8
+
 # general
 .vscode
 .DS_Store

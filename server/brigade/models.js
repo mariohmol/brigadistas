@@ -48,7 +48,7 @@ Brigade.pushToBrigades = function(brigades,message){
   brigades.forEach(bItem=>{
     bItem.brigades.forEach(userItem=>{
       if(userItem.androidkey) android.push(userItem.androidkey);
-      if(userItem.ioskey) ios.push(userItem.androidkey);
+      if(userItem.ioskey) ios.push(userItem.ioskey);
     });
   });
   let returnInfo={};
