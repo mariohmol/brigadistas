@@ -64,6 +64,10 @@
     "title": "fuego",
     "see": "ver Fuego"
   },
+  "map": {
+    "additem": "Add Item",
+    "addarea": "Add Area"
+  },
   "require": {
     "minString": "se requiere (mínimo 5 caracteres)."
   },
@@ -114,6 +118,7 @@
   "enter": "Entrar",
   "generalError": "Tuvimos un error en su solicitud",
   "intensity": "intensidad",
+  "map": "Mapa",
   "name": "nombre",
   "notfounditems": "No se encontró información.",
   "password": "contraseña",

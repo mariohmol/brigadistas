@@ -12,7 +12,8 @@ const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
-  Fire.find({},'_id title description intensity users createdAt coordinates').sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
+  Fire.find({},'_id title description intensity users createdAt coordinates')
+  .sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
 });
 
 router.get('/:id', function (req, res, next) {
@@ -21,14 +22,26 @@ router.get('/:id', function (req, res, next) {
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
-  Fire.findOneAndUpdate(req.params.id,data,{new:true,$new: true, upsert: true}).then(d => { res.json(d);});
+  let find={_id: req.params.id, $in: {users: [req.user._id]}};
+  Fire.findOneAndUpdate(find,data,{new:true,$new: true, upsert: true}).then(d => { res.json(d);});
 });
 
 router.post('/', passport.authenticate('basic', { session: false }), function (req, res, next) {
   let data=Object.assign(req.body, { users:  [req.user._id], createdAt: new Date(), status: 'open' } );
-  Brigade.find({status: 'active'},'_id brigades').populate("brigades").then(b=>{
+  let find={status: 'active'};
+  //$geoIntersects, $geoWithin or $near
+  find.area={
+    $near: {
+       $geometry: {
+         type: 'Point', coordinates: data.coordinates,
+
+       },
+       $maxDistance: 100
+     }
+   };
+
+  Brigade.find(find,'_id brigades').populate("brigades").then(b=>{
     if(b){
-      //TODO: Make brigades getting from polygon are
       data.brigades = b.map(bi=>{return bi._id;});
     }
     newFire(res,data,b);
@@ -124,7 +137,7 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
 
 
 //users , watching , checking , fighting , fighters
-router.get('/relation/:fireId/:type', 
+router.get('/relation/:fireId/:type',
 function (req, res, next) {
   Fire.find(req.params.fireId).then(d => {
     res.json(d);

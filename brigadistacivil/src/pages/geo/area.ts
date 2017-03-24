@@ -5,14 +5,13 @@ import BasePage from '../basepage';
 import { BrigadeService } from '../../providers/brigade-service';
 import { GeneralService } from '../../providers/general-service';
 import {TranslateService} from 'ng2-translate';
-import { BrigadePage } from './brigade';
 declare var google;
 
 @Component({
-  selector: 'page-brigadearea',
+  selector: 'page-area',
   templateUrl: 'area.html'
 })
-export class BrigadeAreaPage extends BasePage {
+export class AreaPage extends BasePage {
   public brigade: any;
   public position: any;
   public isBrigade: boolean;
@@ -73,13 +72,12 @@ export class BrigadeAreaPage extends BasePage {
           let a=this.brigade.area;
           if(this.brigade.area.coordinates) a=this.brigade.area.coordinates;
           a.forEach(area=>{
-            if(!area || !area.map) return;
             let areas= area.map(a=>{
               return {lat: a[1], lng: a[0]};
             });
             this.generalService.addPolygon(this.map,areas,selectShapeCb);
           });
-          if(!this.readonly) this.generalService.drawPolygon(this.map, [],null, selectShapeCb);
+          if(a.length==0 && !this.readonly) this.generalService.drawPolygon(this.map, [],null, selectShapeCb);
         }else{
           let newPolyCb = p=>{
             if(p.getPath().b.length>2){
@@ -106,29 +104,24 @@ export class BrigadeAreaPage extends BasePage {
 
   remove(){
     this.showConfirm(this.translate("remove"), null,c=>{
-      this.brigadeService.deleteArea(this.brigade._id);
       this.generalService.deleteSelectedShape();
     });
   }
 
   save(){
     if(!GeneralService.selectedShape){
-      this.openPageParam(BrigadePage, {brigade: this.brigade, brigadeId: this.brigade._id});
+      //this.openPageParam(BrigadePage, {brigade: this.brigade, brigadeId: this.brigade._id});
       return
     }
-    let paths=[];
-    console.log(GeneralService.polygons)
+    let paths=[]
     GeneralService.polygons.forEach(p=>{
-      let init;
-      p.getPath().b.forEach((b,i)=>{
-        if(i==0) init=[b.lng(), b.lat()];
+      p.getPath().b.forEach(b=>{
         paths.push([b.lng(), b.lat()]);
       });
-      paths.push(init);
     });
     if(!this.brigade.area) this.brigade.area={coordinates: []};
     else if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
-    this.brigade.area={type: 'Polygon',coordinates: [paths]};
+    this.brigade.area.coordinates = paths;
 
     this.brigadeService.updateBrigade({
       _id: this.brigade._id,

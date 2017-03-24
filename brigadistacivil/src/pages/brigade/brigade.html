@@ -16,7 +16,7 @@
 <ion-content>
 
 
-  <ion-segment *ngIf="brigade._id">
+  <ion-segment *ngIf="brigade && brigade._id">
     <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
       Entrar na Brigada
     </ion-segment-button>
@@ -35,13 +35,13 @@
         <ion-col col-12 col-sm-12 col-md-6>
           <ion-item [class.readonlyInput]="isReadonly()==true">
             <ion-label floating>{{ "name" | translate }}</ion-label>
-            <ion-input formControlName="name" [readonly]="isReadonly()" type="text"></ion-input>
+            <ion-input formControlName="name" [readonly]="readonly" type="text"></ion-input>
           </ion-item>
         </ion-col>
         <ion-col col-12 col-sm-12 col-md-6>
           <ion-item [class.readonlyInput]="isReadonly()==true">
             <ion-label floating>{{ "city" | translate }} </ion-label>
-            <ion-input formControlName="city" [readonly]="isReadonly()" type="text"></ion-input>
+            <ion-input formControlName="city" [readonly]="readonly" type="text"></ion-input>
           </ion-item>
         </ion-col>
       </ion-row>
@@ -49,7 +49,7 @@
       <ion-row>
         <ion-item [class.readonlyInput]="isReadonly()==true">
           <ion-label floating>{{ "description" | translate }} </ion-label>
-          <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
+          <ion-input formControlName="description" [readonly]="readonly" type="textarea"></ion-input>
         </ion-item>
       </ion-row>
     </form>

@@ -20,7 +20,7 @@ export class GeneralService extends BaseService {
   public static marker: any;
   public static polygon: any;
   public static markers: [any];
-  public static polygons: [any];
+  public static polygons: [any] = <any>[];
   public static selectedShape: any;
 
   constructor(public http: Http) {
@@ -144,6 +144,22 @@ export class GeneralService extends BaseService {
   }
 
   deleteSelectedShape(selectedShape=GeneralService.selectedShape) {
+    GeneralService.polygons = <any>GeneralService.polygons.filter(p=>{
+      let pPaths=[];
+      p.getPath().b.forEach(b=>{
+        pPaths.push([b.lng(), b.lat()]);
+      });
+
+      let bSelected=GeneralService.selectedShape.getPath().b;
+      if(bSelected.length!=pPaths.length) return false;
+
+      let found=true;
+      bSelected.forEach((b,i)=>{
+        if(pPaths[i][0]!=b.lng() || pPaths[i][1]!=b.lat()) found=false;
+      });
+      return found;
+
+    });
     if (selectedShape) {
       selectedShape.setMap(null);
     }
@@ -182,6 +198,7 @@ export class GeneralService extends BaseService {
 
      google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
         GeneralService.selectedShape = e.overlay;
+        GeneralService.polygons.push(GeneralService.selectedShape);
 
         if (e.type != google.maps.drawing.OverlayType.MARKER) {
           drawingManager.setDrawingMode(null);
@@ -194,7 +211,7 @@ export class GeneralService extends BaseService {
           });
           //"Area =" + area.toFixed(2);
           //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-          cbAddPol(newShape);
+          if(cbAddPol) cbAddPol(newShape);
           this.setSelection(newShape,cbSelectPol);
         }
       });
@@ -275,11 +292,13 @@ export class GeneralService extends BaseService {
          this.map.animateCamera({
            'target': polygon.getPoints()
          });
+         GeneralService.polygons.push(polygon);
        });
     }else{
       var pol = new google.maps.Polygon(options);
        map.fitBounds(this.getBounds(pol.getPaths()));
        pol.setMap(map);
+       GeneralService.polygons.push(pol);
        google.maps.event.addListener(pol, 'click', () => {
          this.setSelection(pol,cbSelectPol);
        });

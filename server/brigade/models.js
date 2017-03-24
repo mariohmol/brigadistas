@@ -23,15 +23,23 @@ const BrigadeSchema = new mongoose.Schema({
   createdAt: { type: Date },
   deletedAt: { type: Date },
   area: {
-    type : { type : String, default : 'Polygon' },
-    coordinates: []
+    type : { type : String, "enum": [
+            "Point",
+            "MultiPoint",
+            "LineString",
+            "MultiLineString",
+            "Polygon",
+            "MultiPolygon"
+        ] },
+    coordinates: {type: Array}
   }
 });
 BrigadeSchema.plugin(deepPopulate);
-BrigadeSchema.index({coordinates: '2dsphere'});
+BrigadeSchema.index({area: '2dsphere'});
+//db.brigade.ensureIndex({area:"2dsphere"});
 
 const Brigade = mongoose.model('Brigade', BrigadeSchema);
-
+Brigade.ensureIndexes();
 /**
  * Send alert of fire to all Brigades in the fire
  * @param  {[type]} brigades [description]

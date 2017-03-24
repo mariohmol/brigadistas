@@ -1,0 +1,120 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "item" | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="!isReadonly()" [disabled]="!fireForm.valid" (click)="save()">
+            <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+          </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+  <form [formGroup]="fireForm" novalidate>
+
+
+    <ion-segment *ngIf="fire._id && isInBrigade()">
+      <ion-segment-button value="checking" *ngIf="fire.status=='open'" (click)="changeStatus('checking')">
+        {{ "fire.checking" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="confirmed" *ngIf="fire.status=='checking'" (click)="changeStatus('confirmed')">
+        {{ "fire.confirmed" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="not_confirmed" *ngIf="fire.status=='checking'" (click)="changeStatus('not_confirmed')">
+        {{ "fire.not_confirmed" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="startCombat" *ngIf="fire.status=='confirmed'" (click)="changeStatus('fighting')">
+        {{ "fire.startCombat" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="startCombat" *ngIf="fire.status=='fighting' && !isTracking()" (click)="tracking()">
+        {{ "fire.startCombat" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="stopCombat" *ngIf="fire.status=='fighting' && isTracking()" (click)="tracking()">
+        {{ "fire.stopCombat" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="endCombat" *ngIf="fire.status=='fighting'" (click)="changeStatus('fighting')">
+        {{ "fire.endCombat" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="aftermath" *ngIf="fire.status=='fighting'" (click)="changeStatus('aftermath')">
+        {{ "fire.aftermath" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="closeCombat" *ngIf="fire.status=='aftermath'" (click)="changeStatus('finished')">
+        {{ "fire.closeCombat" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="chat" *ngIf="fire.status!='finished'" (click)="openChat()">
+        {{ "chat.title" | translate }}
+      </ion-segment-button>
+      <ion-segment value="finished" *ngIf="fire.status=='finished'">
+        {{ "fire.finished" | translate }}
+      </ion-segment>
+    </ion-segment>
+
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-6>
+
+        <ion-item [class.readonlyInput]="isReadonly()==true">
+          <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
+          <ion-input formControlName="title" [readonly]="isReadonly()" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-item>
+          <ion-label class="intensity" floating>{{ "intensity" | translate }}</ion-label>
+          <ion-range min="20" max="100" step="20" snaps="true" [disabled]="isReadonly()" formControlName="intensity" color="danger">
+            <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+            <ion-icon range-right color="danger" name="thermometer"></ion-icon>
+          </ion-range>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-item text-wrap *ngIf="fire.createdAt" [class.readonlyInput]="isReadonly()==true">
+          <ion-icon name="md-calendar" item-left large></ion-icon>
+          <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
+          <ion-icon name="md-person" item-left large></ion-icon>
+          <h2><a href="#/profile/{{fire.users[0]._id}}">{{fire.users[0].name}}</a></h2>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="fire.brigades">
+      <ion-list-header>{{"brigades.title" | translate}}</ion-list-header>
+      <ion-col col-12 col-sm-12 col-md-4 *ngFor="let brigade of fire.brigades">
+        <!--
+        <ion-icon name="md-contacts" item-left large></ion-icon>
+      -->
+        <ion-card>
+          <ion-item [class.readonlyInput]="isReadonly()==true">
+            <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
+            <!--  <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note> -->
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item [class.readonlyInput]="isReadonly()==true">
+          <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>
+          <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+
+  <div #map id="map"></div>
+
+
+</ion-content>

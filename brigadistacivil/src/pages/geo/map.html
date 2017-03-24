@@ -1,0 +1,18 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "map" | translate }}</ion-title>
+    <button ion-button menuToggle icon-only>
+     <ion-icon name="menu"></ion-icon>
+   </button>
+   <ion-buttons end>
+       <button ion-button icon-only class="options-button" (click)="showOptions()">
+         <ion-icon name="more"></ion-icon>
+       </button>
+     </ion-buttons>
+  </ion-navbar>
+
+</ion-header>
+
+<ion-content >
+  <div #map id="map"></div>
+</ion-content>

@@ -68,6 +68,10 @@
     "title": "Incêndios",
     "see": "Ver Incêndio"
   },
+  "map": {
+    "additem": "Adicionar Local",
+    "addarea": "Adicionar Área"
+  },
   "require": {
     "minString": "é obrigatório (mínimo de 5 caracteres)."
   },
@@ -122,6 +126,7 @@
   "enter": "Entrar",
   "generalError": "Tivemos um erro durante a sua solicitação",
   "intensity": "Intensidade",
+  "map": "Mapa",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
   "location": "Localização",

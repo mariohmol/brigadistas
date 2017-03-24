@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { NavController, NavParams, AlertController, App, MenuController, ToastController } from 'ionic-angular';
 import { UserService } from '../../providers/user-service';
 import {TranslateService} from 'ng2-translate';
-import { UserPage } from './user';
 import BasePage from '../basepage';
 
 @Component({

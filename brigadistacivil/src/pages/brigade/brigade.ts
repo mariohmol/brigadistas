@@ -30,7 +30,7 @@ export class BrigadePage  extends BasePage{
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
     public generalService: GeneralService) {
     super();
-
+    this.readonly=true;
     if(this.navParams.get("brigade")){
       this.brigade=this.navParams.get("brigade");
       this.loadData();
@@ -41,6 +41,7 @@ export class BrigadePage  extends BasePage{
       this.brigade={};
       this.readonly=false;
     }
+
     this.brigadeFormFields={
       name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
@@ -70,15 +71,9 @@ export class BrigadePage  extends BasePage{
     this.brigadeService.getBrigade(this.brigade._id).then(d=>{
       this.brigade=d;
       this.setDataForm(this.brigadeForm,this.brigadeFormFields,this.brigade);
-      this.isLeader = this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id})!=null
 
-      this.isBrigade = this.isLeader ||
-              this.brigade.brigades && this.brigade.brigades.find(d=>{return d._id==UserService.loginData._id})!=null ||
-              this.brigade.requested && this.brigade.requested.find(d=>{return d._id==UserService.loginData._id})!=null;
-
-      if(this.brigade && this.brigade.leaders && this.brigade.leaders.find(d=>{return d._id==UserService.loginData._id}))
-        this.readonly=false;
-      else this.readonly=true;
+      const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
+      this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
     });
   }
 
