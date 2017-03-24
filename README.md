@@ -50,6 +50,7 @@ Install libs mostly for iOS enviroment:
 * sudo gem install cocoapods
 * pod setup
 
+For Push we are using the new style APNs - Provider Authentication Tokens., where generates a .p8 file used to make the push and this file must be on `server/config/ios.p8`.
 
 #### Desktop
 

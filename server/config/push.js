@@ -2,20 +2,24 @@
 var gcm = require('node-gcm');
 var apn = require('apn');
 const {APN_KEYID, APN_TEAMID,ANDROID_GCMKEY,APN_PATHKEY} = require('./config');
-var options,sender,apnProvider;
+var sender,apnProvider;
 const {logger} = require('../config/logger');
-
-function initPush(){
-  options = {
+const options = {
     token: {
       key: APN_PATHKEY,
       keyId: APN_KEYID,
       teamId: APN_TEAMID
     },
-    production: false
+   /* cert: APN_PATHCERT,
+    key: APN_PATHKEY,
+    passphrase: APN_PASSPHRASE,*/
+    production: true
   };
+  
+function initPush(){
+  
   //TODO: create app on itunes
-  //apnProvider = new apn.Provider(options);
+  apnProvider = new apn.Provider(options);
 
   // Set up the sender with your GCM/FCM API key (declare this once for multiple messages)
   sender = new gcm.Sender(ANDROID_GCMKEY);
@@ -59,7 +63,11 @@ function sendiOS(alert,regTokens){
   note.alert = alert;
   note.payload = {'messageFrom': 'BrigadistaCivil'};
   note.topic = "br.com.brigadistacivil.ios";
-
+  logger.info(`Trying send iOS msg ${JSON.stringify(note)} to ${regTokens}`);
+  
+  let deviceToken = Buffer.from(regTokens[0], 'base64').toString('hex');
+  console.log(regTokens[0],deviceToken);
+  
   apnProvider.send(note, regTokens).then( (result) => {
     if(result) logger.info(`Response sending iOS token ${JSON.stringify(result)}`);
     else logger.error(`Error when sending iOS ${result}`);

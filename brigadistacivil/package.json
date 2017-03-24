@@ -13,6 +13,7 @@
     "build:before": "build",
     "run:before": "build",
     "setprodenv": "cp src/production.ts src/environment.ts",
+    "setdevenv": "cp src/development.ts src/environment.ts",
     "clean": "cordova clean",
     "servelab": "ionic serve --lab",
     "resources": "ionic resources",

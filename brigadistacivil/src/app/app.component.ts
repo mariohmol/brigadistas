@@ -89,9 +89,10 @@ export class MyApp {
       this.push.on('registration', (data) => {
         localStorage['deviceToken']=data.registrationId;
 
-        if(UserService.loginData)
-          this.userService.storeDeviceToken('android',localStorage['deviceToken']);
-
+        if(UserService.loginData){
+          if (this.platform && this.platform.is('ios')) this.userService.storeDeviceToken('ios',localStorage['deviceToken']);
+          else this.userService.storeDeviceToken('android',localStorage['deviceToken']);
+        }
       });
 
       this.push.on('notification', (data) => {

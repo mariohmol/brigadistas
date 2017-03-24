@@ -13,4 +13,4 @@ exports.SMTP_PASS=process.env.SMTP_PASS || 'PASS';
 exports.APN_KEYID=process.env.APN_KEYID || 'T0K3NK3Y1D';
 exports.APN_TEAMID=process.env.APN_TEAMID || 'T34M1D';
 exports.ANDROID_GCMKEY=process.env.ANDROID_GCMKEY || 'YOUR_API_KEY_HERE';
-exports.APN_PATHKEY=process.env.APN_PATHKEY || "path/to/key.p8"
+exports.APN_PATHKEY=process.env.APN_PATHKEY || "server/config/ios.p8";
