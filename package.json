@@ -1,6 +1,7 @@
 {
   "name": "BrigadistaCivil",
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
+  "main": "server/server.js",
   "scripts": {
     "check": "eval npm install",
     "dev": "supervisor server/server.js",
