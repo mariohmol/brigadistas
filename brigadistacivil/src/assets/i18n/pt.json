@@ -84,7 +84,7 @@
       "conservation": "Área de Conservação",
       "city": "Cidade"
     },
-    "categoria": "Categoria do ítem",
+    "category": "Categoria do ítem",
     "chooseLocation": "Clique no mapa e informe o local do item que deseja adicionar no mapa",
     "description": "Descrição sobre o item, ex: qual o tipo de planta, ou o sobre o perigo encontrado"
   },
