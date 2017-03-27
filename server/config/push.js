@@ -34,7 +34,7 @@ function initPush(){
  * @return {[type]}           [description]
  */
 function sendAndroid(message,regTokens){
-  var messageObject = new gcm.Message({message});
+  var messageObject = new gcm.Message({data: message});
   // Actually send the message
   logger.info(`SendAndroid   ${regTokens.join(" , ")} and ${message}`);
   sender.send(messageObject, { registrationTokens: regTokens }, function (err, response) {
