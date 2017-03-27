@@ -64,6 +64,7 @@ export class BrigadeAreaPage extends BasePage {
 
     if(!this.position){
       this.generalService.getPosition(addPosition);
+      setTimeout(function(){ if(!GeneralService.map) this.initMap(); }, 10000);
     }else{
       this.initMap();
     }

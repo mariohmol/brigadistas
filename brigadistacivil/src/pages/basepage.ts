@@ -311,8 +311,8 @@ export default class BasePage {
    * @param  {[type]} position [description]
    * @return {[type]}          [description]
    */
-  loadMap(position,options={}) {
-    this.map = this.generalService.loadMap(this.mapElement,position,options);
+  loadMap(position,options={},cb=null) {
+    this.map = this.generalService.loadMap(this.mapElement,position,options,cb);
   }
 
 

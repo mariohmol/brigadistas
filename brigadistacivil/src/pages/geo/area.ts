@@ -56,7 +56,7 @@ export class AreaPage extends BasePage {
         this.position=pos;
         this.initMap();
       });
-      this.initMap();
+      //this.initMap();
     }else{
       this.initMap();
     }

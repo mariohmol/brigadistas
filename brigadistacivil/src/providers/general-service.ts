@@ -11,7 +11,7 @@ import {
   GoogleMapsMarkerOptions,
   GoogleMapsMarker
 } from 'ionic-native';
-declare var google;
+declare var google, cordova;
 
 @Injectable()
 export class GeneralService extends BaseService {
@@ -32,8 +32,14 @@ export class GeneralService extends BaseService {
    * @param  {[type]} position [description]
    * @return {[type]}          [description]
    */
-  loadMap(mapElement, position, options = {}) {
-    if(GeneralService.map && GeneralService.map.clear)GeneralService.map.clear();
+  loadMap(mapElement, position, options = {},cb=null) {
+    try{
+      if(GeneralService.map && GeneralService.map.clear)
+        GeneralService.map.clear();
+    }catch(e){
+      console.log(e);
+    }
+
     if (BaseService.device == 'mobile') {
       GeneralService.map = new GoogleMap(mapElement.nativeElement);
 
@@ -52,12 +58,12 @@ export class GeneralService extends BaseService {
 
           // move the map's camera to position
           GeneralService.map.moveCamera(cameraPos);
+          if(cb)cb();
         }
       });
 
       return GeneralService.map;
     } else {
-
 
       let mapOptions = {
         center: new google.maps.LatLng(-19.9364705,-43.980769),
@@ -77,6 +83,7 @@ export class GeneralService extends BaseService {
       } else {
         GeneralService.map = new google.maps.Map(document.getElementById('map'), mapOptions);
       }
+      if(cb) cb();
       return GeneralService.map;
     }
   }
@@ -220,15 +227,20 @@ export class GeneralService extends BaseService {
 
   getPosition(cb) {
     if (BaseService.device == 'mobile') {
-      Geolocation.getCurrentPosition().then((pos) => {
-        cb(pos.coords);
-      }).catch(e => { cb(e); });
 
+      cordova.plugins.diagnostic.isLocationAvailable(function(available){
+        Geolocation.getCurrentPosition().then((pos) => {
+          cb(pos.coords);
+        }).catch(e => { 
+          cb(); 
+        });
+      }, function(error){
+          //console.error("The following error occurred: "+error);
+          cb();
+      });
       /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
-        // data can be a set of coordinates, or an error (if an error occurred).
-       // data.coords.latitude
-       // data.coords.longitude
+        // data can be a set of coordinates, or an error (if an error occurred). data.coords.latitude, data.coords.longitude
      });*/
     }
     else {
@@ -243,7 +255,7 @@ export class GeneralService extends BaseService {
           cb(pos.coords);
         }, error => {
           cb();
-        }, options);
+        }, options);``
       }
     }
   }
