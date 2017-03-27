@@ -24,7 +24,7 @@ $RECYCLE.BIN/
 typings/globals/
 typings/modules/
 platforms/
-
+!brigadistacivil/platforms/android/project.properties
 
 
 #cordova

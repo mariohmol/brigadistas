@@ -49,7 +49,7 @@ const sendEmailAdmins = (subject,text,html="") => {
 };
 
 const doErrorEmailAlerts = (err, req, res, next) => {
-  if (err) {
+  if (err && err.name!=="AuthenticationError") {
     logger.info(`Sending error alert email to ${ADMIN_EMAIL}`);
 
     const emailData = {

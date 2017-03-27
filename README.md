@@ -6,6 +6,14 @@ Here is the web version:
 
 * https://brigadistacivil.com.br/
 
+Android:
+
+* https://play.google.com/store/apps/details?id=br.com.brigadistacivil
+
+iOS:
+
+* https://itunes.apple.com/us/app/brigadista-civil/id1217301893
+
 Development enviroment:
 
 * https://brigadistas.herokuapp.com/
@@ -57,6 +65,9 @@ Need to create in Identifiers -> Your App -> Edit -> Push Notifications
  * https://developer.apple.com/account/ios/identifier/bundle
 
 You need to create a CSR in your MAC and use to create a development certificate. Create another CSR in your server and use it to create a production certificate.
+
+Use `openssl x509 -inform DER -in certificate.cer -out certificate.crt` this to convert the .cer file into .crt, and copy .crt file into /etc/ssl/certs/. More details in https://github.com/dkhamsing/apns-guide/issues/6
+
 
 To run the app in Xcode or deploy to applestore use .xcworkspace file genereated in `platforms/ios`.
 
@@ -113,6 +124,21 @@ cordova.gradle.include.1=cordova-plugin-mauron85-background-geolocation/brigadis
 cordova.system.library.3=com.google.android.gms:play-services-location:+
 cordova.system.library.4=com.android.support:support-v4:+
 ```
+
+### Debug
+
+We use VSCode as development enviroment to connect to node or browser and debug using the IDE.
+
+** FRONTEND **
+
+To debug front end, open 2 terminals in vscode , one with run dev other with run watch. Open the browser in link `http://localhost:8484/#/fires/`, go to debug tab in VSCode and choose Attach to Chrome.
+
+To connect using Chrome, you need to run it with debug port, for example 
+`/Applications/Google\ Chrome.app/Contents/MacOS/Google\ Chrome  --remote-debugging-port=9222`
+
+** BACKEND **
+
+For backend you have to go in VSCode debug and start Launch Program, that will be in place of run dev. Then do npm run watch , open the browser and you will be able to debug the backend.
 
 ### Server
 

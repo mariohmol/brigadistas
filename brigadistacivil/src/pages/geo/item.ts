@@ -53,7 +53,7 @@ export class ItemPage extends BasePage {
         this.position=pos;
         this.initMap();
       });
-      this.initMap();
+      setTimeout(function(){ if(!GeneralService.map) this.initMap(); }, 10000);
     }else{
       this.initMap();
     }
@@ -62,15 +62,14 @@ export class ItemPage extends BasePage {
   initMap(){
     if(this.item && this.item.loc){
       let pos={latitude: this.item.loc.coordinates[1], longitude: this.item.loc.coordinates[0]};
-      this.loadMap(pos);
+      this.loadMap(pos,{},this.confMap);
       if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
       GeneralService.marker = this.addMarker(pos,"Posição do Ítem");
     }else if(this.position){
-      this.loadMap(this.position);
+      this.loadMap(this.position,{},this.confMap);
     }else{
-      this.loadMap(null);
+      this.loadMap(null,{},this.confMap);
     }
-    this.confMap();
   }
 
   confMap(){

@@ -53,15 +53,14 @@ export class FirePage extends BasePage {
     let cb = () => {
       if(this.fire && this.fire.coordinates){
         let pos={latitude: this.fire.coordinates[1], longitude: this.fire.coordinates[0]};
-        this.loadMap(pos);
+        this.loadMap(pos,{},()=>{this.confMap()});
         if(GeneralService.marker)  this.generalService.removeElement(GeneralService.marker) ;
         GeneralService.marker = this.addMarker(pos,"Posição do Fogo");
       }else if(this.position){
-        this.loadMap(this.position);
+        this.loadMap(this.position,{},()=>{this.confMap();});
       }else{
-        this.loadMap(null);
+        this.loadMap(null,{},()=>{this.confMap();});
       }
-      this.confMap();
     }
 
     if(!this.position && !(this.fire && this.fire.coordinates)){
@@ -70,7 +69,7 @@ export class FirePage extends BasePage {
         cb();
       }
       this.generalService.getPosition(addPosition);
-      cb();
+      setTimeout(function(){ if(!GeneralService.map) this.initMap(); }, 10000);
     }else{
       cb();
     }
