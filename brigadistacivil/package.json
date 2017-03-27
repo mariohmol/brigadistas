@@ -17,7 +17,7 @@
     "clean": "cordova clean",
     "servelab": "ionic serve --lab",
     "resources": "ionic resources",
-    "android": "ionic run android",
+    "android": "npm run setprodenv && ionic run android",
     "android-install": "adb install platforms/android/build/outputs/apk/android-debug.apk",
     "ios": "ionic emulate ios -c -s",
     "iosrun": "npm run setprodenv && ionic run ios -c -s",

@@ -42,10 +42,14 @@
     "title": "Brigades",
     "see": "See brigade"
   },
+  "error": {
+    "gps": "We could not connect to your GPS",
+    "notavailableweb": "This feature is not available for web version, just mobile"
+  },
   "fire": {
     "title": "View Fire",
     "chooseLocation": "Click on the map to report the location of the fire",
-    "startCombat": "Fire Fighting",
+    "startCombat": "Start Fighting",
     "stopCombat": "Get out of combat",
     "checking": "Check for Fire",
     "confirmed": "Confirm Fire",
@@ -54,7 +58,7 @@
     "endCombat": "Get out of combat",
     "aftermath": "Start Aftermath",
     "closeCombat": "Close Combat",
-    "finished": "Fire Fighting",
+    "finished": "Fire Extinguished",
     "new": {
       "title": "Report Fire",
       "fieldTitle": "Name (eg Fire in Joaquin Miller Park)",

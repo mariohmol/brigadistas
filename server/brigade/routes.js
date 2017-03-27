@@ -35,7 +35,7 @@ router.delete('/area/:id', passport.authenticate('basic', { session: false }),
 
 router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  let data=Object.assign(req.body, { leaders: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: defaultArea} );
+  let data=Object.assign(req.body, { leaders: [req.user._id], brigades: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: defaultArea} );
   Brigade.create(data).then(d => {
     res.json(d);
     let email= `Activate this brigade by accessing ${URL}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;

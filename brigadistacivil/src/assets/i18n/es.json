@@ -38,6 +38,10 @@
     "title": "Brigadas",
     "see": "Ver brigada"
   },
+  "error": {
+    "gps": "Error ao conectar com seu GPS",
+    "notavailableweb": "Esta funcionalidade não está disponível para versão web ou desktop, apenas em dispositivo móvel"
+  },
   "fire": {
     "title": "ver Fuego",
     "chooseLocation": "Haga clic en el mapa y entrar en el lugar del incendio",

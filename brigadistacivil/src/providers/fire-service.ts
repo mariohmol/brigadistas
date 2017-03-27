@@ -33,29 +33,32 @@ export class FireService extends BaseService {
 
 
   startTracking(cb,errcb){
-    // BackgroundGeolocation is highly configurable. See platform specific configuration options
-    let config = {
-            desiredAccuracy: 10,
-            stationaryRadius: 20,
-            distanceFilter: 30,
-            debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-            stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-    };
 
-    BackgroundGeolocation.configure((location) => {
-      cb(location);
+    if (BaseService.device == 'mobile') {
+      // BackgroundGeolocation is highly configurable. See platform specific configuration options
+      let config = {
+              desiredAccuracy: 10,
+              stationaryRadius: 20,
+              distanceFilter: 30,
+              debug: true, //  enable this hear sounds for background-geolocation life-cycle.
+              stopOnTerminate: false, // enable this to clear background location settings when the app terminates
+      };
 
-      // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
-      // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
-      // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
-      BackgroundGeolocation.finish(); // FOR IOS ONLY
+      BackgroundGeolocation.configure((location) => {
+        cb(location);
 
-     }, (error) => {
-       errcb(error);
-     }, config);
+        // IMPORTANT:  You must execute the finish method here to inform the native plugin that you're finished,
+        // and the background-task may be completed.  You must do this regardless if your HTTP request is successful or not.
+        // IF YOU DON'T, ios will CRASH YOUR APP for spending too much time in the background.
+        BackgroundGeolocation.finish(); // FOR IOS ONLY
 
-    // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
-    BackgroundGeolocation.start();
+      }, (error) => {
+        errcb(error);
+      }, config);
+
+      // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
+      BackgroundGeolocation.start();
+    }else errcb("Is not a mobile");
   }
 
   stopTracking(){
