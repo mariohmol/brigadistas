@@ -88,6 +88,21 @@ To run this app :
 
 Throubleshooting with mobile is very usual to remove the platform, add again and build: ex.: `ionic platform remove ios`
 
+You can install the the ionic plugins manually, like:
+
+* ionic plugin add cordova-plugin-mauron85-background-geolocation
+* ionic plugin add cordova-plugin-geolocation
+* ionic plugin add cordova-plugin-crosswalk-webview --save
+* ionic plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="XYZ" --variable API_KEY_FOR_IOS="XYZ" --save
+
+* npm install --save @ionic-native/background-geolocation
+* npm install --save @ionic-native/google-maps
+* npm install --save @ionic-native/push
+* npm install @ionic-native/core --save
+* npm install @ionic-native/geolocation --save
+
+
+
 ### Configure
 
 *Frontend* : The default enviroment is development, you can change to `test` if you would like to test in mobile conecting to your local server. The task `npm run gen` makes the apk taking the production enviroment file in place as default enviroment.

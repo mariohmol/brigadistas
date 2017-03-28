@@ -42,16 +42,21 @@
     "title": "Brigadas",
     "see": "Ver brigada"
   },
+  "error": {
+    "gps": "Error ao conectar com seu GPS",
+    "notavailableweb": "Esta funcionalidade não está disponível para versão web ou desktop, apenas em dispositivo móvel"
+  },
   "fire": {
     "title": "Ver Incêndio",
     "chooseLocation": "Clique no mapa e informe o local do incêndio",
-    "startCombat": "Combater Incêndio",
+    "startCombat": "Iniciar Combate",
+    "enterCombat": "Entrar no Combate",
     "stopCombat": "Sair do Combate",
     "checking": "Verificar Incêndio",
     "confirmed": "Confirmar Incêndio",
     "not_confirmed": "Não confirmar",
     "initCombat": "Iniciar Combate",
-    "endCombat": "Sair do Combate",
+    "endCombat": "Finalizar Combate",
     "aftermath": "Iniciar Rescaldo",
     "closeCombat": "Encerrar Combate",
     "finished": "Incêndio Combatido",

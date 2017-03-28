@@ -28,14 +28,11 @@
       <ion-segment-button value="startCombat" *ngIf="fire.status=='confirmed'" (click)="changeStatus('fighting')">
         {{ "fire.startCombat" | translate }}
       </ion-segment-button>
-      <ion-segment-button value="startCombat" *ngIf="fire.status=='fighting' && !isTracking()" (click)="tracking()">
-        {{ "fire.startCombat" | translate }}
+      <ion-segment-button value="enterCombat" *ngIf="fire.status=='fighting' && isTracking()!=true" (click)="tracking()">
+        {{ "fire.enterCombat" | translate }}
       </ion-segment-button>
-      <ion-segment-button value="stopCombat" *ngIf="fire.status=='fighting' && isTracking()" (click)="tracking()">
+      <ion-segment-button value="stopCombat" *ngIf="fire.status=='fighting' && isTracking()==true" (click)="tracking()">
         {{ "fire.stopCombat" | translate }}
-      </ion-segment-button>
-      <ion-segment-button value="endCombat" *ngIf="fire.status=='fighting'" (click)="changeStatus('fighting')">
-        {{ "fire.endCombat" | translate }}
       </ion-segment-button>
       <ion-segment-button value="aftermath" *ngIf="fire.status=='fighting'" (click)="changeStatus('aftermath')">
         {{ "fire.aftermath" | translate }}

@@ -86,8 +86,20 @@ export class FirePage extends BasePage {
       this.generalService.addMarker(GeneralService.map,latlng,"Posição do Fogo",m=>{
         GeneralService.marker=m;
       });
-    });
+      if(!this.fire.positions) return;
+      let colors=this.generalService.colors();
+      this.fire.positions.forEach( (p,i)=>{
+        let cindex=i;
+        if(cindex>colors.length) cindex-=colors.length;
+        let userColor = colors[cindex];
 
+        this.generalService.addPolyline(GeneralService.map, p.coordinates , {
+          strokeColor: userColor,
+          fillColor: userColor,
+        });
+        //p.user, line, coordinates, activityType,date
+      });
+    });
   }
 
   loadData(){
@@ -168,11 +180,13 @@ export class FirePage extends BasePage {
         FiresPage.isTracking = true;
       };
       let errcb = ()=>{
-        alert('Error ao conectar comseu GPS');
+        this.showToast(this.translate('error.notavailableweb'));
         FiresPage.isTracking = false;
       }
+      FiresPage.isTracking = true;
       this.fireService.startTracking(cb,errcb);
     }else {
+      FiresPage.isTracking = false;
       this.fireService.stopTracking();
     }
   }

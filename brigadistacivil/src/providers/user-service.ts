@@ -11,6 +11,7 @@ import { BaseService } from './base-service';
 @Injectable()
 export class UserService extends BaseService {
   public static loginData: any;
+  public static locations: [any]= <any>[];
 
   constructor(public http: Http) {
     super(http);
@@ -83,9 +84,17 @@ export class UserService extends BaseService {
 
   saveLocation(lat, lng, fireId) {
     let data = {
-      lat, lng
+      lat, lng, fireId
     }
-    return this.doPost('/fire/position/'+fireId, data);
+    return this.doPost('/fire/position/'+fireId, data).then(a=>{
+      UserService.locations = <any>UserService.locations.filter(f=>{return f.lat!=data.lat && f.lng!=data.lng});
+      if(UserService.locations.length>0) {
+        const {lat,lng,fireId} = UserService.locations[0];
+        this.saveLocation(lat,lng,fireId);
+      }
+    }).catch(e=>{
+      UserService.locations.push(data);
+    });
   }
 
   getUser(id){

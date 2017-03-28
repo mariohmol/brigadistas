@@ -19,6 +19,7 @@ export class GeneralService extends BaseService {
   public static map: any;
   public static marker: any;
   public static polygon: any;
+  public static polylines: [any] = <any>[];
   public static markers: [any];
   public static polygons: [any] = <any>[];
   public static selectedShape: any;
@@ -318,6 +319,45 @@ export class GeneralService extends BaseService {
   }
 
   /**
+   * 
+   * @param map 
+   * @param areas  var flightPlanCoordinates = [
+          {lat: 37.772, lng: -122.214},
+          {lat: 21.291, lng: -157.821},
+          {lat: -18.142, lng: 178.431},
+          {lat: -27.467, lng: 153.027}
+        ];
+   * @param optionsArg 
+   */
+  addPolyline(map,areas,optionsArg={}){
+    let options={...{
+       path: areas,
+       strokeColor: '#FF0000',
+       strokeOpacity: 0.8,
+       strokeWeight: 2,
+       fillColor: '#FF0000',
+       fillOpacity: 0.35,
+       content: null
+     },optionsArg};
+
+    if (BaseService.device == 'mobile') {
+      map.addPolyline(options, function(polyline) {
+         GeneralService.polylines.push(polyline);
+         this.addInfoWindow(map, polyline, options.content);
+       });
+    }else{
+      
+        var polyline = new google.maps.Polyline(options);
+        polyline.setMap(map);
+        GeneralService.polylines.push(polyline);
+        if(options.content){
+          this.addInfoWindow(map, polyline, options.content);
+        }
+    }
+  
+  }
+
+  /**
    * [addMissingMaps description]
    * @param  {[type]} paths ex.:  polygon.getPaths();
    * @return {[type]}       [description]
@@ -332,6 +372,11 @@ export class GeneralService extends BaseService {
         }
     }
     return bounds;
+  }
+
+  colors(){
+    return ["#f44336", "#9c27b0", "#673ab7", "#4caf50", "#3f51b5", "#2196f3" , "#8bc34a", "#cddc39",
+    "#ffeb3b","#795548","#9e9e9e","#607d8b", "#009688", "#00bcd4"];
   }
 
 }
