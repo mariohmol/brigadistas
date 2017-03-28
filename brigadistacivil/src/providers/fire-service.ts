@@ -2,7 +2,8 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import 'rxjs/add/operator/map';
 import { BaseService } from './base-service';
-import { BackgroundGeolocation, BackgroundGeolocationConfig,BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
+import Environment from "../environment";
 
 @Injectable()
 export class FireService extends BaseService {
@@ -35,35 +36,39 @@ export class FireService extends BaseService {
   startTracking(cb,errcb){
 
     if (BaseService.device == 'mobile') {
+      let config: BackgroundGeolocationConfig;
+
+      if(Environment.env!=="production"){
       // BackgroundGeolocation is highly configurable. See platform specific configuration options
-      let config: BackgroundGeolocationConfig = {
+       config = {
               desiredAccuracy: 0,
               stationaryRadius: 0,
               distanceFilter: 0,
               interval: 2000,
               //fastestInterval: 2000,
               debug: true, //  enable this hear sounds for background-geolocation life-cycle.
-              stopOnTerminate: false, // enable this to clear background location settings when the app terminates
-      };
-
-      let configProd: BackgroundGeolocationConfig = {
-        desiredAccuracy: 10,
-        stationaryRadius: 20,
-        distanceFilter: 30,
-        url: 'http://192.168.81.15:3000/locations',
-        httpHeaders: { 'X-FOO': 'bar' },
-        maxLocations: 1000,
-        // Android only section
-        //locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
-        interval: 60000,
-        //fastestInterval: 5000,
-        //activitiesInterval: 10000,
-        notificationTitle: 'Background tracking',
-        notificationText: 'enabled',
-        notificationIconColor: '#FEDD1E',
-        notificationIconLarge: 'mappointer_large',
-        notificationIconSmall: 'mappointer_small'
+              stopOnTerminate: false // enable this to clear background location settings when the app terminates
+        };
+      }else{
+        config = {
+          desiredAccuracy: 10,
+          stationaryRadius: 20,
+          distanceFilter: 30,
+          //url: 'http://192.168.81.15:3000/locations',httpHeaders: { 'X-FOO': 'bar' },
+          maxLocations: 1000,
+          // Android only section
+          //locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
+          interval: 60000,
+          //fastestInterval: 5000,
+          //activitiesInterval: 10000,
+          notificationTitle: 'Background tracking',
+          notificationText: 'enabled',
+          notificationIconColor: '#FEDD1E',
+          notificationIconLarge: 'mappointer_large',
+          notificationIconSmall: 'mappointer_small'
+        };
       }
+
 
       this.backgroundGeolocation.configure(config)
       .subscribe((location: BackgroundGeolocationResponse) => {

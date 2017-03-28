@@ -13,18 +13,8 @@ const FireSchema = new mongoose.Schema({
   deletedAt: { type: Date },
   coordinates: { type: [Number], index: '2dsphere'},
   statusHistory: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No post id found']},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']},
     status: { type: String },
-    date: {type: Date}
-  }],
-  positions: [{
-    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No post id found']},
-    line: {
-      type : { type : String, default : 'LineString', index: '2dsphere' },
-      coordinates: []
-    },
-    coordinates: { type: [Number], index: '2dsphere'},
-    activityType: { type: String },
     date: {type: Date}
   }],
   brigades: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Brigade',unique: false,required: [true,'No user id found']}],
@@ -37,4 +27,18 @@ const FireSchema = new mongoose.Schema({
 FireSchema.plugin(deepPopulate);
 const Fire = mongoose.model('Fire', FireSchema);
 
-module.exports = { Fire };
+const FireTrackSchema = new mongoose.Schema({
+    fire: { type: mongoose.Schema.Types.ObjectId, ref: 'Fire',required: [true,'No fire id found']},
+    user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']},
+    coordinates: { type: [Number], index: '2dsphere'},
+    line: {
+      type : { type : String, default : 'LineString' },
+      coordinates: {type: Array}
+    },
+    activityType: { type: String },
+    date: {type: Date}
+});
+FireTrackSchema.index({line: '2dsphere'});
+const FireTrack = mongoose.model('FireTrack', FireTrackSchema);
+
+module.exports = { Fire, FireTrack };
