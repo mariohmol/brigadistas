@@ -95,8 +95,12 @@ You can install the the ionic plugins manually, like:
 * ionic plugin add cordova-plugin-crosswalk-webview --save
 * ionic plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="XYZ" --variable API_KEY_FOR_IOS="XYZ" --save
 
-* npm install --save @ionic-native/push
+* npm install --save @ionic-native/background-geolocation
 * npm install --save @ionic-native/google-maps
+* npm install --save @ionic-native/push
+* npm install @ionic-native/core --save
+* npm install @ionic-native/geolocation --save
+
 
 
 ### Configure

@@ -183,8 +183,10 @@ export class FirePage extends BasePage {
         this.showToast(this.translate('error.notavailableweb'));
         FiresPage.isTracking = false;
       }
+      FiresPage.isTracking = true;
       this.fireService.startTracking(cb,errcb);
     }else {
+      FiresPage.isTracking = false;
       this.fireService.stopTracking();
     }
   }
