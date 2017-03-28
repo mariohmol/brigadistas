@@ -32,6 +32,7 @@ import {ReadOnlyClass} from './directives/readonlyclass';
 import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {HttpModule,Http} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
+import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 
 let pages = [
   MyApp,
@@ -78,7 +79,8 @@ let links=[
   ],
   bootstrap: [IonicApp],
   entryComponents: pages,
-  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},GeneralService,BaseService,
+  providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},BackgroundGeolocation,
+              GeneralService,BaseService,
               UserService,FireService,BrigadeService,ChatService,GeoService]
 })
 export class AppModule {}
