@@ -91,4 +91,8 @@ export class FireService extends BaseService {
   stopTracking(){
     this.backgroundGeolocation.stop();
   }
+
+  getTracks(id){
+    return this.doGet(`/fire/tracks/${id}`);
+  }
 }

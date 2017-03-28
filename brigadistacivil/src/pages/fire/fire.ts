@@ -88,20 +88,26 @@ export class FirePage extends BasePage {
         GeneralService.marker=m;
       });
     });
+    this.getTracks(this.fire);
+  }
 
-    if(!this.fire.positions) return;
+  getTracks(fire){
     let colors=this.generalService.colors();
-    this.fire.positions.forEach( (p,i)=>{
-      let cindex=i;
-      if(cindex>colors.length) cindex-=colors.length;
-      let userColor = colors[cindex];
+    this.fireService.getTracks(fire._id).then((resp)=>{
+      let tracks = <any>resp;
+      tracks.forEach((track,i)=>{
+        if(!track.line) return;
 
-      this.generalService.addPolyline(GeneralService.map, p.coordinates , {
-        strokeColor: userColor,
-        fillColor: userColor,
+        let cindex=i;
+        if(cindex>colors.length) cindex-=colors.length;
+        let userColor = colors[cindex];
+
+        this.generalService.addPolyline(GeneralService.map, track.line.coordinates , {
+          strokeColor: userColor,
+          fillColor: userColor,
+        });
       });
-      //p.user, line, coordinates, activityType,date
-    });
+    })
   }
 
   loadData(){

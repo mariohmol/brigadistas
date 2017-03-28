@@ -150,7 +150,7 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
       d.line.type="LineString";
     }    
     if(d.line.coordinates && d.line.coordinates.length==0) d.line=null;
-    
+
     FireTrack.update(find,d).then((e)=>{  res.json({d,e});}).catch(e=>res.json(e));
    
   }).catch(e=>{
@@ -159,7 +159,9 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
   });
 });
 
-
+router.get('/tracks/:id', function (req, res, next) {
+  FireTrack.find({fire: req.params.id}).then(d=> res.json(d)).catch(e=>{res.status(500).json(e)});
+});
 
 //users , watching , checking , fighting , fighters
 router.get('/relation/:fireId/:type',
