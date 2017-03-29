@@ -13,12 +13,12 @@ const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
-  Fire.find({},'_id title description intensity users createdAt coordinates')
-  .sort({createdAt: -1}).populate('users',"_id name").then(d => { res.json(d);});
+  Fire.find({},'_id title description intensity users createdAt coordinates image')
+  .sort({createdAt: -1}).populate('users',"_id name image").then(d => { res.json(d);});
 });
 
 router.get('/:id', function (req, res, next) {
-  Fire.findOne({_id: req.params.id}).populate("users","_id name").populate("brigades","_id name brigades leaders").then(d => { res.json(d);});
+  Fire.findOne({_id: req.params.id}).populate("users","_id name image").populate("brigades","_id name brigades leaders image").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
@@ -41,7 +41,7 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
      }
    };
 
-  Brigade.find(find,'_id brigades').populate("brigades","_id name").then(b=>{
+  Brigade.find(find,'_id brigades').populate("brigades","_id name image").then(b=>{
     if(b){
       data.brigades = b.map(bi=>{return bi._id;});
     }
@@ -170,7 +170,7 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
 });
 
 router.get('/tracks/:id', function (req, res, next) {
-  FireTrack.find({fire: req.params.id}).populate("user","_id name").then(d=> res.json(d)).catch(e=>{res.status(500).json(e)});
+  FireTrack.find({fire: req.params.id}).populate("user","_id name image").then(d=> res.json(d)).catch(e=>{res.status(500).json(e)});
 });
 
 //users , watching , checking , fighting , fighters

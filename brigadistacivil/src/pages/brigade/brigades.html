@@ -13,7 +13,7 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content>
+<ion-content class="card-background-page">
 
   <div *ngIf="brigades">
 
@@ -22,22 +22,20 @@
         <ion-col *ngFor="let brigade of brigades; let i = index;" col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
 
           <ion-card>
+            <img [src]="brigade.image" *ngIf="brigade.image">
+            <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
 
 
-            <ion-item text-wrap>
-              <h2>{{brigade.name}}</h2>
-              <p>{{brigade.description}}</p>
-            </ion-item>
+            <div class="card-title">{{brigade.name}}</div>
+            <div class="card-subtitle">{{brigade.city}}</div>
 
-            <ion-list>
+
+            <!-- <ion-list>
               <ion-item text-wrap *ngIf="brigade.createdAt">
                 <ion-icon name="md-calendar" item-left large></ion-icon>
                 <h2>{{brigade.createdAt |  date: 'dd/MM/yyyy' }}</h2>
               </ion-item>
-              <ion-item text-wrap>
-                <ion-icon name="md-home" item-left large></ion-icon>
-                <h2>{{brigade.city}}</h2>
-              </ion-item>
+ 
               <ion-item actions>
                 <button (click)="showBrigade(brigade)" ion-button color="secondary" clear item-right icon-left>
                   <ion-icon name='md-checkmark'></ion-icon>
@@ -45,7 +43,7 @@
                 </button>
               </ion-item>
 
-            </ion-list>
+            </ion-list>-->
 
           </ion-card>
         </ion-col>
