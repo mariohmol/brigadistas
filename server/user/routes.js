@@ -7,6 +7,7 @@ const { Fire } = require('../fire/models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
+const { storageAdd } = require('../config/storage');
 
 router.get('/', function (req, res, next) {
   User.find({deletedAt: null},'name avatar location createdAt').then(d => { res.json(d);});
@@ -111,6 +112,14 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
+  var query={_id: req.user._id};
+  User.findOne(query).then(r=>{
+    req.params.datafolder="brigade";
+    req.params.datafield="image";
+    storageAdd(r,req.params.datafield);
+  });
+});
 
 router.get('/logout', (req,res)=>{
   req.logout();

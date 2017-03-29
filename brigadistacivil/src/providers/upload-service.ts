@@ -16,10 +16,14 @@ export class UploadService {
     return Observable.create(observer => {
         let formData: FormData = new FormData(),
             xhr: XMLHttpRequest = new XMLHttpRequest();
-
-        for (let i = 0; i < files.length; i++) {
-            formData.append("uploads[]", files[i], files[i].name);
+        if(files.length==1){
+            formData.append("uploads", files[0], files[0].name);
+        }else{
+            for (let i = 0; i < files.length; i++) {
+                formData.append("uploads[]", files[i], files[i].name);
+            }
         }
+        
 
         xhr.onreadystatechange = () => {
             if (xhr.readyState === 4) {
@@ -35,7 +39,7 @@ export class UploadService {
         xhr.upload.onprogress = (event) => {
             this.progress = Math.round(event.loaded / event.total * 100);
 
-            this.progressObserver.next(this.progress);
+            if(this.progressObserver) this.progressObserver.next(this.progress);
         };
 
         xhr.open('POST', url, true);

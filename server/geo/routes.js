@@ -7,6 +7,7 @@ const { Chat } = require('../chat/models');
 const passport = require('passport');
 const mongoose = require('mongoose');
 const { sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
+const { storageAdd } = require('../config/storage');
 const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
@@ -73,6 +74,15 @@ router.get('/item/status/:id/:status', passport.authenticate('basic', { session:
       }
   }).catch(e=>{
     res.status(500).json(e);
+  });
+});
+
+router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
+  var query={_id: req.params.id, users: { $in: [req.user._id] }};
+  Item.findOne(query).then(r=>{
+    req.params.datafolder="brigade";
+    req.params.datafield="image";
+    storageAdd(r,req.params.datafield);
   });
 });
 

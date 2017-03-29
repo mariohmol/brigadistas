@@ -5,7 +5,7 @@ const { Brigade } = require('./models');
 const passport = require('passport');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
-const { uploadStorage } = require('../config/storage');
+const { storageAdd } = require('../config/storage');
 const {URL} = require('../config/config');
 const defaultArea={ type: 'Point', coordinates: [-122.424088, 37.529876] };
 
@@ -53,19 +53,12 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
 });
 
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
-  console.log(req.body);
   var query={_id: req.params.id, leaders: { $in: [req.user._id] }};
   Brigade.findOne(query).then(r=>{
-    uploadStorage(req,res,err=>{
-        console.log(req.file);
-        if(err){
-              res.json({error_code:1,err_desc:err});
-              return;
-        }
-          res.json({error_code:0,err_desc:null});
-      });
+    req.params.datafolder="brigade";
+    req.params.datafield="image";
+    storageAdd(r,req.params.datafield);
   });
-
 });
 
 router.get('/activate/:id', passport.authenticate('basic', { session: false }), ensureAdmin,
