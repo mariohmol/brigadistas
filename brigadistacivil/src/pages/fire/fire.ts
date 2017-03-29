@@ -8,7 +8,8 @@ import { FireService } from '../../providers/fire-service';
 import { GeneralService } from '../../providers/general-service';
 import { ChatService } from '../../providers/chat-service';
 import {  ViewChild, ElementRef } from '@angular/core';
-import {TranslateService} from 'ng2-translate';
+import { TranslateService } from 'ng2-translate';
+import { UserService } from "../../providers/user-service";
 declare var google;
 
 @Component({
@@ -26,7 +27,7 @@ export class FirePage extends BasePage {
 
   constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
     public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
-    public generalService: GeneralService, public chatService: ChatService) {
+    public generalService: GeneralService, public chatService: ChatService, public userService: UserService) {
     super();
 
     this.fireFormFields = {
@@ -86,19 +87,20 @@ export class FirePage extends BasePage {
       this.generalService.addMarker(GeneralService.map,latlng,"Posição do Fogo",m=>{
         GeneralService.marker=m;
       });
-      if(!this.fire.positions) return;
-      let colors=this.generalService.colors();
-      this.fire.positions.forEach( (p,i)=>{
-        let cindex=i;
-        if(cindex>colors.length) cindex-=colors.length;
-        let userColor = colors[cindex];
+    });
 
-        this.generalService.addPolyline(GeneralService.map, p.coordinates , {
-          strokeColor: userColor,
-          fillColor: userColor,
-        });
-        //p.user, line, coordinates, activityType,date
+    if(!this.fire.positions) return;
+    let colors=this.generalService.colors();
+    this.fire.positions.forEach( (p,i)=>{
+      let cindex=i;
+      if(cindex>colors.length) cindex-=colors.length;
+      let userColor = colors[cindex];
+
+      this.generalService.addPolyline(GeneralService.map, p.coordinates , {
+        strokeColor: userColor,
+        fillColor: userColor,
       });
+      //p.user, line, coordinates, activityType,date
     });
   }
 

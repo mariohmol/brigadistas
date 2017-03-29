@@ -1,7 +1,7 @@
 'use strict';
 const express = require('express');
 const router = express.Router();
-const { Fire } = require('./models');
+const { Fire, FireTrack } = require('./models');
 const { Brigade } = require('../brigade/models');
 const { Chat } = require('../chat/models');
 const passport = require('passport');
@@ -131,21 +131,31 @@ router.delete('/:id', passport.authenticate('basic', { session: false }), functi
   Fire.findOneAndDelete(req.params.id,{},{}).then(d => { res.json(d);});
 });
 
-
+let ObjectId = mongoose.Types.ObjectId;
 router.post('/position/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
-  let dados = {
-    $push: {
-      positions: {
-        user: req.user._id,
-        activityType: req.body.activityType,
-        coordinates: [req.body.lat,req.body.lng]
+ 
+  let find = {user: req.user._id, fire: req.params.id};
+  let update = Object.assign({},find);
+  FireTrack.findOneAndUpdate(find,{$set: update},{new:true,$new: true, upsert: true}).then(d => { 
+    //Check if have coordinates
+    if(!d.coordinates) d.coordinates=[req.body.lng, req.body.lat];
+    else if(d.coordinates[0]!==req.body.lng || d.coordinates[1]!==req.body.lat){
+      if(!d.line.coordinates)  d.line.coordinates=[];
+      if(d.line.coordinates.length==0){
+        d.line.coordinates.push(d.coordinates);
+        d.line.coordinates.push([req.body.lng, req.body.lat]);   
+      }else if(d.line.coordinates.length>0){
+        d.line.coordinates.push([req.body.lng, req.body.lat]);   
       }
-    }
-  };
-  Fire.findOneAndUpdate(req.params.id,dados).then(function(d) {
-    res.json(d);
-  }).catch(d=>{
-    res.json(d);
+      d.line.type="LineString";
+    }    
+    if(d.line.coordinates && d.line.coordinates.length==0) d.line=null;
+    
+    FireTrack.update(find,d).then((e)=>{  res.json({d,e});}).catch(e=>res.json(e));
+   
+  }).catch(e=>{
+    console.log(e);
+    res.status(500).json(e);
   });
 });
 
