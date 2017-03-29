@@ -92,6 +92,7 @@ export class FirePage extends BasePage {
   }
 
   getTracks(fire){
+    if(!fire || !fire._id) return;
     let colors=this.generalService.colors();
     this.fireService.getTracks(fire._id).then((resp)=>{
       let tracks = <any>resp;
