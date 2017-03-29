@@ -2,9 +2,7 @@ import { Component } from '@angular/core';
 //import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { UserService } from '../../providers/user-service';
-import { ChatService } from '../../providers/chat-service';
-import { GeneralService } from '../../providers/general-service';
+import { UserService,ChatService,GeneralService } from '../../providers';
 import { TranslateService } from 'ng2-translate';
 
 

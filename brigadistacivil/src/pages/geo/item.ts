@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, ToastController } from 'ionic-angular';
+import { App, Platform, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { GeoService } from '../../providers/geo-service';
-import { GeneralService } from '../../providers/general-service';
+import { GeoService,GeneralService } from '../../providers';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import { MapPage } from './map';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 declare var google;
 
 @Component({
@@ -21,10 +22,13 @@ export class ItemPage extends BasePage {
   @ViewChild('map') mapElement: ElementRef;
   itemForm: FormGroup;
   itemFormFields: any;
+  public image: any;
 
-  constructor(public app: App,public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams,
     public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
-    public generalService: GeneralService, public geoService: GeoService) {
+    public generalService: GeneralService, public geoService: GeoService,
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
 
     this.itemFormFields = {
@@ -108,12 +112,16 @@ export class ItemPage extends BasePage {
     if(this.item._id){
       this.item = Object.assign(this.item, this.itemForm.value);
       this.geoService.updateItem(this.item).then(d => {
+        this.item=d;
+        this.uploadPic(); 
         this.showToast(this.translate("item.status.updated"));
         this.openPage(MapPage);
       });
     }else{
       this.item = Object.assign(this.item, this.itemForm.value);
       this.geoService.addItem(this.item).then(d => {
+        this.item=d;
+        this.uploadPic(); 
         this.showToast(this.translate("item.status.new"));
         this.openPage(MapPage);
       });
@@ -125,6 +133,27 @@ export class ItemPage extends BasePage {
       this.showToast(this.translate("item.status.updated"));
       this.loadData();
     });
+  }
+
+  getPic(){
+    this.getPicture(d=>{ this.image=d; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.image=d; });
+  }
+
+  getWebPic(){
+    return (data)=>{
+      this.image=data; 
+    }
+  }
+
+  uploadPic(){
+     if(!this.item._id || !this.image) return;
+     this.generalService.postFile("item",this.item._id, this.image).then(d=>{
+      this.item=d;
+     });
   }
 
 }

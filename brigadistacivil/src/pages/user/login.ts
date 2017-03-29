@@ -3,7 +3,7 @@ import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { NavController, NavParams, AlertController, App, MenuController,
   ToastController, LoadingController, Platform
 } from 'ionic-angular';
-import { UserService } from '../../providers/user-service';
+import { UserService } from '../../providers';
 import {TranslateService} from 'ng2-translate';
 import { UserPage } from './user';
 import { FiresPage } from '../fire/fires';

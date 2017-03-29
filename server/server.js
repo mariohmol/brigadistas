@@ -42,7 +42,9 @@ app.use(i18n.init);
 app.use(passport.initialize());
 app.use(passport.session());
 
+
 app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
+app.use("/upload",express.static(__dirname+ '/../upload/'));
 
 if(ENV!=="test"){
   app.use(morgan('common', {stream: logger.stream}));

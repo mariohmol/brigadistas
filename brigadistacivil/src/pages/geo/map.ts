@@ -1,9 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { App, NavController, NavParams, AlertController, ToastController, PopoverController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { UserService } from '../../providers/user-service';
-import { GeoService } from '../../providers/geo-service';
-import { GeneralService } from '../../providers/general-service';
+import { UserService,GeneralService,GeoService } from '../../providers';
 import { MapOptionsComponent } from './mapoptions';
 import {TranslateService} from 'ng2-translate';
 declare var google;

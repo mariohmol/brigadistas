@@ -1,10 +1,12 @@
 import { Component} from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App,NavController, NavParams, MenuController,ToastController } from 'ionic-angular';
-import { UserService } from '../../providers/user-service';
+import { App, NavController, NavParams, MenuController, ToastController, Platform } from 'ionic-angular';
+import { UserService } from '../../providers';
 import {TranslateService} from 'ng2-translate';
 import BasePage from '../basepage';
 import { FiresPage } from '../fire/fires';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 @Component({
   selector: 'page-user',
@@ -13,10 +15,13 @@ import { FiresPage } from '../fire/fires';
 export class UserPage extends BasePage {
   userForm: FormGroup;
   public user: any;
+  public image: any;
 
-  constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fb: FormBuilder,
+  constructor(public app: App, public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams, public fb: FormBuilder,
     public userService: UserService, public translateService: TranslateService, public menuCtrl: MenuController,
-    public toastCtrl: ToastController) {
+    public toastCtrl: ToastController,
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
     this.userForm = this.fb.group({
       name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
@@ -50,6 +55,8 @@ export class UserPage extends BasePage {
     } else {
       let originalPassword =this.userForm.value.password;
       this.userService.register(this.userForm.value).then((d: any) => {
+        this.user=d;
+        this.uploadPic(); 
         this.login(d.username, originalPassword);
       }).catch(e=>{
         this.showToast(this.translate("user.new.error"))
@@ -63,6 +70,27 @@ export class UserPage extends BasePage {
 
   loginPage(username, password) {
     this.login(username, password);
+  }
+
+  getPic(){
+    this.getPicture(d=>{ this.image=d; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.image=d; });
+  }
+
+  getWebPic(){
+    return (data)=>{
+      this.image=data; 
+    }
+  }
+
+  uploadPic(){
+     if(!this.user._id || !this.image) return;
+     this.generalService.postFile("user",this.user._id, this.image).then(d=>{
+      this.user=d;
+     });
   }
 
 }

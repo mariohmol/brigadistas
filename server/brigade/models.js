@@ -11,6 +11,8 @@ const BrigadeSchema = new mongoose.Schema({
     required: true,
     unique: true
   },
+  logo: { type: String },
+  image: { type: String },
   description: { type: String },
   status: {type: String},
   ownership: { type: String },

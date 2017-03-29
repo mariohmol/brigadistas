@@ -20,7 +20,7 @@ const UserSchema = new mongoose.Schema({
   },
   androidkey: { type: String},
   ioskey: {type: String},
-  avatar: { type: String },
+  image: { type: String },
   bio: { type: String },
   url: { type: String },
   token: { type: String },

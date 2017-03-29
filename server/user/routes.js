@@ -7,13 +7,14 @@ const { Fire } = require('../fire/models');
 const passport = require('passport');
 const bcrypt = require('bcryptjs');
 const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
+const { storageAdd } = require('../config/storage');
 
 router.get('/', function (req, res, next) {
-  User.find({deletedAt: null},'name avatar location createdAt').then(d => { res.json(d);});
+  User.find({deletedAt: null},'name image location createdAt').then(d => { res.json(d);});
 });
 
 router.get('/profile/:id/', function (req, res, next) {
-  User.findOne({_id: req.params.id, deletedAt: null},'name avatar bio url updatedAt location createdAt')
+  User.findOne({_id: req.params.id, deletedAt: null},'name image bio url updatedAt location createdAt')
   .then(d => {
     Brigade.find({
         members: {$in: [d._id]}
@@ -111,6 +112,14 @@ router.post('/register', (req, res) => {
     });
 });
 
+router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
+  var query={_id: req.user._id};
+  User.findOne(query).then(r=>{
+    req.params.datafolder="user";
+    req.params.datafield="image";
+    storageAdd(req,res,r,User);
+  });
+});
 
 router.get('/logout', (req,res)=>{
   req.logout();

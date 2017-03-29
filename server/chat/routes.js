@@ -6,6 +6,7 @@ const passport = require('passport');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
 const {URL} = require('../config/config');
+const { storageAdd } = require('../config/storage');
 
 router.get('/',passport.authenticate('basic', { session: false }), function (req, res, next) {
   Chat.find({members: {$in: [req.user._id]}},'title lastMessage createdAt').then(d => { res.json(d);});
@@ -54,6 +55,14 @@ router.delete('/:id', passport.authenticate('basic', { session: false }),
   Chat.findOneAndDelete(query,{},{}).then(d => { res.json(d);});
 });
 
+router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
+  var query={_id: req.params.id, users: { $in: [req.user._id] }};
+  Chat.findOne(query).then(r=>{
+    req.params.datafolder="geo";
+    req.params.datafield="image";
+    storageAdd(req,res,r,Chat);
+  });
+});
 
 /**
  * MESSAGES

@@ -97,6 +97,10 @@
     "addarea": "Add Area",
     "title": "Map"
   },
+  "picture": {
+    "take": "Take picture",
+    "get": "Picture from Gallery"
+  },
   "require": {
     "minString": "Is required (minimum 5 characters)."
   },

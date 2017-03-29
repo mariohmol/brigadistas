@@ -90,17 +90,24 @@ Throubleshooting with mobile is very usual to remove the platform, add again and
 
 You can install the the ionic plugins manually, like:
 
-* ionic plugin add cordova-plugin-mauron85-background-geolocation
-* ionic plugin add cordova-plugin-geolocation
-* ionic plugin add cordova-plugin-crosswalk-webview --save
-* ionic plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="XYZ" --variable API_KEY_FOR_IOS="XYZ" --save
+```
+ionic plugin add cordova-plugin-mauron85-background-geolocation
+ionic plugin add cordova-plugin-geolocation
+ionic plugin add cordova-plugin-crosswalk-webview --save
+ionic plugin add cordova-plugin-googlemaps --variable API_KEY_FOR_ANDROID="XYZ" --variable API_KEY_FOR_IOS="XYZ" --save
+ionic plugin add https://github.com/Telerik-Verified-Plugins/ImagePicker
+ionic plugin add cordova-plugin-camera
+```
 
-* npm install --save @ionic-native/background-geolocation
-* npm install --save @ionic-native/google-maps
-* npm install --save @ionic-native/push
-* npm install @ionic-native/core --save
-* npm install @ionic-native/geolocation --save
-
+```
+npm install --save @ionic-native/background-geolocation
+npm install --save @ionic-native/google-maps
+npm install --save @ionic-native/push
+npm install @ionic-native/core --save
+npm install @ionic-native/geolocation --save
+npm install --save @ionic-native/image-picker
+npm install --save @ionic-native/camera
+```
 
 
 ### Configure

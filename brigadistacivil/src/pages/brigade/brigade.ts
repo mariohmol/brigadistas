@@ -1,13 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
+import { App,Platform, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { BrigadesPage } from './brigades';
 import { BrigadeAreaPage } from './area';
-import { UserService } from '../../providers/user-service';
-import { BrigadeService } from '../../providers/brigade-service';
-import { GeneralService } from '../../providers/general-service';
+import { UserService,BrigadeService,GeneralService } 
+        from '../../providers';
 import {TranslateService} from 'ng2-translate';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 declare var google;
 
 @Component({
@@ -23,12 +24,15 @@ export class BrigadePage  extends BasePage{
   brigadeForm: FormGroup;
   brigadeFormFields: any;
   public readonly: boolean;
+  public image: any;
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService,
     public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
-    public generalService: GeneralService) {
+    public generalService: GeneralService,
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
     this.readonly=true;
     if(this.navParams.get("brigade")){
@@ -79,6 +83,7 @@ export class BrigadePage  extends BasePage{
 
   save(){
     this.brigadeService.addBrigade(this.brigadeForm.value).then(d=>{
+      this.uploadPic(); 
       if(this.brigade._id){
         this.showToast(this.translate("brigade.update"));
       }else{
@@ -131,6 +136,27 @@ export class BrigadePage  extends BasePage{
         this.loadData();
       });
     })
+  }
+
+  getPic(){
+    this.getPicture(d=>{ this.image=d; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.image=d; });
+  }
+
+  getWebPic(){
+    return (data)=>{
+      this.image=data; 
+    }
+  }
+
+  uploadPic(){
+     if(!this.brigade._id || !this.image) return;
+     this.generalService.postFile("brigade",this.brigade._id, this.image).then(d=>{
+      this.brigade=d;
+     });
   }
 
 }

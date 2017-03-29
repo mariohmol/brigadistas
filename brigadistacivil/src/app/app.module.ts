@@ -19,20 +19,17 @@ import { ItemPage } from '../pages/geo/item';
 import { MapPage } from '../pages/geo/map';
 import { MapOptionsComponent } from '../pages/geo/mapoptions';
 
-import {BaseService} from '../providers/base-service';
-import {GeneralService} from '../providers/general-service';
-import {UserService} from '../providers/user-service';
-import {FireService} from '../providers/fire-service';
-import {BrigadeService} from '../providers/brigade-service';
-import {ChatService} from '../providers/chat-service';
-import {GeoService} from '../providers/geo-service';
+import {GeneralService,BaseService,UserService,FireService,
+      BrigadeService,ChatService,GeoService} from '../providers';
 
-import {ReadOnlyClass} from './directives/readonlyclass';
+import {FileUploadComponent,ReadOnlyClass} from './directives';
 
 import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {HttpModule,Http} from '@angular/http';
 import {BrowserModule} from '@angular/platform-browser';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 
 let pages = [
   MyApp,
@@ -44,7 +41,7 @@ let pages = [
   AreaPage,ItemPage,MapPage,MapOptionsComponent
 ];
 
-let declarations = [...pages, ReadOnlyClass ];
+let declarations = [...pages, ReadOnlyClass, FileUploadComponent ];
 
 let links=[
       { component: UserPage, name: 'User', segment: 'register' },
@@ -80,7 +77,8 @@ let links=[
   bootstrap: [IonicApp],
   entryComponents: pages,
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},BackgroundGeolocation,
-              GeneralService,BaseService,
-              UserService,FireService,BrigadeService,ChatService,GeoService]
+              Camera, ImagePicker, 
+              GeneralService,BaseService,UserService,FireService,
+              BrigadeService,ChatService,GeoService]
 })
 export class AppModule {}

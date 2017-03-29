@@ -17,6 +17,7 @@ const ItemSchema = new mongoose.Schema({
    */
   category: { type: String, enum: ["plant","rock","water","hole","danger","trail","conservation","city"] },
   city: { type: String },
+  image: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },
   loc: {
