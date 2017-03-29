@@ -137,22 +137,23 @@ export class BrigadePage  extends BasePage{
   }
 
   getPic(){
-    this.getPicture(d=>{ this.brigade.image=d; });
+    this.getPicture(d=>{ this.brigade.image=d; this.uploadPic(); });
   }
 
   takePic(){
-    this.takePicture(d=>{ this.brigade.image=d; });
+    this.takePicture(d=>{ this.brigade.image=d; this.uploadPic(); });
   }
 
-  getWebPic(data){
-    this.brigade.image=data; 
+  getWebPic(){
+    return (data)=>{
+      this.brigade.image=data; 
+      this.uploadPic();
+    }
   }
 
-  onChange(event) {
-    console.log('onChange');
-    var files = event.srcElement.files;
-    console.log(files);
-    this.uploadService.makeFileRequest('http://localhost:8182/upload', [], files).subscribe(() => {
+  uploadPic(){
+     if(!this.brigade._id) return;
+    this.uploadService.makeFileRequest(`/api/brigade/image/${this.brigade._id}`, [], this.brigade.image).subscribe(() => {
       console.log('sent');
     });
   }

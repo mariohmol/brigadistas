@@ -61,7 +61,7 @@
         <ion-item *ngIf="!isCordova()" [class.readonlyInput]="isReadonly()==true">
           <ion-label> 
             {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic)" [multiple]="true" ></file-upload>
+            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true" ></file-upload>
             </ion-label>          
         </ion-item>
       </ion-row>
