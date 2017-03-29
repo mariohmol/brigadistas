@@ -105,6 +105,7 @@ export class FirePage extends BasePage {
         this.generalService.addPolyline(GeneralService.map, track.line.coordinates , {
           strokeColor: userColor,
           fillColor: userColor,
+          content: track.user.name
         });
       });
     })
