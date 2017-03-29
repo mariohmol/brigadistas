@@ -11,6 +11,7 @@ const FireSchema = new mongoose.Schema({
   city: { type: String },
   createdAt: { type: Date },
   deletedAt: { type: Date },
+  image: { type: String },
   coordinates: { type: [Number], index: '2dsphere'},
   statusHistory: [{
     user: { type: mongoose.Schema.Types.ObjectId, ref: 'User',required: [true,'No user id found']},

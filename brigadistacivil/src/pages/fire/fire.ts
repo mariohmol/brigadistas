@@ -1,15 +1,14 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, ToastController } from 'ionic-angular';
+import { App,Platform, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { FiresPage } from './fires';
 import { ChatPage } from '../chat/chat';
-import { FireService } from '../../providers/fire-service';
-import { GeneralService } from '../../providers/general-service';
-import { ChatService } from '../../providers/chat-service';
+import { FireService,GeneralService,ChatService,UserService } from '../../providers';
 import {  ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
-import { UserService } from "../../providers/user-service";
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 declare var google;
 
 @Component({
@@ -25,9 +24,11 @@ export class FirePage extends BasePage {
   fireForm: FormGroup;
   fireFormFields: any;
 
-  constructor(public app: App,public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
+  constructor(public app: App, public platform: Platform, 
+    public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
     public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
-    public generalService: GeneralService, public chatService: ChatService, public userService: UserService) {
+    public generalService: GeneralService, public chatService: ChatService, public userService: UserService,
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
 
     this.fireFormFields = {
@@ -226,5 +227,13 @@ export class FirePage extends BasePage {
      }
    });
  }
+
+  getPic(){
+    this.getPicture(d=>{ this.fire.image; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.fire.image; });
+  }
 
 }

@@ -1,13 +1,14 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
+import { App,Platform, NavController, NavParams, AlertController,ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
 import { BrigadesPage } from './brigades';
 import { BrigadeAreaPage } from './area';
-import { UserService } from '../../providers/user-service';
-import { BrigadeService } from '../../providers/brigade-service';
-import { GeneralService } from '../../providers/general-service';
+import { UserService,BrigadeService,GeneralService,UploadService } 
+        from '../../providers';
 import {TranslateService} from 'ng2-translate';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 declare var google;
 
 @Component({
@@ -24,11 +25,13 @@ export class BrigadePage  extends BasePage{
   brigadeFormFields: any;
   public readonly: boolean;
 
-  constructor(public app: App, public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams,
     public translateService: TranslateService,public brigadeService: BrigadeService,
     public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
-    public generalService: GeneralService) {
+    public generalService: GeneralService,
+    public camera: Camera, public imagePicker: ImagePicker, public uploadService: UploadService) {
     super();
     this.readonly=true;
     if(this.navParams.get("brigade")){
@@ -131,6 +134,27 @@ export class BrigadePage  extends BasePage{
         this.loadData();
       });
     })
+  }
+
+  getPic(){
+    this.getPicture(d=>{ this.brigade.image=d; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.brigade.image=d; });
+  }
+
+  getWebPic(data){
+    this.brigade.image=data; 
+  }
+
+  onChange(event) {
+    console.log('onChange');
+    var files = event.srcElement.files;
+    console.log(files);
+    this.uploadService.makeFileRequest('http://localhost:8182/upload', [], files).subscribe(() => {
+      console.log('sent');
+    });
   }
 
 }

@@ -10,7 +10,7 @@ import { FiresPage } from '../pages/fire/fires';
 import { MapPage } from '../pages/geo/map';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { TranslateService } from 'ng2-translate';
-import { UserService } from '../providers/user-service';
+import { UserService } from '../providers';
 
 @Component({
   templateUrl: 'app.html'

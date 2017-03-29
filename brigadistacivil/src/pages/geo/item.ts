@@ -1,12 +1,13 @@
 import { Component } from '@angular/core';
 import {FormGroup, FormBuilder, Validators} from '@angular/forms';
-import { App, NavController, NavParams, ToastController } from 'ionic-angular';
+import { App, Platform, NavController, NavParams, ToastController } from 'ionic-angular';
 import BasePage from '../basepage';
-import { GeoService } from '../../providers/geo-service';
-import { GeneralService } from '../../providers/general-service';
+import { GeoService,GeneralService } from '../../providers';
 import {  ViewChild, ElementRef } from '@angular/core';
 import {TranslateService} from 'ng2-translate';
 import { MapPage } from './map';
+import { Camera } from '@ionic-native/camera';
+import { ImagePicker } from '@ionic-native/image-picker';
 declare var google;
 
 @Component({
@@ -22,9 +23,11 @@ export class ItemPage extends BasePage {
   itemForm: FormGroup;
   itemFormFields: any;
 
-  constructor(public app: App,public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App, public platform: Platform,
+    public navCtrl: NavController, public navParams: NavParams,
     public fb: FormBuilder, public toastCtrl: ToastController, public translateService: TranslateService,
-    public generalService: GeneralService, public geoService: GeoService) {
+    public generalService: GeneralService, public geoService: GeoService,
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
 
     this.itemFormFields = {
@@ -125,6 +128,14 @@ export class ItemPage extends BasePage {
       this.showToast(this.translate("item.status.updated"));
       this.loadData();
     });
+  }
+
+  getPic(){
+    this.getPicture(d=>{ this.item.image; });
+  }
+
+  takePic(){
+    this.takePicture(d=>{ this.item.image; });
   }
 
 }

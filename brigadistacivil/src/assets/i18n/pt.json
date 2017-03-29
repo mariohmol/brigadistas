@@ -98,6 +98,10 @@
     "additem": "Adicionar Local",
     "addarea": "Adicionar Área"
   },
+  "picture": {
+    "take": "Tirar foto",
+    "get": "Imagem da Galeria"
+  },
   "require": {
     "minString": "é obrigatório (mínimo de 5 caracteres)."
   },

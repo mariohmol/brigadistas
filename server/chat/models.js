@@ -7,7 +7,7 @@ var deepPopulate = require('mongoose-deep-populate')(mongoose);
 
 const ChatSchema = new mongoose.Schema({
   title: {  type: String,    required: true},
-  picture: { type: String },
+  image: { type: String },
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: true, required: [true,'No user member found']}],
   lastMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: [false,'No last message found']},
   fire: { type: mongoose.Schema.Types.ObjectId, ref: 'Fire', required: [true,'No fire found']},

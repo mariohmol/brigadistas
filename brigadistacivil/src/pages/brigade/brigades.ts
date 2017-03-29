@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {BrigadePage} from './brigade';
-import { BrigadeService} from '../../providers/brigade-service';
+import { BrigadeService} from '../../providers';
 import BasePage from '../basepage';
 
 

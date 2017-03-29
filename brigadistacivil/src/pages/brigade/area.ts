@@ -1,9 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { App,NavParams, AlertController,ToastController } from 'ionic-angular';
-import { UserService } from '../../providers/user-service';
 import BasePage from '../basepage';
-import { BrigadeService } from '../../providers/brigade-service';
-import { GeneralService } from '../../providers/general-service';
+import { BrigadeService,GeneralService,UserService } from '../../providers';
 import {TranslateService} from 'ng2-translate';
 import { BrigadePage } from './brigade';
 declare var google;

@@ -3,8 +3,7 @@ import { NavController, NavParams } from 'ionic-angular';
 
 import BasePage from '../basepage';
 import { FirePage } from './fire';
-import { UserService } from '../../providers/user-service';
-import { FireService } from '../../providers/fire-service'
+import { UserService,FireService } from '../../providers';
 
 /*
   Generated class for the Fire page.

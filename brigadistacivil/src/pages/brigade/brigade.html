@@ -52,6 +52,20 @@
           <ion-input formControlName="description" [readonly]="readonly" type="textarea"></ion-input>
         </ion-item>
       </ion-row>
+
+      <ion-row>
+        <ion-item *ngIf="isCordova()" [class.readonlyInput]="isReadonly()==true">
+           <button ion-button (click)="getPic()" >{{ "picture.get" | translate}}</button>
+            <button ion-button (click)="takePic()" >{{ "picture.take" | translate}}</button>
+        </ion-item>
+        <ion-item *ngIf="!isCordova()" [class.readonlyInput]="isReadonly()==true">
+          <ion-label> 
+            {{'picture.get' | translate}}
+            <file-upload #fu (change)="fu.upload(getWebPic)" [multiple]="true" ></file-upload>
+            </ion-label>          
+        </ion-item>
+      </ion-row>
+     
     </form>
   </ion-list>
 
