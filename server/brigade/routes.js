@@ -12,7 +12,7 @@ router.get('/', function (req, res, next) {
   Brigade.find({status: "active"},'name city desc createdAt').then(d => { res.json(d);});
 });
 router.get('/:id', function (req, res, next) {
-  Brigade.findOne({_id: req.params.id}).populate("leaders").populate("requested").populate("brigades").then(d => { res.json(d);});
+  Brigade.findOne({_id: req.params.id}).populate("leaders","name").populate("requested","name").populate("brigades","name").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }),

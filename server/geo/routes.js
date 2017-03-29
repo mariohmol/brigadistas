@@ -37,7 +37,7 @@ function findItems(find,res){
 }
 
 router.get('/item/:id', function (req, res, next) {
-  Item.findOne({_id: req.params.id}).populate("users").populate("brigades").then(d => { res.json(d);});
+  Item.findOne({_id: req.params.id}).populate("users","name").populate("brigades","name").then(d => { res.json(d);});
 });
 
 router.put('/item/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
@@ -66,7 +66,7 @@ router.get('/item/status/:id/:status', passport.authenticate('basic', { session:
   Object.assign(req.body, { users:  [req.user._id], updateAt: new Date() } );
   let find={_id: req.params.id};
   if(req.user.role!==10) find.users={$in: [req.user._id]};
-  Item.findOneAndUpdate(find,data).populate("users").then(found=> {
+  Item.findOneAndUpdate(find,data).populate("users","name").then(found=> {
       res.json(found);
       if(found){
         sendEmailTemplate(found.users[0].username, "geo/templates/activate",{user: found.users[0], status: data.status});

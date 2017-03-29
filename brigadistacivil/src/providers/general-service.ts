@@ -174,8 +174,7 @@ export class GeneralService extends BaseService {
   }
 
   addInfoWindow(map, marker, content) {
-    if (BaseService.device == 'mobile') { }
-    else {
+    if (BaseService.device == 'mobile' || BaseService.device == 'web') { 
       let infoWindow = new google.maps.InfoWindow({
         content: content
       });
@@ -277,8 +276,10 @@ export class GeneralService extends BaseService {
       latlng = {latitude: event.latLng.lat(), longitude: event.latLng.lng()};
     }else if(event.lat && event.lng){
       latlng = {latitude: event.lat, longitude: event.lng};
-    }else{
+    }else if(event.latitude && event.longitude){
       latlng = {latitude: event.latitude, longitude: event.longitude};
+    }else{
+      latlng = {latitude: event[1], longitude: event[0]};
     }
     return latlng;
   }
@@ -330,15 +331,18 @@ export class GeneralService extends BaseService {
    * @param optionsArg 
    */
   addPolyline(map,areas,optionsArg={}){
+    let latlngArea = areas.map(a=>{
+      return {lat: a[1], lng: a[0]};
+    })
     let options={...{
-       path: areas,
+       path: latlngArea,
        strokeColor: '#FF0000',
        strokeOpacity: 0.8,
        strokeWeight: 2,
        fillColor: '#FF0000',
        fillOpacity: 0.35,
        content: null
-     },optionsArg};
+     },...optionsArg};
 
     if (BaseService.device == 'mobile') {
       map.addPolyline(options, function(polyline) {

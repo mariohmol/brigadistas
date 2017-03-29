@@ -13,11 +13,11 @@ const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
   Fire.find({},'_id title description intensity users createdAt coordinates')
-  .sort({createdAt: -1}).populate('users').then(d => { res.json(d);});
+  .sort({createdAt: -1}).populate('users',"name").then(d => { res.json(d);});
 });
 
 router.get('/:id', function (req, res, next) {
-  Fire.findOne({_id: req.params.id}).populate("users").populate("brigades").then(d => { res.json(d);});
+  Fire.findOne({_id: req.params.id}).populate("users","name").populate("brigades","name").then(d => { res.json(d);});
 });
 
 router.put('/:id', passport.authenticate('basic', { session: false }), function (req, res, next) {
@@ -40,7 +40,7 @@ router.post('/', passport.authenticate('basic', { session: false }), function (r
      }
    };
 
-  Brigade.find(find,'_id brigades').populate("brigades").then(b=>{
+  Brigade.find(find,'_id brigades').populate("brigades","name").then(b=>{
     if(b){
       data.brigades = b.map(bi=>{return bi._id;});
     }
@@ -150,7 +150,7 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
       d.line.type="LineString";
     }    
     if(d.line.coordinates && d.line.coordinates.length==0) d.line=null;
-    
+
     FireTrack.update(find,d).then((e)=>{  res.json({d,e});}).catch(e=>res.json(e));
    
   }).catch(e=>{
@@ -159,7 +159,9 @@ router.post('/position/:id', passport.authenticate('basic', { session: false }),
   });
 });
 
-
+router.get('/tracks/:id', function (req, res, next) {
+  FireTrack.find({fire: req.params.id}).populate("user","name").then(d=> res.json(d)).catch(e=>{res.status(500).json(e)});
+});
 
 //users , watching , checking , fighting , fighters
 router.get('/relation/:fireId/:type',
