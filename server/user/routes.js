@@ -115,9 +115,9 @@ router.post('/register', (req, res) => {
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
   var query={_id: req.user._id};
   User.findOne(query).then(r=>{
-    req.params.datafolder="brigade";
+    req.params.datafolder="user";
     req.params.datafield="image";
-    storageAdd(r,req.params.datafield);
+    storageAdd(req,res,r,User);
   });
 });
 

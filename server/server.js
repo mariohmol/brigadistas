@@ -44,7 +44,7 @@ app.use(passport.session());
 
 
 app.use(express.static(__dirname+ '/../brigadistacivil/www/'));
-app.use("uploads",express.static(__dirname+ '/../uploads/'));
+app.use("/upload",express.static(__dirname+ '/../upload/'));
 
 if(ENV!=="test"){
   app.use(morgan('common', {stream: logger.stream}));

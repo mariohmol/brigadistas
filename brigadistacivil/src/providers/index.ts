@@ -5,7 +5,6 @@ import {FireService} from './fire-service';
 import {BrigadeService} from './brigade-service';
 import {ChatService} from './chat-service';
 import {GeoService} from './geo-service';
-import {UploadService} from './upload-service';
 
 export {GeneralService,BaseService,UserService,FireService,
-              BrigadeService,ChatService,GeoService,UploadService};
+              BrigadeService,ChatService,GeoService};

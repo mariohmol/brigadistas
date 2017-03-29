@@ -65,6 +65,12 @@
             </ion-label>          
         </ion-item>
       </ion-row>
+
+      <ion-row *ngIf="brigade.image">
+        <ion-item  >
+          <img [src]="brigade.image" />
+        </ion-item>
+      </ion-row>
      
     </form>
   </ion-list>

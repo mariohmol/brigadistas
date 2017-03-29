@@ -4,7 +4,7 @@ import { App,Platform, NavController, NavParams, AlertController,ToastController
 import BasePage from '../basepage';
 import { BrigadesPage } from './brigades';
 import { BrigadeAreaPage } from './area';
-import { UserService,BrigadeService,GeneralService,UploadService } 
+import { UserService,BrigadeService,GeneralService } 
         from '../../providers';
 import {TranslateService} from 'ng2-translate';
 import { Camera } from '@ionic-native/camera';
@@ -24,6 +24,7 @@ export class BrigadePage  extends BasePage{
   brigadeForm: FormGroup;
   brigadeFormFields: any;
   public readonly: boolean;
+  public image: any;
 
   constructor(public app: App, public platform: Platform,
     public navCtrl: NavController, public navParams: NavParams,
@@ -31,7 +32,7 @@ export class BrigadePage  extends BasePage{
     public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController, public fb: FormBuilder,
     public generalService: GeneralService,
-    public camera: Camera, public imagePicker: ImagePicker, public uploadService: UploadService) {
+    public camera: Camera, public imagePicker: ImagePicker) {
     super();
     this.readonly=true;
     if(this.navParams.get("brigade")){
@@ -82,6 +83,7 @@ export class BrigadePage  extends BasePage{
 
   save(){
     this.brigadeService.addBrigade(this.brigadeForm.value).then(d=>{
+      this.uploadPic(); 
       if(this.brigade._id){
         this.showToast(this.translate("brigade.update"));
       }else{
@@ -137,25 +139,24 @@ export class BrigadePage  extends BasePage{
   }
 
   getPic(){
-    this.getPicture(d=>{ this.brigade.image=d; this.uploadPic(); });
+    this.getPicture(d=>{ this.image=d; });
   }
 
   takePic(){
-    this.takePicture(d=>{ this.brigade.image=d; this.uploadPic(); });
+    this.takePicture(d=>{ this.image=d; });
   }
 
   getWebPic(){
     return (data)=>{
-      this.brigade.image=data; 
-      this.uploadPic();
+      this.image=data; 
     }
   }
 
   uploadPic(){
-     if(!this.brigade._id) return;
-    this.uploadService.makeFileRequest(`/api/brigade/image/${this.brigade._id}`, [], this.brigade.image).subscribe(() => {
-      console.log('sent');
-    });
+     if(!this.brigade._id || !this.image) return;
+     this.generalService.postFile("brigade",this.brigade._id, this.image).then(d=>{
+      this.brigade=d;
+     });
   }
 
 }

@@ -5,6 +5,7 @@ const { Fire } = require('../fire/models');
 const { Chat } = require('../chat/models');
 const { Item } = require('../geo/models');
 const fs = require('fs');
+const ObjectId = require('mongoose').Types.ObjectId
 
 /**
  * In root folder we need a upload folder with those folders inside:
@@ -37,17 +38,27 @@ var removeFile = (link,cb=null)=>{
     });
 }
 
-storageAdd = (entity,field)=>{
-    if(!entity || field) return res.sendStatus(404);
+storageAdd = (req,res,entity,model)=>{
+    let field = req.params.datafield;
+    if(!entity || !field) return res.sendStatus(404);
     uploadStorage(req,res,err=>{
       if(err){
             res.json({error_code:1,err_desc:err});
             return;
       }
       if(entity[field])removeFile(entity[field]);
-      entity[field] = req.datalink;
-      entity.save();
-      res.json(entity);
+      
+      let find={_id: new ObjectId(entity._id)};
+      let update = {$set: {}};
+      entity[field] = update.$set[field]=req.datalink;
+
+      model.update(find, update).then(d=>{
+          if(d.ok) return res.json(entity);
+          res.sendStatus(404);
+      }).catch(e=>{
+          res.status(500).json(e);
+      });
+      
     });
 }
 

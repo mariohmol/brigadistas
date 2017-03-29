@@ -19,11 +19,8 @@ import { ItemPage } from '../pages/geo/item';
 import { MapPage } from '../pages/geo/map';
 import { MapOptionsComponent } from '../pages/geo/mapoptions';
 
-
 import {GeneralService,BaseService,UserService,FireService,
-      BrigadeService,ChatService,GeoService,UploadService} from '../providers';
-
-UploadService
+      BrigadeService,ChatService,GeoService} from '../providers';
 
 import {FileUploadComponent,ReadOnlyClass} from './directives';
 
@@ -82,6 +79,6 @@ let links=[
   providers: [{provide: ErrorHandler, useClass: IonicErrorHandler},BackgroundGeolocation,
               Camera, ImagePicker, 
               GeneralService,BaseService,UserService,FireService,
-              BrigadeService,ChatService,GeoService,UploadService]
+              BrigadeService,ChatService,GeoService]
 })
 export class AppModule {}

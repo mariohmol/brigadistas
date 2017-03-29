@@ -84,18 +84,27 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="isReadonly()!=true">
-        <ion-item *ngIf="isCordova()" >
-           <button ion-button (click)="getPic()" >{{ "picture.get" | translate}}</button>
-            <button ion-button (click)="takePic()" >{{ "picture.take" | translate}}</button>
+    <ion-row>
+      <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
+        <ion-item *ngIf="isCordova()">
+          <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
+          <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
         </ion-item>
-        <ion-item *ngIf="!isCordova()" >
-          <ion-label> 
+        <ion-item *ngIf="!isCordova()">
+          <ion-label>
             {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true" ></file-upload>
-            </ion-label>          
+            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+          </ion-label>
         </ion-item>
-      </ion-row>
+      </ion-col>
+
+      <ion-col *ngIf="fire.image" col-12 col-sm-12 col-md-6>
+        <ion-item>
+          <img [src]="fire.image" />
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
 
     <ion-row *ngIf="fire.brigades">
       <ion-list-header>{{"brigades.title" | translate}}</ion-list-header>

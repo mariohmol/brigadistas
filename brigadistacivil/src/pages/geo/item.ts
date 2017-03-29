@@ -22,6 +22,7 @@ export class ItemPage extends BasePage {
   @ViewChild('map') mapElement: ElementRef;
   itemForm: FormGroup;
   itemFormFields: any;
+  public image: any;
 
   constructor(public app: App, public platform: Platform,
     public navCtrl: NavController, public navParams: NavParams,
@@ -111,12 +112,16 @@ export class ItemPage extends BasePage {
     if(this.item._id){
       this.item = Object.assign(this.item, this.itemForm.value);
       this.geoService.updateItem(this.item).then(d => {
+        this.item=d;
+        this.uploadPic(); 
         this.showToast(this.translate("item.status.updated"));
         this.openPage(MapPage);
       });
     }else{
       this.item = Object.assign(this.item, this.itemForm.value);
       this.geoService.addItem(this.item).then(d => {
+        this.item=d;
+        this.uploadPic(); 
         this.showToast(this.translate("item.status.new"));
         this.openPage(MapPage);
       });
@@ -131,11 +136,24 @@ export class ItemPage extends BasePage {
   }
 
   getPic(){
-    this.getPicture(d=>{ this.item.image; });
+    this.getPicture(d=>{ this.image=d; });
   }
 
   takePic(){
-    this.takePicture(d=>{ this.item.image; });
+    this.takePicture(d=>{ this.image=d; });
+  }
+
+  getWebPic(){
+    return (data)=>{
+      this.image=data; 
+    }
+  }
+
+  uploadPic(){
+     if(!this.item._id || !this.image) return;
+     this.generalService.postFile("item",this.item._id, this.image).then(d=>{
+      this.item=d;
+     });
   }
 
 }

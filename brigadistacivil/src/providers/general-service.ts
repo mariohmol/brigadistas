@@ -383,4 +383,8 @@ export class GeneralService extends BaseService {
     "#ffeb3b","#795548","#9e9e9e","#607d8b", "#009688", "#00bcd4"];
   }
 
+  postFile(type,id, files){
+    return this.doPost(`/${type}/image/${id}`, null,files);
+  }
+
 }

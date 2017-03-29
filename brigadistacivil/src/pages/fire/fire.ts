@@ -23,6 +23,7 @@ export class FirePage extends BasePage {
   @ViewChild('map') mapElement: ElementRef;
   fireForm: FormGroup;
   fireFormFields: any;
+  public image: any;
 
   constructor(public app: App, public platform: Platform, 
     public navCtrl: NavController, public navParams: NavParams, public fireService: FireService,
@@ -148,11 +149,15 @@ export class FirePage extends BasePage {
     if(this.fire._id){
       this.fire = Object.assign(this.fire, this.fireForm.value);
       this.fireService.updateFire(this.fire).then(d => {
+        this.fire=d;
+        this.uploadPic(); 
         this.openPage(FiresPage);
       });
     }else{
       this.fire = Object.assign(this.fire, this.fireForm.value);
       this.fireService.addFire(this.fire).then(d => {
+        this.fire=d;
+        this.uploadPic(); 
         this.openPage(FiresPage);
       });
     }
@@ -229,11 +234,24 @@ export class FirePage extends BasePage {
  }
 
   getPic(){
-    this.getPicture(d=>{ this.fire.image; });
+    this.getPicture(d=>{ this.image=d; });
   }
 
   takePic(){
-    this.takePicture(d=>{ this.fire.image; });
+    this.takePicture(d=>{ this.image=d; });
+  }
+
+  getWebPic(){
+    return (data)=>{
+      this.image=data; 
+    }
+  }
+
+  uploadPic(){
+     if(!this.fire._id || !this.image) return;
+     this.generalService.postFile("fire",this.fire._id, this.image).then(d=>{
+      this.fire=d;
+     });
   }
 
 }

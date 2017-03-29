@@ -57,7 +57,7 @@ router.post('/image/:id', passport.authenticate('basic', { session: false }),fun
   Brigade.findOne(query).then(r=>{
     req.params.datafolder="brigade";
     req.params.datafield="image";
-    storageAdd(r,req.params.datafield);
+    storageAdd(req,res,r,Brigade);
   });
 });
 

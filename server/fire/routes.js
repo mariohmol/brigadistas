@@ -131,9 +131,9 @@ router.put('/status/:id/:status', passport.authenticate('basic', { session: fals
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {
   var query={_id: req.params.id, users: { $in: [req.user._id] }};
   Fire.findOne(query).then(r=>{
-    req.params.datafolder="brigade";
+    req.params.datafolder="fire";
     req.params.datafield="image";
-    storageAdd(r,req.params.datafield);
+    storageAdd(req,res,r,Fire);
   });
 });
 
