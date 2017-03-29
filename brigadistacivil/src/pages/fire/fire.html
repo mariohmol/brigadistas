@@ -12,6 +12,16 @@
 <ion-content>
 
 
+   <ion-item>
+    <ion-avatar item-left>
+       <img [src]="fire.users[0].image" *ngIf="fire.users">
+        <img src="/assets/img/bg.jpg" *ngIf="!fire.users">
+    </ion-avatar>
+    <h2>Marty McFly</h2>
+    <p>November 5, 1955</p>
+  </ion-item>
+
+
   <form [formGroup]="fireForm" novalidate>
 
 
@@ -64,22 +74,6 @@
             <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
             <ion-icon range-right color="danger" name="thermometer"></ion-icon>
           </ion-range>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col col-12 col-sm-12 col-md-6>
-        <ion-item text-wrap *ngIf="fire.createdAt" [class.readonlyInput]="isReadonly()==true">
-          <ion-icon name="md-calendar" item-left large></ion-icon>
-          <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
-        </ion-item>
-      </ion-col>
-
-      <ion-col col-12 col-sm-12 col-md-6>
-        <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
-          <ion-icon name="md-person" item-left large></ion-icon>
-          <h2><a href="#/profile/{{fire.users[0]._id}}">{{fire.users[0].name}}</a></h2>
         </ion-item>
       </ion-col>
     </ion-row>

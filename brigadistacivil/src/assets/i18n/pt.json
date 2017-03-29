@@ -135,10 +135,12 @@
     },
     "update": {
       "title": "Perfil",
-      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
+      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
+      "ok": "Seu perfil foi atualizado com sucesso"
     },
     "profile": {
-      "title": "Perfil do Usuário"
+      "title": "Perfil do Usuário",
+      "my": "Meu Perfil"
     }
   },
   "bio": "Como pode ajudar",

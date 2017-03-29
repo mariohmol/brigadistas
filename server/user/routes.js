@@ -13,6 +13,10 @@ router.get('/', function (req, res, next) {
   User.find({deletedAt: null},'name image location createdAt').then(d => { res.json(d);});
 });
 
+router.get('/me', function (req, res, next) {
+  User.findById(req.user._id).then(d => { delete d.password; res.json(d);});
+});
+
 router.get('/profile/:id/', function (req, res, next) {
   User.findOne({_id: req.params.id, deletedAt: null},'name image bio url updatedAt location createdAt')
   .then(d => {

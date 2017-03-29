@@ -130,7 +130,9 @@
     },
     "update": {
       "title": "Perfil",
-      "error": "No se puede cambiar su perfil como su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor, póngase en contacto con nosotros."
+      "my": "Meu Perfil",
+      "error": "No se puede cambiar su perfil como su correo electrónico ya existe en nuestra base de datos o hubo un error, por favor, póngase en contacto con nosotros.",
+      "ok": "Seu perfil foi atualizado com sucesso"
     }
   },
   "bio": "Como puede ajudar",

@@ -14,6 +14,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 })
 export class UserPage extends BasePage {
   userForm: FormGroup;
+  userFormFields: any;
   public user: any;
   public image: any;
 
@@ -23,13 +24,15 @@ export class UserPage extends BasePage {
     public toastCtrl: ToastController,
     public camera: Camera, public imagePicker: ImagePicker) {
     super();
-    this.userForm = this.fb.group({
+    this.userFormFields = {
       name: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       email: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       password: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       city: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
       bio: ['', [<any>Validators.required, <any>Validators.minLength(5)]]
-    });
+    };
+
+    this.userForm = this.fb.group(this.userFormFields);
   }
 
   ionViewDidLoad() {
@@ -37,7 +40,15 @@ export class UserPage extends BasePage {
       this.user = this.navParams.get("user");
       if(UserService.loginData && this.user._id===UserService.loginData._id) this.readonly = false;
       else this.readonly = true;
-    } else {
+    } else if(UserService.loginData){
+      this.user=UserService.loginData;
+      this.userService.getMe().then(u=>{
+        this.user=u;
+        if(UserService.loginData && this.user._id===UserService.loginData._id) this.readonly = false;
+        else this.readonly = true;
+        this.setDataForm(this.userForm,this.userFormFields,this.user);
+      });
+    }else {
       this.user = {};
       this.readonly = false;
     }
@@ -54,13 +65,22 @@ export class UserPage extends BasePage {
       });
     } else {
       let originalPassword =this.userForm.value.password;
-      this.userService.register(this.userForm.value).then((d: any) => {
-        this.user=d;
-        this.uploadPic(); 
-        this.login(d.username, originalPassword);
-      }).catch(e=>{
-        this.showToast(this.translate("user.new.error"))
-      });
+      if(this.user && this.user._id){
+        this.userService.updateUser(this.user).then((d: any) => {
+          this.uploadPic(); 
+           this.showToast(this.translate("user.update.ok"))
+        }).catch(e=>{
+          this.showToast(this.translate("user.new.error"))
+        });
+      }else{    
+        this.userService.register(this.userForm.value).then((d: any) => {
+          this.user=d;
+          this.uploadPic(); 
+          this.login(d.username, originalPassword);
+        }).catch(e=>{
+          this.showToast(this.translate("user.new.error"))
+        });
+      }
     }
   }
 
