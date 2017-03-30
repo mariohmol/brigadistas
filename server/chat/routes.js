@@ -43,10 +43,18 @@ router.put('/:id', passport.authenticate('basic', { session: false }),
 
 router.post('/', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  let data=Object.assign(req.body, { members: [req.user._id], createdAt: new Date(), updatedAt: new Date()} );
-  Chat.create(req.body).then(d => {
-    res.json(d);
-  });
+  let data=Object.assign(req.body, {  createdAt: new Date(), updatedAt: new Date()} );
+  if(data.members) data.members.push([req.user._id]);
+  else data.members= [req.user._id];
+
+   Chat.find({ members: { $eq: data.members } }).then(d=>{
+    if(d) return res.json(d);
+    if(!data.title) data.title = data.members.reduce( (prev,cur) => { return prev+", "+cur.name} );
+    if(!data.public) data.public=false;
+    Chat.create(data).then(d => {
+      res.json(d);
+    }).catch(e=> {res.json(e);});
+   }).catch(e=> {res.json(e);});;
 });
 
 router.delete('/:id', passport.authenticate('basic', { session: false }),

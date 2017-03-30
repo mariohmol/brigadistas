@@ -19,18 +19,28 @@
     <ion-row>
       <ion-col *ngFor="let chat of chats" col-12 col-sm-12 col-md-6 col-lg-4 col-xl-4>
 
+        <ion-card>
+          <ion-list>
+            <img [src]="chat.image" *ngIf="chat && chat.image">
+            <img src="/assets/img/bg.jpg" *ngIf="!chat || !chat.image">
+            <ion-item text-wrap>
+              <h2>{{chat.title}}</h2>
+              <p>{{chat.description}}</p>
+              <p *ngIf="chat.lastMessage && chat.lastMessage.type == 'text'" class="last-message-content last-message-content-text">{{chat.lastMessage.content}}
+                <span class="last-message-timestamp">{{ chat.lastMessage.createdAt }}</span>
+              </p>
+            </ion-item>
+          </ion-list>
+        </ion-card>
 
-        <ion-list class="chats">
+        <!--<ion-list class="chats">
           <ion-item-sliding>
             <button ion-item class="chat" (click)="showChat(chat)">
                 <img class="chat-picture" [src]="chat.picture" *ngIf="chat.picture">
                 <div class="chat-info">
                   <h2 class="chat-title">{{chat.title}}</h2>
 
-                  <span *ngIf="chat.lastMessage" class="last-message">
-                    <p *ngIf="chat.lastMessage.type == 'text'" class="last-message-content last-message-content-text">{{chat.lastMessage.content}}</p>
-                    <span class="last-message-timestamp">{{ chat.lastMessage.createdAt }}</span>
-                  </span>
+                  
                 </div>
               </button>
             <ion-item-options class="chat-options">
@@ -38,7 +48,7 @@
             </ion-item-options>
           </ion-item-sliding>
         </ion-list>
-
+        -->
 
       </ion-col>
     </ion-row>

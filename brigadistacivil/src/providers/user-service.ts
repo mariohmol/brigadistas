@@ -97,6 +97,11 @@ export class UserService extends BaseService {
     return this.doGet(`/user/profile/${id}/`);
   }
 
+  findUser(name){
+    if(!name)name="";
+    return this.doGet(`/user/?name=${name}`);
+  }
+
   getMe(){
     return this.doPost(`/user/login`,{});
   }
