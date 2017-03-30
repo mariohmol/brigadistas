@@ -40,7 +40,7 @@
           <ion-label floating>{{ "user.email" | translate }} </ion-label>
           <ion-input formControlName="email" [readonly]="readOnly" type="email"></ion-input>
         </ion-item>
-        <ion-item col-12 col-sm-12 col-md-6>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!user || !user._id">
           <ion-label floating>{{ "user.password" | translate }} </ion-label>
           <ion-input formControlName="password" [readonly]="readOnly" type="password"></ion-input>
         </ion-item>

@@ -12,7 +12,7 @@
     </ion-header>
 
     <ion-content>
-      <ion-list>
+      <ion-list class="mainmenu">
         <button ion-item (click)="openPageName('FiresPage')">
             <ion-icon name="md-flame" item-left></ion-icon>
           {{"fires.title" | translate}}
@@ -29,7 +29,7 @@
           <ion-icon name="md-map" item-left></ion-icon>
           {{"map.title" | translate}}
         </button>
-        <button ion-item (click)="openPageName('ProfilePage')" *ngIf="isLogged()===true" >
+        <button ion-item (click)="openPageName('ProfilePage')" *ngIf="isLogged()" >
           <ion-icon name="md-person" item-left></ion-icon>
           {{"user.profile.my" | translate}}
         </button>

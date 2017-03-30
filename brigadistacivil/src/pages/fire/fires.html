@@ -32,9 +32,11 @@
                 <p>{{fire.description}}</p>
               </ion-item>
 
-              <ion-item *ngIf="fire.users && fire.users.length>0">
-                <img [src]="fire.users[0].image" *ngIf="fire.users[0].image" item-left large>
-                <ion-icon name="md-person" *ngIf="!fire.users[0].image" item-left large></ion-icon>
+              <ion-item  *ngIf="fire.users && fire.users.length>0">
+                <ion-avatar item-left>
+                  <img [src]="fire.users[0].image" *ngIf="fire.users[0].image" item-left large>
+                  <ion-icon name="md-person" *ngIf="!fire.users[0].image" item-left large></ion-icon>
+                </ion-avatar>
                 <h2>{{fire.users[0].name}}</h2>
                 <p *ngIf="fire.createdAt"> às {{fire.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
               </ion-item>

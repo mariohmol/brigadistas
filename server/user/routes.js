@@ -13,10 +13,6 @@ router.get('/', function (req, res, next) {
   User.find({deletedAt: null},'name image location createdAt').then(d => { res.json(d);});
 });
 
-router.get('/me', function (req, res, next) {
-  User.findById(req.user._id).then(d => { delete d.password; res.json(d);});
-});
-
 router.get('/profile/:id/', function (req, res, next) {
   User.findOne({_id: req.params.id, deletedAt: null},'name image bio url updatedAt location createdAt')
   .then(d => {
@@ -114,6 +110,13 @@ router.post('/register', (req, res) => {
         });
       });
     });
+});
+
+
+router.post('/update', passport.authenticate('basic', { session: false }), function (req, res, next) {
+  User.update({_id: req.user._id},req.body.user)
+  .then(d => {  if(d.ok) res.json(req.body.user); else res.sendStatus(500); })
+  .catch(e=>{ res.status(500).json(e); });
 });
 
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {

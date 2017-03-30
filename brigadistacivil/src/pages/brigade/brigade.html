@@ -15,6 +15,16 @@
 
 <ion-content>
 
+  <ion-card>
+    <ion-item *ngIf="brigade && brigade._id">
+      <h2>{{brigade.name}}</h2>
+      <p *ngIf="brigade.createdAt"> às {{brigade.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
+    </ion-item>
+
+    <img [src]="brigade.image" *ngIf="brigade.image">
+    <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
+  </ion-card>
+
 
   <ion-segment *ngIf="brigade && brigade._id">
     <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
@@ -85,9 +95,11 @@
         <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.leaders; let i = index;">
           <ion-card>
             <ion-item>
-              <!--<ion-thumbnail item-left>  <img src="img/thumbnail-totoro.png">  </ion-thumbnail>  <p>{{user.createdAt}}</p>-->
+              <ion-avatar item-left>
+                <img [src]="user.image" *ngIf="user.image">
+                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+              </ion-avatar>
               <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
-              <!--<button ion-button clear item-right >View</button>-->
             </ion-item>
           </ion-card>
         </ion-col>
@@ -109,6 +121,10 @@
         <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.brigades; let i = index;">
           <ion-card>
             <ion-item>
+              <ion-avatar item-left>
+                <img [src]="user.image" *ngIf="user.image">
+                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+              </ion-avatar>
               <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
               <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
               <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="isInLeaderes()">Promote</button>
@@ -131,6 +147,10 @@
         <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.requested; let i = index;">
           <ion-card>
             <ion-item>
+              <ion-avatar item-left>
+                <img [src]="user.image" *ngIf="user.image">
+                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+              </ion-avatar>
               <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
               <p>{{user.createdAt | date: 'dd/MM/yyyy' }}</p>
               <button ion-button clear item-right (click)="approveBrigade(user._id)" *ngIf="isInLeaderes()">Approve</button>
