@@ -28,13 +28,13 @@
 
   <ion-segment *ngIf="brigade && brigade._id">
     <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
-      Entrar na Brigada
+      {{ "brigade.requestEnter.action" | translate }}
     </ion-segment-button>
     <ion-segment-button value="leave" *ngIf="isInBrigade()" (click)="leaveBrigade()">
-      Sair da Brigada
+      {{ "brigade.leaveBrigade.action" | translate }}
     </ion-segment-button>
     <ion-segment-button value="area" (click)="showMap()">
-      Ver Área
+      {{ "brigade.area.title" | translate }}
     </ion-segment-button>
   </ion-segment>
 
@@ -88,7 +88,7 @@
   <div *ngIf="brigade._id">
     <ion-list class="leaders">
       <ion-list-header>
-        Leaders
+        {{ "leaders" | translate }}
       </ion-list-header>
 
       <ion-row>
@@ -111,7 +111,7 @@
 
     <ion-list class="brigades">
       <ion-list-header>
-        Brigades
+        {{ "brigades.title" | translate }}
       </ion-list-header>
       <ion-item *ngIf="!brigade.brigades || brigade.brigades.length==0">
         <h2>{{ "notfounditems" | translate }}</h2>
@@ -127,7 +127,8 @@
               </ion-avatar>
               <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
               <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
-              <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="isInLeaderes()">Promote</button>
+              <button ion-button clear item-right (click)="promoteBrigade(user._id)" 
+              *ngIf="isInLeaderes()">{{ "promote" | translate }}</button>
             </ion-item>
           </ion-card>
         </ion-col>
@@ -137,7 +138,7 @@
 
     <ion-list *ngIf="!isReadonly()">
       <ion-list-header>
-        Requested
+        {{ "brigade.requested" | translate }}
       </ion-list-header>
       <ion-item *ngIf="!brigade.requested || brigade.requested.length==0">
         <h2>{{ "notfounditems" | translate }}</h2>
@@ -153,7 +154,8 @@
               </ion-avatar>
               <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
               <p>{{user.createdAt | date: 'dd/MM/yyyy' }}</p>
-              <button ion-button clear item-right (click)="approveBrigade(user._id)" *ngIf="isInLeaderes()">Approve</button>
+              <button ion-button clear item-right (click)="approveBrigade(user._id)" 
+              *ngIf="isInLeaderes()">{{ "approve" | translate }}</button>
             </ion-item>
 
           </ion-card>

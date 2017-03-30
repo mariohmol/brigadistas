@@ -81,13 +81,13 @@ export class BaseService {
   doPost(url: string,data: any,files: any=null){
     return new Promise( (resolve,reject) => {
       let headers=this.doHeaders(data);  //let headers = new Headers({ 'Content-Type': 'application/x-www-form-urlencoded' });
+      if(files) headers._headers.delete("content-type");
       let options = new RequestOptions({ headers: headers, method:  'post' });
       if(!data) data={};
 
       let formData;
 
       if(files){
-        options.headers = null;
         formData = new FormData()
         if(files.length==1){
           formData.append("uploads", files[0], files[0].name);
