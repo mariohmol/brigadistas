@@ -19,6 +19,12 @@ import { ItemPage } from '../pages/geo/item';
 import { MapPage } from '../pages/geo/map';
 import { MapOptionsComponent } from '../pages/geo/mapoptions';
 
+import { NewLocationMessageComponent } from '../pages/message/location-message';
+import { MessagesAttachmentsComponent } from '../pages/message/messages-attachments';
+import { MessagesOptionsComponent } from '../pages/message/messages-options';
+import { MessagesPage } from '../pages/message/messages';
+import { ShowPictureComponent } from '../pages/message/show-picture';
+
 import {GeneralService,BaseService,UserService,FireService,
       BrigadeService,ChatService,GeoService} from '../providers';
 
@@ -31,6 +37,9 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 
+
+
+
 let pages = [
   MyApp,
   UserPage,LoginPage,UserProfilePage,
@@ -38,6 +47,7 @@ let pages = [
   BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
   ChatsPage,ChatPage,NewChatModalPage,
+  NewLocationMessageComponent,MessagesAttachmentsComponent,MessagesOptionsComponent,MessagesPage,ShowPictureComponent,
   AreaPage,ItemPage,MapPage,MapOptionsComponent
 ];
 

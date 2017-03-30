@@ -2,10 +2,6 @@
   "app": {
     "name": "Civilian Brigadist"
   },
-  "chat": {
-    "title": "Chat",
-    "notfound": "Chat not found for this fire"
-  },
   "brigade": {
     "title": "Brigade",
     "promoteBrigade": {
@@ -41,6 +37,15 @@
   "brigades": {
     "title": "Brigades",
     "see": "See brigade"
+  },
+  "chat": {
+    "deleted": "Chat deleted successfully",
+    "title": "Chat",
+    "notfound": "Chat not found for this fire",
+    "select": "Select a user to chat",
+    "new": {
+      "error": "We could not open this chat, if the error persist please get in touch"
+    }
   },
   "error": {
     "gps": "We could not connect to your GPS",
@@ -161,6 +166,7 @@
   "name": "Name",
   "notfounditems": "No information found.",
   "password": "password",
+  "remove": "Remove",
   "title": "Title",
   "yesContinue": "Yes, I want to continue"
 }

@@ -7,6 +7,7 @@ const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
 const {URL} = require('../config/config');
 const { storageAdd } = require('../config/storage');
+const {ObjectId} = require('mongoose').Types;
 
 router.get('/',passport.authenticate('basic', { session: false }), function (req, res, next) {
   Chat.find({members: {$in: [req.user._id]}},'title lastMessage createdAt').then(d => { res.json(d);});
@@ -47,20 +48,24 @@ router.post('/', passport.authenticate('basic', { session: false }),
   if(data.members) data.members.push([req.user._id]);
   else data.members= [req.user._id];
 
-   Chat.find({ members: { $eq: data.members } }).then(d=>{
-    if(d) return res.json(d);
-    if(!data.title) data.title = data.members.reduce( (prev,cur) => { return prev+", "+cur.name} );
+   Chat.findOne({ members: { $eq: data.members } }).then(d=>{
+    if(d && d.length>0) return res.json(d);
+    if(!data.title) data.title = data.members.reduce( (prev,cur) => { 
+      if(prev) return prev+", "+cur.name
+    });
     if(!data.public) data.public=false;
     Chat.create(data).then(d => {
       res.json(d);
-    }).catch(e=> {res.json(e);});
-   }).catch(e=> {res.json(e);});;
+    }).catch(e=> {res.status(500).json(e);});
+   }).catch(e=> {res.status(500).json(e);});;
 });
 
 router.delete('/:id', passport.authenticate('basic', { session: false }),
  function (req, res, next) {
-  var query={_id: req.params.id, ownerId: req.user._id };
-  Chat.findOneAndDelete(query,{},{}).then(d => { res.json(d);});
+  var query={_id: req.params.id};
+  Chat.findOneAndUpdate(query,{$pull: {members: req.user._id}},{})
+  .then(d => { res.json(d);})
+  .catch(e => { res.status(500).json(e);});
 });
 
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {

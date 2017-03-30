@@ -38,6 +38,15 @@
     "title": "Brigadas",
     "see": "Ver brigada"
   },
+  "chat": {
+    "deleted": "Conversa removida com sucesso",
+    "title": "Conversa",
+    "notfound": "Conversa não encontrada para este fogo",
+    "select": "Selecione um usuário",
+    "new": {
+      "error": "Não foi possível abrir um chat, se persistir entre em contato conosco"
+    }
+  },
   "error": {
     "gps": "Error ao conectar com seu GPS",
     "notavailableweb": "Esta funcionalidade não está disponível para versão web ou desktop, apenas em dispositivo móvel"
@@ -152,6 +161,7 @@
   "name": "nombre",
   "notfounditems": "No se encontró información.",
   "password": "contraseña",
+  "remove": "Remover",
   "title": "Título",
   "yesContinue": "Sí, quiero seguir"
 }

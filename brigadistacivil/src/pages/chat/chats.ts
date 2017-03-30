@@ -32,14 +32,14 @@ export class ChatsPage extends BasePage {
   }
 
   showChat(chat){
-    this.chatService.getChat(chat._id).then((chat:any)=>{
-      if(!chat) return this.showToast(this.translate("chat.notfound"));
-      this.navCtrl.push(ChatPage,{ chat, chatId: chat._id});
-    });
+    this.navCtrl.push(ChatPage,{ chat, chatId: chat._id});
   }
 
   removeChat(chat){
-
+    this.chatService.deleteChat(chat._id).then(chat=>{
+      this.showToast(this.translate("chat.deleted"));
+      this.loadData();
+    });
   }
 
   addChat() {
@@ -72,7 +72,7 @@ export class NewChatModalPage extends BasePage {
   character;
 
   constructor(
-    public platform: Platform,
+    public app: App,public platform: Platform,
     public params: NavParams,
     public viewCtrl: ViewController,
     public chatService: ChatService,
@@ -87,7 +87,7 @@ export class NewChatModalPage extends BasePage {
     let chat={members: [user]};
     this.chatService.addChat(chat).then( (d:any)=>{
       console.log(d);
-      this.openPageParam(ChatPage, { id: d._id })
+      this.openPageParam(ChatPage, { chatId: d._id })
        this.viewCtrl.dismiss();
     }).catch(e=>{ console.log(e);
       this.showToast(this.translate("chat.new.error"));

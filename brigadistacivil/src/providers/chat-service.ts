@@ -27,8 +27,8 @@ export class ChatService extends BaseService {
     return this.doPost('/chat/',chat);
   }
 
-  deleteChat(chat){
-    return this.doDelete(`/chat/${chat._id}`);
+  deleteChat(chatId){
+    return this.doDelete(`/chat/${chatId}`);
   }
 
   getMessages(){
