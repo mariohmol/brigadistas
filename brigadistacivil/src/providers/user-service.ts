@@ -78,10 +78,6 @@ export class UserService extends BaseService {
     return this.doPost('/user/register',data);
   }
 
-  updateProfile(data) {
-    return this.doPost('/user/update',data);
-  }
-
   saveLocation(lat, lng, fireId) {
     let data = {
       lat, lng, fireId
@@ -99,6 +95,19 @@ export class UserService extends BaseService {
 
   getUser(id){
     return this.doGet(`/user/profile/${id}/`);
+  }
+
+  findUser(name){
+    if(!name)name="";
+    return this.doGet(`/user/?name=${name}`);
+  }
+
+  getMe(){
+    return this.doPost(`/user/login`,{});
+  }
+
+  updateUser(user){
+    return this.doPost(`/user/update`,{user});
   }
 
 }

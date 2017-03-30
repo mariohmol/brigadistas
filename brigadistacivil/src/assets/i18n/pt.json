@@ -2,10 +2,6 @@
   "app": {
     "name": "Brigadista Civil"
   },
-  "chat": {
-    "title": "Conversa",
-    "notfound": "Conversa não encontrada para este fogo"
-  },
   "brigade": {
     "title": "Brigada",
     "promoteBrigade": {
@@ -41,6 +37,15 @@
   "brigades": {
     "title": "Brigadas",
     "see": "Ver brigada"
+  },
+  "chat": {
+    "deleted": "Conversa removida com sucesso",
+    "title": "Conversa",
+    "notfound": "Conversa não encontrada para este fogo",
+    "select": "Selecione um usuário",
+    "new": {
+      "error": "Não foi possível abrir um chat, se persistir entre em contato conosco"
+    }
   },
   "error": {
     "gps": "Error ao conectar com seu GPS",
@@ -135,10 +140,12 @@
     },
     "update": {
       "title": "Perfil",
-      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco."
+      "error": "Não foi possível alterar seu perfil pois seu email já existe na nossa base ou houve um erro, entre em contato conosco.",
+      "ok": "Seu perfil foi atualizado com sucesso"
     },
     "profile": {
-      "title": "Perfil do Usuário"
+      "title": "Perfil do Usuário",
+      "my": "Meu Perfil"
     }
   },
   "bio": "Como pode ajudar",
@@ -160,6 +167,7 @@
   "notfounditems": "Não foram encontrados informações.",
   "location": "Localização",
   "password": "Senha",
+  "remove": "Remover",
   "title": "Título",
   "yesContinue": "Sim, desejo continuar"
 }

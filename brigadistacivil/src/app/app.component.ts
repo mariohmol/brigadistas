@@ -10,7 +10,7 @@ import { FiresPage } from '../pages/fire/fires';
 import { MapPage } from '../pages/geo/map';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { TranslateService } from 'ng2-translate';
-import { UserService } from '../providers';
+import { UserService, BaseService } from '../providers';
 
 @Component({
   templateUrl: 'app.html'
@@ -57,6 +57,7 @@ export class MyApp {
         { title: 'MapPage', component: MapPage },
       ];
       if(this.platform.is('cordova')) {
+        BaseService.device="mobile";
         this.startPush();
         StatusBar.styleDefault();
         Splashscreen.hide();

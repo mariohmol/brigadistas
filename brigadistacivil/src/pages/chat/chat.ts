@@ -26,7 +26,7 @@ export class ChatPage extends BasePage {
       this.chat = this.navParams.get("chat");
       this.loadData();
     }if (this.navParams.get("chatId")) {
-      this.chat = {_id: this.navParams.get("chat")};
+      this.chat = {_id: this.navParams.get("chatId")};
       this.loadData();
     } else {
       this.chat = {};

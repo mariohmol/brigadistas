@@ -10,9 +10,20 @@
 </ion-header>
 
 <ion-content>
-
-
   <form [formGroup]="fireForm" novalidate>
+    <ion-card>
+      <ion-item *ngIf="fire.users">
+        <ion-avatar item-left>
+          <img [src]="fire.users[0].image" *ngIf="fire.users">
+          <img src="/assets/img/bg.jpg" *ngIf="!fire.users">
+        </ion-avatar>
+        <h2>{{fire.users[0].name}}</h2>
+        <p *ngIf="fire.createdAt"> às {{fire.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
+      </ion-item>
+
+      <img [src]="fire.image" *ngIf="fire.image">
+      <img src="/assets/img/bg.jpg" *ngIf="!fire.image">
+    </ion-card>
 
 
     <ion-segment *ngIf="fire._id && isInBrigade()">
@@ -69,22 +80,6 @@
     </ion-row>
 
     <ion-row>
-      <ion-col col-12 col-sm-12 col-md-6>
-        <ion-item text-wrap *ngIf="fire.createdAt" [class.readonlyInput]="isReadonly()==true">
-          <ion-icon name="md-calendar" item-left large></ion-icon>
-          <h2>{{fire.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
-        </ion-item>
-      </ion-col>
-
-      <ion-col col-12 col-sm-12 col-md-6>
-        <ion-item text-wrap *ngIf="fire.users" [class.readonlyInput]="isReadonly()==true">
-          <ion-icon name="md-person" item-left large></ion-icon>
-          <h2><a href="#/profile/{{fire.users[0]._id}}">{{fire.users[0].name}}</a></h2>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
       <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
         <ion-item *ngIf="isCordova()">
           <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
@@ -109,13 +104,13 @@
     <ion-row *ngIf="fire.brigades">
       <ion-list-header>{{"brigades.title" | translate}}</ion-list-header>
       <ion-col col-12 col-sm-12 col-md-4 *ngFor="let brigade of fire.brigades">
-        <!--
-        <ion-icon name="md-contacts" item-left large></ion-icon>
-      -->
         <ion-card>
-          <ion-item [class.readonlyInput]="isReadonly()==true">
+          <ion-item>
+            <ion-avatar item-left>
+              <img [src]="brigade.image" *ngIf="brigade.image">
+              <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
+            </ion-avatar>
             <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
-            <!--  <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note> -->
           </ion-item>
         </ion-card>
       </ion-col>

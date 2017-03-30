@@ -17,7 +17,7 @@
 //
 .readonlyInput {
 
-  ,.item-inner{
+  .item-inner{
     border-bottom-color: transparent !important;
      box-shadow: inset 0 -1px 0 0 transparent !important;
   }
@@ -41,7 +41,8 @@
     font-size: 2.0em;
     width: 100%;
     font-weight: bold;
-    color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255,255,255,.6);
   }
 
   .card-subtitle {
@@ -49,7 +50,12 @@
     position: absolute;
     top: 52%;
     width: 100%;
-    color: rgba(0,0,0,0.6);
+    background-color: rgba(0, 0, 0, 0.6);
+    color: rgba(255,255,255,.6);
   }
 
+}
+
+ion-card img{
+  max-height: 100px;
 }

@@ -12,7 +12,7 @@
     </ion-header>
 
     <ion-content>
-      <ion-list>
+      <ion-list class="mainmenu">
         <button ion-item (click)="openPageName('FiresPage')">
             <ion-icon name="md-flame" item-left></ion-icon>
           {{"fires.title" | translate}}
@@ -28,6 +28,10 @@
         <button ion-item (click)="openPageName('MapPage')" >
           <ion-icon name="md-map" item-left></ion-icon>
           {{"map.title" | translate}}
+        </button>
+        <button ion-item (click)="openPageName('ProfilePage')" *ngIf="isLogged()" >
+          <ion-icon name="md-person" item-left></ion-icon>
+          {{"user.profile.my" | translate}}
         </button>
         <a ion-item href="http://www.brigadistacivil.com.br" target="_new">
           <ion-icon name="md-paper" item-left></ion-icon>

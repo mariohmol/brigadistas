@@ -10,7 +10,11 @@ const { sendMail,sendEmailAdmins,sendEmailTemplate } = require('../config/emaile
 const { storageAdd } = require('../config/storage');
 
 router.get('/', function (req, res, next) {
-  User.find({deletedAt: null},'name image location createdAt').then(d => { res.json(d);});
+  let find = {deletedAt: null};
+  if(req.query.name){
+    find.name =  { "$regex": req.query.name, "$options": "i" };
+  }
+  User.find(find,'_id name image location createdAt').limit(10).then(d => { res.json(d);});
 });
 
 router.get('/profile/:id/', function (req, res, next) {
@@ -110,6 +114,13 @@ router.post('/register', (req, res) => {
         });
       });
     });
+});
+
+
+router.post('/update', passport.authenticate('basic', { session: false }), function (req, res, next) {
+  User.update({_id: req.user._id},req.body.user)
+  .then(d => {  if(d.ok) res.json(req.body.user); else res.sendStatus(500); })
+  .catch(e=>{ res.status(500).json(e); });
 });
 
 router.post('/image/:id', passport.authenticate('basic', { session: false }),function (req, res, next) {

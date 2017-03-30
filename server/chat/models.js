@@ -10,7 +10,7 @@ const ChatSchema = new mongoose.Schema({
   image: { type: String },
   members: [{ type: mongoose.Schema.Types.ObjectId, ref: 'User',unique: true, required: [true,'No user member found']}],
   lastMessage: { type: mongoose.Schema.Types.ObjectId, ref: 'Message', required: [false,'No last message found']},
-  fire: { type: mongoose.Schema.Types.ObjectId, ref: 'Fire', required: [true,'No fire found']},
+  fire: { type: mongoose.Schema.Types.ObjectId, ref: 'Fire', required: [false,'No fire found']},
   createdAt: { type: Date },
   deletedAt: { type: Date },
   ownerId: { type: String },

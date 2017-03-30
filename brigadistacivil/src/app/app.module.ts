@@ -13,16 +13,22 @@ import { BrigadePage } from '../pages/brigade/brigade';
 import { BrigadeAreaPage } from '../pages/brigade/area';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { ChatPage } from '../pages/chat/chat';
-import { ChatsPage } from '../pages/chat/chats';
+import { ChatsPage,NewChatModalPage } from '../pages/chat/chats';
 import { AreaPage } from '../pages/geo/area';
 import { ItemPage } from '../pages/geo/item';
 import { MapPage } from '../pages/geo/map';
 import { MapOptionsComponent } from '../pages/geo/mapoptions';
 
+import { NewLocationMessageComponent } from '../pages/message/location-message';
+import { MessagesAttachmentsComponent } from '../pages/message/messages-attachments';
+import { MessagesOptionsComponent } from '../pages/message/messages-options';
+import { MessagesPage } from '../pages/message/messages';
+import { ShowPictureComponent } from '../pages/message/show-picture';
+
 import {GeneralService,BaseService,UserService,FireService,
       BrigadeService,ChatService,GeoService} from '../providers';
 
-import {FileUploadComponent,ReadOnlyClass} from './directives';
+import {FileUploadComponent,ReadOnlyClass,SelectUser} from './directives';
 
 import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {HttpModule,Http} from '@angular/http';
@@ -31,17 +37,21 @@ import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
 
+
+
+
 let pages = [
   MyApp,
   UserPage,LoginPage,UserProfilePage,
   FirePage, FiresPage,
   BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
-  ChatsPage,ChatPage,
+  ChatsPage,ChatPage,NewChatModalPage,
+  NewLocationMessageComponent,MessagesAttachmentsComponent,MessagesOptionsComponent,MessagesPage,ShowPictureComponent,
   AreaPage,ItemPage,MapPage,MapOptionsComponent
 ];
 
-let declarations = [...pages, ReadOnlyClass, FileUploadComponent ];
+let declarations = [...pages, ReadOnlyClass, FileUploadComponent,SelectUser ];
 
 let links=[
       { component: UserPage, name: 'User', segment: 'register' },

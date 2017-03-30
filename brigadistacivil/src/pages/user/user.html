@@ -40,7 +40,7 @@
           <ion-label floating>{{ "user.email" | translate }} </ion-label>
           <ion-input formControlName="email" [readonly]="readOnly" type="email"></ion-input>
         </ion-item>
-        <ion-item col-12 col-sm-12 col-md-6>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!user || !user._id">
           <ion-label floating>{{ "user.password" | translate }} </ion-label>
           <ion-input formControlName="password" [readonly]="readOnly" type="password"></ion-input>
         </ion-item>
@@ -63,20 +63,7 @@
           <small>{{ "user.bio" | translate }} {{ "require.minString" | translate }}</small>
         </ion-item>
       </ion-row>
-
-      <ion-row *ngIf="isReadonly()!=true">
-        <ion-item *ngIf="isCordova()">
-          <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
-          <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
-        </ion-item>
-        <ion-item *ngIf="!isCordova()">
-          <ion-label>
-            {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
-          </ion-label>
-        </ion-item>
-      </ion-row>
-
+      
       <ion-row>
         <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
           <ion-item *ngIf="isCordova()">
@@ -91,7 +78,7 @@
           </ion-item>
         </ion-col>
 
-        <ion-col *ngIf="user.image" col-12 col-sm-12 col-md-6>
+        <ion-col *ngIf="user && user.image" col-12 col-sm-12 col-md-6>
           <ion-item>
             <img [src]="user.image" />
           </ion-item>

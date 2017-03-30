@@ -15,6 +15,8 @@
     "setprodenv": "cp src/production.ts src/environment.ts",
     "setdevenv": "cp src/development.ts src/environment.ts",
     "clean": "cordova clean",
+    "cordova-update": "cordova platform update android && cordova platform update ios",
+    "cordova-reinstall": "cordova platform rm android && cordova platform add android@latest && cordova build android",
     "servelab": "ionic serve --lab",
     "resources": "ionic resources",
     "android": "npm run setprodenv && ionic run android",
@@ -25,7 +27,6 @@
     "iospod": "pod setup",
     "iosgenperm": "openssl x509 -in ioscert.cer -inform DER -outform PEM -out ioscert.pem && openssl pkcs12 -in ioskey.p12 -out ioskey.pem -nodes",
     "iosgentest": "openssl s_client -connect gateway.push.apple.com:2195 -cert ioscert.pem -key ioskey.pem",
-    "cordova-update": "cordova platform update android && cordova platform update ios",
     "deploy-mongo": "git pull && gulp build && 'cp' -R www/* api/public/ && cd api && sed -i -e 's/localhost:3000/app.brigadistacivil.com.br:3000/g' public/build/js/app.bundle.js && passenger-config restart-app",
     "logs": "tail -f api/passenger.3000.log",
     "savestate": "ionic state save",
@@ -100,6 +101,7 @@
     "cordova-plugin-mauron85-background-geolocation",
     "cordova-plugin-googlemaps",
     "phonegap-plugin-push",
+    "cordova-plugin-image-picker",
     "cordova-plugin-crosswalk-webview",
     "cordova.plugins.diagnostic"
   ],
@@ -116,5 +118,5 @@
       "locator": "android"
     }
   ],
-  "description": "brigadistacivil: Appque auxilia brigadista civil durante o combate"
+  "description": "brigadistacivil: App que auxilia brigadista civil durante o combate"
 }

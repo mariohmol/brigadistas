@@ -2,10 +2,6 @@
   "app": {
     "name": "Civilian Brigadist"
   },
-  "chat": {
-    "title": "Chat",
-    "notfound": "Chat not found for this fire"
-  },
   "brigade": {
     "title": "Brigade",
     "promoteBrigade": {
@@ -41,6 +37,15 @@
   "brigades": {
     "title": "Brigades",
     "see": "See brigade"
+  },
+  "chat": {
+    "deleted": "Chat deleted successfully",
+    "title": "Chat",
+    "notfound": "Chat not found for this fire",
+    "select": "Select a user to chat",
+    "new": {
+      "error": "We could not open this chat, if the error persist please get in touch"
+    }
   },
   "error": {
     "gps": "We could not connect to your GPS",
@@ -134,10 +139,12 @@
     },
     "update": {
       "title": "Profile",
-      "error": "We were unable to change your profile because your email already exists in our database or there was an error, please contact us."
+      "error": "We were unable to change your profile because your email already exists in our database or there was an error, please contact us.",
+      "ok": "Your profile was updated successfully"
     },
     "profile": {
-      "title": "User Profile"
+      "title": "User Profile",
+      "my": "My Profile"
     }
   },
   "bio": "How I can help",
@@ -159,6 +166,7 @@
   "name": "Name",
   "notfounditems": "No information found.",
   "password": "password",
+  "remove": "Remove",
   "title": "Title",
   "yesContinue": "Yes, I want to continue"
 }
