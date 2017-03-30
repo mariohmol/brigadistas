@@ -7,7 +7,7 @@ import Environment from "../environment";
 
 @Injectable()
 export class FireService extends BaseService {
-  public static dados: any= {};
+  public static data: any= {};
   
   constructor(public http: Http,private backgroundGeolocation: BackgroundGeolocation) {
     super(http);

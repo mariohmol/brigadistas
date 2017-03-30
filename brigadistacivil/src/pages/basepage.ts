@@ -3,7 +3,7 @@ import {
   LoadingController, ToastController
 } from 'ionic-angular';
 import { FormGroup } from '@angular/forms';
-import { UserService,GeneralService } from '../providers';
+import { UserService,GeneralService,BaseService } from '../providers';
 import { TranslateService } from 'ng2-translate';
 import { ViewChild, ElementRef } from '@angular/core';
 import { Camera, CameraOptions } from '@ionic-native/camera';
@@ -41,6 +41,7 @@ export default class BasePage {
 
   isCordova(){
     if(this.platform) return this.platform.is('cordova')==true;
+    return BaseService.device === 'mobile';
   }
 
   /**

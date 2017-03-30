@@ -42,7 +42,7 @@ export class GeneralService extends BaseService {
     }
 
     if (BaseService.device == 'mobile') {
-      GeneralService.map = new GoogleMap(mapElement.nativeElement);
+      GeneralService.map = new GoogleMap(mapElement.nativeElement,options);
 
       // listen to MAP_READY event
       GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {

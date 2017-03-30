@@ -75,21 +75,13 @@
             </ion-label>          
         </ion-item>
       </ion-row>
-
-      <ion-row *ngIf="brigade.image">
-        <ion-item  >
-          <img [src]="brigade.image" />
-        </ion-item>
-      </ion-row>
      
     </form>
   </ion-list>
 
   <div *ngIf="brigade._id">
     <ion-list class="leaders">
-      <ion-list-header>
-        {{ "leaders" | translate }}
-      </ion-list-header>
+      <ion-item-divider color="light">{{ "leaders" | translate }}</ion-item-divider>
 
       <ion-row>
         <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.leaders; let i = index;">
@@ -110,9 +102,7 @@
     <hr/>
 
     <ion-list class="brigades">
-      <ion-list-header>
-        {{ "brigades.title" | translate }}
-      </ion-list-header>
+      <ion-item-divider color="light">{{ "brigades.title" | translate }}</ion-item-divider>
       <ion-item *ngIf="!brigade.brigades || brigade.brigades.length==0">
         <h2>{{ "notfounditems" | translate }}</h2>
       </ion-item>
@@ -137,9 +127,7 @@
 
 
     <ion-list *ngIf="!isReadonly()">
-      <ion-list-header>
-        {{ "brigade.requested" | translate }}
-      </ion-list-header>
+      <ion-item-divider color="light">{{ "brigade.requested" | translate }}</ion-item-divider>
       <ion-item *ngIf="!brigade.requested || brigade.requested.length==0">
         <h2>{{ "notfounditems" | translate }}</h2>
       </ion-item>

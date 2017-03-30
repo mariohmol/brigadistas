@@ -1,0 +1,81 @@
+<ion-card>
+    <ion-item *ngIf="fire.users">
+        <ion-avatar item-left>
+            <img [src]="fire.users[0].image" *ngIf="fire.users">
+            <img src="/assets/img/bg.jpg" *ngIf="!fire.users">
+        </ion-avatar>
+        <h2>{{fire.users[0].name}}</h2>
+        <p *ngIf="fire.createdAt"> às {{fire.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
+    </ion-item>
+
+    <img [src]="fire.image" *ngIf="fire.image">
+    <img src="/assets/img/bg.jpg" *ngIf="!fire.image">
+</ion-card>
+
+<form [formGroup]="fireForm" novalidate>
+    <ion-row>
+        <ion-col col-12 col-sm-12 col-md-6>
+
+            <ion-item [class.readonlyInput]="isReadonly()==true">
+                <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
+                <ion-input formControlName="title" [readonly]="isReadonly()" type="text"></ion-input>
+            </ion-item>
+        </ion-col>
+
+        <ion-col col-12 col-sm-12 col-md-6>
+            <ion-item>
+                <ion-label class="intensity" floating>{{ "intensity" | translate }}</ion-label>
+                <ion-range min="20" max="100" step="20" snaps="true" [disabled]="isReadonly()" formControlName="intensity" color="danger">
+                    <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
+                    <ion-icon range-right color="danger" name="thermometer"></ion-icon>
+                </ion-range>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col>
+            <ion-item [class.readonlyInput]="isReadonly()==true">
+                <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>
+                <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+    <ion-row>
+        <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
+            <ion-item *ngIf="isCordova()">
+                <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
+                <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
+            </ion-item>
+            <ion-item *ngIf="!isCordova()">
+                <ion-label>
+                    {{'picture.get' | translate}}
+                    <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+                </ion-label>
+            </ion-item>
+        </ion-col>
+    </ion-row>
+
+
+    <ion-row *ngIf="fire.brigades">
+        <ion-item-divider color="light">{{ "brigades.title" | translate }}</ion-item-divider>
+
+        <ion-col col-12 col-sm-12 col-md-4 *ngFor="let brigade of fire.brigades">
+            <ion-card>
+                <ion-item>
+                    <ion-avatar item-left>
+                        <img [src]="brigade.image" *ngIf="brigade.image">
+                        <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
+                    </ion-avatar>
+                    <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
+                </ion-item>
+            </ion-card>
+        </ion-col>
+    </ion-row>
+
+
+    <button ion-button block (click)="save()" *ngIf="isReadonly()!=true">
+        {{"done" | translate}}
+    </button>
+</form>

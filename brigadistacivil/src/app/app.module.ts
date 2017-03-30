@@ -7,7 +7,7 @@ import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { RecoverPage } from '../pages/user/recover';
 import { UserProfilePage } from '../pages/user/profile';
-import { FirePage } from '../pages/fire/fire';
+import { FirePage,FireViewPage,FireMapPage } from '../pages/fire/fire';
 import { FiresPage } from '../pages/fire/fires';
 import { BrigadePage } from '../pages/brigade/brigade';
 import { BrigadeAreaPage } from '../pages/brigade/area';
@@ -43,7 +43,7 @@ import { ImagePicker } from '@ionic-native/image-picker';
 let pages = [
   MyApp,
   UserPage,LoginPage,UserProfilePage,
-  FirePage, FiresPage,
+  FirePage,FireViewPage,FireMapPage, FiresPage,
   BrigadePage, BrigadesPage,BrigadeAreaPage,
   RecoverPage,
   ChatsPage,ChatPage,NewChatModalPage,
@@ -75,7 +75,9 @@ let links=[
   imports: [
     BrowserModule,
     HttpModule,
-    IonicModule.forRoot(MyApp,{},{
+    IonicModule.forRoot(MyApp,{
+      tabsPlacement: 'bottom'
+    },{
       links: links
     }),
     TranslateModule.forRoot({
