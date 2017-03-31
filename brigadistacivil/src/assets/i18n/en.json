@@ -163,10 +163,12 @@
   "generalError": "We had an error during your request",
   "intensity": "Intensity",
   "location": "Location",
+  "options": "Options",
   "name": "Name",
   "notfounditems": "No information found.",
   "password": "password",
   "remove": "Remove",
+  "save": "Save",
   "title": "Title",
   "yesContinue": "Yes, I want to continue"
 }

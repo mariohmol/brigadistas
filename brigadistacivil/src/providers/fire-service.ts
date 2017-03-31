@@ -7,14 +7,17 @@ import Environment from "../environment";
 
 @Injectable()
 export class FireService extends BaseService {
-  public static dados: any= {};
+  public static data: any= {};
   
   constructor(public http: Http,private backgroundGeolocation: BackgroundGeolocation) {
     super(http);
   }
 
-  getFires(){
-    return this.doGet('/fire/');
+  getFires(query={}){
+    query = Object.keys(query).map(q=>{
+      return `${q}=${query[q]}`
+    }).join("&");
+    return this.doGet('/fire/?${query}');
   }
   getFire(id){
     return this.doGet(`/fire/${id}`);

@@ -1,5 +1,5 @@
 import {FileUploadComponent} from './fileupload';
 import {ReadOnlyClass} from './readonlyclass';
-import { SelectUser } from "./selectuser";
+import { SelectItem } from "./selectitem";
 
-export {FileUploadComponent,ReadOnlyClass,SelectUser};
+export {FileUploadComponent,ReadOnlyClass,SelectItem};

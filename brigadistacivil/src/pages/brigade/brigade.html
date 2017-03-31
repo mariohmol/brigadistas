@@ -3,10 +3,11 @@
     <ion-title>{{ "brigade.new.title" | translate }}</ion-title>
     <button ion-button menuToggle icon-only>
      <ion-icon name="menu"></ion-icon>
-   </button>
+   </button> 
     <ion-buttons end>
-      <button ion-button *ngIf="!isReadonly()" [disabled]="!brigadeForm.valid" (click)="save()">
-        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      <button ion-button icon-only
+        (click)="openMenu()">
+        <ion-icon name="more"></ion-icon>
       </button>
     </ion-buttons>
   </ion-navbar>
@@ -14,152 +15,9 @@
 </ion-header>
 
 <ion-content>
-
-  <ion-card>
-    <ion-item *ngIf="brigade && brigade._id">
-      <h2>{{brigade.name}}</h2>
-      <p *ngIf="brigade.createdAt"> às {{brigade.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
-    </ion-item>
-
-    <img [src]="brigade.image" *ngIf="brigade.image">
-    <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
-  </ion-card>
-
-
-  <ion-segment *ngIf="brigade && brigade._id">
-    <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
-      Entrar na Brigada
-    </ion-segment-button>
-    <ion-segment-button value="leave" *ngIf="isInBrigade()" (click)="leaveBrigade()">
-      Sair da Brigada
-    </ion-segment-button>
-    <ion-segment-button value="area" (click)="showMap()">
-      Ver Área
-    </ion-segment-button>
-  </ion-segment>
-
-
-  <ion-list>
-    <form [formGroup]="brigadeForm" novalidate>
-      <ion-row>
-        <ion-col col-12 col-sm-12 col-md-6>
-          <ion-item [class.readonlyInput]="isReadonly()==true">
-            <ion-label floating>{{ "name" | translate }}</ion-label>
-            <ion-input formControlName="name" [readonly]="readonly" type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-        <ion-col col-12 col-sm-12 col-md-6>
-          <ion-item [class.readonlyInput]="isReadonly()==true">
-            <ion-label floating>{{ "city" | translate }} </ion-label>
-            <ion-input formControlName="city" [readonly]="readonly" type="text"></ion-input>
-          </ion-item>
-        </ion-col>
-      </ion-row>
-
-      <ion-row>
-        <ion-item [class.readonlyInput]="isReadonly()==true">
-          <ion-label floating>{{ "description" | translate }} </ion-label>
-          <ion-input formControlName="description" [readonly]="readonly" type="textarea"></ion-input>
-        </ion-item>
-      </ion-row>
-
-      <ion-row *ngIf="isReadonly()!=true">
-        <ion-item *ngIf="isCordova()" >
-           <button ion-button (click)="getPic()" >{{ "picture.get" | translate}}</button>
-            <button ion-button (click)="takePic()" >{{ "picture.take" | translate}}</button>
-        </ion-item>
-        <ion-item *ngIf="!isCordova()" >
-          <ion-label> 
-            {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true" ></file-upload>
-            </ion-label>          
-        </ion-item>
-      </ion-row>
-
-      <ion-row *ngIf="brigade.image">
-        <ion-item  >
-          <img [src]="brigade.image" />
-        </ion-item>
-      </ion-row>
-     
-    </form>
-  </ion-list>
-
-  <div *ngIf="brigade._id">
-    <ion-list class="leaders">
-      <ion-list-header>
-        Leaders
-      </ion-list-header>
-
-      <ion-row>
-        <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.leaders; let i = index;">
-          <ion-card>
-            <ion-item>
-              <ion-avatar item-left>
-                <img [src]="user.image" *ngIf="user.image">
-                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
-              </ion-avatar>
-              <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
-            </ion-item>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-list>
-
-    <br/>
-    <hr/>
-
-    <ion-list class="brigades">
-      <ion-list-header>
-        Brigades
-      </ion-list-header>
-      <ion-item *ngIf="!brigade.brigades || brigade.brigades.length==0">
-        <h2>{{ "notfounditems" | translate }}</h2>
-      </ion-item>
-
-      <ion-row>
-        <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.brigades; let i = index;">
-          <ion-card>
-            <ion-item>
-              <ion-avatar item-left>
-                <img [src]="user.image" *ngIf="user.image">
-                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
-              </ion-avatar>
-              <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
-              <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
-              <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="isInLeaderes()">Promote</button>
-            </ion-item>
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-list>
-
-
-    <ion-list *ngIf="!isReadonly()">
-      <ion-list-header>
-        Requested
-      </ion-list-header>
-      <ion-item *ngIf="!brigade.requested || brigade.requested.length==0">
-        <h2>{{ "notfounditems" | translate }}</h2>
-      </ion-item>
-
-      <ion-row>
-        <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.requested; let i = index;">
-          <ion-card>
-            <ion-item>
-              <ion-avatar item-left>
-                <img [src]="user.image" *ngIf="user.image">
-                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
-              </ion-avatar>
-              <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
-              <p>{{user.createdAt | date: 'dd/MM/yyyy' }}</p>
-              <button ion-button clear item-right (click)="approveBrigade(user._id)" *ngIf="isInLeaderes()">Approve</button>
-            </ion-item>
-
-          </ion-card>
-        </ion-col>
-      </ion-row>
-    </ion-list>
-
-  </div>
+ <ion-tabs  tabbarPlacement="bottom" #myTabs>
+    <ion-tab tabIcon="people" tabTitle="Brigade" [root]="tab1Root"></ion-tab>
+    <ion-tab tabIcon="map" tabTitle="Area" [root]="tab2Root"></ion-tab>
+    <ion-tab tabIcon="flame" tabTitle="Combates" [root]="tab3Root"></ion-tab>
+  </ion-tabs>
 </ion-content>

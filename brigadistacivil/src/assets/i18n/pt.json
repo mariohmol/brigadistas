@@ -3,6 +3,9 @@
     "name": "Brigadista Civil"
   },
   "brigade": {
+    "approve":"Aprovar",
+    "promote": "Promover",
+    "requested": "Entrar Brigada",
     "title": "Brigada",
     "promoteBrigade": {
       "action": "Promover a Líder",
@@ -80,7 +83,6 @@
   },
   "item": {
     "status": {
-      "updated": "Status do ítem do mapa atualizado!",
       "new": "Ítem críado com sucesso",
       "updated": "Ítem atualizado com sucesso"
     },
@@ -165,9 +167,12 @@
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
+  "options": "Opções",
+  "leaders": "Leaders",
   "location": "Localização",
   "password": "Senha",
   "remove": "Remover",
   "title": "Título",
+  "save": "Salvar",
   "yesContinue": "Sim, desejo continuar"
 }

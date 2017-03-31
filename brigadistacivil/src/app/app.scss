@@ -23,10 +23,16 @@
   }
 }
 
-#map {
+#map, .tabcontent {
   width: 100%;
-  height: 100%;
+  height: 90%;
 }
+
+.tabcontent {
+  overflow: scroll;
+}
+
+
 
 .card-background-page {
 
@@ -58,4 +64,18 @@
 
 ion-card img{
   max-height: 100px;
+}
+
+.tabbar{
+  opacity: 1;
+  bottom: 55px;
+  position: fixed;
+}
+
+ion-tab ng-component {
+    min-height: 90% !important;
+}
+.show-tab ng-component {
+  overflow: scroll;
+    height: 90%;
 }

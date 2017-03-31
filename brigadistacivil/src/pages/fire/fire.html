@@ -2,31 +2,15 @@
   <ion-navbar color="primary">
     <ion-title>{{ "fire.new.title" | translate }}</ion-title>
     <ion-buttons end>
-      <button ion-button *ngIf="!isReadonly()" [disabled]="!fireForm.valid" (click)="save()">
-            <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
-          </button>
+      <button ion-button icon-only
+        (click)="openMenu()" *ngIf="!isCordova() && fire._id && isInBrigade()">
+        <ion-icon name="more"></ion-icon>
+      </button>
     </ion-buttons>
   </ion-navbar>
-</ion-header>
-
-<ion-content>
-  <form [formGroup]="fireForm" novalidate>
-    <ion-card>
-      <ion-item *ngIf="fire.users">
-        <ion-avatar item-left>
-          <img [src]="fire.users[0].image" *ngIf="fire.users">
-          <img src="/assets/img/bg.jpg" *ngIf="!fire.users">
-        </ion-avatar>
-        <h2>{{fire.users[0].name}}</h2>
-        <p *ngIf="fire.createdAt"> às {{fire.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
-      </ion-item>
-
-      <img [src]="fire.image" *ngIf="fire.image">
-      <img src="/assets/img/bg.jpg" *ngIf="!fire.image">
-    </ion-card>
-
-
-    <ion-segment *ngIf="fire._id && isInBrigade()">
+  
+  <ion-toolbar no-border-top hideWhen="android,ios" *ngIf="!isCordova() && fire._id && isInBrigade()">
+    <ion-segment >
       <ion-segment-button value="checking" *ngIf="fire.status=='open'" (click)="changeStatus('checking')">
         {{ "fire.checking" | translate }}
       </ion-segment-button>
@@ -51,84 +35,20 @@
       <ion-segment-button value="closeCombat" *ngIf="fire.status=='aftermath'" (click)="changeStatus('finished')">
         {{ "fire.closeCombat" | translate }}
       </ion-segment-button>
-      <ion-segment-button value="chat" *ngIf="fire.status!='finished'" (click)="openChat()">
-        {{ "chat.title" | translate }}
-      </ion-segment-button>
       <ion-segment value="finished" *ngIf="fire.status=='finished'">
         {{ "fire.finished" | translate }}
       </ion-segment>
     </ion-segment>
+  </ion-toolbar>
 
-    <ion-row>
-      <ion-col col-12 col-sm-12 col-md-6>
+</ion-header>
 
-        <ion-item [class.readonlyInput]="isReadonly()==true">
-          <ion-label floating>{{ "fire.new.fieldTitle" | translate }}</ion-label>
-          <ion-input formControlName="title" [readonly]="isReadonly()" type="text"></ion-input>
-        </ion-item>
-      </ion-col>
+<ion-content>
 
-      <ion-col col-12 col-sm-12 col-md-6>
-        <ion-item>
-          <ion-label class="intensity" floating>{{ "intensity" | translate }}</ion-label>
-          <ion-range min="20" max="100" step="20" snaps="true" [disabled]="isReadonly()" formControlName="intensity" color="danger">
-            <ion-icon range-left small color="danger" name="thermometer"></ion-icon>
-            <ion-icon range-right color="danger" name="thermometer"></ion-icon>
-          </ion-range>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
-        <ion-item *ngIf="isCordova()">
-          <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
-          <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
-        </ion-item>
-        <ion-item *ngIf="!isCordova()">
-          <ion-label>
-            {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
-          </ion-label>
-        </ion-item>
-      </ion-col>
-
-      <ion-col *ngIf="fire.image" col-12 col-sm-12 col-md-6>
-        <ion-item>
-          <img [src]="fire.image" />
-        </ion-item>
-      </ion-col>
-    </ion-row>
-
-
-    <ion-row *ngIf="fire.brigades">
-      <ion-list-header>{{"brigades.title" | translate}}</ion-list-header>
-      <ion-col col-12 col-sm-12 col-md-4 *ngFor="let brigade of fire.brigades">
-        <ion-card>
-          <ion-item>
-            <ion-avatar item-left>
-              <img [src]="brigade.image" *ngIf="brigade.image">
-              <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
-            </ion-avatar>
-            <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
-          </ion-item>
-        </ion-card>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col>
-        <ion-item [class.readonlyInput]="isReadonly()==true">
-          <ion-label floating>{{ "fire.new.fieldDescription" | translate }} </ion-label>
-          <ion-input formControlName="description" [readonly]="isReadonly()" type="textarea"></ion-input>
-        </ion-item>
-      </ion-col>
-    </ion-row>
-  </form>
-
-
-
-  <div #map id="map"></div>
-
+  <ion-tabs  tabbarPlacement="bottom" #myTabs>
+    <ion-tab tabIcon="flame" tabTitle="Fire" [root]="tab1Root"></ion-tab>
+    <ion-tab tabIcon="map" tabTitle="Map" [root]="tab2Root"></ion-tab>
+    <ion-tab tabIcon="mail" tabTitle="Chat" (click)="openChat()"></ion-tab>
+  </ion-tabs>
 
 </ion-content>
