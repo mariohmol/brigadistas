@@ -13,8 +13,11 @@ export class FireService extends BaseService {
     super(http);
   }
 
-  getFires(){
-    return this.doGet('/fire/');
+  getFires(query={}){
+    query = Object.keys(query).map(q=>{
+      return `${q}=${query[q]}`
+    }).join("&");
+    return this.doGet('/fire/?${query}');
   }
   getFire(id){
     return this.doGet(`/fire/${id}`);

@@ -167,10 +167,12 @@
   "intensity": "Intensidade",
   "name": "Nome",
   "notfounditems": "Não foram encontrados informações.",
+  "options": "Opções",
   "leaders": "Leaders",
   "location": "Localização",
   "password": "Senha",
   "remove": "Remover",
   "title": "Título",
+  "save": "Salvar",
   "yesContinue": "Sim, desejo continuar"
 }

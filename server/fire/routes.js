@@ -13,7 +13,11 @@ const {logger} = require('../config/logger');
 const {URL} = require('../config/config');
 
 router.get('/', function (req, res, next) {
-  Fire.find({},'_id title description intensity users createdAt coordinates image')
+  let find={};
+  if(req.query.brigade){
+    find.brigades={$in: [req.query.brigade]};
+  }
+  Fire.find(find,'_id title description intensity users createdAt coordinates image')
   .sort({createdAt: -1}).populate('users',"_id name image").then(d => { res.json(d);});
 });
 

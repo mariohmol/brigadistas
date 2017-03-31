@@ -32,8 +32,8 @@ var uploadStorage = multer({ //multer settings
 
 var removeFile = (link,cb=null)=>{
     //if(link.contains("http")) link=link.split("/")[0];
-    fs.unlink(`${__dirname}/../../${link}`, (err) => {
-        if (err) throw err;
+    fs.unlink(`${__dirname}/../..${link}`, (err) => {
+        if (err) cb(false,err); // throw err;
         if(cb) cb(true); //console.log('successfully deleted /tmp/hello');
     });
 }

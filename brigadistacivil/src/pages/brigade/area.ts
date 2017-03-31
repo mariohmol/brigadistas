@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { App,NavParams, AlertController,ToastController } from 'ionic-angular';
+import { App, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import BasePage from '../basepage';
 import { BrigadeService,GeneralService,UserService } from '../../providers';
 import {TranslateService} from 'ng2-translate';
@@ -21,11 +21,19 @@ export class BrigadeAreaPage extends BasePage {
   valid: boolean;
   public selectedShape: any;
 
-  constructor(public app: App, public navParams: NavParams,
+  constructor(public app: App, public navParams: NavParams,public events: Events,
     public translateService: TranslateService,public alertCtrl: AlertController,
     public userService: UserService,public toastCtrl: ToastController,
     public generalService: GeneralService, public brigadeService: BrigadeService) {
       super();
+
+    events.subscribe('brigade:loaded', ()=>{
+      this.ionViewDidLoad();
+    });
+
+     events.subscribe('brigade:save', ()=>{
+      this.save();
+    });
   }
 
   ionViewDidLoad() {
@@ -36,23 +44,31 @@ export class BrigadeAreaPage extends BasePage {
     if(this.navParams.get("brigade") && !force){
       this.brigade=this.navParams.get("brigade");
       this.readonly=this.navParams.get("readonly");
-      const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
-      this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
-      this.showMap();
+      this.initData()
       //TODO: this.valid=false;
     } else if(this.navParams.get("brigadeId")){
       this.brigadeService.getBrigade(this.navParams.get("brigadeId")).then(d=>{
         this.brigade=d;
-        const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
-        this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
-        this.showMap();
+        this.initData()
       });
-    }else{
+    }else if(BrigadeService.data.brigade){
+      this.brigade=BrigadeService.data.brigade;
+      this.initData();
+    }
+    else{
       this.brigade={};
       this.readonly=false;
       this.valid=false;
     }
+
+    
   }
+
+  initData(){
+       const {isLeader,isBrigade,readonly} = this.brigadeService.userPerms(UserService.loginData,this.brigade);
+      this.isLeader=isLeader; this.isBrigade=isBrigade; this.readonly=readonly;
+      this.showMap();
+    }
 
   showMap(){
     let addPosition= (pos)=>{

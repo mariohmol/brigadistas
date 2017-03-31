@@ -1,0 +1,137 @@
+<div class="">
+    <ion-card>
+        <ion-item *ngIf="brigade && brigade._id">
+            <h2>{{brigade.name}}</h2>
+            <p *ngIf="brigade.createdAt"> às {{brigade.createdAt | date: 'dd/MM/yyyy H:mm' }}</p>
+        </ion-item>
+
+        <img [src]="brigade.image" *ngIf="brigade.image">
+        <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
+    </ion-card>
+
+
+    <ion-segment *ngIf="brigade && brigade._id">
+        <ion-segment-button value="enter" *ngIf="!isInBrigade()" (click)="requestEnter()">
+            {{ "brigade.requestEnter.action" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="leave" *ngIf="isInBrigade()" (click)="leaveBrigade()">
+            {{ "brigade.leaveBrigade.action" | translate }}
+        </ion-segment-button>
+        <ion-segment-button value="area" (click)="showMap()">
+            {{ "brigade.area.title" | translate }}
+        </ion-segment-button>
+    </ion-segment>
+
+
+    <ion-list>
+        <form [formGroup]="brigadeForm" novalidate>
+            <ion-row>
+                <ion-col col-12 col-sm-12 col-md-6>
+                    <ion-item [class.readonlyInput]="isReadonly()==true">
+                        <ion-label floating>{{ "name" | translate }}</ion-label>
+                        <ion-input formControlName="name" [readonly]="readonly" type="text"></ion-input>
+                    </ion-item>
+                </ion-col>
+                <ion-col col-12 col-sm-12 col-md-6>
+                    <ion-item [class.readonlyInput]="isReadonly()==true">
+                        <ion-label floating>{{ "city" | translate }} </ion-label>
+                        <ion-input formControlName="city" [readonly]="readonly" type="text"></ion-input>
+                    </ion-item>
+                </ion-col>
+            </ion-row>
+
+            <ion-row>
+                <ion-item [class.readonlyInput]="isReadonly()==true">
+                    <ion-label floating>{{ "description" | translate }} </ion-label>
+                    <ion-input formControlName="description" [readonly]="readonly" type="textarea"></ion-input>
+                </ion-item>
+            </ion-row>
+
+            <ion-row *ngIf="isReadonly()!=true">
+                <ion-item *ngIf="isCordova()">
+                    <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
+                    <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
+                </ion-item>
+                <ion-item *ngIf="!isCordova()">
+                    <ion-label>
+                        {{'picture.get' | translate}}
+                        <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+                    </ion-label>
+                </ion-item>
+            </ion-row>
+
+        </form>
+    </ion-list>
+
+    <div *ngIf="brigade._id">
+        <ion-list class="leaders">
+            <ion-item-divider color="light">{{ "leaders" | translate }}</ion-item-divider>
+
+            <ion-row>
+                <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.leaders; let i = index;">
+                    <ion-card>
+                        <ion-item>
+                            <ion-avatar item-left>
+                                <img [src]="user.image" *ngIf="user.image">
+                                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+                            </ion-avatar>
+                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                        </ion-item>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-list>
+
+        <br/>
+        <hr/>
+
+        <ion-list class="brigades">
+            <ion-item-divider color="light">{{ "brigades.title" | translate }}</ion-item-divider>
+            <ion-item *ngIf="!brigade.brigades || brigade.brigades.length==0">
+                <h2>{{ "notfounditems" | translate }}</h2>
+            </ion-item>
+
+            <ion-row>
+                <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.brigades; let i = index;">
+                    <ion-card>
+                        <ion-item>
+                            <ion-avatar item-left>
+                                <img [src]="user.image" *ngIf="user.image">
+                                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+                            </ion-avatar>
+                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                            <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
+                            <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="isInLeaderes()">{{ "promote" | translate }}</button>
+                        </ion-item>
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-list>
+
+
+        <ion-list *ngIf="!isReadonly()">
+            <ion-item-divider color="light">{{ "brigade.requested" | translate }}</ion-item-divider>
+            <ion-item *ngIf="!brigade.requested || brigade.requested.length==0">
+                <h2>{{ "notfounditems" | translate }}</h2>
+            </ion-item>
+
+            <ion-row>
+                <ion-col col-12 col-sm-12 col-md-4 *ngFor="let user of brigade.requested; let i = index;">
+                    <ion-card>
+                        <ion-item>
+                            <ion-avatar item-left>
+                                <img [src]="user.image" *ngIf="user.image">
+                                <img src="/assets/img/bg.jpg" *ngIf="!user.image">
+                            </ion-avatar>
+                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                            <p>{{user.createdAt | date: 'dd/MM/yyyy' }}</p>
+                            <button ion-button clear item-right (click)="approveBrigade(user._id)" *ngIf="isInLeaderes()">{{ "approve" | translate }}</button>
+                        </ion-item>
+
+                    </ion-card>
+                </ion-col>
+            </ion-row>
+        </ion-list>
+
+    </div>
+</div>

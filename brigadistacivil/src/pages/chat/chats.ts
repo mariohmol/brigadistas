@@ -65,7 +65,7 @@ export class ChatsPage extends BasePage {
   </ion-toolbar>
 </ion-header>
 <ion-content>
-    <select-user [select]="select"></select-user>
+    <select-item [select]="select"></select-item>
 </ion-content>`
 })
 export class NewChatModalPage extends BasePage {

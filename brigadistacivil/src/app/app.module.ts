@@ -7,9 +7,10 @@ import { UserPage } from '../pages/user/user';
 import { LoginPage } from '../pages/user/login';
 import { RecoverPage } from '../pages/user/recover';
 import { UserProfilePage } from '../pages/user/profile';
-import { FirePage,FireViewPage,FireMapPage } from '../pages/fire/fire';
+import { FirePage,FireMapPage } from '../pages/fire/fire';
 import { FiresPage } from '../pages/fire/fires';
-import { BrigadePage } from '../pages/brigade/brigade';
+import { BrigadePage, BrigadeFiresPage } from '../pages/brigade/brigade'; 
+
 import { BrigadeAreaPage } from '../pages/brigade/area';
 import { BrigadesPage } from '../pages/brigade/brigades';
 import { ChatPage } from '../pages/chat/chat';
@@ -28,7 +29,7 @@ import { ShowPictureComponent } from '../pages/message/show-picture';
 import {GeneralService,BaseService,UserService,FireService,
       BrigadeService,ChatService,GeoService} from '../providers';
 
-import {FileUploadComponent,ReadOnlyClass,SelectUser} from './directives';
+import {FileUploadComponent,ReadOnlyClass,SelectItem} from './directives';
 
 import { TranslateModule,TranslateLoader ,TranslateStaticLoader} from 'ng2-translate/ng2-translate';
 import {HttpModule,Http} from '@angular/http';
@@ -36,22 +37,22 @@ import {BrowserModule} from '@angular/platform-browser';
 import { BackgroundGeolocation } from '@ionic-native/background-geolocation';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
-
-
+import { FireViewPage } from "../pages/fire/fireview";
+import { BrigadeViewPage } from "../pages/brigade/brigadeview";
 
 
 let pages = [
   MyApp,
   UserPage,LoginPage,UserProfilePage,
   FirePage,FireViewPage,FireMapPage, FiresPage,
-  BrigadePage, BrigadesPage,BrigadeAreaPage,
+  BrigadePage, BrigadesPage,BrigadeViewPage,BrigadeAreaPage,BrigadeFiresPage,
   RecoverPage,
   ChatsPage,ChatPage,NewChatModalPage,
   NewLocationMessageComponent,MessagesAttachmentsComponent,MessagesOptionsComponent,MessagesPage,ShowPictureComponent,
   AreaPage,ItemPage,MapPage,MapOptionsComponent
 ];
 
-let declarations = [...pages, ReadOnlyClass, FileUploadComponent,SelectUser ];
+let declarations = [...pages, ReadOnlyClass, FileUploadComponent,SelectItem ];
 
 let links=[
       { component: UserPage, name: 'User', segment: 'register' },

@@ -10,6 +10,7 @@ import { ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
 import { Camera } from '@ionic-native/camera';
 import { ImagePicker } from '@ionic-native/image-picker';
+import { FireViewPage } from "./fireview";
 declare var google;
 
 @Component({
@@ -142,12 +143,15 @@ export class FirePage extends BasePage {
     if (this.fire.status == 'checking') addButton('marked', "fire.not_confirmed", () => { this.changeStatus('trash') });
     if (this.fire.status == 'confirmed') addButton('arrow-dropright-circle', "fire.startCombat", () => { this.changeStatus('trash') });
     if (this.fire.status == 'fighting' && this.isTracking() != true) addButton('arrow-dropright-circle', "fire.enterCombat", () => { this.tracking() });
-    if (this.fire.status == 'fighting') addButton('checked', "fire.aftermath", () => { this.changeStatus('aftermath') });
-    if (this.fire.status == 'aftermath') addButton('close', "fire.closeCombat", () => { this.changeStatus('finished') });
+    if (this.fire.status == 'fighting') addButton('pause', "fire.aftermath", () => { this.changeStatus('aftermath') });
+    if (this.fire.status == 'aftermath') addButton('stop', "fire.closeCombat", () => { this.changeStatus('finished') });
    // if (this.fire.status != 'finished') addButton('close', "chat.title", () => { this.openChat() });
+   
+   if (!this.isReadonly()) addButton('save', "save", () => { this.events.publish('fire:save', this.fire, Date.now()); });
+ 
 
     let actionSheet = this.actionsheetCtrl.create({
-      title: 'Albums',
+      title: this.translate('options'),
       cssClass: 'action-sheets-basic-page',
       buttons: [...buttons,
       {
@@ -171,126 +175,19 @@ export class FirePage extends BasePage {
  * 
  * 
  * 
- * VIEW
- * 
- * 
- * 
- */
-@Component({
-  templateUrl: `fireview.html`
-})
-export class FireViewPage extends BasePage {
-  public position: any;  @ViewChild('map') 
-  mapElement: ElementRef;
-  fireForm: FormGroup;
-  fireFormFields: any;
-  public image: any;
-  fire: any;
-
-
-  constructor(public fireService: FireService, public generalService: GeneralService, 
-   public toastCtrl: ToastController,public events: Events, public translateService: TranslateService,
-  public fb: FormBuilder, public camera: Camera, public imagePicker: ImagePicker){
-    super();
-        this.fireFormFields = {
-      title: ['', [<any>Validators.required, <any>Validators.minLength(5)]],
-      description: ['', [<any>Validators.required]],
-      intensity: ['', [<any>Validators.required]]
-    };
-    this.ionViewDidLoad();
-
-    events.subscribe('fire:loaded', (user, time) => {
-       this.ionViewDidLoad();
-    });
-    
-  }
-
-  ionViewDidLoad() {
-    if(!FireService.data.fire) this.fire =FireService.data.fire={}
-    else this.fire = FireService.data.fire;
-    this.fireForm = this.fb.group(this.fireFormFields);
-    if(Object.keys(this.fire).length>0){
-      this.setDataForm(this.fireForm, this.fireFormFields, FireService.data.fire);
-    }
-  }
-
-
-
-  save() {
-    if (!FireService.data.fire.coordinates) {
-      return this.showToast(this.translate("fire.chooseLocation"));
-    }
-    if (FireService.data.fire._id) {
-      FireService.data.fire = Object.assign(FireService.data.fire, this.fireForm.value);
-      this.fireService.updateFire(FireService.data.fire).then(d => {
-        FireService.data.fire = d;
-        this.uploadPic();
-        this.openPage(FiresPage);
-      });
-    } else {
-      FireService.data.fire = Object.assign(FireService.data.fire, this.fireForm.value);
-      this.fireService.addFire(FireService.data.fire).then(d => {
-        FireService.data.fire = d;
-        this.uploadPic();
-        this.openPage(FiresPage);
-      });
-    }
-  }
-
-  isInBrigade() {
-    return FireService.data.isBrigade && this.fire._id != null;
-  }
-
-  isReadonly() {
-    return FireService.data.readonly;
-  }
-
-  getPic() {
-    this.getPicture(d => { this.image = d; });
-  }
-
-  takePic() {
-    this.takePicture(d => { this.image = d; });
-  }
-
-  getWebPic() {
-    return (data) => {
-      this.image = data;
-    }
-  }
-
-  uploadPic() {
-    if (!FireService.data.fire._id || !this.image) return;
-    this.generalService.postFile("fire", FireService.data.fire._id, this.image).then(d => {
-      FireService.data.fire = d;
-    });
-  }
-
-}
-
-
-
-
-/**
- * 
- * 
- * 
  * MAP
  * 
  * 
  */
 @Component({
-  template: `
-  <ion-content><div #map id="map"></div></ion-content>`
+  template: `<ion-content><div #map id="map"></div></ion-content>`
 })
 export class FireMapPage extends BasePage {
-  public position: any;  @ViewChild('map') 
+  @ViewChild('map') 
   mapElement: ElementRef;
   constructor(public fireService: FireService, public generalService: GeneralService,
    public toastCtrl: ToastController, public translateService: TranslateService ){
     super();
-     //FireService.data.readonly=this.readonly;
-      //FireService.data.isBrigade=this.isBrigade;
   }
 
   ionViewDidLoad() {
@@ -300,16 +197,16 @@ export class FireMapPage extends BasePage {
         this.loadMap(pos, {scrollwheel: false}, () => { this.confMap() });
         if (GeneralService.marker) this.generalService.removeElement(GeneralService.marker);
         GeneralService.marker = this.addMarker(pos, "Posição do Fogo");
-      } else if (this.position) {
-        this.loadMap(this.position, {scrollwheel: false}, () => { this.confMap(); });
+      } else if (FireService.data.position) {
+        this.loadMap(FireService.data.position, {scrollwheel: false}, () => { this.confMap(); });
       } else {
         this.loadMap(null, {scrollwheel: false}, () => { this.confMap(); });
       }
     }
 
-    if (!this.position && !(FireService.data.fire && FireService.data.fire.coordinates)) {
+    if (!FireService.data.position && !(FireService.data.fire && FireService.data.fire.coordinates)) {
       let addPosition = (pos) => {
-        this.position = pos;
+        FireService.data.position = pos;
         cb();
       }
       this.generalService.getPosition(addPosition);
