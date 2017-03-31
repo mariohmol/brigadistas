@@ -53,7 +53,8 @@ export class FirePage extends BasePage {
       this.fire = d;
 
       if (this.fire.brigades) {
-        let userId = this.currentUser()._id;
+        let userId;
+        if(this.currentUser())userId = this.currentUser()._id;
         let findUser = this.fire.brigades.find(b => {
           if (!b.brigades) return;
           let findUser = b.brigades.find(bu => {
