@@ -6,6 +6,7 @@ import { MessagesOptionsComponent } from './messages-options';
 import { Subscription, Observable, Subscriber } from 'rxjs';
 import { MessagesAttachmentsComponent } from './messages-attachments';
 import { ShowPictureComponent } from './show-picture';
+import { ChatService } from "../../providers/index";
 
 @Component({
   selector: 'messages-page',
@@ -15,7 +16,7 @@ export class MessagesPage implements OnInit, OnDestroy {
   selectedChat: Chat;
   title: string;
   picture: string;
-  messagesDayGroups;
+  messages;
   message: string = '';
   autoScroller: MutationObserver;
   scrollOffset = 0;
@@ -28,7 +29,8 @@ export class MessagesPage implements OnInit, OnDestroy {
     navParams: NavParams,
     private el: ElementRef,
     private popoverCtrl: PopoverController,
-    private modalCtrl: ModalController
+    private modalCtrl: ModalController,
+    public chatService: ChatService
   ) {
     this.selectedChat = <Chat>navParams.get('chat');
     this.title = this.selectedChat.title;
@@ -52,21 +54,9 @@ export class MessagesPage implements OnInit, OnDestroy {
     this.autoScroller = this.autoScroll();
     this.subscribeMessages();
 
-    // Get total messages count in database so we can have an indication of when to
-    // stop the auto-subscriber
-    // MeteorObservable.call('countMessages').subscribe((messagesCount: number) => {
-    //   Observable
-    //   // Chain every scroll event
-    //     .fromEvent(this.scroller, 'scroll')
-    //     // Remove the scroll listener once all messages have been fetched
-    //     .takeUntil(this.autoRemoveScrollListener(messagesCount))
-    //     // Filter event handling unless we're at the top of the page
-    //     .filter(() => !this.scroller.scrollTop)
-    //     // Prohibit parallel subscriptions
-    //     .filter(() => !this.loadingMessages)
-    //     // Invoke the messages subscription once all the requirements have been met
-    //     .forEach(() => this.subscribeMessages());
-    // });
+    this.chatService.getMessages().then(m=>{
+      this.messages=m;
+    })
   }
 
   ngOnDestroy() {
