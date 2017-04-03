@@ -20,6 +20,7 @@ export class BrigadesPage extends BasePage {
   ionViewDidLoad() {
     this.brigadeService.getBrigades().then(d => {
       this.brigades = <Array<any>>d;
+      this.generalService.fileUrl(this.brigades);
     });
   }
 

@@ -12,6 +12,7 @@ import Environment from '../environment';
 @Injectable()
 export class BaseService {
   public static apiUrl: string;
+  public static baseUrl: string;
   public static env: string = "production"; //production or development or test
   public static device: string; //mobile or web
   profile: any;
@@ -33,6 +34,7 @@ export class BaseService {
     else{
       BaseService.apiUrl = Environment.apiBase;
     }
+    BaseService.baseUrl = Environment.baseUrl;
 
     if(window.location.pathname.includes("asset")) BaseService.device="mobile";
     else BaseService.device="web";
