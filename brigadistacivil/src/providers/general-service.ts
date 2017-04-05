@@ -33,16 +33,16 @@ export class GeneralService extends BaseService {
    * @param  {[type]} position [description]
    * @return {[type]}          [description]
    */
-  loadMap(mapElement, position, options = {},cb=null) {
-    try{
-      if(GeneralService.map && GeneralService.map.clear)
+  loadMap(mapElement, position, options = {}, cb = null) {
+    try {
+      if (GeneralService.map && GeneralService.map.clear)
         GeneralService.map.clear();
-    }catch(e){
+    } catch (e) {
       console.log(e);
     }
 
     if (BaseService.device == 'mobile') {
-      GeneralService.map = new GoogleMap(mapElement.nativeElement,options);
+      GeneralService.map = new GoogleMap(mapElement.nativeElement, options);
 
       // listen to MAP_READY event
       GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {
@@ -59,7 +59,7 @@ export class GeneralService extends BaseService {
 
           // move the map's camera to position
           GeneralService.map.moveCamera(cameraPos);
-          if(cb)cb();
+          if (cb) cb();
         }
       });
 
@@ -67,7 +67,7 @@ export class GeneralService extends BaseService {
     } else {
 
       let mapOptions = {
-        center: new google.maps.LatLng(-19.9364705,-43.980769),
+        center: new google.maps.LatLng(-19.9364705, -43.980769),
         zoom: 15,
         mapTypeId: google.maps.MapTypeId.ROADMAP
       };
@@ -84,7 +84,7 @@ export class GeneralService extends BaseService {
       } else {
         GeneralService.map = new google.maps.Map(document.getElementById('map'), mapOptions);
       }
-      if(cb) cb();
+      if (cb) cb();
       return GeneralService.map;
     }
   }
@@ -135,13 +135,13 @@ export class GeneralService extends BaseService {
     }
   }
 
-  setSelection(shape,cb=null) {
+  setSelection(shape, cb = null) {
     this.clearSelection(shape);
     GeneralService.selectedShape = shape;
     shape.setEditable(true);
     google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
     google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
-    if(cb) cb(shape);
+    if (cb) cb(shape);
   }
 
   calcar(shape) {
@@ -151,19 +151,19 @@ export class GeneralService extends BaseService {
     return area;
   }
 
-  deleteSelectedShape(selectedShape=GeneralService.selectedShape) {
-    GeneralService.polygons = <any>GeneralService.polygons.filter(p=>{
-      let pPaths=[];
-      p.getPath().b.forEach(b=>{
+  deleteSelectedShape(selectedShape = GeneralService.selectedShape) {
+    GeneralService.polygons = <any>GeneralService.polygons.filter(p => {
+      let pPaths = [];
+      p.getPath().b.forEach(b => {
         pPaths.push([b.lng(), b.lat()]);
       });
 
-      let bSelected=GeneralService.selectedShape.getPath().b;
-      if(bSelected.length!=pPaths.length) return false;
+      let bSelected = GeneralService.selectedShape.getPath().b;
+      if (bSelected.length != pPaths.length) return false;
 
-      let found=true;
-      bSelected.forEach((b,i)=>{
-        if(pPaths[i][0]!=b.lng() || pPaths[i][1]!=b.lat()) found=false;
+      let found = true;
+      bSelected.forEach((b, i) => {
+        if (pPaths[i][0] != b.lng() || pPaths[i][1] != b.lat()) found = false;
       });
       return found;
 
@@ -174,7 +174,7 @@ export class GeneralService extends BaseService {
   }
 
   addInfoWindow(map, marker, content) {
-    if (BaseService.device == 'mobile' || BaseService.device == 'web') { 
+    if (BaseService.device == 'mobile' || BaseService.device == 'web') {
       let infoWindow = new google.maps.InfoWindow({
         content: content
       });
@@ -184,59 +184,59 @@ export class GeneralService extends BaseService {
     }
   }
 
-  drawPolygon(map, points, cbAddPol, cbSelectPol=null) {
-     var newShape;
+  drawPolygon(map, points, cbAddPol, cbSelectPol = null) {
+    var newShape;
     const polyOptions = {
-       strokeWeight: 0,
-       fillOpacity: 0.45,
-       editable: true
-     };
+      strokeWeight: 0,
+      fillOpacity: 0.45,
+      editable: true
+    };
 
     const drawingManager = new google.maps.drawing.DrawingManager({
-       drawingControl: true,
-       drawingControlOptions: {
-         drawingModes: [
-           google.maps.drawing.OverlayType.POLYGON,
-         ]
-       },
-       polygonOptions: polyOptions,
-       map: map
-     });
+      drawingControl: true,
+      drawingControlOptions: {
+        drawingModes: [
+          google.maps.drawing.OverlayType.POLYGON,
+        ]
+      },
+      polygonOptions: polyOptions,
+      map: map
+    });
 
-     google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
-        GeneralService.selectedShape = e.overlay;
-        GeneralService.polygons.push(GeneralService.selectedShape);
+    google.maps.event.addListener(drawingManager, 'overlaycomplete', (e) => {
+      GeneralService.selectedShape = e.overlay;
+      GeneralService.polygons.push(GeneralService.selectedShape);
 
-        if (e.type != google.maps.drawing.OverlayType.MARKER) {
-          drawingManager.setDrawingMode(null);
+      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+        drawingManager.setDrawingMode(null);
 
-          let newShape = e.overlay;
-          newShape.type = e.type;
+        let newShape = e.overlay;
+        newShape.type = e.type;
 
-          google.maps.event.addListener(newShape, 'click', () => {
-            this.setSelection(newShape,cbSelectPol);
-          });
-          //"Area =" + area.toFixed(2);
-          //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-          if(cbAddPol) cbAddPol(newShape);
-          this.setSelection(newShape,cbSelectPol);
-        }
-      });
-      google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
+        google.maps.event.addListener(newShape, 'click', () => {
+          this.setSelection(newShape, cbSelectPol);
+        });
+        //"Area =" + area.toFixed(2);
+        //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
+        if (cbAddPol) cbAddPol(newShape);
+        this.setSelection(newShape, cbSelectPol);
+      }
+    });
+    google.maps.event.addListener(map, 'click', () => { this.clearSelection(newShape); });
   }
 
   getPosition(cb) {
     if (BaseService.device == 'mobile') {
 
-      cordova.plugins.diagnostic.isLocationAvailable(function(available){
+      cordova.plugins.diagnostic.isLocationAvailable(function (available) {
         Geolocation.getCurrentPosition().then((pos) => {
           cb(pos.coords);
-        }).catch(e => { 
-          cb(); 
-        });
-      }, function(error){
-          //console.error("The following error occurred: "+error);
+        }).catch(e => {
           cb();
+        });
+      }, function (error) {
+        //console.error("The following error occurred: "+error);
+        cb();
       });
       /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
@@ -255,7 +255,7 @@ export class GeneralService extends BaseService {
           cb(pos.coords);
         }, error => {
           cb();
-        }, options);``
+        }, options); ``
       }
     }
   }
@@ -270,52 +270,52 @@ export class GeneralService extends BaseService {
     }
   }
 
-  getEventLatLng(event){
+  getEventLatLng(event) {
     let latlng;
-    if(event.latLng){
-      latlng = {latitude: event.latLng.lat(), longitude: event.latLng.lng()};
-    }else if(event.lat && event.lng){
-      latlng = {latitude: event.lat, longitude: event.lng};
-    }else if(event.latitude && event.longitude){
-      latlng = {latitude: event.latitude, longitude: event.longitude};
-    }else{
-      latlng = {latitude: event[1], longitude: event[0]};
+    if (event.latLng) {
+      latlng = { latitude: event.latLng.lat(), longitude: event.latLng.lng() };
+    } else if (event.lat && event.lng) {
+      latlng = { latitude: event.lat, longitude: event.lng };
+    } else if (event.latitude && event.longitude) {
+      latlng = { latitude: event.latitude, longitude: event.longitude };
+    } else {
+      latlng = { latitude: event[1], longitude: event[0] };
     }
     return latlng;
   }
 
-  removeElement(element){
-    if(element.setMap){
+  removeElement(element) {
+    if (element.setMap) {
       element.setMap(null);
-    }else{
+    } else {
       element.remove();
     }
   }
 
-  addPolygon(map,areas,cbSelectPol=null) {
-    let options={
-       paths: areas,
-       strokeColor: '#FF0000',
-       strokeOpacity: 0.8,
-       strokeWeight: 2,
-       fillColor: '#FF0000',
-       fillOpacity: 0.35
-     };
+  addPolygon(map, areas, cbSelectPol = null) {
+    let options = {
+      paths: areas,
+      strokeColor: '#FF0000',
+      strokeOpacity: 0.8,
+      strokeWeight: 2,
+      fillColor: '#FF0000',
+      fillOpacity: 0.35
+    };
     if (BaseService.device == 'mobile') {
-      map.addPolygon(options, function(polygon) {
-         this.map.animateCamera({
-           'target': polygon.getPoints()
-         });
-         GeneralService.polygons.push(polygon);
-       });
-    }else{
+      map.addPolygon(options, function (polygon) {
+        this.map.animateCamera({
+          'target': polygon.getPoints()
+        });
+        GeneralService.polygons.push(polygon);
+      });
+    } else {
       var pol = new google.maps.Polygon(options);
-       map.fitBounds(this.getBounds(pol.getPaths()));
-       pol.setMap(map);
-       GeneralService.polygons.push(pol);
-       google.maps.event.addListener(pol, 'click', () => {
-         this.setSelection(pol,cbSelectPol);
-       });
+      map.fitBounds(this.getBounds(pol.getPaths()));
+      pol.setMap(map);
+      GeneralService.polygons.push(pol);
+      google.maps.event.addListener(pol, 'click', () => {
+        this.setSelection(pol, cbSelectPol);
+      });
     }
   }
 
@@ -330,35 +330,37 @@ export class GeneralService extends BaseService {
         ];
    * @param optionsArg 
    */
-  addPolyline(map,areas,optionsArg={}){
-    let latlngArea = areas.map(a=>{
-      return {lat: a[1], lng: a[0]};
+  addPolyline(map, areas, optionsArg = {}) {
+    let latlngArea = areas.map(a => {
+      return { lat: a[1], lng: a[0] };
     })
-    let options={...{
-       path: latlngArea,
-       strokeColor: '#FF0000',
-       strokeOpacity: 0.8,
-       strokeWeight: 2,
-       fillColor: '#FF0000',
-       fillOpacity: 0.35,
-       content: null
-     },...optionsArg};
+    let options = {
+      ...{
+        path: latlngArea,
+        strokeColor: '#FF0000',
+        strokeOpacity: 0.8,
+        strokeWeight: 2,
+        fillColor: '#FF0000',
+        fillOpacity: 0.35,
+        content: null
+      }, ...optionsArg
+    };
 
     if (BaseService.device == 'mobile') {
-      map.addPolyline(options, function(polyline) {
-         GeneralService.polylines.push(polyline);
-         this.addInfoWindow(map, polyline, options.content);
-       });
-    }else{
-      
-        var polyline = new google.maps.Polyline(options);
-        polyline.setMap(map);
+      map.addPolyline(options, function (polyline) {
         GeneralService.polylines.push(polyline);
-        if(options.content){
-          this.addInfoWindow(map, polyline, options.content);
-        }
+        this.addInfoWindow(map, polyline, options.content);
+      });
+    } else {
+
+      var polyline = new google.maps.Polyline(options);
+      polyline.setMap(map);
+      GeneralService.polylines.push(polyline);
+      if (options.content) {
+        this.addInfoWindow(map, polyline, options.content);
+      }
     }
-  
+
   }
 
   /**
@@ -366,25 +368,36 @@ export class GeneralService extends BaseService {
    * @param  {[type]} paths ex.:  polygon.getPaths();
    * @return {[type]}       [description]
    */
-  getBounds(paths){
+  getBounds(paths) {
     var bounds = new google.maps.LatLngBounds();
     var path;
     for (var i = 0; i < paths.getLength(); i++) {
-        path = paths.getAt(i);
-        for (var ii = 0; ii < path.getLength(); ii++) {
-            bounds.extend(path.getAt(ii));
-        }
+      path = paths.getAt(i);
+      for (var ii = 0; ii < path.getLength(); ii++) {
+        bounds.extend(path.getAt(ii));
+      }
     }
     return bounds;
   }
 
-  colors(){
-    return ["#f44336", "#9c27b0", "#673ab7", "#4caf50", "#3f51b5", "#2196f3" , "#8bc34a", "#cddc39",
-    "#ffeb3b","#795548","#9e9e9e","#607d8b", "#009688", "#00bcd4"];
+  colors() {
+    return ["#f44336", "#9c27b0", "#673ab7", "#4caf50", "#3f51b5", "#2196f3", "#8bc34a", "#cddc39",
+      "#ffeb3b", "#795548", "#9e9e9e", "#607d8b", "#009688", "#00bcd4"];
   }
 
-  postFile(type,id, files){
-    return this.doPost(`/${type}/image/${id}`, null,files);
+  postFile(type, id, files) {
+    return this.doPost(`/${type}/image/${id}`, null, files);
   }
 
+  fileUrl(data) {
+    if (!data) return data;
+    if (data.image) {
+      data.image = BaseService.baseUrl + data.image;
+    } else {
+      data.forEach(item => {
+        if (item.image) item.image = BaseService.baseUrl + item.image;
+      });
+    }
+    return data;
+  }
 }

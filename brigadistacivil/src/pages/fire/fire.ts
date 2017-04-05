@@ -51,9 +51,11 @@ export class FirePage extends BasePage {
     if (!this.fire) return;
     this.fireService.getFire(this.fire._id).then(d => {
       this.fire = d;
+      this.generalService.fileUrl(this.fire);
 
       if (this.fire.brigades) {
-        let userId = this.currentUser()._id;
+        let userId;
+        if(this.currentUser())userId = this.currentUser()._id;
         let findUser = this.fire.brigades.find(b => {
           if (!b.brigades) return;
           let findUser = b.brigades.find(bu => {
