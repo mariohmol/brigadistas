@@ -24,7 +24,10 @@ node_modules/
 tmp/
 temp/
 hooks/
-platforms/
+platforms/ios/*
+platforms/android/*
+!platforms/android/project.properties
+
 plugins/
 plugins/android.json
 plugins/ios.json
