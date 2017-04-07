@@ -64,6 +64,13 @@
     "aftermath": "Start Aftermath",
     "closeCombat": "Close Combat",
     "finished": "Fire Extinguished",
+    "intensity": {
+      "verystrong": "Muito Forte",
+      "strong": "Forte",
+      "medium": "Médio",
+      "weak": "Fraco",
+      "veryweak": "Muito Fraco"
+    },
     "new": {
       "title": "Report Fire",
       "fieldTitle": "Name (eg Fire in Joaquin Miller Park)",

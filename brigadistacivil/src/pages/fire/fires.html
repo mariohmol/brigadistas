@@ -49,7 +49,11 @@
 
               <ion-item text-wrap>
                 <ion-icon name="md-thermometer" item-left large></ion-icon>
-                <h2>{{fire.intensity}}</h2>
+                <h2 *ngIf="fire.intensity==100">{{ "fire.intensity.verystrong" | translate }}</h2>
+                <h2 *ngIf="fire.intensity==80">{{ "fire.intensity.strong" | translate }}</h2>
+                <h2 *ngIf="fire.intensity==60">{{ "fire.intensity.medium" | translate }}</h2>
+                <h2 *ngIf="fire.intensity==40">{{ "fire.intensity.weak" | translate }}</h2>
+                <h2 *ngIf="fire.intensity==20">{{ "fire.intensity.veryweak" | translate }}</h2>
               </ion-item>
 
 
