@@ -17,12 +17,19 @@ const options = {
   };
   
 function initPush(){
-  
-  //TODO: create app on itunes
-  apnProvider = new apn.Provider(options);
+  try{
+    apnProvider = new apn.Provider(options);
+  }catch(e){
+    logger.error(`Error when starting ios push  ${e}`);
+  }
 
-  // Set up the sender with your GCM/FCM API key (declare this once for multiple messages)
-  sender = new gcm.Sender(ANDROID_GCMKEY);
+  try{
+    // Set up the sender with your GCM/FCM API key (declare this once for multiple messages)
+    sender = new gcm.Sender(ANDROID_GCMKEY);
+  }catch(e){
+    logger.error(`Error when starting android push ${e}`);
+  }
+  
 }
 
 
