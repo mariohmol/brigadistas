@@ -161,6 +161,7 @@ router.post('/pushunregister/:type/',passport.authenticate('basic', { session: f
 
 
 router.get('/recover/:username/', (req, res) => {
+  console.log("recover password" + req.params.username);
   User.findOne({username: req.params.username}).then(u=>{
     if(!u) res.sendStatus(404);
 

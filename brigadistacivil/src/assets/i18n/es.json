@@ -64,6 +64,13 @@
     "aftermath": "Consecuencias Inicar",
     "closeCombat": "Encerrar Combate",
     "finished": "incendios combatidos",
+    "intensity": {
+      "verystrong": "Muito Forte",
+      "strong": "Forte",
+      "medium": "Médio",
+      "weak": "Fraco",
+      "veryweak": "Muito Fraco"
+    },
     "new": {
       "title": "informes de incendios",
       "fieldTitle": "Nombre (por ejemplo. Fuego en la alta sierra)",

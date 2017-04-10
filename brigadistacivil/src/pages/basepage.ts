@@ -118,10 +118,22 @@ export default class BasePage {
    * @param  {string} key "brigade.requestEnter.confirm"
    * @return {string}     [description]
    */
-  translate(key) {
-    let newKey = this.translateService.get(key);
-    if (newKey && (<any>newKey).value) return (<any>newKey).value;
+  translate(key, args = {}) {
+    let newKey = this.translateService.get(key, args);
+    if (newKey && (<any>newKey).value) {
+      let value = (<any>newKey).value
+      return this.applyTemplate(value, args);
+    }
     return key;
+  }
+
+  applyTemplate(tpl, o) {
+    for(let key in o){
+      if(o.hasOwnProperty(key)){
+        tpl = tpl.replace('{'+key+'}',o[key]);
+      } //prevent iteration on any prototype inherited methods
+    }
+    return tpl;
   }
 
   /**
@@ -358,7 +370,7 @@ getPicture(cb){
       // max images to be selected, defaults to 15. If this is set to 1, upon
     // selection of a single image, the plugin will return it.
     maximumImagesCount: 1,
-    
+
     // max width and height to allow the images to be.  Will keep aspect
     // ratio no matter what.  So if both are 800, the returned image
     // will be at most 800 pixels wide and 800 pixels tall.  If the width is
@@ -366,7 +378,7 @@ getPicture(cb){
     // is at least that wide.
     width: 1500,
     height: 1500,
-    
+
     // quality of resized image, defaults to 100 - int (0-100)
     quality: 100
   };

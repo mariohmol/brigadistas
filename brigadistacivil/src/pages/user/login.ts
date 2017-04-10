@@ -56,7 +56,7 @@ export class LoginPage extends BasePage {
   }
 
   recover(form) {
-    this.showConfirm(this.translate("user.recover.confirm") + form.username,
+    this.showConfirm(this.translate("user.recover.confirm", {email: form.username}),
       this.translate("user.recover.title"), () => {
         this.userService.recover(form.username).then(r => {
           this.showToast(this.translate("user.recover.response"));

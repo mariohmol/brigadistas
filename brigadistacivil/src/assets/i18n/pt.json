@@ -68,6 +68,13 @@
     "aftermath": "Iniciar Rescaldo",
     "closeCombat": "Encerrar Combate",
     "finished": "Incêndio Combatido",
+    "intensity": {
+      "verystrong": "Muito Forte",
+      "strong": "Forte",
+      "medium": "Médio",
+      "weak": "Fraco",
+      "veryweak": "Muito Fraco"
+    },
     "new": {
       "title": "Reporta Incêndio",
       "fieldTitle": "Nome (ex. Fogo no Alto da Serra)",
