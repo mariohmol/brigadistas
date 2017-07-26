@@ -44,25 +44,22 @@ export class GeneralService extends BaseService {
     if (BaseService.device == 'mobile') {
       GeneralService.map = new GoogleMap(mapElement.nativeElement, options);
 
-      // listen to MAP_READY event
-      GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {
-        if (position) {
-          // create LatLng object
-          let posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
-
-          // create CameraPosition
-          let cameraPos: CameraPosition = {
-            target: posLatLng,
-            zoom: 18,
-            tilt: 30
-          };
-
-          // move the map's camera to position
-          GeneralService.map.moveCamera(cameraPos);
+      if (position) {
+        // listen to MAP_READY event
+        GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {
+          this.centerMap(position);
           if (cb) cb();
-        }
-      });
-
+        });
+      }else {
+        //if fire has no location get current from user's phone
+        Geolocation.getCurrentPosition().then((position) => {
+          this.centerMap(position.coords);
+          if (cb) cb();
+        }, (err) => {
+          alert("error getting current location");
+          console.log(err);
+        });
+      }
       return GeneralService.map;
     } else {
 
@@ -89,6 +86,18 @@ export class GeneralService extends BaseService {
     }
   }
 
+  centerMap(coordinates: any) {
+    // create LatLng object
+    let posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(coordinates.latitude, coordinates.longitude);
+    // create CameraPosition
+    let cameraPos: CameraPosition = {
+      target: posLatLng,
+      zoom: 18,
+      tilt: 30
+    };
+    // move the map's camera to position
+    GeneralService.map.moveCamera(cameraPos);
+  }
 
   addMarker(map, position, title, cb = null) {
     if (BaseService.device == 'mobile') {
@@ -320,15 +329,15 @@ export class GeneralService extends BaseService {
   }
 
   /**
-   * 
-   * @param map 
+   *
+   * @param map
    * @param areas  var flightPlanCoordinates = [
           {lat: 37.772, lng: -122.214},
           {lat: 21.291, lng: -157.821},
           {lat: -18.142, lng: 178.431},
           {lat: -27.467, lng: 153.027}
         ];
-   * @param optionsArg 
+   * @param optionsArg
    */
   addPolyline(map, areas, optionsArg = {}) {
     let latlngArea = areas.map(a => {
