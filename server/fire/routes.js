@@ -75,7 +75,7 @@ router.get('/testgeonear', passport.authenticate('basic', { session: false }), f
 const newFire =  function(res,data,b=null){
   logger.info(`Creating a new fire ${JSON.stringify(data)}`);
   Fire.create(data).then(d => {
-    let email= `New Fire is open, check it out in ${URLAPP}/fire/${d._id}. Full details ${JSON.stringify(d)}`;
+    let email= `New Fire is open, check it out in ${URLAPI}/fire/${d._id}. Full details ${JSON.stringify(d)}`;
     logger.info(`Sending email to admins in post fire`);
     sendEmailAdmins("New Fire is reported",email);
 
