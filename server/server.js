@@ -79,6 +79,7 @@ const runServer = function(callback) {
     console.log(`Connected to db at ${DATABASE_URL}`);
 
     app.listen(PORT, () => {
+      console.log(`Listen server on port ${PORT}`);
       initPush();
       if (callback) {
         callback();

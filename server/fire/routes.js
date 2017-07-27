@@ -10,7 +10,7 @@ const {sendAndroid,sendiOS} = require('../config/push');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { storageAdd } = require('../config/storage');
 const {logger} = require('../config/logger');
-const {URL} = require('../config/config');
+const {URL, URLAPP} = require('../config/config');
 
 router.get('/', function (req, res, next) {
   let find={};
@@ -75,7 +75,7 @@ router.get('/testgeonear', passport.authenticate('basic', { session: false }), f
 const newFire =  function(res,data,b=null){
   logger.info(`Creating a new fire ${JSON.stringify(data)}`);
   Fire.create(data).then(d => {
-    let email= `New Fire is open, check it out in ${URL}/fire/${d._id}. Full details ${JSON.stringify(d)}`;
+    let email= `New Fire is open, check it out in ${URLAPI}/fire/${d._id}. Full details ${JSON.stringify(d)}`;
     logger.info(`Sending email to admins in post fire`);
     sendEmailAdmins("New Fire is reported",email);
 
