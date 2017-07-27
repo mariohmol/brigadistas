@@ -6,7 +6,7 @@ const passport = require('passport');
 const { sendEmailAdmins,sendEmail } = require('../config/emailer');
 const { ensureAdmin } = require('../config/passport');
 const { storageAdd } = require('../config/storage');
-const {URL} = require('../config/config');
+const {URLAPI} = require('../config/config');
 const defaultArea={ type: 'Point', coordinates: [-122.424088, 37.529876] };
 
 router.get('/', function (req, res, next) {
@@ -39,7 +39,7 @@ router.post('/', passport.authenticate('basic', { session: false }),
   let data=Object.assign(req.body, { leaders: [req.user._id], brigades: [req.user._id], status: "waiting", createdAt: new Date(), updatedAt: new Date(), area: defaultArea} );
   Brigade.create(data).then(d => {
     res.json(d);
-    let email= `Activate this brigade by accessing ${URL}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
+    let email= `Activate this brigade by accessing ${URLAPI}/brigade/activate/${d._id}. Full details ${JSON.stringify(d)}`;
     sendEmailAdmins("New Brigade created",email);
   }).catch(e=>{
     res.json(e);

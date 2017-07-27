@@ -9,7 +9,7 @@ const mongoose = require('mongoose');
 const { sendEmailAdmins,sendEmailTemplate } = require('../config/emailer');
 const { storageAdd } = require('../config/storage');
 const {logger} = require('../config/logger');
-const {URL} = require('../config/config');
+const {URL, URLAPI} = require('../config/config');
 
 
 router.get('/item/', function (req, res, next) {
@@ -52,8 +52,8 @@ router.post('/item/', passport.authenticate('basic', { session: false }), functi
     logger.info(`Returning new Item`);
     res.json(d);
 
-    let email= `Activate this Item map by accessing ${URL}/api/geo/item/status/${d._id}/active .
-              If you want to reprove access ${URL}/api/geo/item/status/${d._id}/not_confirmed.
+    let email= `Activate this Item map by accessing ${URLAPI}/api/geo/item/status/${d._id}/active .
+              If you want to reprove access ${URLAPI}/api/geo/item/status/${d._id}/not_confirmed.
                Full details ${JSON.stringify(d)}`;
     sendEmailAdmins("New Item map created",email);
   }).catch(e=>{
