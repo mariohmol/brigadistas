@@ -1,0 +1,17 @@
+{
+	"folders": [
+		{
+			"path": "."
+		},
+		{
+			"path": "brigadistacivil"
+		},
+		{
+			"path": "server"
+		},
+		{
+			"path": "docs"
+		}
+	],
+	"settings": {}
+}

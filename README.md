@@ -2,6 +2,14 @@
 
 App that connects civil fire brigades with civil society to fight against the fire.
 
+## Project Template for Ionic3 and Angular 5 Code Style
+
+****** IF YOU CAN HELP WITH MORE STYLING (pipes...) OR FEATURES PLEASE DO IT =) *******
+
+Following the style guide:
+
+* https://angular.io/styleguide
+
 Here is the web version:
 
 * https://brigadistacivil.com.br/
