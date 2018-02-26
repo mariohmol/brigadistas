@@ -43,15 +43,18 @@ export class BrigadeService extends BaseService {
   }
 
   userPerms(loginData, brigade) {
-    if (!loginData) return { isLeader: false, readonly: true, isBrigade: false }
-    let isLeader = brigade.leaders && brigade.leaders.find(d => { return d._id == loginData._id }) != null
+    if (!loginData) {
+      return { isLeader: false, readonly: true, isBrigade: false };
+    }
+    const isLeader = brigade.leaders && brigade.leaders.find(d => d._id === loginData._id) != null;
     let readonly = true;
-    let isBrigade = isLeader ||
-      brigade.brigades && brigade.brigades.find(d => { return d._id == loginData._id }) != null ||
-      brigade.requested && brigade.requested.find(d => { return d._id == loginData._id }) != null;
+    const isBrigade = isLeader ||
+      brigade.brigades && brigade.brigades.find(d => d._id === loginData._id) != null ||
+      brigade.requested && brigade.requested.find(d => d._id === loginData._id) != null;
 
-    if (brigade && brigade.leaders && brigade.leaders.find(d => { return d._id == loginData._id }))
+    if (brigade && brigade.leaders && brigade.leaders.find(d => d._id === loginData._id)) {
       readonly = false;
+    }
     return { isLeader, readonly, isBrigade };
   }
 

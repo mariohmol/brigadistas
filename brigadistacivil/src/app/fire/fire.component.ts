@@ -52,36 +52,38 @@ export class FirePageComponent extends BasePage {
 
 
   loadData() {
-    if (!this.fire) return;
+    if (!this.fire) { return; }
     this.fireService.getFire(this.fire._id).then(d => {
       this.fire = d;
       this.generalService.fileUrl(this.fire);
 
       if (this.fire.brigades) {
         let userId;
-        if (this.currentUser()) userId = this.currentUser()._id;
-        let findUser = this.fire.brigades.find(b => {
-          if (!b.brigades) return;
-          let findUser = b.brigades.find(bu => {
-            return userId == bu;
-          })
-          if (findUser) return true;
+        if (this.currentUser()) { userId = this.currentUser()._id; }
+        const findUser = this.fire.brigades.find(b => {
+          if (!b.brigades) { return; }
+          const findUserU = b.brigades.find(bu => {
+            return userId === bu;
+          });
+          if (findUserU) { return true; }
           return false;
         });
-        if (findUser) this.isBrigade = true;
-        else this.isBrigade = false;
-      }
-      else this.isBrigade = false;
+        if (findUser) {
+          this.isBrigade = true;
+        } else {
+          this.isBrigade = false;
+        }
+      } else { this.isBrigade = false; }
 
-      if (this.fire && this.isBrigade)
+      if (this.fire && this.isBrigade) {
         this.readonly = false;
-      else this.readonly = true;
+      } else { this.readonly = true; }
 
       FireService.data.readonly = this.readonly;
       FireService.data.isBrigade = this.isBrigade;
       FireService.data.fire = this.fire;
       this.events.publish('fire:loaded', this.fire, Date.now());
-      //this.tabRef.select(1);
+      // this.tabRef.select(1);
     });
   }
 
@@ -95,7 +97,7 @@ export class FirePageComponent extends BasePage {
 
   openChat() {
     this.chatService.getChatByFire(this.fire).then((chat: any) => {
-      if (!chat) return this.showToast(this.translate('chat.notfound'));
+      if (!chat) { return this.showToast(this.translate('chat.notfound')); }
       this.navCtrl.push(ChatPage, { chat, chatId: chat._id });
     });
   }
@@ -114,14 +116,14 @@ export class FirePageComponent extends BasePage {
 
   tracking() {
     if (!FiresPage.isTracking) {
-      let cb = (location) => {
+      const cb = (location) => {
         this.userService.saveLocation(location.latitude, location.longitude, this.fire._id);
         FiresPage.isTracking = true;
       };
-      let errcb = () => {
+      const errcb = () => {
         this.showToast(this.translate('error.notavailableweb'));
         FiresPage.isTracking = false;
-      }
+      };
       FiresPage.isTracking = true;
       this.fireService.startTracking(cb, errcb);
     } else {
@@ -132,9 +134,9 @@ export class FirePageComponent extends BasePage {
 
 
   openMenu() {
-    let buttons = [];
+    const buttons = [];
 
-    let addButton = (icon, text, cb) => {
+    const addButton = (icon, text, cb) => {
       buttons.push({
         text: this.translate(text),
         icon: !this.platform.is('ios') ? icon : null,
@@ -144,19 +146,19 @@ export class FirePageComponent extends BasePage {
       });
     };
 
-    if (this.fire.status == 'open') addButton('question', 'fire.checking', () => { this.changeStatus('check') });
-    if (this.fire.status == 'checking') addButton('checked', 'fire.confirmed', () => { this.changeStatus('check') });
-    if (this.fire.status == 'checking') addButton('marked', 'fire.not_confirmed', () => { this.changeStatus('trash') });
-    if (this.fire.status == 'confirmed') addButton('arrow-dropright-circle', 'fire.startCombat', () => { this.changeStatus('trash') });
-    if (this.fire.status == 'fighting' && this.isTracking() != true) addButton('arrow-dropright-circle', 'fire.enterCombat', () => { this.tracking() });
-    if (this.fire.status == 'fighting') addButton('pause', 'fire.aftermath', () => { this.changeStatus('aftermath') });
-    if (this.fire.status == 'aftermath') addButton('stop', 'fire.closeCombat', () => { this.changeStatus('finished') });
+    if (this.fire.status === 'open') { addButton('question', 'fire.checking', () => { this.changeStatus('check'); }); }
+    if (this.fire.status === 'checking') { addButton('checked', 'fire.confirmed', () => { this.changeStatus('check'); }); }
+    if (this.fire.status === 'checking') { addButton('marked', 'fire.not_confirmed', () => { this.changeStatus('trash'); }); }
+    if (this.fire.status === 'confirmed') { addButton('arrow-dropright-circle', 'fire.startCombat', () => { this.changeStatus('trash'); }); }
+    if (this.fire.status === 'fighting' && this.isTracking() !== true) { addButton('arrow-dropright-circle', 'fire.enterCombat', () => { this.tracking(); }); }
+    if (this.fire.status === 'fighting') { addButton('pause', 'fire.aftermath', () => { this.changeStatus('aftermath'); }); }
+    if (this.fire.status === 'aftermath') { addButton('stop', 'fire.closeCombat', () => { this.changeStatus('finished'); }); }
     // if (this.fire.status != 'finished') addButton('close', 'chat.title', () => { this.openChat() });
 
-    if (!this.isReadonly()) addButton('save', 'save', () => { this.events.publish('fire:save', this.fire, Date.now()); });
+    if (!this.isReadonly()) { addButton('save', 'save', () => { this.events.publish('fire:save', this.fire, Date.now()); }); }
 
 
-    let actionSheet = this.actionsheetCtrl.create({
+    const actionSheet = this.actionsheetCtrl.create({
       title: this.translate('options'),
       cssClass: 'action-sheets-basic-page',
       buttons: [...buttons,
@@ -178,12 +180,12 @@ export class FirePageComponent extends BasePage {
 
 
 /**
- * 
- * 
- * 
+ *
+ *
+ *
  * MAP
- * 
- * 
+ *
+ *
  */
 @Component({
   template: `<ion-content><div #map id='map'></div></ion-content>`
@@ -197,36 +199,36 @@ export class FireMapPage extends BasePage {
   }
 
   ionViewDidLoad() {
-    let cb = () => {
+    const cb = () => {
       if (FireService.data.fire && FireService.data.fire.coordinates) {
-        let pos = { latitude: FireService.data.fire.coordinates[1], longitude: FireService.data.fire.coordinates[0] };
-        this.loadMap(pos, { scrollwheel: false }, () => { this.confMap() });
-        if (GeneralService.marker) this.generalService.removeElement(GeneralService.marker);
+        const pos = { latitude: FireService.data.fire.coordinates[1], longitude: FireService.data.fire.coordinates[0] };
+        this.loadMap(pos, { scrollwheel: false }, () => { this.confMap(); });
+        if (GeneralService.marker) { this.generalService.removeElement(GeneralService.marker); }
         GeneralService.marker = this.addMarker(pos, 'Posição do Fogo');
       } else if (FireService.data.position) {
         this.loadMap(FireService.data.position, { scrollwheel: false }, () => { this.confMap(); });
       } else {
         this.loadMap(null, { scrollwheel: false }, () => { this.confMap(); });
       }
-    }
+    };
 
     if (!FireService.data.position && !(FireService.data.fire && FireService.data.fire.coordinates)) {
-      let addPosition = (pos) => {
+      const addPosition = (pos) => {
         FireService.data.position = pos;
         cb();
-      }
+      };
       this.generalService.getPosition(addPosition);
-      setTimeout(function () { if (!GeneralService.map) this.initMap(); }, 10000);
+      setTimeout(function () { if (!GeneralService.map) { this.initMap(); } }, 10000);
     } else {
       cb();
     }
   }
 
   confMap() {
-    if (this.isReadonly()) return;
+    if (this.isReadonly()) { return; }
     this.generalService.drawMarker(GeneralService.map, event => {
-      if (GeneralService.marker) this.generalService.removeElement(GeneralService.marker);
-      let latlng = this.generalService.getEventLatLng(event);
+      if (GeneralService.marker) { this.generalService.removeElement(GeneralService.marker); }
+      const latlng = this.generalService.getEventLatLng(event);
 
       FireService.data.fire.coordinates = [latlng.longitude, latlng.latitude];
 
@@ -238,16 +240,16 @@ export class FireMapPage extends BasePage {
   }
 
   getTracks(fire) {
-    if (!fire || !fire._id) return;
-    let colors = this.generalService.colors();
+    if (!fire || !fire._id) { return; }
+    const colors = this.generalService.colors();
     this.fireService.getTracks(fire._id).then((resp) => {
-      let tracks = <any>resp;
+      const tracks = <any>resp;
       tracks.forEach((track, i) => {
-        if (!track.line) return;
+        if (!track.line) { return; }
 
         let cindex = i;
-        if (cindex > colors.length) cindex -= colors.length;
-        let userColor = colors[cindex];
+        if (cindex > colors.length) { cindex -= colors.length; }
+        const userColor = colors[cindex];
 
         this.generalService.addPolyline(GeneralService.map, track.line.coordinates, {
           strokeColor: userColor,
@@ -255,7 +257,7 @@ export class FireMapPage extends BasePage {
           content: track.user.name
         });
       });
-    })
+    });
   }
 
   /*

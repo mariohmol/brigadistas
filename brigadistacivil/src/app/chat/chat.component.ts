@@ -1,5 +1,4 @@
 import { Component } from '@angular/core';
-//import {FormGroup, FormBuilder, Validators} from '@angular/forms';
 import { App, NavController, NavParams, AlertController, ToastController } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import BasePage from '../core/basepage';
@@ -24,11 +23,11 @@ export class ChatPageComponent extends BasePage {
   }
 
   ionViewDidLoad() {
-    if (this.navParams.get("chat")) {
-      this.chat = this.navParams.get("chat");
+    if (this.navParams.get('chat')) {
+      this.chat = this.navParams.get('chat');
       this.loadData();
-    } if (this.navParams.get("chatId")) {
-      this.chat = { _id: this.navParams.get("chatId") };
+    } if (this.navParams.get('chatId')) {
+      this.chat = { _id: this.navParams.get('chatId') };
       this.loadData();
     } else {
       this.chat = {};

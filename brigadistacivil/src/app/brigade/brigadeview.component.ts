@@ -1,13 +1,3 @@
-
-/**
- * 
- * 
- * 
- * VIEW
- * 
- * 
- * 
- */
 import { Component } from '@angular/core';
 import { Events, ToastController, App } from 'ionic-angular';
 import { Camera } from '@ionic-native/camera';
@@ -79,25 +69,25 @@ export class BrigadeViewPageComponent extends BasePage {
 
 
   approveBrigade(userId) {
-    let message = this.translate('brigade.approveBrigade.confirm');
-    let title = this.translate('brigade.approveBrigade.action');
+    const message = this.translate('brigade.approveBrigade.confirm');
+    const title = this.translate('brigade.approveBrigade.action');
     this.showConfirm(message, title, confirm => {
       this.brigadeService.addRelationBrigade(this.brigade._id, 'brigades', userId).then(d => {
         this.showToast(this.translate('brigade.approveBrigade.feedback'));
         this.events.publish('brigade:load');
       });
-    })
+    });
   }
 
   promoteBrigade(userId) {
-    let message = this.translate('brigade.promoteBrigade.confirm');
-    let title = this.translate('brigade.promoteBrigade.action');
+    const message = this.translate('brigade.promoteBrigade.confirm');
+    const title = this.translate('brigade.promoteBrigade.action');
     this.showConfirm(message, title, confirm => {
       this.brigadeService.addRelationBrigade(this.brigade._id, 'leaders', userId).then(d => {
         this.showToast(this.translate('brigade.promoteBrigade.feedback'));
         this.events.publish('brigade:load');
       });
-    })
+    });
   }
 
   /**
@@ -114,12 +104,12 @@ export class BrigadeViewPageComponent extends BasePage {
   getWebPic() {
     return (data) => {
       BrigadeService.data.image = data;
-    }
+    };
   }
 
 
   uploadPic() {
-    if (!BrigadeService.data.brigade._id || !BrigadeService.data.image) return;
+    if (!BrigadeService.data.brigade._id || !BrigadeService.data.image) { return; }
     this.generalService.postFile('brigade', BrigadeService.data.brigade._id, BrigadeService.data.image).then(d => {
       BrigadeService.data.brigade = d;
     });

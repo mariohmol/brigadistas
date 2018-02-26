@@ -37,14 +37,14 @@ export class ChatsPageComponent extends BasePage {
   }
 
   removeChat(chat) {
-    this.chatService.deleteChat(chat._id).then(chat => {
-      this.showToast(this.translate("chat.deleted"));
+    this.chatService.deleteChat(chat._id).then(chatt => {
+      this.showToast(this.translate('chat.deleted'));
       this.loadData();
     });
   }
 
   addChat() {
-    let modal = this.modalCtrl.create(NewChatModalPage);
+    const modal = this.modalCtrl.create(NewChatModalPage);
     modal.present();
   }
 }
@@ -69,7 +69,7 @@ export class ChatsPageComponent extends BasePage {
     <select-item [select]="select"></select-item>
 </ion-content>`
 })
-export class NewChatModalPage extends BasePage {
+export class NewChatModalPageComponent extends BasePage {
   character;
 
   constructor(
@@ -85,14 +85,14 @@ export class NewChatModalPage extends BasePage {
   }
 
   select(user) {
-    let chat = { members: [user] };
+    const chat = { members: [user] };
     this.chatService.addChat(chat).then((d: any) => {
       console.log(d);
-      this.openPageParam(ChatPageComponent, { chatId: d._id })
+      this.openPageParam(ChatPageComponent, { chatId: d._id });
       this.viewCtrl.dismiss();
     }).catch(e => {
       console.log(e);
-      this.showToast(this.translate("chat.new.error"));
+      this.showToast(this.translate('chat.new.error'));
     });
   }
 

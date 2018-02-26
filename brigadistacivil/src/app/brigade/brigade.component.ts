@@ -43,11 +43,11 @@ export class BrigadePageComponent extends BasePage {
   ) {
     super();
     this.readonly = true;
-    if (this.navParams.get("brigade")) {
-      BrigadeService.data.brigade = this.brigade = this.navParams.get("brigade");
+    if (this.navParams.get('brigade')) {
+      BrigadeService.data.brigade = this.brigade = this.navParams.get('brigade');
       this.loadData();
-    } else if (this.navParams.get("brigadeId") && this.navParams.get("brigadeId") != "brigadeId") {
-      BrigadeService.data.brigade = this.brigade = { _id: this.navParams.get("brigadeId") };
+    } else if (this.navParams.get('brigadeId') && this.navParams.get('brigadeId') !== 'brigadeId') {
+      BrigadeService.data.brigade = this.brigade = { _id: this.navParams.get('brigadeId') };
       this.loadData();
     } else {
       BrigadeService.data.brigade = this.brigade = {};
@@ -61,7 +61,7 @@ export class BrigadePageComponent extends BasePage {
 
 
   loadData() {
-    if (!this.brigade) return;
+    if (!this.brigade) { return; }
     this.brigadeService.getBrigade(this.brigade._id).then(d => {
       BrigadeService.data.brigade = this.brigade = d;
 
@@ -72,8 +72,8 @@ export class BrigadePageComponent extends BasePage {
   }
 
   openMenu() {
-    let buttons = [];
-    let addButton = (icon, text, cb) => {
+    const buttons = [];
+    const addButton = (icon, text, cb) => {
       buttons.push({
         text: this.translate(text),
         icon: !this.platform.is('ios') ? icon : null,
@@ -82,12 +82,14 @@ export class BrigadePageComponent extends BasePage {
         }
       });
     };
-    if (!this.readonly) addButton("checkmark-round", this.translate("save"), b => {
-      this.events.publish('brigade:save')
-    });
+    if (!this.readonly) {
+      addButton('checkmark-round', this.translate('save'), b => {
+        this.events.publish('brigade:save');
+      });
+    }
 
 
-    let actionSheet = this.actionsheetCtrl.create({
+    const actionSheet = this.actionsheetCtrl.create({
       title: this.translate('options'),
       cssClass: 'action-sheets-basic-page',
       buttons: [...buttons,
@@ -106,22 +108,22 @@ export class BrigadePageComponent extends BasePage {
 
 
   requestEnter() {
-    let message = this.translate("brigade.requestEnter.confirm");
-    let title = this.translate("brigade.requestEnter.action");
+    const message = this.translate('brigade.requestEnter.confirm');
+    const title = this.translate('brigade.requestEnter.action');
     this.showConfirm(message, title, confirm => {
-      this.brigadeService.addRelationBrigade(this.brigade._id, "requested").then(d => {
-        this.showToast(this.translate("brigade.requestEnter.feedback"));
+      this.brigadeService.addRelationBrigade(this.brigade._id, 'requested').then(d => {
+        this.showToast(this.translate('brigade.requestEnter.feedback'));
         this.loadData();
       });
     });
   }
 
   leaveBrigade() {
-    let message = this.translate("brigade.leaveBrigade.confirm");
-    let title = this.translate("brigade.leaveBrigade.action");
+    const message = this.translate('brigade.leaveBrigade.confirm');
+    const title = this.translate('brigade.leaveBrigade.action');
     this.showConfirm(message, title, confirm => {
-      this.brigadeService.removeRelationBrigade(this.brigade._id, "requested").then(d => {
-        this.showToast(this.translate("brigade.leaveBrigade.feedback"));
+      this.brigadeService.removeRelationBrigade(this.brigade._id, 'requested').then(d => {
+        this.showToast(this.translate('brigade.leaveBrigade.feedback'));
         this.loadData();
       });
     });
@@ -137,17 +139,17 @@ export class BrigadePageComponent extends BasePage {
 
 
 /**
- * 
+ *
  * Fires
- * 
+ *
  */
 @Component({
-  template: `<div ><select-item [readonly]="readonly" [items]="fires" 
+  template: `<div ><select-item [readonly]="readonly" [items]="fires"
               title="title" subtitle="status" ></select-item></div>`
 })
-export class BrigadeFiresPage extends BasePage {
+export class BrigadeFiresPageComponent extends BasePage {
   public fires: any = [];
-  public readonly: boolean = true;
+  public readonly = true;
 
   constructor(public fireService: FireService) {
     super();

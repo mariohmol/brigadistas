@@ -43,21 +43,20 @@ export class BrigadeAreaPageComponent extends BasePage {
   }
 
   loadData(force) {
-    if (this.navParams.get("brigade") && !force) {
-      this.brigade = this.navParams.get("brigade");
-      this.readonly = this.navParams.get("readonly");
-      this.initData()
-      //TODO: this.valid=false;
-    } else if (this.navParams.get("brigadeId")) {
-      this.brigadeService.getBrigade(this.navParams.get("brigadeId")).then(d => {
+    if (this.navParams.get('brigade') && !force) {
+      this.brigade = this.navParams.get('brigade');
+      this.readonly = this.navParams.get('readonly');
+      this.initData();
+      // TODO: this.valid=false;
+    } else if (this.navParams.get('brigadeId')) {
+      this.brigadeService.getBrigade(this.navParams.get('brigadeId')).then(d => {
         this.brigade = d;
-        this.initData()
+        this.initData();
       });
     } else if (BrigadeService.data.brigade) {
       this.brigade = BrigadeService.data.brigade;
       this.initData();
-    }
-    else {
+    } else {
       this.brigade = {};
       this.readonly = false;
       this.valid = false;
@@ -73,14 +72,14 @@ export class BrigadeAreaPageComponent extends BasePage {
   }
 
   showMap() {
-    let addPosition = (pos) => {
+    const addPosition = (pos) => {
       this.position = pos;
       this.initMap();
-    }
+    };
 
     if (!this.position) {
       this.generalService.getPosition(addPosition);
-      setTimeout(function () { if (!GeneralService.map) this.initMap(); }, 10000);
+      setTimeout(function () { if (!GeneralService.map) { this.initMap(); } }, 10000);
     } else {
       this.initMap();
     }
@@ -89,10 +88,10 @@ export class BrigadeAreaPageComponent extends BasePage {
   initMap() {
     let coords;
     GeneralService.polygons = <any>[];
-    if (this.position) coords = this.position.coords;
+    if (this.position) { coords = this.position.coords; }
     this.map = this.generalService.loadMap(this.mapElement, coords, { scrollwheel: false });
 
-    let selectShapeCb = (function (obj) {
+    const selectShapeCb = (function (obj) {
       return shape => {
         obj.selectedShape = shape;
       };
@@ -100,28 +99,28 @@ export class BrigadeAreaPageComponent extends BasePage {
 
     if (this.brigade.area && (this.brigade.area.coordinates || this.brigade.area.length > 0)) {
       let a = this.brigade.area;
-      if (this.brigade.area.coordinates) a = this.brigade.area.coordinates;
+      if (this.brigade.area.coordinates) { a = this.brigade.area.coordinates; }
       a.forEach(area => {
-        if (!area || !area.map) return;
-        let areas = area.map(a => {
-          return { lat: a[1], lng: a[0] };
+        if (!area || !area.map) { return; }
+        const areas = area.map(aa => {
+          return { lat: aa[1], lng: aa[0] };
         });
         this.generalService.addPolygon(this.map, areas, selectShapeCb);
       });
-      if (!this.readonly) this.generalService.drawPolygon(this.map, [], null, selectShapeCb);
+      if (!this.readonly) { this.generalService.drawPolygon(this.map, [], null, selectShapeCb); }
     } else {
-      let newPolyCb = p => {
+      const newPolyCb = p => {
         if (p.getPath().b.length > 2) {
           this.valid = true;
           this.readonly = false;
         }
       };
-      if (!this.readonly) this.generalService.drawPolygon(this.map, [], newPolyCb, selectShapeCb);
+      if (!this.readonly) { this.generalService.drawPolygon(this.map, [], newPolyCb, selectShapeCb); }
     }
   }
 
   remove() {
-    this.showConfirm(this.translate("remove"), null, c => {
+    this.showConfirm(this.translate('remove'), null, c => {
       this.brigadeService.deleteArea(this.brigade._id);
       this.generalService.deleteSelectedShape();
     });
@@ -130,27 +129,32 @@ export class BrigadeAreaPageComponent extends BasePage {
   save() {
     if (!GeneralService.selectedShape) {
       this.openPageParam(BrigadePage, { brigade: this.brigade, brigadeId: this.brigade._id });
-      return
+      return;
     }
-    let paths = [];
-    console.log(GeneralService.polygons)
+    const paths = [];
+    console.log(GeneralService.polygons);
     GeneralService.polygons.forEach(p => {
       let init;
       p.getPath().b.forEach((b, i) => {
-        if (i == 0) init = [b.lng(), b.lat()];
+        if (i === 0) { init = [b.lng(), b.lat()]; }
         paths.push([b.lng(), b.lat()]);
       });
       paths.push(init);
     });
-    if (!this.brigade.area) this.brigade.area = { coordinates: [] };
-    else if (!this.brigade.area.coordinates) this.brigade.area.coordinates = [];
+    if (!this.brigade.area) {
+      this.brigade.area = {
+        coordinates: []
+      };
+    } else if (!this.brigade.area.coordinates) {
+      this.brigade.area.coordinates = [];
+    }
     this.brigade.area = { type: 'Polygon', coordinates: [paths] };
 
     this.brigadeService.updateBrigade({
       _id: this.brigade._id,
       area: this.brigade.area
     }).then(c => {
-      this.showToast(this.translate("brigade.area.save"));
+      this.showToast(this.translate('brigade.area.save'));
       this.loadData(true);
     });
   }
