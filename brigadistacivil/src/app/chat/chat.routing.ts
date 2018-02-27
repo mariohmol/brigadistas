@@ -1,6 +1,6 @@
-import { ChatPageComponent } from "./chat.component";
-import { ChatsOptionsComponent } from "./chats-options.component";
-import { ChatsPageComponent } from "./chats.component";
+import { ChatPageComponent } from './chat.component';
+import { ChatsOptionsComponent } from './chats-options.component';
+import { ChatsPageComponent } from './chats.component';
 
 
 export const ChatRoutes = [

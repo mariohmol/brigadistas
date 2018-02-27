@@ -1,7 +1,7 @@
 import { NewLocationMessageComponent } from './location-message.component';
 import { MessagesAttachmentsComponent } from './messages-attachments.component';
 import { MessagesOptionsComponent } from './messages-options.component';
-import { MessagesPageComponent } from './messages.component.component';
+import { MessagesPageComponent } from './messages.component';
 
 export const MessageRoutes = [
   { component: NewLocationMessageComponent, name: 'BrigadeAreaPage', segment: 'brigadearea/:id' },

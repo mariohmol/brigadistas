@@ -34,7 +34,7 @@ export class RecoverPageComponent extends BasePage {
   }
 
   ionViewDidLoad() {
-    this.token = this.navParams.get("token");
+    this.token = this.navParams.get('token');
     this.userService.recoverCheck(this.token).then(u => {
       this.user = u;
     });
@@ -43,8 +43,9 @@ export class RecoverPageComponent extends BasePage {
 
   recoverPage(form) {
     this.userService.recoverPassword(this.token, form.password).then(u => {
-      if (u) this.showToast(this.translate("user.recover.changed"));
-      else this.showToast(this.translate("generalError"));
+      if (u) {
+        this.showToast(this.translate('user.recover.changed'));
+      } else { this.showToast(this.translate('generalError')); }
       this.navCtrl.push(LoginPageComponent);
     });
   }

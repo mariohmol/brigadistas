@@ -18,8 +18,8 @@ export default class BasePage {
   public translateService: TranslateService;
   public navCtrl: NavController;
   public alertCtrl: AlertController;
-  public loadingCtrl: LoadingController
-  public toastCtrl: ToastController
+  public loadingCtrl: LoadingController;
+  public toastCtrl: ToastController;
   public app: App;
   public platform: Platform;
   public loading: any;
@@ -40,8 +40,8 @@ export default class BasePage {
     }
   }
 
-  isCordova(){
-    if(this.platform) return this.platform.is('cordova')==true;
+  isCordova() {
+    if (this.platform) { return this.platform.is('cordova') === true; }
     return BaseService.device === 'mobile';
   }
 
@@ -59,7 +59,7 @@ export default class BasePage {
   }
 
   showLoading(): void {
-    if (!this.loadingCtrl || this.loading) return;
+    if (!this.loadingCtrl || this.loading) { return; }
     this.loading = this.loadingCtrl.create({
       content: 'Carregando...',
       duration: 90000
@@ -87,10 +87,9 @@ export default class BasePage {
    * @return {[type]}      [description]
    */
   setDataForm(form, keys, data) {
-    let formData = {};
-    for (let key in keys) {
-      if (key in data) formData[key] = data[key];
-      else formData[key] = '';
+    const formData = {};
+    for (const key in keys) {
+      if (key in data) { formData[key] = data[key]; } else { formData[key] = ''; }
     }
     (<FormGroup>form).setValue(formData, { onlySelf: true });
   }
@@ -99,7 +98,7 @@ export default class BasePage {
 
 
   onInputKeypress({ keyCode }: KeyboardEvent): void {
-    if (keyCode == 13) {
+    if (keyCode === 13) {
       this.formsubmit();
     }
   }
@@ -109,7 +108,8 @@ export default class BasePage {
   }
 
   toDate(mydate) {
-    return new Date(mydate.substring(6, 10), mydate.substring(3, 5), mydate.substring(0, 2), mydate.substring(11, 13), mydate.substring(14, 16));
+    return new Date(mydate.substring(6, 10), mydate.substring(3, 5),
+      mydate.substring(0, 2), mydate.substring(11, 13), mydate.substring(14, 16));
   }
 
   formsubmit() { }
@@ -120,8 +120,8 @@ export default class BasePage {
    * @return {string}     [description]
    */
   translate(key) {
-    let newKey = this.translateService.get(key);
-    if (newKey && (<any>newKey).value) return (<any>newKey).value;
+    const newKey = this.translateService.get(key);
+    if (newKey && (<any>newKey).value) { return (<any>newKey).value; }
     return key;
   }
 
@@ -129,18 +129,21 @@ export default class BasePage {
    * User
    */
   isUser() {
-    if (UserService && UserService.loginData)
+    if (UserService && UserService.loginData) {
       return true;
-    else return false;
+    } else { return false; }
   }
 
   openPageParam(page, param) {
     // if (this.menuCtrl) this.menuCtrl.close();
     if (this.app) {
-      if (param) this.app.getRootNav().push(page, param);
-      else this.app.getRootNav().setRoot(page);
+      if (param) {
+        this.app.getRootNav().push(page, param);
+      } else {
+        this.app.getRootNav().setRoot(page);
+      }
     }
-    //let nav = this.app.getActiveNav();nav.push(page);
+    // let nav = this.app.getActiveNav();nav.push(page);
   }
 
   openPage(page) {
@@ -156,7 +159,7 @@ export default class BasePage {
    */
 
   showAlert(title, desc) {
-    let alert = this.alertCtrl.create({
+    const alert = this.alertCtrl.create({
       title: title,
       subTitle: desc,
       buttons: ['OK']
@@ -165,8 +168,8 @@ export default class BasePage {
   }
 
   showConfirm(message, title, callback) {
-    if (!title) title = this.translate('confirmOperation');
-    let confirm = this.alertCtrl.create({
+    if (!title) { title = this.translate('confirmOperation'); }
+    const confirm = this.alertCtrl.create({
       title: title,
       message: message,
       buttons: [
@@ -192,7 +195,7 @@ export default class BasePage {
 
     alertConfirm = this.alertCtrl.create();
 
-    if (!title) title = this.translate('chooseOption');
+    if (!title) { title = this.translate('chooseOption'); }
     alertConfirm.setTitle(title);
     alertConfirm.setMessage(message);
 
@@ -212,7 +215,7 @@ export default class BasePage {
         if (data) {
           callback(data);
         } else {
-          alert(this.translate('chooseOptionFail'))
+          alert(this.translate('chooseOptionFail'));
           return false;
         }
       }
@@ -228,11 +231,11 @@ export default class BasePage {
   showError(error: any) {
     this.dismissLoading();
     if (error && error.status === 0) {
-      error = this.translate('cancel')
+      error = this.translate('cancel');
     }
 
     if (this.alertCtrl) {
-      let alert = this.alertCtrl.create({
+      const alert = this.alertCtrl.create({
         title: this.translate('connectionFail'),
         subTitle: error,
         buttons: ['OK']
@@ -243,8 +246,8 @@ export default class BasePage {
 
 
   showToast(desc, fixed = false) {
-    if (!this.toastCtrl) return;
-    let options = {
+    if (!this.toastCtrl) { return; }
+    const options = {
       message: desc,
       position: 'top',
       closeButtonText: 'OK',
@@ -256,7 +259,7 @@ export default class BasePage {
       options.duration = 15000;
       options.showCloseButton = true;
     }
-    let toast = this.toastCtrl.create(options);
+    const toast = this.toastCtrl.create(options);
     toast.present();
   }
 
@@ -274,8 +277,9 @@ export default class BasePage {
     localStorage['base_token'] = btoa(user.username + ':' + password);
     console.log(localStorage);
     if (localStorage['deviceToken']) {
-      if (this.platform && this.platform.is('ios')) this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
-      else this.userService.storeDeviceToken('android', localStorage['deviceToken']);
+      if (this.platform && this.platform.is('ios')) {
+        this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
+      } else { this.userService.storeDeviceToken('android', localStorage['deviceToken']); }
     }
     this.afterLogin();
     this.showToast(user.name + this.translate('user.new.welcome'));
@@ -283,16 +287,15 @@ export default class BasePage {
 
   login(username: any = null, password: any = null, callback: any = null): void {
     this.showLoading();
-    if (!username) username = this.username;
-    if (!password) password = this.password;
+    if (!username) { username = this.username; }
+    if (!password) { password = this.password; }
 
     this.userService.login(username, password).then(user => {
       this.dismissLoading();
       if (user) {
         this.authSuccess(true, user, password);
-        if (callback) callback();
-      }
-      else {
+        if (callback) { callback(); }
+      } else {
         this.errorlogin();
       }
 
@@ -304,7 +307,7 @@ export default class BasePage {
 
   errorlogin(): void {
     if (this.alertCtrl) {
-      let alert = this.alertCtrl.create({
+      const alert = this.alertCtrl.create({
         title: this.translate('user.login.title'),
         subTitle: this.translate('user.login.subTitle'),
         buttons: ['OK']
@@ -336,46 +339,46 @@ export default class BasePage {
   }
 
 
-takePicture(cb){
-  const options: CameraOptions = {
-    quality: 100,
-    destinationType: this.camera.DestinationType.DATA_URL,
-    encodingType: this.camera.EncodingType.JPEG,
-    mediaType: this.camera.MediaType.PICTURE
+  takePicture(cb) {
+    const options: CameraOptions = {
+      quality: 100,
+      destinationType: this.camera.DestinationType.DATA_URL,
+      encodingType: this.camera.EncodingType.JPEG,
+      mediaType: this.camera.MediaType.PICTURE
+    };
+
+    this.camera.getPicture(options).then((imageData) => {
+      // imageData is either a base64 encoded string or a file URI
+      // If it's base64:
+      const base64Image = 'data:image/jpeg;base64,' + imageData;
+      cb(base64Image);
+    }, (err) => {
+      // Handle error
+    });
   }
 
-  this.camera.getPicture(options).then((imageData) => {
-  // imageData is either a base64 encoded string or a file URI
-  // If it's base64:
-  let base64Image = 'data:image/jpeg;base64,' + imageData;
-    cb(base64Image);
-  }, (err) => {
-  // Handle error
-  });
-}
-
-getPicture(cb){
-  let options = {
+  getPicture(cb) {
+    const options = {
       // max images to be selected, defaults to 15. If this is set to 1, upon
-    // selection of a single image, the plugin will return it.
-    maximumImagesCount: 1,
-    
-    // max width and height to allow the images to be.  Will keep aspect
-    // ratio no matter what.  So if both are 800, the returned image
-    // will be at most 800 pixels wide and 800 pixels tall.  If the width is
-    // 800 and height 0 the image will be 800 pixels wide if the source
-    // is at least that wide.
-    width: 1500,
-    height: 1500,
-    
-    // quality of resized image, defaults to 100 - int (0-100)
-    quality: 100
-  };
-  this.imagePicker.getPictures(options).then((results) => {
-    for (var i = 0; i < results.length; i++) {
+      // selection of a single image, the plugin will return it.
+      maximumImagesCount: 1,
+
+      // max width and height to allow the images to be.  Will keep aspect
+      // ratio no matter what.  So if both are 800, the returned image
+      // will be at most 800 pixels wide and 800 pixels tall.  If the width is
+      // 800 and height 0 the image will be 800 pixels wide if the source
+      // is at least that wide.
+      width: 1500,
+      height: 1500,
+
+      // quality of resized image, defaults to 100 - int (0-100)
+      quality: 100
+    };
+    this.imagePicker.getPictures(options).then((results) => {
+      for (let i = 0; i < results.length; i++) {
         cb(results[i]);
-    }
-  }, (err) => { });
-}
+      }
+    }, (err) => { });
+  }
 
 }

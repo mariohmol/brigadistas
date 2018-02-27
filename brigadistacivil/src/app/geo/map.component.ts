@@ -37,10 +37,10 @@ export class MapPageComponent extends BasePage {
 
   showMap() {
 
-    let addPosition = (pos) => {
+    const addPosition = (pos) => {
       this.position = pos;
       this.initMap();
-    }
+    };
 
     if (!this.position) {
       this.generalService.getPosition(addPosition);
@@ -52,11 +52,14 @@ export class MapPageComponent extends BasePage {
   initMap() {
     let coords;
     GeneralService.polygons = <any>[];
-    if (this.position && this.position.coords) coords = this.position.coords;
-    else if (this.position) coords = this.position;
+    if (this.position && this.position.coords) {
+      coords = this.position.coords;
+    } else if (this.position) {
+      coords = this.position;
+    }
     this.map = this.generalService.loadMap(this.mapElement, coords, { scrollwheel: false });
 
-    let selectShapeCb = (function (obj) {
+    const selectShapeCb = (function (obj) {
       return shape => {
         obj.selectedShape = shape;
       };
@@ -67,13 +70,13 @@ export class MapPageComponent extends BasePage {
       if (this.items) {
         this.items.forEach(item => {
           if (item.loc && item.loc.coordinates && item.loc.coordinates.length) {
-            let c = item.loc.coordinates;
-            if (item.loc.type == "Point") {
-              let pos = { latitude: c[1], longitude: c[0] };
+            const c = item.loc.coordinates;
+            if (item.loc.type === 'Point') {
+              const pos = { latitude: c[1], longitude: c[0] };
               this.generalService.addMarker(this.map, pos, `${item.title} (${item.category})`);
-            } else if (item.loc.type == "Polygon") {
+            } else if (item.loc.type === 'Polygon') {
               c.forEach(area => {
-                let areas = area.map(a => {
+                const areas = area.map(a => {
                   return { lat: a[1], lng: a[0] };
                 });
                 this.generalService.addPolygon(this.map, areas, selectShapeCb);

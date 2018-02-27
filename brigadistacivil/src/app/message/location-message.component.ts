@@ -2,7 +2,8 @@ import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Platform, ViewController } from 'ionic-angular';
 import { Geolocation } from 'ionic-native';
 import { Location } from '../../models';
-import { Observable, Subscription } from 'rxjs';
+import { Observable } from 'rxjs/Observable';
+import {Subscription } from 'rxjs/Subscription';
 
 const DEFAULT_ZOOM = 8;
 const EQUATOR = 40075004;
@@ -18,7 +19,7 @@ export class NewLocationMessageComponent implements OnInit, OnDestroy {
   lat: number = DEFAULT_LAT;
   lng: number = DEFAULT_LNG;
   zoom: number = DEFAULT_ZOOM;
-  accuracy: number = -1;
+  accuracy = -1;
   intervalObs: Subscription;
 
   constructor(private platform: Platform, private viewCtrl: ViewController) {

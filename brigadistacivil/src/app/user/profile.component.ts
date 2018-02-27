@@ -20,13 +20,12 @@ export class UserProfilePageComponent extends BasePage {
   }
 
   ionViewDidLoad() {
-    if (this.navParams.get("userId")) {
-      this.userService.getUser(this.navParams.get("userId")).then(u => {
-        if (!u) return this.showToast("notfound");
+    if (this.navParams.get('userId')) {
+      this.userService.getUser(this.navParams.get('userId')).then(u => {
+        if (!u) { return this.showToast('notfound'); }
         this.user = u;
       });
-    }
-    else if (UserService.loginData) {
+    } else if (UserService.loginData) {
       this.user = UserService.loginData;
     }
   }

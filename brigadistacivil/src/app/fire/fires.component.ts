@@ -17,8 +17,8 @@ import { FirePageComponent } from './fire.component';
   templateUrl: 'fires.component.html'
 })
 export class FiresPageComponent extends BasePage {
+  public static isTracking = false;
   public fires: Array<any>;
-  public static isTracking: boolean = false;
 
   constructor(public navCtrl: NavController, public navParams: NavParams,
     public userService: UserService,

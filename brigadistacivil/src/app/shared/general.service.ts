@@ -35,23 +35,24 @@ export class GeneralService extends BaseService {
    */
   loadMap(mapElement, position, options = {}, cb = null) {
     try {
-      if (GeneralService.map && GeneralService.map.clear)
+      if (GeneralService.map && GeneralService.map.clear) {
         GeneralService.map.clear();
+      }
     } catch (e) {
       console.log(e);
     }
 
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       GeneralService.map = new GoogleMap(mapElement.nativeElement, options);
 
       // listen to MAP_READY event
       GeneralService.map.one(GoogleMapsEvent.MAP_READY).then(() => {
         if (position) {
           // create LatLng object
-          let posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
+          const posLatLng: GoogleMapsLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
 
           // create CameraPosition
-          let cameraPos: CameraPosition = {
+          const cameraPos: CameraPosition = {
             target: posLatLng,
             zoom: 18,
             tilt: 30
@@ -59,7 +60,7 @@ export class GeneralService extends BaseService {
 
           // move the map's camera to position
           GeneralService.map.moveCamera(cameraPos);
-          if (cb) cb();
+          if (cb) { cb(); }
         }
       });
 
@@ -73,57 +74,55 @@ export class GeneralService extends BaseService {
       };
 
       if (position) {
-        //-34.9290, 138.6010
-        let latLng = new google.maps.LatLng(position.latitude, position.longitude);
+        // -34.9290, 138.6010
+        const latLng = new google.maps.LatLng(position.latitude, position.longitude);
         mapOptions = Object.assign(mapOptions, { center: latLng });
       }
-      mapOptions = Object.assign(mapOptions, options)
+      mapOptions = Object.assign(mapOptions, options);
 
       if (mapElement) {
         GeneralService.map = new google.maps.Map(mapElement.nativeElement, mapOptions);
       } else {
         GeneralService.map = new google.maps.Map(document.getElementById('map'), mapOptions);
       }
-      if (cb) cb();
+      if (cb) { cb(); }
       return GeneralService.map;
     }
   }
 
 
   addMarker(map, position, title, cb = null) {
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       let posLatLng: GoogleMapsLatLng;
 
-      if (!position) posLatLng = map.getCenter();
-      else {
+      if (!position) { posLatLng = map.getCenter(); } else {
         posLatLng = new GoogleMapsLatLng(position.latitude, position.longitude);
       }
       // create new marker
-      let markerOptions: GoogleMapsMarkerOptions = {
+      const markerOptions: GoogleMapsMarkerOptions = {
         position: posLatLng,
         title: title
       };
 
       map.addMarker(markerOptions)
         .then((marker: GoogleMapsMarker) => {
-          if (cb) cb(marker);
+          if (cb) { cb(marker); }
           marker.showInfoWindow();
         });
 
     } else {
       let latlng;
-      if (!position) position = map.getCenter();
-      else {
+      if (!position) { position = map.getCenter(); } else {
         latlng = new google.maps.LatLng(position.latitude, position.longitude);
       }
-      let marker = new google.maps.Marker({
+      const marker = new google.maps.Marker({
         map: map,
         animation: google.maps.Animation.DROP,
         position: latlng
       });
-      if (!title) return;
+      if (!title) { return; }
       this.addInfoWindow(map, marker, title);
-      if (cb) cb(marker);
+      if (cb) { cb(marker); }
     }
 
   }
@@ -139,13 +138,13 @@ export class GeneralService extends BaseService {
     this.clearSelection(shape);
     GeneralService.selectedShape = shape;
     shape.setEditable(true);
-    google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape) });
-    google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape) });
-    if (cb) cb(shape);
+    google.maps.event.addListener(shape.getPath(), 'set_at', () => { this.calcar(shape); });
+    google.maps.event.addListener(shape.getPath(), 'insert_at', () => { this.calcar(shape); });
+    if (cb) { cb(shape); }
   }
 
   calcar(shape) {
-    //"Area =" + area.toFixed(2);
+    // "Area =" + area.toFixed(2);
     const area = google.maps.geometry.spherical.computeArea(shape.getPath());
     GeneralService.selectedShape = shape;
     return area;
@@ -153,17 +152,17 @@ export class GeneralService extends BaseService {
 
   deleteSelectedShape(selectedShape = GeneralService.selectedShape) {
     GeneralService.polygons = <any>GeneralService.polygons.filter(p => {
-      let pPaths = [];
+      const pPaths = [];
       p.getPath().b.forEach(b => {
         pPaths.push([b.lng(), b.lat()]);
       });
 
-      let bSelected = GeneralService.selectedShape.getPath().b;
-      if (bSelected.length != pPaths.length) return false;
+      const bSelected = GeneralService.selectedShape.getPath().b;
+      if (bSelected.length !== pPaths.length) { return false; }
 
       let found = true;
       bSelected.forEach((b, i) => {
-        if (pPaths[i][0] != b.lng() || pPaths[i][1] != b.lat()) found = false;
+        if (pPaths[i][0] !== b.lng() || pPaths[i][1] !== b.lat()) { found = false; }
       });
       return found;
 
@@ -174,8 +173,8 @@ export class GeneralService extends BaseService {
   }
 
   addInfoWindow(map, marker, content) {
-    if (BaseService.device == 'mobile' || BaseService.device == 'web') {
-      let infoWindow = new google.maps.InfoWindow({
+    if (BaseService.device === 'mobile' || BaseService.device === 'web') {
+      const infoWindow = new google.maps.InfoWindow({
         content: content
       });
       google.maps.event.addListener(marker, 'click', () => {
@@ -185,7 +184,7 @@ export class GeneralService extends BaseService {
   }
 
   drawPolygon(map, points, cbAddPol, cbSelectPol = null) {
-    var newShape;
+    let newShape;
     const polyOptions = {
       strokeWeight: 0,
       fillOpacity: 0.45,
@@ -207,18 +206,18 @@ export class GeneralService extends BaseService {
       GeneralService.selectedShape = e.overlay;
       GeneralService.polygons.push(GeneralService.selectedShape);
 
-      if (e.type != google.maps.drawing.OverlayType.MARKER) {
+      if (e.type !== google.maps.drawing.OverlayType.MARKER) {
         drawingManager.setDrawingMode(null);
 
-        let newShape = e.overlay;
+        newShape = e.overlay;
         newShape.type = e.type;
 
         google.maps.event.addListener(newShape, 'click', () => {
           this.setSelection(newShape, cbSelectPol);
         });
-        //"Area =" + area.toFixed(2);
-        //const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
-        if (cbAddPol) cbAddPol(newShape);
+        // "Area =" + area.toFixed(2);
+        // const area = google.maps.geometry.spherical.computeArea(newShape.getPath());
+        if (cbAddPol) { cbAddPol(newShape); }
         this.setSelection(newShape, cbSelectPol);
       }
     });
@@ -226,7 +225,7 @@ export class GeneralService extends BaseService {
   }
 
   getPosition(cb) {
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
 
       cordova.plugins.diagnostic.isLocationAvailable(function (available) {
         Geolocation.getCurrentPosition().then((pos) => {
@@ -235,37 +234,36 @@ export class GeneralService extends BaseService {
           cb();
         });
       }, function (error) {
-        //console.error("The following error occurred: "+error);
+        // console.error("The following error occurred: "+error);
         cb();
       });
       /*let watch = Geolocation.watchPosition();
       watch.subscribe((data) => {
         // data can be a set of coordinates, or an error (if an error occurred). data.coords.latitude, data.coords.longitude
      });*/
-    }
-    else {
-      //using navigator
+    } else {
+      // using navigator
       if (navigator.geolocation) {
-        var options = {
+        const options = {
           enableHighAccuracy: true
         };
 
-        //position.coords.latitude,position.coords.longitude
+        // position.coords.latitude,position.coords.longitude
         navigator.geolocation.getCurrentPosition(pos => {
           cb(pos.coords);
         }, error => {
           cb();
-        }, options); ``
+        }, options);
       }
     }
   }
 
   drawMarker(map, cb) {
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       map.addEventListener(GoogleMapsEvent.MAP_CLICK).subscribe(cb);
     } else {
       google.maps.event.addListener(map, 'click', event => {
-        cb(event)
+        cb(event);
       });
     }
   }
@@ -293,7 +291,7 @@ export class GeneralService extends BaseService {
   }
 
   addPolygon(map, areas, cbSelectPol = null) {
-    let options = {
+    const options = {
       paths: areas,
       strokeColor: '#FF0000',
       strokeOpacity: 0.8,
@@ -301,7 +299,7 @@ export class GeneralService extends BaseService {
       fillColor: '#FF0000',
       fillOpacity: 0.35
     };
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       map.addPolygon(options, function (polygon) {
         this.map.animateCamera({
           'target': polygon.getPoints()
@@ -309,7 +307,7 @@ export class GeneralService extends BaseService {
         GeneralService.polygons.push(polygon);
       });
     } else {
-      var pol = new google.maps.Polygon(options);
+      const pol = new google.maps.Polygon(options);
       map.fitBounds(this.getBounds(pol.getPaths()));
       pol.setMap(map);
       GeneralService.polygons.push(pol);
@@ -320,20 +318,20 @@ export class GeneralService extends BaseService {
   }
 
   /**
-   * 
-   * @param map 
+   *
+   * @param map
    * @param areas  var flightPlanCoordinates = [
           {lat: 37.772, lng: -122.214},
           {lat: 21.291, lng: -157.821},
           {lat: -18.142, lng: 178.431},
           {lat: -27.467, lng: 153.027}
         ];
-   * @param optionsArg 
+   * @param optionsArg
    */
   addPolyline(map, areas, optionsArg = {}) {
     const latlngArea = areas.map(a => {
       return { lat: a[1], lng: a[0] };
-    })
+    });
     const options = {
       ...{
         path: latlngArea,
@@ -346,14 +344,14 @@ export class GeneralService extends BaseService {
       }, ...optionsArg
     };
 
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       map.addPolyline(options, function (polyline) {
         GeneralService.polylines.push(polyline);
         this.addInfoWindow(map, polyline, options.content);
       });
     } else {
 
-      var polyline = new google.maps.Polyline(options);
+      const polyline = new google.maps.Polyline(options);
       polyline.setMap(map);
       GeneralService.polylines.push(polyline);
       if (options.content) {
@@ -381,8 +379,8 @@ export class GeneralService extends BaseService {
   }
 
   colors() {
-    return ["#f44336", "#9c27b0", "#673ab7", "#4caf50", "#3f51b5", "#2196f3", "#8bc34a", "#cddc39",
-      "#ffeb3b", "#795548", "#9e9e9e", "#607d8b", "#009688", "#00bcd4"];
+    return ['#f44336', '#9c27b0', '#673ab7', '#4caf50', '#3f51b5', '#2196f3', '#8bc34a', '#cddc39',
+      '#ffeb3b', '#795548', '#9e9e9e', '#607d8b', '#009688', '#00bcd4'];
   }
 
   postFile(type, id, files) {
@@ -390,12 +388,12 @@ export class GeneralService extends BaseService {
   }
 
   fileUrl(data) {
-    if (!data) return data;
+    if (!data) { return data; }
     if (data.image) {
       data.image = BaseService.baseUrl + data.image;
     } else {
       data.forEach(item => {
-        if (item.image) item.image = BaseService.baseUrl + item.image;
+        if (item.image) { item.image = BaseService.baseUrl + item.image; }
       });
     }
     return data;

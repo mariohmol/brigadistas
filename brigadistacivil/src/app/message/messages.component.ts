@@ -3,7 +3,9 @@ import { NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { Chat, Message, MessageType, Location } from '../../models';
 import * as moment from 'moment';
 import { MessagesOptionsComponent } from './messages-options';
-import { Subscription, Observable, Subscriber } from 'rxjs';
+import { Subscription } from 'rxjs/Subscription';
+import { Observable } from 'rxjs/Observable';
+import { Subscriber } from 'rxjs/Subscriber';
 import { MessagesAttachmentsComponent } from './messages-attachments';
 import { ShowPictureComponent } from './show-picture';
 import { ChatService } from '../chat/chat.service';
@@ -17,13 +19,13 @@ export class MessagesPageComponent implements OnInit, OnDestroy {
   title: string;
   picture: string;
   messages;
-  message: string = '';
+  message = '';
   autoScroller: MutationObserver;
   scrollOffset = 0;
   senderId: string;
   loadingMessages: boolean;
   messagesComputation: Subscription;
-  messagesBatchCounter: number = 0;
+  messagesBatchCounter = 0;
 
   constructor(
     navParams: NavParams,
@@ -35,7 +37,7 @@ export class MessagesPageComponent implements OnInit, OnDestroy {
     this.selectedChat = <Chat>navParams.get('chat');
     this.title = this.selectedChat.title;
     this.picture = this.selectedChat.picture;
-    //this.senderId = Meteor.userId();
+    // this.senderId = Meteor.userId();
   }
 
   private get messagesPageContent(): Element {
@@ -56,7 +58,7 @@ export class MessagesPageComponent implements OnInit, OnDestroy {
 
     this.chatService.getMessages().then(m => {
       this.messages = m;
-    })
+    });
   }
 
   ngOnDestroy() {
@@ -224,8 +226,7 @@ export class MessagesPageComponent implements OnInit, OnDestroy {
         if (params.messageType === MessageType.LOCATION) {
           const location = params.selectedLocation;
           this.sendLocationMessage(location);
-        }
-        else if (params.messageType === MessageType.PICTURE) {
+        } else if (params.messageType === MessageType.PICTURE) {
           const blob: Blob = params.selectedPicture;
           this.sendPictureMessage(blob);
         }

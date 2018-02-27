@@ -40,11 +40,11 @@ export class ItemPageComponent extends BasePage {
 
     this.itemForm = this.fb.group(this.itemFormFields);
 
-    if (this.navParams.get("item")) {
-      this.item = this.navParams.get("item");
+    if (this.navParams.get('item')) {
+      this.item = this.navParams.get('item');
       this.loadData();
-    } else if (this.navParams.get("itemId")) {
-      this.item = { _id: this.navParams.get("itemId") };
+    } else if (this.navParams.get('itemId')) {
+      this.item = { _id: this.navParams.get('itemId') };
       this.loadData();
     } else {
       this.item = {};
@@ -58,7 +58,9 @@ export class ItemPageComponent extends BasePage {
         this.position = pos;
         this.initMap();
       });
-      setTimeout(function () { if (!GeneralService.map) this.initMap(); }, 10000);
+      setTimeout(function () {
+        if (!GeneralService.map) { this.initMap(); }
+      }, 10000);
     } else {
       this.initMap();
     }
@@ -66,10 +68,10 @@ export class ItemPageComponent extends BasePage {
 
   initMap() {
     if (this.item && this.item.loc) {
-      let pos = { latitude: this.item.loc.coordinates[1], longitude: this.item.loc.coordinates[0] };
+      const pos = { latitude: this.item.loc.coordinates[1], longitude: this.item.loc.coordinates[0] };
       this.loadMap(pos, {}, this.confMap);
-      if (GeneralService.marker) this.generalService.removeElement(GeneralService.marker);
-      GeneralService.marker = this.addMarker(pos, "Posição do Ítem");
+      if (GeneralService.marker) { this.generalService.removeElement(GeneralService.marker); }
+      GeneralService.marker = this.addMarker(pos, 'Posição do Ítem');
     } else if (this.position) {
       this.loadMap(this.position, {}, this.confMap);
     } else {
@@ -78,29 +80,29 @@ export class ItemPageComponent extends BasePage {
   }
 
   confMap() {
-    if (this.isReadonly()) return;
+    if (this.isReadonly()) { return; }
     this.generalService.drawMarker(GeneralService.map, event => {
-      if (GeneralService.marker) this.generalService.removeElement(GeneralService.marker);
-      let latlng = this.generalService.getEventLatLng(event);
+      if (GeneralService.marker) { this.generalService.removeElement(GeneralService.marker); }
+      const latlng = this.generalService.getEventLatLng(event);
 
-      this.item.loc = { type: "Point", coordinates: [latlng.longitude, latlng.latitude] };
+      this.item.loc = { type: 'Point', coordinates: [latlng.longitude, latlng.latitude] };
 
-      this.generalService.addMarker(GeneralService.map, latlng, "Posição do Item", m => {
+      this.generalService.addMarker(GeneralService.map, latlng, 'Posição do Item', m => {
         GeneralService.marker = m;
       });
     });
   }
 
   loadData() {
-    if (!this.item) return;
+    if (!this.item) { return; }
     this.geoService.getItem(this.item._id).then(d => {
       this.item = d;
       this.setDataForm(this.itemForm, this.itemFormFields, this.item);
       this.readonly = false;
       if (this.item && this.item.users) {
-        let userId = this.currentUser()._id;
-        let findUser = this.item.users.find(b => { return b == userId });
-        if (findUser) this.readonly = false;
+        const userId = this.currentUser()._id;
+        const findUser = this.item.users.find(b => b === userId);
+        if (findUser) { this.readonly = false; }
       }
     });
   }
@@ -108,14 +110,14 @@ export class ItemPageComponent extends BasePage {
 
   save() {
     if (!this.item.loc) {
-      return this.showToast(this.translate("item.chooseLocation"));
+      return this.showToast(this.translate('item.chooseLocation'));
     }
     if (this.item._id) {
       this.item = Object.assign(this.item, this.itemForm.value);
       this.geoService.updateItem(this.item).then(d => {
         this.item = d;
         this.uploadPic();
-        this.showToast(this.translate("item.status.updated"));
+        this.showToast(this.translate('item.status.updated'));
         this.openPage(MapPageComponent);
       });
     } else {
@@ -123,7 +125,7 @@ export class ItemPageComponent extends BasePage {
       this.geoService.addItem(this.item).then(d => {
         this.item = d;
         this.uploadPic();
-        this.showToast(this.translate("item.status.new"));
+        this.showToast(this.translate('item.status.new'));
         this.openPage(MapPageComponent);
       });
     }
@@ -131,7 +133,7 @@ export class ItemPageComponent extends BasePage {
 
   changeStatus(status) {
     this.geoService.changeItemStatus(this.item._id, status).then(d => {
-      this.showToast(this.translate("item.status.updated"));
+      this.showToast(this.translate('item.status.updated'));
       this.loadData();
     });
   }
@@ -147,12 +149,12 @@ export class ItemPageComponent extends BasePage {
   getWebPic() {
     return (data) => {
       this.image = data;
-    }
+    };
   }
 
   uploadPic() {
-    if (!this.item._id || !this.image) return;
-    this.generalService.postFile("item", this.item._id, this.image).then(d => {
+    if (!this.item._id || !this.image) { return; }
+    this.generalService.postFile('item', this.item._id, this.image).then(d => {
       this.item = d;
     });
   }

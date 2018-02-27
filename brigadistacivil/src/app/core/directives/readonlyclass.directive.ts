@@ -1,19 +1,21 @@
-import {Directive,ElementRef,Renderer,Input} from '@angular/core';
+import { Directive, ElementRef, Renderer, Input, OnInit } from '@angular/core';
 
 @Directive({
-    selector:'[readonlyDirective]'
+    selector: '[appReadonlyDirective]'
 })
-export class ReadOnlyDirective{
+export class ReadOnlyDirective implements OnInit {
 
-    constructor(private el:ElementRef,private render:Renderer){  }
+    constructor(private el: ElementRef, private render: Renderer) { }
 
     @Input('readonlyClass') readonlyClass: boolean;
 
-    ngOnInit(){
-      if(this.readonlyClass) this.changeClass('readonlyInput');
+    ngOnInit() {
+        if (this.readonlyClass) {
+            this.changeClass('readonlyInput');
+        }
     }
 
     private changeClass(value: string) {
-          this.render.setElementClass(this.el.nativeElement, value, true);
+        this.render.setElementClass(this.el.nativeElement, value, true);
     }
 }

@@ -19,10 +19,12 @@ export class UserPageComponent extends BasePage {
   public user: any;
   public image: any;
 
-  constructor(public app: App, public platform: Platform,
-    public navCtrl: NavController, public navParams: NavParams,
+  constructor(public app: App,
+    public platform: Platform,
+    public navCtrl: NavController,
+    public navParams: NavParams,
     public fb: FormBuilder,
-    public userService: UserService, 
+    public userService: UserService,
     public translateService: TranslateService,
     // public menuCtrl: MenuController,
     public toastCtrl: ToastController, public generalService: GeneralService,
@@ -42,15 +44,17 @@ export class UserPageComponent extends BasePage {
   ionViewDidLoad() {
     if (this.navParams.get('user')) {
       this.user = this.navParams.get('user');
-      if (UserService.loginData && this.user._id === UserService.loginData._id) this.readonly = false;
-      else this.readonly = true;
+      if (UserService.loginData && this.user._id === UserService.loginData._id) {
+      this.readonly = false;
+      } else {
+        this.readonly = true;
+      }
     } else if (UserService.loginData) {
       this.user = UserService.loginData;
       this.userService.getMe().then((u: any) => {
         this.user = u;
         this.user.email = u.username;
-        if (UserService.loginData && this.user._id === UserService.loginData._id) this.readonly = false;
-        else this.readonly = true;
+        if (UserService.loginData && this.user._id === UserService.loginData._id) { this.readonly = false; } else { this.readonly = true; }
         this.setDataForm(this.userForm, this.userFormFields, this.user);
       });
     } else {
@@ -67,18 +71,18 @@ export class UserPageComponent extends BasePage {
       this.user.username = this.user.email;
       this.userService.updateUser(this.user).then((d: any) => {
         this.uploadPic();
-        this.showToast(this.translate('user.update.ok'))
+        this.showToast(this.translate('user.update.ok'));
       }).catch(e => {
-        this.showToast(this.translate('user.update.error'))
+        this.showToast(this.translate('user.update.error'));
       });
     } else {
-      let originalPassword = this.userForm.value.password;
+      const originalPassword = this.userForm.value.password;
       this.userService.register(this.userForm.value).then((d: any) => {
         this.user = d;
         this.uploadPic();
         this.login(d.username, originalPassword);
       }).catch(e => {
-        this.showToast(this.translate('user.new.error'))
+        this.showToast(this.translate('user.new.error'));
       });
     }
   }
@@ -102,11 +106,11 @@ export class UserPageComponent extends BasePage {
   getWebPic() {
     return (data) => {
       this.image = data;
-    }
+    };
   }
 
   uploadPic() {
-    if (!this.user._id || !this.image) return;
+    if (!this.user._id || !this.image) { return; }
     this.generalService.postFile('user', this.user._id, this.image).then(d => {
       this.user = d;
     });

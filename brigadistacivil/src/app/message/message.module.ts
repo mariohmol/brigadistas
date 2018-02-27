@@ -3,7 +3,7 @@ import { AppSharedModule } from '../shared/shared.module';
 import { NewLocationMessageComponent } from './location-message.component';
 import { MessagesOptionsComponent } from './messages-options.component';
 import { MessagesAttachmentsComponent } from './messages-attachments.component';
-import { MessagesPageComponent } from './messages.component.component';
+import { MessagesPageComponent } from './messages.component';
 
 @NgModule({
     imports: [

@@ -39,11 +39,11 @@ export class AreaPageComponent extends BasePage {
 
     this.itemForm = this.fb.group(this.itemFormFields);
 
-    if (this.navParams.get("item")) {
-      this.item = this.navParams.get("item");
+    if (this.navParams.get('item')) {
+      this.item = this.navParams.get('item');
       this.loadData();
-    } else if (this.navParams.get("itemId")) {
-      this.item = { _id: this.navParams.get("itemId") };
+    } else if (this.navParams.get('itemId')) {
+      this.item = { _id: this.navParams.get('itemId') };
       this.loadData();
     } else {
       this.item = {};
@@ -61,7 +61,7 @@ export class AreaPageComponent extends BasePage {
         this.position = pos;
         this.initMap();
       });
-      //this.initMap();
+      // this.initMap();
     } else {
       this.initMap();
     }
@@ -70,7 +70,7 @@ export class AreaPageComponent extends BasePage {
 
   changeStatus(status) {
     this.geoService.changeItemStatus(this.item._id, status).then(d => {
-      this.showToast(this.translate("item.status.updated"));
+      this.showToast(this.translate('item.status.updated'));
       this.loadData();
     });
   }
@@ -81,13 +81,11 @@ export class AreaPageComponent extends BasePage {
       GeneralService.polygons=<any>[];
       if(this.position)coords=this.position.coords;
         this.map = this.generalService.loadMap(this.mapElement,coords,{scrollwheel: false});
-  
         let selectShapeCb = (function(obj){
             return shape=>{
               obj.selectedShape = shape;
             };
           })(this);
-  
         if(this.brigade.area && (this.brigade.area.coordinates || this.brigade.area.length>0)){
           let a=this.brigade.area;
           if(this.brigade.area.coordinates) a=this.brigade.area.coordinates;
@@ -135,7 +133,6 @@ export class AreaPageComponent extends BasePage {
       if(!this.brigade.area) this.brigade.area={coordinates: []};
       else if(!this.brigade.area.coordinates) this.brigade.area.coordinates=[];
       this.brigade.area={type: 'Polygon',coordinates: [paths]};
-  
       this.brigadeService.updateBrigade({
         _id: this.brigade._id,
         area: this.brigade.area

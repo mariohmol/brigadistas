@@ -1,7 +1,7 @@
-import { LoginPageComponent } from "./login.component";
-import { UserPageComponent } from "./user.component";
-import { RecoverPageComponent } from "./recover.component";
-import { UserProfilePageComponent } from "./profile.component";
+import { LoginPageComponent } from './login.component';
+import { UserPageComponent } from './user.component';
+import { RecoverPageComponent } from './recover.component';
+import { UserProfilePageComponent } from './profile.component';
 
 export const UserRoutes = [
   { component: LoginPageComponent, name: 'Login', segment: 'login' },

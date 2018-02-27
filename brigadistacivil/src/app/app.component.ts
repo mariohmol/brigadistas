@@ -14,6 +14,7 @@ import { UserService } from './user/user.service';
 @Component({
   templateUrl: 'app.html'
 })
+// tslint:disable-next-line:component-class-suffix
 export class MyApp {
   @ViewChild(Nav) nav: Nav;
   push: any;
@@ -21,17 +22,19 @@ export class MyApp {
 
   pages: Array<{ title: string, component: any }>;
 
-  constructor(public platform: Platform, 
-    public translate: TranslateService, 
+  constructor(public platform: Platform,
+    public translate: TranslateService,
     // public menuCtrl: MenuController,
-    public toastCtrl: ToastController, 
+    public toastCtrl: ToastController,
     public userService: UserService) {
     this.initializeApp();
 
   }
 
   openPageName(page) {
-    this.openPage(this.pages.find(v => { return v.title === page; }));
+    this.openPage(this.pages.find(v => {
+      return v.title === page;
+    }));
   }
 
   initializeApp() {
@@ -41,8 +44,11 @@ export class MyApp {
       //
       // this language will be used as a fallback when a translation isn't found in the current language
       let language;
-      if (navigator && navigator.language) language = navigator.language.slice(0, 2);
-      else language = 'en';
+      if (navigator && navigator.language) {
+        language = navigator.language.slice(0, 2);
+      } else {
+        language = 'en';
+      }
 
       this.translate.setDefaultLang(language);
 
@@ -69,12 +75,13 @@ export class MyApp {
 
   openPage(page) {
     // if (this.menuCtrl) this.menuCtrl.close();
-    if (page.component) this.nav.setRoot(page.component);
-    else this.nav.setRoot(page);
+    if (page.component) {
+      this.nav.setRoot(page.component);
+    } else { this.nav.setRoot(page); }
   }
 
   startPush() {
-    if (!this.platform.is('cordova')) return;
+    if (!this.platform.is('cordova')) { return; }
     this.push = Push.init({
       android: {
         senderID: '651174488283'
@@ -87,25 +94,28 @@ export class MyApp {
       windows: {}
     });
 
-    if (!this.push || this.push.error) return;
+    if (!this.push || this.push.error) { return; }
     try {
       this.push.on('registration', (data) => {
         localStorage['deviceToken'] = data.registrationId;
 
         if (UserService.loginData) {
-          if (this.platform && this.platform.is('ios')) this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
-          else this.userService.storeDeviceToken('android', localStorage['deviceToken']);
+          if (this.platform && this.platform.is('ios')) {
+            this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
+          } else {
+            this.userService.storeDeviceToken('android', localStorage['deviceToken']);
+          }
         }
       });
 
       this.push.on('notification', (data) => {
-        new Promise(resolve => {
-          var snd = new (<any>window).Audio('assets/mp3/atraso.mp3');
+        const q = new Promise(resolve => {
+          const snd = new (<any>window).Audio('assets/mp3/atraso.mp3');
           snd.play();
           resolve();
-        })
+        });
 
-        let toast = this.toastCtrl.create({
+        const toast = this.toastCtrl.create({
           message: data.message,
           duration: 15000,
           showCloseButton: true,
@@ -114,13 +124,13 @@ export class MyApp {
         });
         toast.present();
 
-      })
+      });
 
       this.push.on('error', (e) => {
         console.log(e.message);
       });
     } catch (e) {
-      console.log(e)
+      console.log(e);
     }
   }
 

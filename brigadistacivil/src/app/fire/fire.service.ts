@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
 import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
-import Environment from "../environment";
+import Environment from '../environment';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/base.service';
 
@@ -15,8 +15,8 @@ export class FireService extends BaseService {
 
   getFires(query = {}) {
     query = Object.keys(query).map(q => {
-      return `${q}=${query[q]}`
-    }).join("&");
+      return `${q}=${query[q]}`;
+    }).join('&');
     return this.doGet('/fire/?${query}');
   }
   getFire(id) {
@@ -38,17 +38,17 @@ export class FireService extends BaseService {
 
   startTracking(cb, errcb) {
 
-    if (BaseService.device == 'mobile') {
+    if (BaseService.device === 'mobile') {
       let config: BackgroundGeolocationConfig;
 
-      if (Environment.env !== "production") {
+      if (Environment.env !== 'production') {
         // BackgroundGeolocation is highly configurable. See platform specific configuration options
         config = {
           desiredAccuracy: 0,
           stationaryRadius: 0,
           distanceFilter: 0,
           interval: 2000,
-          //fastestInterval: 2000,
+          // fastestInterval: 2000,
           debug: true, //  enable this hear sounds for background-geolocation life-cycle.
           stopOnTerminate: false // enable this to clear background location settings when the app terminates
         };
@@ -57,13 +57,13 @@ export class FireService extends BaseService {
           desiredAccuracy: 10,
           stationaryRadius: 20,
           distanceFilter: 30,
-          //url: 'http://192.168.81.15:3000/locations',httpHeaders: { 'X-FOO': 'bar' },
+          // url: 'http://192.168.81.15:3000/locations',httpHeaders: { 'X-FOO': 'bar' },
           maxLocations: 1000,
           // Android only section
-          //locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
+          // locationProvider: BackgroundGeolocation.provider.ANDROID_ACTIVITY_PROVIDER,
           interval: 60000,
-          //fastestInterval: 5000,
-          //activitiesInterval: 10000,
+          // fastestInterval: 5000,
+          // activitiesInterval: 10000,
           notificationTitle: 'Background tracking',
           notificationText: 'enabled',
           notificationIconColor: '#FEDD1E',
@@ -88,7 +88,7 @@ export class FireService extends BaseService {
 
       // Turn ON the background-geolocation system.  The user will be tracked whenever they suspend the app.
       this.backgroundGeolocation.start();
-    } else errcb("Is not a mobile");
+    } else { errcb('Is not a mobile'); }
   }
 
   stopTracking() {

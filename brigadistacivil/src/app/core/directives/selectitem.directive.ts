@@ -1,9 +1,9 @@
-import { Component, ElementRef, Input, ViewChild, SimpleChanges } from '@angular/core';
+import { Component, ElementRef, Input, ViewChild, SimpleChanges, OnInit, OnChanges } from '@angular/core';
 import { UserService } from '../../user/user.service';
 import { HttpClient } from '@angular/common/http';
 
 @Component({
-    selector: 'select-item',
+    selector: 'app-select-item',
     template: `
             <ion-searchbar #textInput (ionInput)="getItems($event)"></ion-searchbar>
             <ion-list class="tabcontent">
@@ -19,53 +19,55 @@ import { HttpClient } from '@angular/common/http';
         `
     // , styleUrls: ['app/hero-details.component.css'] [multiple]="multiple"
 })
-export class SelectItemDirective {
-    @Input() multiple: boolean = false;
-    @Input() readonly: boolean = false;
+// tslint:disable-next-line:component-class-suffix
+export class SelectItemDirective implements OnInit, OnChanges {
+    @Input() multiple = false;
+    @Input() readonly = false;
     @Input() select: Function;
     @Input() search: Function;
     @ViewChild('textInput') inputEl: ElementRef;
     @Input() items: any;
     private item: any;
     private filterItems;
-    @Input() title: any = "name";
-    @Input() subtitle: any = "bio";
-    @Input() image: any = "image";
+    @Input() title: any = 'name';
+    @Input() subtitle: any = 'bio';
+    @Input() image: any = 'image';
 
 
     constructor(private http: HttpClient, private userService: UserService) {
-        
+
     }
 
     ngOnInit() {
         this.filterItems = this.items;
-        if(!this.search) this.search=this.searchDefault;
-        if(!this.readonly) this.search(null);
+        if (!this.search) { this.search = this.searchDefault; }
+        if (!this.readonly) { this.search(null); }
     }
 
     ngOnChanges(changes: SimpleChanges) {
         this.ngOnInit();
     }
 
-    searchDefault(text){
-        if(text==null && this.inputEl) text = this.inputEl.nativeElement;
-        this.userService.findUser(text).then(u=>{
-            this.filterItems = this.items=u;
+    searchDefault(text) {
+        if (text == null && this.inputEl) { text = this.inputEl.nativeElement; }
+        this.userService.findUser(text).then(u => {
+            this.filterItems = this.items = u;
         });
     }
 
     getItems(ev: any) {
-        this.filterItems = this.items=[];
-        let val = ev.target.value;
-        if(this.readonly) this.filterItems = this.items.filter(c=>{ 
+        this.filterItems = this.items = [];
+        const val = ev.target.value;
+        if (this.readonly) {
+        this.filterItems = this.items.filter(c => {
             return c[this.title].includes(val) || c[this.subtitle].includes(val);
         });
-        else this.search(val);
+        } else { this.search(val); }
     }
 
-    selectItem(u){
-        this.item=u;
-        if(this.select) this.select(u);
+    selectItem(u) {
+        this.item = u;
+        if (this.select) { this.select(u); }
     }
 
 }

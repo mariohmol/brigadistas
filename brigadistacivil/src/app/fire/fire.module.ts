@@ -10,15 +10,15 @@ import { FireService } from './fire.service';
         AppSharedModule
     ],
     declarations: [
-        FirePageComponent, FiresPageComponent, 
+        FirePageComponent, FiresPageComponent,
         FireViewPageComponent
     ],
     exports: [
-        FirePageComponent, FiresPageComponent, 
+        FirePageComponent, FiresPageComponent,
         FireViewPageComponent
     ],
     entryComponents: [
-        FirePageComponent, FiresPageComponent, 
+        FirePageComponent, FiresPageComponent,
         FireViewPageComponent
     ],
     providers: [

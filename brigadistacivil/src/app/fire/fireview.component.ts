@@ -1,12 +1,3 @@
-/**
- * 
- * 
- * 
- * VIEW
- * 
- * 
- * 
- */
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ToastController, Events, App } from 'ionic-angular';
@@ -58,8 +49,9 @@ export class FireViewPageComponent extends BasePage {
   }
 
   ionViewDidLoad() {
-    if (!FireService.data.fire) this.fire = FireService.data.fire = {}
-    else this.fire = FireService.data.fire;
+    if (!FireService.data.fire) {
+    this.fire = FireService.data.fire = {};
+    } else { this.fire = FireService.data.fire; }
     this.fireForm = this.fb.group(this.fireFormFields);
     if (Object.keys(this.fire).length > 0) {
       this.setDataForm(this.fireForm, this.fireFormFields, FireService.data.fire);
@@ -108,11 +100,11 @@ export class FireViewPageComponent extends BasePage {
   getWebPic() {
     return (data) => {
       this.image = data;
-    }
+    };
   }
 
   uploadPic() {
-    if (!FireService.data.fire._id || !this.image) return;
+    if (!FireService.data.fire._id || !this.image) { return; }
     this.generalService.postFile('fire', FireService.data.fire._id, this.image).then(d => {
       FireService.data.fire = d;
     });

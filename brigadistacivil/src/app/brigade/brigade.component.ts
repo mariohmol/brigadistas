@@ -27,7 +27,7 @@ export class BrigadePageComponent extends BasePage {
   public image: any;
   tab1Root: any = BrigadeViewPageComponent;
   tab2Root: any = BrigadeAreaPageComponent;
-  tab3Root: any = BrigadeFiresPage;
+  tab3Root: any = BrigadeFiresPageComponent;
 
   constructor(public app: App,
     public platform: Platform,

@@ -11,15 +11,15 @@ import { ChatService } from './chat.service';
         AppSharedModule
     ],
     declarations: [
-       BrigadeAreaPageComponent, BrigadePageComponent, 
-       BrigadesPageComponent, BrigadeViewPageComponent
+        BrigadeAreaPageComponent, BrigadePageComponent,
+        BrigadesPageComponent, BrigadeViewPageComponent
     ],
     exports: [
-        BrigadeAreaPageComponent, BrigadePageComponent, 
+        BrigadeAreaPageComponent, BrigadePageComponent,
         BrigadesPageComponent, BrigadeViewPageComponent
     ],
     entryComponents: [
-        BrigadeAreaPageComponent, BrigadePageComponent, 
+        BrigadeAreaPageComponent, BrigadePageComponent,
         BrigadesPageComponent, BrigadeViewPageComponent
     ],
     providers: [

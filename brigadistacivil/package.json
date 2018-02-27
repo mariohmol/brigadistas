@@ -18,6 +18,7 @@
     "clean": "cordova clean",
     "cordova-update": "cordova platform update android && cordova platform update ios",
     "cordova-reinstall": "cordova platform rm android && cordova platform add android@latest && cordova build android",
+    "start": "ionic serve",
     "servelab": "ionic serve --lab",
     "resources": "ionic resources",
     "android": "npm run setprodenv && ionic run android",

@@ -1,5 +1,8 @@
 import { Component } from '@angular/core';
-import { App, NavController, NavParams, AlertController, ToastController, ModalController, Platform, ViewController } from 'ionic-angular';
+import {
+  App, NavController, NavParams, AlertController,
+  ToastController, ModalController, Platform, ViewController
+} from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
 import BasePage from '../core/basepage';
 import { GeneralService } from '../shared/general.service';
@@ -44,7 +47,7 @@ export class ChatsPageComponent extends BasePage {
   }
 
   addChat() {
-    const modal = this.modalCtrl.create(NewChatModalPage);
+    const modal = this.modalCtrl.create(NewChatModalPageComponent);
     modal.present();
   }
 }

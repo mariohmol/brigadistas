@@ -13,6 +13,7 @@ import { ChatService } from '../chat/chat.service';
 import { GeneralService } from '../shared/general.service';
 import { FireService } from './fire.service';
 import { UserService } from '../user/user.service';
+import { FireViewPageComponent } from './fireview.component';
 declare var google;
 
 @Component({
@@ -24,8 +25,8 @@ export class FirePageComponent extends BasePage {
   public readonly: boolean;
   public isBrigade: boolean;
   @ViewChild('myTabs') tabRef: Tabs;
-  tab1Root: any = FireViewPage;
-  tab2Root: any = FireMapPage;
+  tab1Root: any = FireViewPageComponent;
+  tab2Root: any = FireMapPageComponent;
 
   constructor(public app: App, public platform: Platform, public events: Events,
     public navCtrl: NavController, public navParams: NavParams,
@@ -149,8 +150,12 @@ export class FirePageComponent extends BasePage {
     if (this.fire.status === 'open') { addButton('question', 'fire.checking', () => { this.changeStatus('check'); }); }
     if (this.fire.status === 'checking') { addButton('checked', 'fire.confirmed', () => { this.changeStatus('check'); }); }
     if (this.fire.status === 'checking') { addButton('marked', 'fire.not_confirmed', () => { this.changeStatus('trash'); }); }
-    if (this.fire.status === 'confirmed') { addButton('arrow-dropright-circle', 'fire.startCombat', () => { this.changeStatus('trash'); }); }
-    if (this.fire.status === 'fighting' && this.isTracking() !== true) { addButton('arrow-dropright-circle', 'fire.enterCombat', () => { this.tracking(); }); }
+    if (this.fire.status === 'confirmed') {
+      addButton('arrow-dropright-circle', 'fire.startCombat', () => { this.changeStatus('trash'); });
+    }
+    if (this.fire.status === 'fighting' && this.isTracking() !== true) {
+      addButton('arrow-dropright-circle', 'fire.enterCombat', () => { this.tracking(); });
+    }
     if (this.fire.status === 'fighting') { addButton('pause', 'fire.aftermath', () => { this.changeStatus('aftermath'); }); }
     if (this.fire.status === 'aftermath') { addButton('stop', 'fire.closeCombat', () => { this.changeStatus('finished'); }); }
     // if (this.fire.status != 'finished') addButton('close', 'chat.title', () => { this.openChat() });
@@ -190,7 +195,7 @@ export class FirePageComponent extends BasePage {
 @Component({
   template: `<ion-content><div #map id='map'></div></ion-content>`
 })
-export class FireMapPage extends BasePage {
+export class FireMapPageComponent extends BasePage {
   @ViewChild('map')
   mapElement: ElementRef;
   constructor(public fireService: FireService, public generalService: GeneralService,

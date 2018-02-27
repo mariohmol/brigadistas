@@ -40,15 +40,18 @@ export class LoginPageComponent extends BasePage {
   }
 
   ionViewDidLoad() {
-    if (localStorage["profile"]) {
+    if (localStorage['profile']) {
       this.openPage(FiresPageComponent);
     }
   }
 
   afterLogin() {
     if ('deviceToken' in localStorage) {
-      if (this.platform && this.platform.is('ios')) this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
-      else this.userService.storeDeviceToken('android', localStorage['deviceToken']);
+      if (this.platform && this.platform.is('ios')) {
+        this.userService.storeDeviceToken('ios', localStorage['deviceToken']);
+      } else {
+        this.userService.storeDeviceToken('android', localStorage['deviceToken']);
+      }
     }
     this.openPage(FiresPageComponent);
     this.setMenu();
@@ -63,10 +66,10 @@ export class LoginPageComponent extends BasePage {
   }
 
   recover(form) {
-    this.showConfirm(this.translate("user.recover.confirm") + form.username,
-      this.translate("user.recover.title"), () => {
+    this.showConfirm(this.translate('user.recover.confirm') + form.username,
+      this.translate('user.recover.title'), () => {
         this.userService.recover(form.username).then(r => {
-          this.showToast(this.translate("user.recover.response"));
+          this.showToast(this.translate('user.recover.response'));
         });
       });
   }
