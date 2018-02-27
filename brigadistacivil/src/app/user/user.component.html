@@ -1,0 +1,88 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "user.new.title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="!isReadonly()" [disabled]="!userForm.valid" (click)="save()">
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding class="login-page-content">
+  <form [formGroup]="userForm">
+
+
+
+    <ion-grid fixed>
+      <ion-row>
+        <ion-item col-12 col-sm-12 col-md-6>
+          <ion-label floating>{{ "user.name" | translate }}</ion-label>
+          <ion-input formControlName="name" [readonly]="readOnly" type="text"></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-12 col-md-6>
+          <ion-label floating>{{ "user.city" | translate }} </ion-label>
+          <ion-input formControlName="city" [readonly]="isReadonly()" type="text"></ion-input>
+        </ion-item>
+
+
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!userForm.controls.name.valid  && (userForm.controls.name.dirty || submitted)">
+          <small>{{ "user.name" | translate }} {{ "require.minString" | translate }}</small>
+        </ion-item>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!userForm.controls.city.valid  && (userForm.controls.city.dirty || submitted)">
+          <small>{{ "user.city" | translate }} {{ "require.minString" | translate }}</small>
+        </ion-item>
+
+      </ion-row>
+
+      <ion-row>
+        <ion-item col-12 col-sm-12 col-md-6>
+          <ion-label floating>{{ "user.email" | translate }} </ion-label>
+          <ion-input formControlName="email" [readonly]="readOnly" type="email"></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!user || !user._id">
+          <ion-label floating>{{ "user.password" | translate }} </ion-label>
+          <ion-input formControlName="password" [readonly]="readOnly" type="password"></ion-input>
+        </ion-item>
+
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!userForm.controls.email.valid  && (userForm.controls.email.dirty || submitted)">
+          <small>{{ "user.email" | translate }} {{ "require.minString" | translate }} </small>
+        </ion-item>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!userForm.controls.password.valid  && (userForm.controls.password.dirty || submitted)">
+          <small>{{ "user.password" | translate }} {{ "require.minString" | translate }}</small>
+        </ion-item>
+      </ion-row>
+
+      <ion-row>
+        <ion-item>
+          <ion-label floating>{{ "user.bio" | translate }} </ion-label>
+          <ion-input formControlName="bio" [readonly]="isReadonly()" type="textarea"></ion-input>
+        </ion-item>
+        <ion-item col-12 col-sm-12 col-md-6 *ngIf="!userForm.controls.bio.valid  && (userForm.controls.bio.dirty || submitted)">
+          <small>{{ "user.bio" | translate }} {{ "require.minString" | translate }}</small>
+        </ion-item>
+      </ion-row>
+
+      <ion-row>
+        <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
+          <ion-item *ngIf="isCordova()">
+            <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
+            <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
+          </ion-item>
+          <ion-item *ngIf="!isCordova()">
+            <ion-label>
+              {{'picture.get' | translate}}
+              <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
+            </ion-label>
+          </ion-item>
+        </ion-col>
+
+        <ion-col *ngIf="user && user.image" col-12 col-sm-12 col-md-6>
+          <ion-item>
+            <img [src]="user.image" />
+          </ion-item>
+        </ion-col>
+      </ion-row>
+    </ion-grid>
+  </form>
+</ion-content>

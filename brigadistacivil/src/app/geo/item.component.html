@@ -1,0 +1,125 @@
+<ion-header>
+  <ion-navbar color="primary">
+    <ion-title>{{ "item.title" | translate }}</ion-title>
+    <ion-buttons end>
+      <button ion-button *ngIf="!readonly" [disabled]="!itemForm.valid" (click)="save()">
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
+    </ion-buttons>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+
+  <form [formGroup]="itemForm" novalidate>
+
+
+    <ion-segment *ngIf="item._id && isInBrigade()">
+      <ion-segment-button value="confirmed" *ngIf="item.status=='open'" (click)="changeStatus('active')">
+        {{ "item.confirmed" | translate }}
+      </ion-segment-button>
+      <ion-segment-button value="not_confirmed" *ngIf="item.status=='open'" (click)="changeStatus('not_confirmed')">
+        {{ "item.not_confirmed" | translate }}
+      </ion-segment-button>
+    </ion-segment>
+
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-12>
+
+        <ion-item [class.readonlyInput]="readonly==true">
+          <ion-label floating>{{ "title" | translate }}</ion-label>
+          <ion-input formControlName="title" [readonly]="readonly" type="text"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col col-12 col-sm-12 col-md-12>
+        <ion-item>
+          <ion-label>{{ "item.category" | translate }}</ion-label>
+          <ion-select formControlName="category" *ngIf="!readonly">
+            <ion-option value="plant">{{ "item.types.plant" | translate }}</ion-option>
+            <ion-option value="rock">{{ "item.types.rock" | translate }}</ion-option>
+            <ion-option value="water">{{ "item.types.water" | translate }}</ion-option>
+            <ion-option value="hole">{{ "item.types.hole" | translate }}</ion-option>
+            <ion-option value="danger">{{ "item.types.danger" | translate }}</ion-option>
+            <ion-option value="trail">{{ "item.types.trail" | translate }}</ion-option>
+          </ion-select>
+          <ion-label *ngIf="readonly">{{ "item.types."+item.category | translate }}</ion-label>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="item._id">
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-item text-wrap *ngIf="item.createdAt" [class.readonlyInput]="readonly==true">
+          <ion-icon name="md-calendar" item-left large></ion-icon>
+          <h2>{{item.createdAt | date: 'dd/MM/yyyy H:mm'}}</h2>
+        </ion-item>
+      </ion-col>
+
+      <ion-col col-12 col-sm-12 col-md-6>
+        <ion-item text-wrap *ngIf="item.users" [class.readonlyInput]="readonly==true">
+          <ion-icon name="md-person" item-left large></ion-icon>
+          <h2>
+            <a href="#/profile/{{item.users[0]._id}}">{{item.users[0].name}}</a>
+          </h2>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row *ngIf="item.brigades">
+      <ion-list-header>{{"brigades.title" | translate}}</ion-list-header>
+      <ion-col col-12 col-sm-12 col-md-4 *ngFor="let brigade of item.brigades">
+        <!--
+        <ion-icon name="md-contacts" item-left large></ion-icon>
+      -->
+        <ion-card>
+          <ion-item [class.readonlyInput]="readonly==true">
+            <h2>
+              <a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a>
+            </h2>
+            <!--  <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note> -->
+          </ion-item>
+        </ion-card>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col>
+        <ion-item [class.readonlyInput]="readonly==true">
+          <ion-label floating>{{ "item.description" | translate }} </ion-label>
+          <ion-input formControlName="description" [readonly]="readonly" type="textarea"></ion-input>
+        </ion-item>
+      </ion-col>
+    </ion-row>
+
+    <ion-row>
+      <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
+        <ion-item *ngIf="isCordova()">
+          <button ion-button (click)="getPic()">{{ "picture.get" | translate}}</button>
+          <button ion-button (click)="takePic()">{{ "picture.take" | translate}}</button>
+        </ion-item>
+        <ion-item *ngIf="!isCordova()">
+          <ion-label>
+            {{'picture.get' | translate}}
+            <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
+          </ion-label>
+        </ion-item>
+      </ion-col>
+
+      <ion-col *ngIf="item.image" col-12 col-sm-12 col-md-6>
+        <ion-item>
+          <img [src]="item.image" />
+        </ion-item>
+      </ion-col>
+    </ion-row>
+  </form>
+
+
+
+  <div #map id="map"></div>
+
+
+</ion-content>

@@ -2,6 +2,44 @@
 
 App that connects civil fire brigades with civil society to fight against the fire.
 
+## Project Template for Ionic3 + Angular 5  + Code Style Spec + TSLint 
+
+****** IF YOU CAN HELP WITH MORE STYLING (pipes...) OR FEATURES PLEASE DO IT =) *******
+
+
+
+Following the style guide:
+
+* https://angular.io/styleguide
+
+
+Organized in modules and having files with these extensions 
+
+* `.component.ts`
+
+* `.directive.ts`
+
+Have one example but is giving a problem in TSLint, issue to follow https://github.com/palantir/tslint/issues/3739
+
+* `.module.ts` and `.service.ts`
+
+The entire app is organized in modules (ex folder brigade, fire....). Inside the modules we have components, routes and services
+
+
+* `.pipe.ts` :  Missing example 
+
+And we have `core` that has the basic classes and `shared` where stays all the directives, components and services that is used between other modules.
+
+
+
+
+
+----
+
+
+
+## Running
+
 Here is the web version:
 
 * https://brigadistacivil.com.br/
@@ -75,7 +113,7 @@ To build locally you can run `npm run electron`, if you would like to generate t
 
 ### Run
 
-To run this app :
+To run this app, go to the root folder of the project and do:
 
 * `npm run dev` to run express server on port 8484
 * `npm run watch` to keep watching angular2 files
