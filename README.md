@@ -113,7 +113,7 @@ To build locally you can run `npm run electron`, if you would like to generate t
 
 ### Run
 
-To run this app :
+To run this app, go to the root folder of the project and do:
 
 * `npm run dev` to run express server on port 8484
 * `npm run watch` to keep watching angular2 files

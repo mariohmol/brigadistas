@@ -12,7 +12,7 @@ import { ChatsPageComponent } from './chat/chats.component';
 import { MapPageComponent } from './geo/map.component';
 
 @Component({
-  templateUrl: 'app.html'
+  templateUrl: 'app.component.html'
 })
 // tslint:disable-next-line:component-class-suffix
 export class MyApp {
