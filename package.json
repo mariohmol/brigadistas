@@ -1,5 +1,6 @@
 {
-  "name": "BrigadistaCivil",
+  "name": "brigadistacivil",
+  "version": "0.5.0",
   "description": "BrigadistaCivil: App that connects civil fire brigades with civil society to fight against the fire.",
   "main": "server/server.js",
   "scripts": {
