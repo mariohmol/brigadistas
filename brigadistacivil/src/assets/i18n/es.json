@@ -39,16 +39,16 @@
     "see": "Ver brigada"
   },
   "chat": {
-    "deleted": "Conversa removida com sucesso",
-    "title": "Conversa",
-    "notfound": "Conversa não encontrada para este fogo",
-    "select": "Selecione um usuário",
+    "deleted": "Conversación eliminado correctamente",
+    "title": "Conversación",
+    "notfound": "La conversación no se encontró para este fuego",
+    "select": "Selecciona un usuario",
     "new": {
-      "error": "Não foi possível abrir um chat, se persistir entre em contato conosco"
+      "error": "No se pudo abrir un chat, si persiste por favor en contacto con nosotros"
     }
   },
   "error": {
-    "gps": "Error ao conectar com seu GPS",
+    "gps": "Error al conectar con el GPS",
     "notavailableweb": "Esta funcionalidade não está disponível para versão web ou desktop, apenas em dispositivo móvel"
   },
   "fire": {

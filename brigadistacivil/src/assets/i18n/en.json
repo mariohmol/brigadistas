@@ -140,7 +140,7 @@
     "recover": {
       "title": "Recover Password",
       "enter": "Change Password",
-      "confirm": "Are you sure you want to receive a password recovery email in the email",
+      "confirm": "Are you sure you want to receive a password recovery email in the email {email}?",
       "response": "We've sent you an email with the steps to change your password.",
       "changed": "Your password has been successfully changed, you can use it to sign in."
     },
