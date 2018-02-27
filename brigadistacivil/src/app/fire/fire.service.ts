@@ -1,9 +1,12 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import { BackgroundGeolocation, BackgroundGeolocationConfig, BackgroundGeolocationResponse } from '@ionic-native/background-geolocation';
-import Environment from '../environment';
+import {
+  BackgroundGeolocation, BackgroundGeolocationConfig,
+  BackgroundGeolocationResponse
+} from '@ionic-native/background-geolocation';
 import { HttpClient } from '@angular/common/http';
 import { BaseService } from '../core/base.service';
+import Environment from '../../environment';
 
 @Injectable()
 export class FireService extends BaseService {

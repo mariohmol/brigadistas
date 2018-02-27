@@ -55,7 +55,7 @@
                 <ion-item *ngIf="!isCordova()">
                     <ion-label>
                         {{'picture.get' | translate}}
-                        <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+                        <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
                     </ion-label>
                 </ion-item>
             </ion-row>
@@ -75,7 +75,9 @@
                                 <img [src]="user.image" *ngIf="user.image">
                                 <img src="/assets/img/bg.jpg" *ngIf="!user.image">
                             </ion-avatar>
-                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                            <h2>
+                                <a href="#/profile/{{user._id}}">{{user.name}}</a>
+                            </h2>
                         </ion-item>
                     </ion-card>
                 </ion-col>
@@ -99,7 +101,9 @@
                                 <img [src]="user.image" *ngIf="user.image">
                                 <img src="/assets/img/bg.jpg" *ngIf="!user.image">
                             </ion-avatar>
-                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                            <h2>
+                                <a href="#/profile/{{user._id}}">{{user.name}}</a>
+                            </h2>
                             <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note>
                             <button ion-button clear item-right (click)="promoteBrigade(user._id)" *ngIf="isInLeaderes()">{{ "promote" | translate }}</button>
                         </ion-item>
@@ -123,7 +127,9 @@
                                 <img [src]="user.image" *ngIf="user.image">
                                 <img src="/assets/img/bg.jpg" *ngIf="!user.image">
                             </ion-avatar>
-                            <h2><a href="#/profile/{{user._id}}">{{user.name}}</a></h2>
+                            <h2>
+                                <a href="#/profile/{{user._id}}">{{user.name}}</a>
+                            </h2>
                             <p>{{user.createdAt | date: 'dd/MM/yyyy' }}</p>
                             <button ion-button clear item-right (click)="approveBrigade(user._id)" *ngIf="isInLeaderes()">{{ "approve" | translate }}</button>
                         </ion-item>

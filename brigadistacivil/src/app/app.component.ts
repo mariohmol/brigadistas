@@ -1,15 +1,15 @@
 import { Component, ViewChild } from '@angular/core';
 import { Nav, Platform, ToastController, MenuController } from 'ionic-angular';
 import { StatusBar, Splashscreen, Push } from 'ionic-native';
-import { UserPageComponent } from '../pages/user/user.component';
-import { LoginPageComponent } from '../pages/user/login.component';
-import { ChatsPageComponent } from '../pages/chat/chats.component';
-import { FiresPageComponent } from '../pages/fire/fires.component';
-import { MapPageComponent } from '../pages/geo/map.component';
-import { BrigadesPageComponent } from '../pages/brigade/brigades.component';
 import { TranslateService } from 'ng2-translate';
 import { BaseService } from './core/base.service';
 import { UserService } from './user/user.service';
+import { LoginPageComponent } from './user/login.component';
+import { BrigadesPageComponent } from './brigade/brigades.component';
+import { FiresPageComponent } from './fire/fires.component';
+import { UserPageComponent } from './user/user.component';
+import { ChatsPageComponent } from './chat/chats.component';
+import { MapPageComponent } from './geo/map.component';
 
 @Component({
   templateUrl: 'app.html'

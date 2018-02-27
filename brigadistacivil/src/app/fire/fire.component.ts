@@ -3,17 +3,16 @@ import {
   App, Platform, NavController, NavParams, ToastController,
   ActionSheetController, Tabs, Events
 } from 'ionic-angular';
-import { FiresPage } from './fires';
-import { ChatPage } from '../chat/chat';
+import { FiresPageComponent } from './fires.component';
 import { ViewChild, ElementRef } from '@angular/core';
 import { TranslateService } from 'ng2-translate';
-import { FireViewPage } from './fireview';
 import BasePage from '../core/basepage';
 import { ChatService } from '../chat/chat.service';
 import { GeneralService } from '../shared/general.service';
 import { FireService } from './fire.service';
 import { UserService } from '../user/user.service';
 import { FireViewPageComponent } from './fireview.component';
+import { ChatPageComponent } from '../chat/chat.component';
 declare var google;
 
 @Component({
@@ -99,7 +98,7 @@ export class FirePageComponent extends BasePage {
   openChat() {
     this.chatService.getChatByFire(this.fire).then((chat: any) => {
       if (!chat) { return this.showToast(this.translate('chat.notfound')); }
-      this.navCtrl.push(ChatPage, { chat, chatId: chat._id });
+      this.navCtrl.push(ChatPageComponent, { chat, chatId: chat._id });
     });
   }
 
@@ -112,23 +111,23 @@ export class FirePageComponent extends BasePage {
   }
 
   isTracking() {
-    return FiresPage.isTracking;
+    return FiresPageComponent.isTracking;
   }
 
   tracking() {
-    if (!FiresPage.isTracking) {
+    if (!FiresPageComponent.isTracking) {
       const cb = (location) => {
         this.userService.saveLocation(location.latitude, location.longitude, this.fire._id);
-        FiresPage.isTracking = true;
+        FiresPageComponent.isTracking = true;
       };
       const errcb = () => {
         this.showToast(this.translate('error.notavailableweb'));
-        FiresPage.isTracking = false;
+        FiresPageComponent.isTracking = false;
       };
-      FiresPage.isTracking = true;
+      FiresPageComponent.isTracking = true;
       this.fireService.startTracking(cb, errcb);
     } else {
-      FiresPage.isTracking = false;
+      FiresPageComponent.isTracking = false;
       this.fireService.stopTracking();
     }
   }

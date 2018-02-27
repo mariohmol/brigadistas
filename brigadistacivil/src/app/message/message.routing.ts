@@ -4,8 +4,8 @@ import { MessagesOptionsComponent } from './messages-options.component';
 import { MessagesPageComponent } from './messages.component';
 
 export const MessageRoutes = [
-  { component: NewLocationMessageComponent, name: 'BrigadeAreaPage', segment: 'brigadearea/:id' },
-  { component: MessagesAttachmentsComponent, name: 'Brigades', segment: 'brigades' },
-  { component: MessagesOptionsComponent, name: 'Brigade', segment: 'brigade/new' },
-  { component: MessagesPageComponent, name: 'BrigadeView', segment: 'brigade/:id' }
+  { component: NewLocationMessageComponent, name: 'NewLocationMessage', segment: 'newlocationmessage' },
+  { component: MessagesAttachmentsComponent, name: 'MessagesAttachments', segment: 'messagesattch/:id' },
+  { component: MessagesOptionsComponent, name: 'MessagesOptions', segment: 'messagesoptions/:id' },
+  { component: MessagesPageComponent, name: 'Messages', segment: 'messages' }
 ];

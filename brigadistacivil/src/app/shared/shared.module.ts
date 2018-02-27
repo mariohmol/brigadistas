@@ -5,6 +5,7 @@ import { TranslateModule, TranslateLoader } from '@ngx-translate/core'; // impor
 import { GeneralService } from './general.service';
 import { CoreModule } from '../core/core.module';
 import { HttpClient } from '@angular/common/http';
+import { IonicModule } from 'ionic-angular';
 
 
 export class TranslateHttpLoader implements TranslateLoader {
@@ -40,8 +41,8 @@ export function HttpLoaderFactory(http: HttpClient) {
     declarations: [
     ],
     exports: [
-        TranslateModule,
-
+        CoreModule, TranslateModule, IonicModule,
+        ReactiveFormsModule, FormsModule
     ],
     entryComponents: [
 

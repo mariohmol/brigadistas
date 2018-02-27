@@ -1,8 +1,8 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { BrigadePage } from './brigade';
 import { BrigadeService } from './brigade.service';
 import BasePage from '../core/basepage';
+import { BrigadePageComponent } from './brigade.component';
 
 
 @Component({
@@ -26,11 +26,11 @@ export class BrigadesPageComponent extends BasePage {
   }
 
   addBrigade() {
-    this.navCtrl.push(BrigadePage);
+    this.navCtrl.push(BrigadePageComponent);
   }
 
   showBrigade(brigade) {
-    this.navCtrl.push(BrigadePage, { brigade, brigadeId: brigade._id });
+    this.navCtrl.push(BrigadePageComponent, { brigade, brigadeId: brigade._id });
   }
 
 }

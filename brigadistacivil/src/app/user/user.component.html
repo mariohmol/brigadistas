@@ -63,7 +63,7 @@
           <small>{{ "user.bio" | translate }} {{ "require.minString" | translate }}</small>
         </ion-item>
       </ion-row>
-      
+
       <ion-row>
         <ion-col *ngIf="isReadonly()!=true" col-12 col-sm-12 col-md-6>
           <ion-item *ngIf="isCordova()">
@@ -73,7 +73,7 @@
           <ion-item *ngIf="!isCordova()">
             <ion-label>
               {{'picture.get' | translate}}
-              <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+              <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
             </ion-label>
           </ion-item>
         </ion-col>

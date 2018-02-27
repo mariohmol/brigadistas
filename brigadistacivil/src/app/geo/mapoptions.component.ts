@@ -1,8 +1,8 @@
 import { Component, Injectable } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { AreaPage } from './area';
-import { ItemPage } from './item';
 import { TranslateService } from 'ng2-translate';
+import { AreaPageComponent } from './area.component';
+import { ItemPageComponent } from './item.component';
 
 @Component({
   selector: 'app-map-options',
@@ -16,10 +16,10 @@ export class MapOptionsComponent {
   ) { }
 
   addArea(): void {
-    this.navCtrl.push(AreaPage);
+    this.navCtrl.push(AreaPageComponent);
   }
   addItem(): void {
-    this.navCtrl.push(ItemPage);
+    this.navCtrl.push(ItemPageComponent);
   }
 
 }

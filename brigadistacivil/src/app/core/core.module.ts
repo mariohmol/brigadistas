@@ -6,7 +6,6 @@ import { Geolocation } from '@ionic-native/geolocation';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { StatusBar } from '@ionic-native/status-bar';
 import { Push } from '@ionic-native/push';
-import { PopoverComponent } from './popover.component';
 import { FileUploadDirective } from './directives/fileupload.directive';
 import { ReadOnlyDirective } from './directives/readonlyclass.directive';
 import { SelectItemDirective } from './directives/selectitem.directive';
@@ -24,7 +23,7 @@ import { SelectItemDirective } from './directives/selectitem.directive';
         FileUploadDirective, ReadOnlyDirective,
         SelectItemDirective, IonicModule
     ],
-    entryComponents: [PopoverComponent],
+    entryComponents: [],
     providers: [
         BaseService, SplashScreen,
         StatusBar, Push,

@@ -1,11 +1,11 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { App, NavParams, AlertController, ToastController, Events } from 'ionic-angular';
 import { TranslateService } from 'ng2-translate';
-import { BrigadePage } from './brigade';
 import { BrigadeService } from './brigade.service';
 import { UserService } from '../user/user.service';
 import { GeneralService } from '../shared/general.service';
 import BasePage from '../core/basepage';
+import { BrigadePageComponent } from './brigade.component';
 declare var google;
 
 @Component({
@@ -128,7 +128,7 @@ export class BrigadeAreaPageComponent extends BasePage {
 
   save() {
     if (!GeneralService.selectedShape) {
-      this.openPageParam(BrigadePage, { brigade: this.brigade, brigadeId: this.brigade._id });
+      this.openPageParam(BrigadePageComponent, { brigade: this.brigade, brigadeId: this.brigade._id });
       return;
     }
     const paths = [];

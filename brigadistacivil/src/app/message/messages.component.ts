@@ -2,13 +2,13 @@ import { Component, OnInit, OnDestroy, ElementRef } from '@angular/core';
 import { NavParams, PopoverController, ModalController } from 'ionic-angular';
 import { Chat, Message, MessageType, Location } from '../../models';
 import * as moment from 'moment';
-import { MessagesOptionsComponent } from './messages-options';
 import { Subscription } from 'rxjs/Subscription';
 import { Observable } from 'rxjs/Observable';
 import { Subscriber } from 'rxjs/Subscriber';
-import { MessagesAttachmentsComponent } from './messages-attachments';
-import { ShowPictureComponent } from './show-picture';
+import { ShowPictureComponent } from './show-picture.component';
 import { ChatService } from '../chat/chat.service';
+import { MessagesAttachmentsComponent } from './messages-attachments.component';
+import { MessagesOptionsComponent } from './messages-options.component';
 
 @Component({
   selector: 'app-messages-page',

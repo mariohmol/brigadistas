@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import 'rxjs/add/operator/map';
-import Environment from '../environment';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
+import Environment from '../../environment';
 
 /*
   Generated class for the BaseService provider.

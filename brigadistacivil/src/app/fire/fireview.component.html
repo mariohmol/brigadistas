@@ -51,7 +51,7 @@
             <ion-item *ngIf="!isCordova()">
                 <ion-label>
                     {{'picture.get' | translate}}
-                    <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+                    <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
                 </ion-label>
             </ion-item>
         </ion-col>
@@ -68,7 +68,9 @@
                         <img [src]="brigade.image" *ngIf="brigade.image">
                         <img src="/assets/img/bg.jpg" *ngIf="!brigade.image">
                     </ion-avatar>
-                    <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
+                    <h2>
+                        <a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a>
+                    </h2>
                 </ion-item>
             </ion-card>
         </ion-col>

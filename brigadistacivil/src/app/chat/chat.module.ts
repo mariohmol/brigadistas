@@ -1,26 +1,27 @@
 import { NgModule } from '@angular/core';
 import { AppSharedModule } from '../shared/shared.module';
-import { BrigadeViewPageComponent } from './brigadeview.component';
-import { BrigadeAreaPageComponent } from './area.component';
-import { BrigadePageComponent } from './brigade.component';
-import { BrigadesPageComponent } from './brigades.component';
 import { ChatService } from './chat.service';
+import { ChatPageComponent } from './chat.component';
+import { ChatsOptionsComponent } from './chats-options.component';
+import { ChatsPageComponent } from './chats.component';
+
+
 
 @NgModule({
     imports: [
         AppSharedModule
     ],
     declarations: [
-        BrigadeAreaPageComponent, BrigadePageComponent,
-        BrigadesPageComponent, BrigadeViewPageComponent
+        ChatPageComponent, ChatsOptionsComponent,
+        ChatsPageComponent
     ],
     exports: [
-        BrigadeAreaPageComponent, BrigadePageComponent,
-        BrigadesPageComponent, BrigadeViewPageComponent
+        ChatPageComponent, ChatsOptionsComponent,
+        ChatsPageComponent
     ],
     entryComponents: [
-        BrigadeAreaPageComponent, BrigadePageComponent,
-        BrigadesPageComponent, BrigadeViewPageComponent
+        ChatPageComponent, ChatsOptionsComponent,
+        ChatsPageComponent
     ],
     providers: [
         ChatService

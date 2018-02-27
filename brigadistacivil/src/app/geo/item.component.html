@@ -3,8 +3,8 @@
     <ion-title>{{ "item.title" | translate }}</ion-title>
     <ion-buttons end>
       <button ion-button *ngIf="!readonly" [disabled]="!itemForm.valid" (click)="save()">
-            <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
-          </button>
+        <ion-icon name="checkmark-round"></ion-icon>{{"done" | translate}}
+      </button>
     </ion-buttons>
   </ion-navbar>
 </ion-header>
@@ -51,7 +51,7 @@
       </ion-col>
     </ion-row>
 
-    <ion-row *ngIf="item._id" >
+    <ion-row *ngIf="item._id">
       <ion-col col-12 col-sm-12 col-md-6>
         <ion-item text-wrap *ngIf="item.createdAt" [class.readonlyInput]="readonly==true">
           <ion-icon name="md-calendar" item-left large></ion-icon>
@@ -62,7 +62,9 @@
       <ion-col col-12 col-sm-12 col-md-6>
         <ion-item text-wrap *ngIf="item.users" [class.readonlyInput]="readonly==true">
           <ion-icon name="md-person" item-left large></ion-icon>
-          <h2><a href="#/profile/{{item.users[0]._id}}">{{item.users[0].name}}</a></h2>
+          <h2>
+            <a href="#/profile/{{item.users[0]._id}}">{{item.users[0].name}}</a>
+          </h2>
         </ion-item>
       </ion-col>
     </ion-row>
@@ -75,7 +77,9 @@
       -->
         <ion-card>
           <ion-item [class.readonlyInput]="readonly==true">
-            <h2><a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a></h2>
+            <h2>
+              <a href="#/brigade/{{brigade._id}}">{{brigade.name}}</a>
+            </h2>
             <!--  <ion-note item-right>{{user.createdAt | date: 'dd/MM/yyyy'}}</ion-note> -->
           </ion-item>
         </ion-card>
@@ -100,7 +104,7 @@
         <ion-item *ngIf="!isCordova()">
           <ion-label>
             {{'picture.get' | translate}}
-            <file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></file-upload>
+            <app-file-upload #fu (change)="fu.upload(getWebPic())" [multiple]="true"></app-file-upload>
           </ion-label>
         </ion-item>
       </ion-col>

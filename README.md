@@ -6,9 +6,39 @@ App that connects civil fire brigades with civil society to fight against the fi
 
 ****** IF YOU CAN HELP WITH MORE STYLING (pipes...) OR FEATURES PLEASE DO IT =) *******
 
+
+
 Following the style guide:
 
 * https://angular.io/styleguide
+
+
+Organized in modules and having files with these extensions 
+
+* `.component.ts`
+
+* `.directive.ts`
+
+Have one example but is giving a problem in TSLint, issue to follow https://github.com/palantir/tslint/issues/3739
+
+* `.module.ts` and `.service.ts`
+
+The entire app is organized in modules (ex folder brigade, fire....). Inside the modules we have components, routes and services
+
+
+* `.pipe.ts` :  Missing example 
+
+And we have `core` that has the basic classes and `shared` where stays all the directives, components and services that is used between other modules.
+
+
+
+
+
+----
+
+
+
+## Running
 
 Here is the web version:
 
