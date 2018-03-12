@@ -19,8 +19,6 @@ Organized in modules and having files with these extensions
 
 * `.directive.ts`
 
-Have one example but is giving a problem in TSLint, issue to follow https://github.com/palantir/tslint/issues/3739
-
 * `.module.ts` and `.service.ts`
 
 The entire app is organized in modules (ex folder brigade, fire....). Inside the modules we have components, routes and services
@@ -29,8 +27,6 @@ The entire app is organized in modules (ex folder brigade, fire....). Inside the
 * `.pipe.ts` :  Missing example 
 
 And we have `core` that has the basic classes and `shared` where stays all the directives, components and services that is used between other modules.
-
-
 
 
 
