@@ -19,8 +19,7 @@ import { HttpClient } from '@angular/common/http';
         `
     // , styleUrls: ['app/hero-details.component.css'] [multiple]="multiple"
 })
-// tslint:disable-next-line:component-class-suffix
-export class SelectItemDirective implements OnInit, OnChanges {
+export class SelectItemComponent implements OnInit, OnChanges {
     @Input() multiple = false;
     @Input() readonly = false;
     @Input() select: Function;
