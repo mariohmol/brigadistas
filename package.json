@@ -32,7 +32,7 @@
     "cookie-parser": "^1.4.3",
     "cors": "^2.8.1",
     "dotenv": "^4.0.0",
-    "ejs": "^2.5.6",
+    "ejs": "^3.1.7",
     "email-templates": "^2.5.4",
     "es6-promise": "^3.3.1",
     "es6-shim": "^0.35.0",
